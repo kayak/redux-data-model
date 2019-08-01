@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "es2015",
     "target": "es5",
     "jsx": "react",
     "moduleResolution": "node",
@@ -22,6 +22,5 @@
   "include": [
     "src/**/*",
     "__tests__/**/*"
-  ],
-  "outFile": "kaytum.js",
+  ]
 }

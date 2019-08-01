@@ -15,8 +15,10 @@
   },
   "homepage": "https://kayak.github.io/kaytum",
   "license": "Apache-2.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
-    "clean": "rimraf coverage build tmp",
+    "clean": "rimraf dist js_coverage .docz .rpt2_cache",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "test": "jest",
@@ -27,19 +29,12 @@
     "docs:deploy": "npm run docs:build && gh-pages -d public --repo git@github.com:kayak/kaytum.git --",
     "changelog": "conventional-changelog",
     "coveralls": "coveralls",
-    "build": "npm run lint && npm run test && tsc --build tsconfig.release.json",
-    "release": "np",
+    "build": "npm run lint && npm run test && rollup -c",
+    "release": "release-it",
     "release:docs": "npm run docs:deploy",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@babel/cli": "7.5.5",
-    "@babel/core": "7.5.5",
-    "@babel/plugin-proposal-class-properties": "7.5.5",
-    "@babel/plugin-proposal-numeric-separator": "7.2.0",
-    "@babel/plugin-proposal-object-rest-spread": "7.5.5",
-    "@babel/preset-env": "7.5.5",
-    "@babel/preset-typescript": "7.3.3",
     "@commitlint/cli": "8.1.0",
     "@commitlint/config-conventional": "8.1.0",
     "@types/enzyme": "3.10.3",
@@ -64,20 +59,20 @@
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-react": "7.14.3",
     "gh-pages": "2.0.1",
+    "husky": "3.0.2",
     "jest": "24.8.0",
     "jest-extended": "0.11.2",
     "jsdom-global": "3.0.2",
-    "np": "5.0.3",
-    "peer-deps-externals-webpack-plugin": "1.0.4",
+    "release-it": "12.3.4",
     "rimraf": "2.6.3",
+    "rollup": "1.18.0",
+    "rollup-plugin-terser": "5.1.1",
+    "rollup-plugin-typescript2": "0.22.1",
     "source-map-loader": "0.2.4",
     "ts-jest": "24.0.2",
     "ts-loader": "6.0.4",
     "typescript": "3.5.3",
-    "url-composer": "1.15.0",
-    "webpack": "4.37.0",
-    "webpack-cli": "3.3.6",
-    "webpack-merge": "4.2.1"
+    "url-composer": "1.15.0"
   },
   "peerDependencies": {
     "@types/lodash-es": ">=4.17.3",
@@ -94,7 +89,7 @@
     "react-redux": ">=7.1.0",
     "reselect": ">=4.0.0",
     "tslib": ">=1.10.0",
-    "url-composer": "1.15.0"
+    "url-composer": ">=1.15.0"
   },
   "dependencies": {
     "@types/react": "16.8.23",
@@ -110,10 +105,12 @@
     "reselect": "4.0.0",
     "tslib": "1.10.0"
   },
-  "hooks": {
-    "pre-commit": "npm test && npm run lint",
-    "pre-push": "npm test && npm run lint",
-    "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && npm run lint",
+      "pre-push": "npm test && npm run lint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "config": {
     "commitizen": {

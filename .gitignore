@@ -29,3 +29,4 @@ dist/
 # Misc
 .DS_Store
 .docz/
+.rpt2_cache/
