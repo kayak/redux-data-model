@@ -26,7 +26,7 @@
     "test:coverage": "jest --verbose --coverage",
     "docs:watch": "docz dev",
     "docs:build": "docz build",
-    "docs:deploy": "npm run docs:build && gh-pages -d public --repo git@github.com:kayak/kaytum.git --",
+    "docs:deploy": "npm run docs:build && gh-pages -d .docz/dist --repo git@github.com:kayak/kaytum.git --",
     "changelog": "conventional-changelog",
     "coveralls": "coveralls",
     "build": "npm run lint && npm run test && rollup -c",
