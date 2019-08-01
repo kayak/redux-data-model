@@ -1,0 +1,91 @@
+---
+name: Concepts
+route: /concepts
+---
+
+# Models
+
+Models are the most basic data structure/abstraction in this library. They require a set of options to be provided
+when initializing them.
+
+#### Example:
+```javascript
+import {Model} from 'kaytum';
+
+const articleModel = new Model({
+  namespace: 'articles',
+  scopes: ['byPage'],
+  fields: {},
+  views: {
+    asOption: article => ({
+      value: article.id,
+      label: `${article.id}. ${article.title}`,
+      disabled: article.disabled || false,
+    }),
+  },
+  controllers: {
+    disable: article => { article.disabled = true },
+  },
+});
+```
+
+Below you can find a more in depth description on the many options that can be used during a model instantiation.
+
+## Model Options
+
+### Namespace
+
+The namespace of a model will define where the model's scopes and instances will be stored. This value must be unique.
+Redux actions, related to this model, will also be prefixed with the provided namespace.
+
+#### Syntax
+
+A string.
+
+### Scopes
+
+Scopes are custom aggregations of data for a particular model. A custom aggregation is referenced by an id and
+should return a list of one or more model instances. That might make sense when you are paginating your data, so
+you might be interested in having a byPage scope. A default scope will be avialble even when none is provided. This
+can be configured by specifying modelInstance.defaultScope, defaults to byId, and modelInstance.defaultScopeIdField,
+defaults to id, fields in model options.
+
+#### Syntax
+
+A list of strings.
+
+### Fields
+
+Fields determine how models are related. One model might reference another one (i.e. one to one relation) or
+a set of model instances (i.e. one to many relation). The data that is set via a model will be transparently
+normalized if it references nested models.
+
+#### Syntax
+
+An object that might contain or not references to other models.
+
+### Views
+
+Views are data selectors. By default you already can get the entire model instance by referencing just scopes, however
+when you do need to transform data prior to using it, this might be useful. All views are cached. If the data a view
+depends on change, then the cache will be automatically updated. For such we are using
+[re-reselect] (https://github.com/toomuchdesign/re-reselect). This make it safe for you to just use shallow
+reference comparisons in order to determine when to re-render.
+
+#### Syntax
+
+A function that takes one model instance as argument and returns an object.
+
+### Controllers
+
+Controllers are data modifiers. By default you can set, remove and reset any given scope. One can add extra
+controllers, in order to make it easier/safer to apply data changes in model instances. All changes must be made
+by accessing the provided model instance and changing it in place. Under the hood this library will generate a
+different instance, for fields that changed, and apply them to the store. For such we are using
+[immer](https://github.com/immerjs/immer). Avoid using functional construncts, like map, reduce, etc,
+since they will generate new instances in memory even when not necessary, which can cause unnecessary re-renders.
+
+#### Syntax
+
+A function that takes one model instance plus a desired amount of arguments. The function doesn't need to return
+data.

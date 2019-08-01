@@ -1,0 +1,19 @@
+---
+name: Integrating with Redux
+route: /redux-integration
+---
+
+# Integrating with Redux
+
+Before you can use a model in your components, you have to hook its model reducers into redux. For such do:
+
+```javascript
+import {modelA, modelB} from './models';
+import {createStore, combineReducers} from 'redux';
+
+const reducers = combineReducers({
+  kaytum: combineModelReducers([modelA, modelB]),
+});
+
+const store = createStore(todoApp);
+```
