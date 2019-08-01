@@ -1,0 +1,1 @@
+export { useModel } from './useModel';
