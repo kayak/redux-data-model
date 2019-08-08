@@ -1,6 +1,6 @@
-import { keys, omit } from 'lodash';
+import { keys, isArray, omit } from 'lodash';
 import { createSelector } from 'reselect';
-import { DispatchProp } from 'react-redux';
+import { DispatchProp, batch } from 'react-redux';
 import produce from 'immer';
 import { Model } from './model';
 
@@ -37,13 +37,14 @@ export class Data {
       get: (object, key) => object[key],
     });
 
-    for (const view of this._viewKeys) {
-      const selector = this.viewSelectors(view).bind(this);
-      proxy[view] = () => selector(proxy);
+    for (const viewKey of this._viewKeys) {
+      const selector = this.viewSelectors(viewKey).bind(this);
+      proxy[viewKey] = () => isArray(data) ? proxy.map(selector) : selector(proxy);
     }
 
-    for (const controller of this._controllerKeys) {
-      proxy[controller] = this.controllers(controller).bind(this);
+    for (const controllerKey of this._controllerKeys) {
+      const controller = this.controllers(controllerKey).bind(this);
+      proxy[controllerKey] = controller;
     }
 
     return proxy;
@@ -62,11 +63,16 @@ export class Data {
     verifyIsControllerValid(controller);
 
     const actions = this._model.actions();
-    const controllerFunc = produce(this._model.controllers[controller]);
+    const controllerFunc = produce((...args) => { this._model.controllers[controller](...args); });
 
     return (...args) => {
-      const dataWithoutViewsAndControllers = omit(this._data, [...this._viewKeys, ...this._controllerKeys]);
-      const payload = [controllerFunc(dataWithoutViewsAndControllers, ...args)];
+      const data = isArray(this._data) ? this._data : [this._data];
+      const payload = batch(
+        () => data.map(instance => {
+          const dataWithoutHelpers = omit(instance, [...this._viewKeys, ...this._controllerKeys]);
+          return controllerFunc(dataWithoutHelpers, ...args)
+        })
+      );
       this._dispatch(actions.set(this._scope, this._scopeId, payload));
     };
   }

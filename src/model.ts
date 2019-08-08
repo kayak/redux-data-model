@@ -85,10 +85,10 @@ export class Model {
         verifyIsScopeValid(scope);
         return { type: actionTypes.remove, scope, scopeId };
       },
-      set: (scope: string, scopeId: ScopeId, payload: object[]) => {
+      set: (scope: string, scopeId: ScopeId, payload: object | object[]) => {
         verifyIsScopeValid(scope);
         return {
-          type: actionTypes.set, scope, scopeId, payload,
+          type: actionTypes.set, scope, scopeId, payload: isArray(payload) ? payload : [payload],
         };
       },
     };
@@ -149,6 +149,8 @@ export class Model {
           // We use setWith because it mutates an existing object. In this case the draft. That is important
           // in order to keep unaffected objects untouched. Otherwise that could cause unnecessary re-renders
           // in unrelated components.
+          const idsForScopeId = [];
+
           for (const instance of payload) {
             const normalizedData = normalize(instance, this._schema);
 
@@ -165,14 +167,20 @@ export class Model {
               }
             }
 
-            if (scope !== this.defaultScope) {
-              setWith(
-                draft,
-                `${this.namespace}.${scope}.${scopeId}`,
-                values(normalizedData.entities[this.namespace]).map(entity => entity.id),
-                Object,
-              );
-            }
+            idsForScopeId.push(
+              ...values(
+                normalizedData.entities[this.namespace]
+              ).map(entity => entity[this.defaultScopeIdField]),
+            );
+          }
+
+          if (scope !== this.defaultScope) {
+            setWith(
+              draft,
+              `${this.namespace}.${scope}.${scopeId}`,
+              idsForScopeId,
+              Object,
+            );
           }
       }
     }, {});
