@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {combineModelReducers, Model, useModel} from '../../src';
-import {createStore} from 'redux';
+import {combineReducers, createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {mount} from 'enzyme';
 
@@ -26,7 +26,7 @@ describe('useModel', () => {
       scopes: [],
       fields: {},
     });
-    store = createStore(combineModelReducers([articleModel]));
+    store = createStore(combineReducers({ models: combineModelReducers([articleModel])}));
     store.dispatch(articleModel.actions().set(articleModel.defaultScope, 1, [{id: 1, title: 'title'}]));
     component = mount(
       <Provider store={store}>

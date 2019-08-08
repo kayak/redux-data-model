@@ -6,7 +6,7 @@ import { Data } from '../data';
 export function useModel(model: Model, namespace: string=''): Record<string, (ScopeId) => any> {
   const dispatch: DispatchProp = useDispatch();
   const state = useSelector(
-    (state: Record<string, any>) => namespace === '' ? state : state['models']
+    (state: Record<string, any>) => namespace === '' ? state['models'] : state[namespace]
   ) as object;
 
   return React.useMemo(() => {
