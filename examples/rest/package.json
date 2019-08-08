@@ -1,0 +1,16 @@
+{
+  "name": "kaytum-rest.js",
+  "version": "1.0.0",
+  "description": "kaytum-rest-example",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "next"
+  },
+  "dependencies": {
+    "@types/redux-logger": "3.0.7",
+    "kaytum": "file://../../",
+    "next": "9.0.3",
+    "redux-logger": "3.0.6"
+  }
+}
