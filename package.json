@@ -1,5 +1,5 @@
 {
-  "name": "kaytum",
+  "name": "react-resux",
   "version": "0.0.1",
   "description": "Opinionated, Redux abstraction with built-in immutability, normalization, and selectors support.",
   "engines": {
@@ -8,12 +8,12 @@
   "author": "Lucas Lira Gomes",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kayak/kaytum.git"
+    "url": "git+https://github.com/kayak/react-resux.git"
   },
   "bugs": {
-    "url": "https://github.com/kayak/kaytum/issues"
+    "url": "https://github.com/kayak/react-resux/issues"
   },
-  "homepage": "https://kayak.github.io/kaytum",
+  "homepage": "https://kayak.github.io/react-resux",
   "license": "Apache-2.0",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -26,7 +26,7 @@
     "test:coverage": "jest --verbose --coverage",
     "docs:watch": "docz dev",
     "docs:build": "docz build",
-    "docs:deploy": "npm run docs:build && gh-pages -d .docz/dist --repo git@github.com:kayak/kaytum.git --",
+    "docs:deploy": "npm run docs:build && gh-pages -d .docz/dist --repo git@github.com:kayak/react-resux.git --",
     "changelog": "conventional-changelog",
     "coveralls": "coveralls",
     "build": "npm run lint && npm run test && rollup -c",

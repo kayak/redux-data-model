@@ -1,8 +1,8 @@
 export default {
   typescript: true,
-  title: 'Kaytum',
+  title: 'React-Resux',
   description: 'Opinionated, Redux abstraction with built-in immutability, normalization, and selectors support',
-  base: '/kaytum/',
+  base: '/react-resux/',
   themeConfig: {
     mode: 'dark',
   },

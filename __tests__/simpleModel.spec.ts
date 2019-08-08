@@ -68,7 +68,7 @@ describe('Model', () => {
         namespace: 'articles',
         scopes: [customScope],
         fields: {
-          kaytumField: 7
+          randomField: 7
         }
       })).toThrow();
     });

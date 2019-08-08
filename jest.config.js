@@ -79,7 +79,7 @@ module.exports = {
     // A map from regular expressions to module names that allow to stub out resources with a single module
     moduleNameMapper: {
         '^root/(.*)$': '<rootDir>/$1',
-        '^kaytum/(.*)$': '<rootDir>/src/$1',
+        '^react-resux/(.*)$': '<rootDir>/src/$1',
     },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible'

@@ -4,7 +4,7 @@ import {
   Model,
   useModel,
   useService,
-} from 'kaytum';
+} from 'react-resux';
 import {
   applyMiddleware,
   combineReducers,

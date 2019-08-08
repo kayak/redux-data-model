@@ -1,10 +1,10 @@
-# Kaytum
+# React-Resux
 
-[![NPM](https://img.shields.io/npm/v/kaytum.svg)](https://www.npmjs.com/package/kaytum)
-[![Build Status](https://travis-ci.org/kayak/kaytum.png?branch=master)](https://travis-ci.org/kayak/kaytum)
-[![Coverage Status](https://coveralls.io/repos/github/kayak/kaytum/badge.svg)](https://coveralls.io/github/kayak/kaytum)
-[![David](https://img.shields.io/david/kayak/kaytum.svg)](https://david-dm.org/kayak/kaytum)
-[![David](https://img.shields.io/david/dev/kayak/kaytum.svg)](https://david-dm.org/kayak/kaytum)
+[![NPM](https://img.shields.io/npm/v/react-resux.svg)](https://www.npmjs.com/package/react-resux)
+[![Build Status](https://travis-ci.org/kayak/react-resux.png?branch=master)](https://travis-ci.org/kayak/react-resux)
+[![Coverage Status](https://coveralls.io/repos/github/kayak/react-resux/badge.svg)](https://coveralls.io/github/kayak/react-resux)
+[![David](https://img.shields.io/david/kayak/react-resux.svg)](https://david-dm.org/kayak/react-resux)
+[![David](https://img.shields.io/david/dev/kayak/react-resux.svg)](https://david-dm.org/kayak/react-resux)
 
 Opinionated, Redux abstraction with built-in immutability, normalization, and selectors support.
 
@@ -13,12 +13,12 @@ Opinionated, Redux abstraction with built-in immutability, normalization, and se
 Using npm:
 
 ```bash
-$ npm install kaytum
+$ npm install react-resux
 ```
 
 ## Documentation
 
-Documentation is available here: https://kayak.github.io/kaytum/
+Documentation is available here: https://kayak.github.io/react-resux/
 
 ## License
 

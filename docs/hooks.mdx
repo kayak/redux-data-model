@@ -5,7 +5,7 @@ route: /hooks
 
 # Hooks
 
-Kaytum is a hooks-first library. To read/change data from the store see useModel. Optionally, for an easier REST API
+React-Resux is a hooks-first library. To read/change data from the store see useModel. Optionally, for an easier REST API
 interfacing, see useService.
 
 ## useModel
@@ -14,7 +14,7 @@ Returns an object that can be used to access views/controllers for any given sco
 
 #### Read data example:
 ```javascript
-import {Model} from 'kaytum';
+import {Model} from 'react-resux';
 import {modelX} from './modelX';
 
 export default function({page}) {
@@ -36,7 +36,7 @@ export default function({page}) {
 
 #### Change data example:
 ```javascript
-  import {Model} from 'kaytum';
+  import {Model} from 'react-resux';
   import {modelX} from './modelX';
 
   export default function({page}) {
@@ -63,7 +63,7 @@ you can ignore this hook.
 
 #### Example:
 ```javascript
-import {Model} from 'kaytum';
+import {Model} from 'react-resux';
 import {userModel} from './userModel';
 
 const userServiceSpec = {
