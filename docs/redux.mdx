@@ -12,7 +12,7 @@ import {modelA, modelB} from './models';
 import {createStore, combineReducers} from 'redux';
 
 const reducers = combineReducers({
-  kaytum: combineModelReducers([modelA, modelB]),
+  models: combineModelReducers([modelA, modelB]),
 });
 
 const store = createStore(todoApp);

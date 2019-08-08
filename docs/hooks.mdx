@@ -1,0 +1,96 @@
+---
+name: Hooks
+route: /hooks
+---
+
+# Hooks
+
+Kaytum is a hooks-first library. To read/change data from the store see useModel. Optionally, for an easier REST API
+interfacing, see useService.
+
+## useModel
+
+Returns an object that can be used to access views/controllers for any given scope supported in the provided model.
+
+#### Read data example:
+```javascript
+import {Model} from 'kaytum';
+import {modelX} from './modelX';
+
+export default function({page}) {
+  const xData = useModel(modelX);
+
+  // We assume, for the sake of this example, that modelX has a byPage scope and a asItem view.
+  // And that there is already data in the store for that particular model.
+  //
+  // Views:
+  // xData.scopeName(scopeId) -> returns raw data
+  // xData.scopeName(scopeId).aView() -> returns raw data transformed with a view
+  const items = xData.byPage(page).asItem();
+
+  return items.map(
+    item => <span key={item.id}>{item.label}</span>
+  );
+}
+```
+
+#### Change data example:
+```javascript
+  import {Model} from 'kaytum';
+  import {modelX} from './modelX';
+
+  export default function({page}) {
+  const xData = useModel(modelX);
+
+  // We assume, for the sake of this example, that modelX has a byPage scope and a disable
+  // controller. And that there is already data in the store for that particular model.
+  //
+  // Controllers:
+  // xData.scopeName(scopeId).disable() -> returns nothing but dispatchs a change action
+  const items = xData.byPage(page).disable();
+
+  return (
+    <button onClick={xData.byPage(page).disable}>Disable all in page #{page}</button>
+  );
+}
+```
+
+## useService
+
+Returns an object containing metadata related to the request in question. It's useful for abstracting rest API calls.
+It's definitely optional, so if you rather use redux-saga, redux-pack, redux-thunks, or your own custom middleware,
+you can ignore this hook.
+
+#### Example:
+```javascript
+import {Model} from 'kaytum';
+import {userModel} from './userModel';
+
+const userServiceSpec = {
+  model: userModel,
+  host: 'http://jsonplaceholder.typicode.com',
+  urls: {
+    byId: '/users/:id'
+  }
+};
+
+export default function({userId}) {
+  const userData = useModel(userModel);
+  const userService = useService(userServiceSpec);
+
+  const userRequest = userService.byId(userId).get({pathParams: {id: userId}});
+
+  if (userRequest.isLoading) return 'Loading...';
+  else if (userRequest.errror) return `Error: {userRequest.error}`;
+
+  const user = userData.byId(userId);
+
+  return (
+    <span key={user.id}>
+      {user.name} <button onClick={
+        () => userService.byId(userId).delete({pathParams: {id: userId}})
+      }>Remove</button>
+    </span>
+  );
+}
+```
