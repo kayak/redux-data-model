@@ -1,26 +1,31 @@
-type ScopeId = string | number;
-type SelectorFunction = (state: object, props?: object) => any;
-type ViewFunction = (instance) => any;
-type ControllerFunction = (instance: any) => void;
+import {AnyAction, Dispatch} from 'redux';
+import {Action, ActionCreatorsMapObject} from "react-redux";
+
+type SelectorFunction = (state: object, ...arguments: any[]) => any;
+type ReducerFunction = (state: object, action: AnyAction) => void;
+type EffectFunction = (state: object, ...arguments: any[]) => any;
+
+type MapDispatchToPropsWithActionCreatorsFunction<TDispatchProps, TOwnProps> =
+    (
+      dispatch: Dispatch<Action>,
+      ownProps: TOwnProps,
+      modelActionCreators: ActionCreatorsMapObject,
+      subscriberActionCreators: ActionCreatorsMapObject,
+    ) => TDispatchProps;
+type MapDispatchToPropsWithActionCreators<TDispatchProps, TOwnProps> =
+    MapDispatchToPropsWithActionCreatorsFunction<TDispatchProps, TOwnProps> | TDispatchProps;
+
+type MapStateToPropsWithSelectors<TStateProps, TOwnProps, State> =
+    (
+      state: State,
+      ownProps: TOwnProps,
+      modelSelectors: Record<string, SelectorFunction>
+    ) => TStateProps;
 
 interface ModelOptions {
   namespace: string;
-  scopes: string[];
-  fields: object;
-  defaultScope?: string;
-  defaultScopeIdField?: string;
-  views?: Record<string, ViewFunction>;
-  controllers?: Record<string, ControllerFunction>;
-}
-
-interface ActionTypes {
-  clear: string;
-  remove: string;
-  set: string;
-}
-
-interface Actions {
-  clear: Function;
-  remove: Function;
-  set: Function;
+  state: Record<string, any>;
+  selectors?: Record<string, SelectorFunction>;
+  reducers?: Record<string, ReducerFunction>;
+  effects?: Record<string, EffectFunction>;
 }

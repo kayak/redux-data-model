@@ -1,188 +1,183 @@
-import {
-  isArray, mapValues, pull, setWith, toPairs, unset, values,
-} from 'lodash';
-import { denormalize, normalize, schema } from 'normalizr';
 import produce from 'immer';
-import { createSelector } from 'reselect';
-import { AnyAction, Reducer } from 'redux';
+import {get, toPairs,} from 'lodash';
+import {ActionCreatorsMapObject, AnyAction, Reducer} from 'redux';
+import {Saga} from '@redux-saga/core';
+import {
+  actionChannel,
+  all,
+  apply,
+  call,
+  cancel,
+  cancelled,
+  cps,
+  debounce,
+  delay,
+  flush,
+  fork,
+  getContext,
+  join,
+  put,
+  putResolve,
+  race,
+  retry,
+  select,
+  setContext,
+  spawn,
+  take,
+  takeEvery as blockingEffectTakeEvery,
+  takeMaybe,
+  throttle,
+} from 'redux-saga/effects'
+import {createSelector} from 'reselect';
+import {EffectFunction, ModelOptions, ReducerFunction, SelectorFunction} from './baseTypes';
+
+export const sagaEffects = {
+  actionChannel,
+  all,
+  apply,
+  call,
+  cancel,
+  cancelled,
+  cps,
+  debounce,
+  delay,
+  flush,
+  fork,
+  getContext,
+  join,
+  put,
+  putResolve,
+  race,
+  retry,
+  select,
+  setContext,
+  spawn,
+  take,
+  takeMaybe,
+  throttle,
+};
+
+const defaultReducer = (
+  state,
+  // @ts-ignore
+  // eslint-disable @typescript-eslint/no-unused-vars
+  action,
+) => state;
 
 export class Model {
   public readonly namespace: string;
-
-  public readonly scopes: string[];
-
-  private readonly fields: object;
-
-  public readonly defaultScope: string;
-
-  public readonly defaultScopeIdField: string;
-
-  public readonly views: Record<string, ViewFunction>;
-
-  public readonly controllers: Record<string, ControllerFunction>;
-
-  private _schema: schema.Entity;
+  public readonly state: Record<string, any>;
+  public readonly modelSelectors?: Record<string, SelectorFunction>;
+  public readonly modelReducers?: Record<string, ReducerFunction>;
+  public readonly modelEffects?: Record<string, EffectFunction>;
 
   public constructor(options: ModelOptions) {
     this.namespace = options.namespace;
-    this.scopes = options.scopes;
-    this.fields = options.fields;
-    this.defaultScope = options.defaultScope || 'byId';
-    this.defaultScopeIdField = options.defaultScopeIdField || 'id';
-    this.views = options.views || {};
-    this.controllers = options.controllers || {};
+    this.state = options.state;
+    this.modelSelectors = options.selectors || {};
+    this.modelReducers = options.reducers || {};
+    this.modelEffects = options.effects || {};
 
-    this._schema = this.schema();
-
-    this.schema = this.schema.bind(this);
-    this.actionTypes = this.actionTypes.bind(this);
     this.selectors = this.selectors.bind(this);
     this.reducers = this.reducers.bind(this);
+    this.effects = this.effects.bind(this);
   }
 
-  public schema(): schema.Entity {
-    // @ts-ignore
-    return new schema.Entity(this.namespace, mapValues(
-      this.fields,
-      (fieldValue: Model | Model[], fieldKey: string) => {
-        if (fieldValue instanceof Model) return fieldValue.schema();
-        if (isArray(fieldValue)) return fieldValue.map(arrayValue => arrayValue.schema());
-        throw {
-          name: 'InvalidFieldType',
-          message: `Field types can only be arrays and Model instances. 
-          Field ${fieldKey} had a ${typeof fieldValue} value.`,
-        };
-      },
-    ));
+  /**
+   * @ignore
+   */
+  public actionType(actionName: string): string {
+    return `${this.namespace}.${actionName}`;
   }
 
-  public actionTypes(): ActionTypes {
-    return {
-      clear: `${this.namespace}.clear`,
-      remove: `${this.namespace}.remove`,
-      set: `${this.namespace}.set`,
-    };
+  /**
+   * @ignore
+   */
+  public actionCreator(actionName: string, actionData: object = {}): AnyAction {
+    return {...actionData, type: this.actionType(actionName)};
   }
 
-  public actions(): Actions {
-    const actionTypes = this.actionTypes();
+  /**
+   * Returns an object with action creators, one for each of the declared reducers and effects. Only useful for
+   * testing purposes, read the docs section on testing for more info. Also supports the inner workings of this
+   * class.
+   *
+   * @returns an action creator's map object.
+   */
+  public actionCreators(): ActionCreatorsMapObject {
+    const actions = {};
 
-    const verifyIsScopeValid = (scope: string): void => {
-      if (![this.defaultScope, ...this.scopes].includes(scope)) {
-        throw {
-          name: 'InvalidScope',
-          message: `The available scopes are: ${[this.defaultScope, ...this.scopes].join(', ')}.`,
-        };
-      }
-    };
-
-    return {
-      clear: (scope: string) => {
-        verifyIsScopeValid(scope);
-        return { type: actionTypes.clear, scope };
-      },
-      remove: (scope: string, scopeId: ScopeId) => {
-        verifyIsScopeValid(scope);
-        return { type: actionTypes.remove, scope, scopeId };
-      },
-      set: (scope: string, scopeId: ScopeId, payload: object | object[]) => {
-        verifyIsScopeValid(scope);
-        return {
-          type: actionTypes.set, scope, scopeId, payload: isArray(payload) ? payload : [payload],
-        };
-      },
-    };
-  }
-
-  public selectors(scope: string, scopeId: ScopeId): SelectorFunction {
-    let selectorFunc = null;
-
-    const getDefaultScope = state => state[this.defaultScope];
-
-    if (scope === this.defaultScope) {
-      selectorFunc = state => denormalize(
-        scopeId,
-        this._schema,
-        mapValues(state, getDefaultScope),
-      );
-    } else {
-      selectorFunc = state => denormalize(
-        state[this.namespace][scope][scopeId],
-        new schema.Array(this._schema),
-        mapValues(state, getDefaultScope),
-      );
+    for (const reducerName in this.modelReducers) {
+      actions[reducerName] = (actionData: object = {}) => this.actionCreator(reducerName, actionData);
     }
 
-    return createSelector([selectorFunc], data => data);
+    for (const effectName in this.modelEffects) {
+      actions[effectName] = (actionData: object = {}) => this.actionCreator(effectName, actionData);
+    }
+
+    return actions;
   }
 
+  /**
+   * @ignore
+   */
+  public selectors(): Record<string, SelectorFunction> {
+    const selectors = {};
+
+    for (const [selectorName, selectorFunc] of toPairs(this.modelSelectors)) {
+      selectors[selectorName] = createSelector([selectorFunc], data => data);
+    }
+
+    return selectors;
+  }
+
+  /**
+   * @ignore
+   */
   public reducers(): Reducer<unknown, AnyAction> {
-    const actionTypes = this.actionTypes();
+    const reducers = {};
 
-    return produce((draft: object, {
-      type, scope, scopeId, payload,
-    }) => {
-      switch (type) {
-        case actionTypes.clear:
-          if (scope === this.defaultScope) draft[this.namespace] = mapValues(draft, () => ({}));
-          else draft[this.namespace][scope] = {};
-          return;
+    for (const [reducerName, reducerFunc] of toPairs(this.modelReducers)) {
+      const actionType = this.actionType(reducerName);
+      reducers[actionType] = reducerFunc;
+    }
 
-        case actionTypes.remove:
-          // We use pull and unset, because they mutate an existing object. In this case the draft. That is
-          // important in order to keep unaffected objects untouched. Otherwise that could cause unnecessary
-          // re-renders in unrelated components.
-          if (scope === this.defaultScope) {
-            unset(draft, `${this.namespace}.${this.defaultScope}.${scopeId}`);
+    return produce((draft: object, action: AnyAction) => {
+      const reducerFunc = get(reducers, action.type, defaultReducer);
+      reducerFunc(draft, action);
+    }, this.state);
+  }
 
-            for (const scope in this.scopes) {
-              for (const currentScopeId in draft[this.namespace][scope]) {
-                pull(draft[this.namespace][scope][currentScopeId], [scopeId]);
-              }
-            }
-          } else {
-            unset(draft, `${this.namespace}.${scope}.${scopeId}`);
-          }
-          return;
+  /**
+   * @ignore
+   */
+  public effects(): Record<string, EffectFunction> {
+    const effects = {};
 
-        case actionTypes.set:
-          // We use setWith because it mutates an existing object. In this case the draft. That is important
-          // in order to keep unaffected objects untouched. Otherwise that could cause unnecessary re-renders
-          // in unrelated components.
-          const idsForScopeId = [];
+    for (const [effectName, effectFunc] of toPairs(this.modelEffects)) {
+      effects[effectName] = (actionData: object = {}) => effectFunc(actionData, sagaEffects);
+    }
 
-          for (const instance of payload) {
-            const normalizedData = normalize(instance, this._schema);
+    return effects;
+  }
 
-            const entityEntries: [string, object[]][] = toPairs(normalizedData.entities);
+  /**
+   * Returns an array of sagas, one for each of the declared effects. They will default to taking every action and
+   * calling its respective effect. For taking only latest or leading actions, at any given moment, look for
+   * subscribers instead.
+   *
+   * @returns An array of sagas.
+   */
+  public get reduxSagas(): Saga[] {
+    const reduxSagas = [];
 
-            for (const [entityName, entities] of entityEntries) {
-              for (const entity of values(entities)) {
-                setWith(
-                  draft,
-                  `${entityName}.${this.defaultScope}.${entity[this.defaultScopeIdField]}`,
-                  entity,
-                  Object,
-                );
-              }
-            }
+    for (const [effectName, effectFunc] of toPairs(this.effects())) {
+      const actionType = this.actionType(effectName);
+      reduxSagas.push(function *() {
+        yield blockingEffectTakeEvery(actionType, effectFunc);
+      });
+    }
 
-            idsForScopeId.push(
-              ...values(
-                normalizedData.entities[this.namespace]
-              ).map(entity => entity[this.defaultScopeIdField]),
-            );
-          }
-
-          if (scope !== this.defaultScope) {
-            setWith(
-              draft,
-              `${this.namespace}.${scope}.${scopeId}`,
-              idsForScopeId,
-              Object,
-            );
-          }
-      }
-    }, {});
+    return reduxSagas;
   }
 }
