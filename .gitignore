@@ -31,3 +31,5 @@ dist/
 .docz/
 .rpt2_cache/
 .next/
+*.tgz
+CHANGELOG
