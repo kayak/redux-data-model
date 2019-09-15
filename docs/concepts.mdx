@@ -3,91 +3,157 @@ name: Concepts
 route: /concepts
 ---
 
-# Models
+## Model
 
 Models are the most basic data structure/abstraction in this library. They require a set of options to be provided
-when initializing them.
+when initializing them. See [Model's Constructor](#models-constructor) section below for more info.
 
 #### Example:
 ```javascript
 import {Model} from 'react-resux';
+import _ from 'lodash';
 
-const articleModel = new Model({
-  namespace: 'articles',
-  scopes: ['byPage'],
-  fields: {},
-  views: {
-    asOption: article => ({
-      value: article.id,
-      label: `${article.id}. ${article.title}`,
-      disabled: article.disabled || false,
-    }),
-  },
-  controllers: {
-    disable: article => { article.disabled = true },
-  },
+async function fetchApi(url) {
+  return await fetch(url).then(response => response.json());
+}
+
+export const userModel = new Model({
+    // Mandatory options
+    namespace: 'users',
+    state: {
+        loading: {},
+        data: {},
+    },
+
+    // Optional options
+    selectors: {
+        loadingByUser: (state, userId) => _.get(state, `users.loading[${userId}]`, true),
+        userById: (state, userId) => _.get(state, `users.data[${userId}]`),
+    },
+    reducers: {
+        saveUser(state, { data, userId }) {
+          state.loading[userId] = false;
+          state.data[userId] = data;
+        },
+    },
+    effects: {
+        *fetchUser({ userId }, { call, put }) {
+            try {
+                const data = yield call(fetchApi, `http://jsonplaceholder.typicode.com/users/${userId}`);
+                yield put({type: "users.saveUser", data, userId});
+             } catch (error) {
+                console.log(error)
+             }
+        },
+    },
 });
 ```
 
 The model will be used to generate the action types, actions, reducers and dispatchers for this particular entity
-(i.e. article). Below you can find a more in depth description on the many options that can be used during a model
+(i.e. users). Below you can find a more in depth description on the many options that can be used during a model
 instantiation.
 
-## Model Options
+### Model's Constructor
 
-### Namespace
+Expects an object with a few options. Being [namespace](#namespace) and [state](#namespace) mandatory, while
+[selectors](#selectors), [reducers](#reducers), [effects](#effects) are optional. See the
+[Model Options](#model-options) section below for more info.
 
-The namespace of a model will define where the model's scopes and instances will be stored. This value must be unique.
-Redux actions, related to this model, will also be prefixed with the provided namespace.
+### Model Options
 
-#### Syntax
+#### Namespace
+
+The namespace of a model will preffix all its reducers and effects' action types. This value must be unique and,
+as a matter of fact, resux will enforce it.
+
+##### Syntax
 
 A string.
 
-### Scopes
+#### State
 
-Scopes are custom aggregations of data for a particular model. A custom aggregation is referenced by an id and
-should return a list of one or more model instances. That might make sense when you are paginating your data, so
-you might be interested in having a byPage scope. A default scope will be avialble even when none is provided. This
-can be configured by specifying modelInstance.defaultScope, defaults to byId, and modelInstance.defaultScopeIdField,
-defaults to id, fields in model options.
+State represents the initial state of the model's reducer.
 
-#### Syntax
+##### Syntax
 
-A list of strings.
+Anything, but most commonly an object.
 
-### Fields
+#### Selectors
 
-Fields determine how models are related. One model might reference another one (i.e. one to one relation) or
-a set of model instances (i.e. one to many relation). The data that is set via a model will be transparently
-normalized if it references nested models.
+Selectors are functions that receive the entire state as an argument and returns a pice of it or, perhpas transform it.
+Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow comparing its variables.
 
-#### Syntax
+##### Syntax
 
-An object that might contain or not references to other models.
+A function receives the entire state as an argument and returns a pice of it or, perhpas transform it.
 
-### Views
+#### Reducers
 
-Views are data selectors. By default you already can get the entire model instance by referencing just scopes, however
-when you do need to transform data prior to using it, this might be useful. All views are cached. If the data a view
-depends on change, then the cache will be automatically updated. For such we are using
-[re-reselect] (https://github.com/toomuchdesign/re-reselect). This make it safe for you to just use shallow
-reference comparisons in order to determine when to re-render.
+Reducers are functions used for synchronously changing the current state of a given model. A reducer will be
+triggered whenever an action is dispatched, which contains an actionType equals to modelNamespace.reducerName.
 
-#### Syntax
+##### Syntax
 
-A function that takes one model instance as argument and returns an object.
+A function that receives the entire state and the action as arguments respectively. It shouldn't return data,
+like vanilla reducers. Instead it should change the state argument in place. Resux uses
+[immer](https://github.com/immerjs/immer) under the hood, which means that the state is made immutable by
+tracking property access.
 
-### Controllers
+#### Effects
 
-Controllers are data modifiers. By default you can set, remove and reset any given scope. One can add extra
-controllers, in order to make it easier/safer to apply data changes in model instances. All changes must be made
-by accessing the provided model instance and changing it in place. Under the hood this library will generate a
-different instance, for fields that changed, and apply them to the store. For such we are using
-[immer](https://github.com/immerjs/immer). Avoid using functional construncts, like map, reduce, etc,
-since they will generate new instances in memory even when not necessary, which can cause unnecessary re-renders.
+Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever an action
+is dispatched, which contains an actionType equals to modelNamespace.effectName. They are wrapped by a
+[takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from redux-saga.
 
-#### Syntax
+##### Syntax
 
-A function that takes one model instance plus a desired amount of arguments. The function doesn't need to return
-data.
+A function generator that receives an action and an object with redux saga's effects as arguments respectively. The
+saga effects won't include takeLeading, takeLatest, and takeEvery blocking effects. For using those use a Subscriber
+instead.
+
+## Subscriber
+
+Subscribers provide a way to link models' effects/reducers, so that they get triggered by the same non-namespaced
+action type, on a leading, latest, or every action basis. That is, they provide the means for generating redux sagas
+employing takeLeading, takeLatest, or takeEvery effects. For instantiating a subscriber you need to provide an array.
+See [Subscriber's Constructor](#subscribers-constructor) section below for more info. Those models' action creators
+will be available within the subscriber's effects. See the [Subscriber's API](#subscribers-api) section below for
+more info.
+
+#### Example:
+```javascript
+import {Subscriber} from 'react-resux';
+import {userModel} from './models';
+
+export const pageSubscriber = new Subscriber([userModel]).takeLatest(
+  'fetchPage', [
+    (action, {users}) => users.fetchUser(action),
+  ]
+);
+```
+
+### Subscriber's Constructor
+
+Expects an array of model instances as the only argument.
+
+### Subscriber's API
+
+#### takeLeading
+
+Adds a blocking effect that watches for the action type passed as first argument. If multiple actions
+exist at the time of execution, only the first will be picqued while others will be dropped. Behaviour
+that can be used as the basis for a throtling/debouncing implementation. It uses a
+[takeLeading](https://redux-saga.js.org/docs/api/#takeleadingpattern-saga-args) effect under the hood.
+
+#### takeLatest
+
+Adds a blocking effect that watches for the action type passed as first argument. If multiple actions
+exist at the time of execution, only the latest will be picqued while others will be dropped. Behaviour
+that can be used as the basis for a throtling/debouncing implementation. It uses a
+[takeLatest](https://redux-saga.js.org/docs/api/#takelatestpattern-saga-args) effect under the hood.
+
+#### takeEvery
+
+Adds a blocking effect that watches for the action type passed as first argument. If multiple actions
+exist at the time of execution, all of them will be taken into account. It uses a
+[takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect under the hood.

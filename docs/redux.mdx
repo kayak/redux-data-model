@@ -1,19 +1,33 @@
 ---
-name: Integrating with Redux
+name: Integrating with Redux/Redux Saga
 route: /redux-integration
 ---
 
-# Integrating with Redux
+# Integrating with Redux/Redux Saga
 
-Before you can use a model in your components, you have to hook its model reducers into redux. For such do:
+Before you can use a model in your components, you have to hook its model's reducers into redux. The same applies for
+hooking the subscribers and model's effects into redux-saga. For such do:
 
 ```javascript
+import {
+  combineModelReducers,
+  resuxRootSaga,
+} from 'react-resux';
+import createSagaMiddleware from 'redux-saga';
+import {
+  applyMiddleware,
+  combineReducers,
+  createStore,
+} from 'redux';
+
 import {modelA, modelB} from './models';
-import {createStore, combineReducers} from 'redux';
+import {subscriberX} from './subscribers';
 
-const reducers = combineReducers({
-  models: combineModelReducers([modelA, modelB]),
-});
+const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(todoApp);
+const store = createStore(combineReducers({
+  ...combineModelReducers([modelA, modelB]),
+}), applyMiddleware(sagaMiddleware));
+
+sagaMiddleware.run(() => resuxRootSaga([modelA, modelB, subscriberX]));
 ```

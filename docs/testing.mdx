@@ -1,0 +1,114 @@
+---
+name: Testing
+route: /testing
+---
+
+# Testing
+
+One of the main design decisions of this library, was to keep it easier to test the business logic in your selectors,
+reducers, and effects, in spite of the abstraction. As a matter of fact, we believe it's actually simpler than
+testing vanilla redux. Given the model below, let's try to test it with [jest](https://jestjs.io/).
+
+## Model
+
+### Example:
+```javascript
+import {Model} from 'react-resux';
+import _ from 'lodash';
+
+export const counterModel = new Model({
+    namespace: 'counter',
+    state: {
+        count: 0,
+    },
+    selectors: {
+        count: (state) => state.counter.count,
+    },
+    reducers: {
+        increment(state, {}) {
+          state.count += 1;
+        },
+        decrement(state, {}) {
+          state.count -= 1;
+        },
+        incrementByX(state, {x}) {
+          state.count += x;
+        },
+    },
+    effects: {
+      *asyncIncrement(action, { put }) {
+          // This is not useful in practice, since there's no async behaviour per se, but is defined for
+          // example's sake.
+          yield put({type: "counter.increment"});
+      },
+      *asyncDecrement(action, { put }) {
+          // This is not useful in practice, since there's no async behaviour per se, but is defined for
+          // example's sake.
+          yield put({type: "counter.decrement"});
+      },
+    },
+});
+```
+
+### Testing the namespace:
+
+```javascript
+it('namespace is set to counter', () => {
+  expect(counterModel.namespace).toEqual('counter');
+});
+```
+
+### Testing the initial state:
+
+```javascript
+it('namespace is set to counter', () => {
+  expect(counterModel.state).toEqual({
+    count: 0,
+  });
+});
+```
+
+### Testing the reducers:
+
+```javascript
+const action = {}; // It's empty, since the reducers don't use the action's data
+
+it('increments reducer change count to current + 1', () => {
+  const state = {...counterModel.state};
+  counterModel.modelReducers.increment(state, action);
+  expect(state.count).toEqual(1);
+});
+
+it('decrements reducer change count to current - 1', () => {
+  const state = {...counterModel.state};
+  counterModel.modelReducers.decrement(state, action);
+  expect(state.count).toEqual(-1);
+});
+```
+
+### Testing the effects:
+
+```javascript
+import * as sagaEffects from 'redux-saga/effects'
+
+const action = {}; // It's empty, since the effects don't use action's data
+const actionCreators = counterModel.actionCreators();
+
+it('asyncIncrement effect yields put increment reducer', () => {
+  const gen = counterModel.modelEffects.asyncIncrement(action, sagaEffects);
+  expect(gen.next()).toEqual(
+    sagaEffects.put(actionCreators.increment())
+  );
+});
+
+it('asyncDecrement effect yields put decrement reducer', () => {
+  const gen = counterModel.modelEffects.asyncDecrement(action, sagaEffects);
+  expect(gen.next()).toEqual(
+    sagaEffects.put(actionCreators.decrement())
+  );
+});
+```
+
+## Subscriber
+
+TODO

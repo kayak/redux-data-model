@@ -5,17 +5,29 @@ route: /development
 
 # Development
 
+## Linting
+
+We use eslint with [@typescript-eslint/parser](https://github.com/typescript-eslint/typescript-eslint) as our linter
+tool. To run:
+
+```bash
+npm run lint
+npm run lint:fix
+```
+
 ## Testing
 
-We use JEST as our test framework. To execute the entire test suite run:
+We use [jest](https://jestjs.io/) as our test framework. To execute the entire test suite run:
 
 ```bash
 npm run test
+npm run test:watch
+npm run test:coverage
 ```
 
 ## Documentation
 
-To see the documentation in dev mode run:
+We use [docz](https://www.docz.site/) as our documentation framework. To see the documentation in dev mode run:
 
 ```bash
 npm run docs:watch
@@ -35,8 +47,7 @@ To publish the documentation run:
 npm run release:docs
 ```
 
-It might take some time for [Netlify](https://www.netlify.com/) to update its caches once docs are deployed, so be
-patient.
+It might take some time for github pages to update its caches once docs are deployed, so be patient.
 
 ## License
 Copyright 2016 KAYAK Germany, GmbH

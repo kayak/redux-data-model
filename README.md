@@ -6,15 +6,33 @@
 [![David](https://img.shields.io/david/kayak/react-resux.svg)](https://david-dm.org/kayak/react-resux)
 [![David](https://img.shields.io/david/dev/kayak/react-resux.svg)](https://david-dm.org/kayak/react-resux)
 
-Opinionated, Redux abstraction with built-in immutability, normalization, and selectors support.
+# Introduction
+
+Opinionated, Redux abstraction with built-in immutability, async and more. Heavily dva inspired.
 
 ## Installing
 
 Using npm:
 
 ```bash
-$ npm install react-resux
+$ npm install react-resux --save
 ```
+
+Using yarn:
+
+```bash
+$ yarn add react-resux
+```
+
+## Demos
+
+* [__counterWithConnectResux__](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResux): 
+Simple count example without hooks api.
+* [__counterWithHooks__](https://github.com/kayak/react-resux/tree/master/examples/counterWithHooks): 
+Simple count example with hooks api.
+* [__rest__](https://github.com/kayak/react-resux/tree/master/examples/rest): 
+Multi model rest example, using subscribers and hooks api. 
+Data is fetched from [jsonplaceholder.typicode.com](http://jsonplaceholder.typicode.com/)
 
 ## Documentation
 

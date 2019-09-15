@@ -6,5 +6,5 @@ export default {
   themeConfig: {
     mode: 'dark',
   },
-  menu: ['Getting Started', 'Concepts', 'Hooks', 'Integrating with Redux', 'Development'],
+  menu: ['Getting Started', 'Concepts', 'Hooks', 'Integrating with Redux/Redux Saga', 'Testing', 'Development'],
 }

@@ -5,92 +5,64 @@ route: /hooks
 
 # Hooks
 
-React-Resux is a hooks-first library. To read/change data from the store see useModel. Optionally, for an easier REST API
-interfacing, see useService.
+React-Resux is a hooks-first library and it provides three distinct hooks as part of its public API. They are:
 
-## useModel
+## useModelSelector
+Returns the result of a given a selector, which has the state and perhaps additional arguments as arguments.
 
-Returns an object that can be used to access views/controllers for any given scope supported in the provided model.
+It's an equivalent of redux's [useSelector](https://react-redux.js.org/next/api/hooks#useselector), with the difference
+that it memoizes values in order to minimise unnecessary re-renders.
 
 #### Read data example:
 ```javascript
-import {Model} from 'react-resux';
+import {useModelSelector} from 'react-resux';
 import {modelX} from './modelX';
 
 export default function({page}) {
-  const xData = useModel(modelX);
-
-  // We assume, for the sake of this example, that modelX has a byPage scope and a asItem view.
-  // And that there is already data in the store for that particular model.
-  //
-  // Views:
-  // xData.scopeName(scopeId) -> returns raw data
-  // xData.scopeName(scopeId).aView() -> returns raw data transformed with a view
-  const items = xData.byPage(page).asItem();
+  // We assume here that modelX has a selector defined.
+  // Fyi modelXSelectors arg will include all selectors defined on modelX.
+  const xData = useModelSelector(modelX, (state, modelXSelectors) => modelXSelectors.dataByPage(page));
 
   return items.map(
-    item => <span key={item.id}>{item.label}</span>
+    item => <span key={item.id}>{xData.label}</span>
   );
 }
 ```
 
-#### Change data example:
+## useModelActions
+
+Returns an object with all reducer/effect action creators, defined in the provided model, already bound with
+redux's dispatch.
+
+#### Read data example:
 ```javascript
-  import {Model} from 'react-resux';
-  import {modelX} from './modelX';
+import {useModelActions} from 'react-resux';
+import {modelX} from './modelX';
 
-  export default function({page}) {
-  const xData = useModel(modelX);
+export default function({page}) {
+  // We assume here that modelX has a reducer called swapValue defined.
+  // Fyi modelXActions will contain all reducers/effects defined on modelX.
+  const modelXActions = useModelActions(modelX);
 
-  // We assume, for the sake of this example, that modelX has a byPage scope and a disable
-  // controller. And that there is already data in the store for that particular model.
-  //
-  // Controllers:
-  // xData.scopeName(scopeId).disable() -> returns nothing but dispatchs a change action
-  const items = xData.byPage(page).disable();
-
-  return (
-    <button onClick={xData.byPage(page).disable}>Disable all in page #{page}</button>
-  );
+  return (<button onClick={modelXActions.swapValue}>Click here to swap value!</button>);
 }
 ```
 
-## useService
+## useSubscriberActions
 
-Returns an object containing metadata related to the request in question. It's useful for abstracting rest API calls.
-It's definitely optional, so if you rather use redux-saga, redux-pack, redux-thunks, or your own custom middleware,
-you can ignore this hook.
+Returns an object with all effect action creators, defined in the provided subscriber, already bound with redux's
+dispatch.
 
-#### Example:
+#### Read data example:
 ```javascript
-import {Model} from 'react-resux';
-import {userModel} from './userModel';
+import {useSubscriberAction} from 'react-resux';
+import {subscriberX} from './modelX';
 
-const userServiceSpec = {
-  model: userModel,
-  host: 'http://jsonplaceholder.typicode.com',
-  urls: {
-    byId: '/users/:id'
-  }
-};
+export default function({page}) {
+  // We assume here that modelX has an effect called fetchPageA defined.
+  // Fyi subscriberXActions will contain all effects defined on subscriberX.
+  const subscriberXActions = useSubscriberAction(subscriberX);
 
-export default function({userId}) {
-  const userData = useModel(userModel);
-  const userService = useService(userServiceSpec);
-
-  const userRequest = userService.byId(userId).get({pathParams: {id: userId}});
-
-  if (userRequest.isLoading) return 'Loading...';
-  else if (userRequest.errror) return `Error: {userRequest.error}`;
-
-  const user = userData.byId(userId);
-
-  return (
-    <span key={user.id}>
-      {user.name} <button onClick={
-        () => userService.byId(userId).delete({pathParams: {id: userId}})
-      }>Remove</button>
-    </span>
-  );
+  return (<button onClick={subscriberXActions.fetchPageA}>Click here to fetch page a!</button>)
 }
 ```

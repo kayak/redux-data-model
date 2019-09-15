@@ -1,0 +1,20 @@
+---
+name: FAQ
+route: /faq
+---
+
+# FAQ
+
+## Is using vanilla redux/redux-sagas and react-resux together fine?
+Yep, perfectly fine. No problem.
+
+## How does this compare to dva?
+[Dva](https://github.com/dvajs/dva) doesn't have selectors support. Also, dva includes react-router integration, which we think is out of scope for
+a state management abstraction. Its documentation and community is mostly chinese, so be prepared.
+
+## Are there similar alternatives to this library?
+Besides dva, the closest thing would be [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree), but that's not for redux.
+
+## I like redux-thunks, redux-observable, redux-pack, or other async middleware. Is it possible to use anything other than redux-saga for effects in models/subscribers?
+No. That said we guarantee redux-saga won't disappoint you. If you strongly want to stick to any of those other
+async middlewares, but don't want to give up on resux, consider using resux without effects/subscribers.

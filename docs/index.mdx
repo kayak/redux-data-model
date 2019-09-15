@@ -5,24 +5,26 @@ route: /
 
 # Introduction
 
-Opinionated, Redux abstraction with built-in immutability, normalization, and selectors support.
+Opinionated, Redux abstraction with built-in immutability, async and more. Heavily dva inspired.
 
 ## Benefits
 
-* Easy to use and learn. Only two essential public interfaces (i.e. combineModelReducers, Model, useModel).
-* Boilerplate reduction (i.e. action, dispatcher, reducers, mapStateToProps, mapDispatchToProps).
+* Easy to use and learn. Only a few public interfaces (i.e. combineModelReducers, subscribersRootSaga, Model, Subscriber, connectResux or equivalent hooks).
+* Boilerplate reduction (i.e. actions, dispatchers, reducers).
 * Immutability with normal JavaScript objects and arrays. No new APIs to learn!
-* Built-in and transparent data normalization. No need to do it yourself.
+* Async, typescript, and hooks support.
 * Memoized data selectors.
-* React Hooks support.
 
 ## Installation
 
-* **NPM**: npm install react-resux --save
-* **Yarn**: yarn add react-resux
+Using npm:
 
-## Philosophy & Overview
+```bash
+npm install react-resux --save
+```
 
-Unlike barebone React/Redux, this project is very opinionated about how data should be structured and updated.
-This makes it possible to solve many common problems out of the box, such as data immutability, normalization
-and excessive boilerplate.
+Using yarn:
+
+```bash
+yarn add react-resux
+```
