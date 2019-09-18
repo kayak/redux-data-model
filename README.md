@@ -24,6 +24,14 @@ Using yarn:
 $ yarn add react-resux
 ```
 
+## Benefits
+
+* Easy to use and learn. Only a few public interfaces (i.e. combineModelReducers, subscribersRootSaga, Model, Subscriber, connectResux or equivalent hooks).
+* Boilerplate reduction (i.e. actions, dispatchers, reducers).
+* Immutability with normal JavaScript objects and arrays. No new APIs to learn!
+* Async, typescript, memoised selectors, and hooks support.
+* Tiny footprint (i.e. ~2KB).
+
 ## Demos
 
 * [__counterWithConnectResux__](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResux): 

@@ -6,7 +6,7 @@ route: /concepts
 ## Model
 
 Models are the most basic data structure/abstraction in this library. They require a set of options to be provided
-when initializing them. See [Model's Constructor](#models-constructor) section below for more info.
+when initializing them.
 
 #### Example:
 ```javascript
@@ -49,76 +49,26 @@ export const userModel = new Model({
 });
 ```
 
-The model will be used to generate the action types, actions, reducers and dispatchers for this particular entity
-(i.e. users). Below you can find a more in depth description on the many options that can be used during a model
-instantiation.
-
-### Model's Constructor
-
-Expects an object with a few options. Being [namespace](#namespace) and [state](#namespace) mandatory, while
-[selectors](#selectors), [reducers](#reducers), [effects](#effects) are optional. See the
-[Model Options](#model-options) section below for more info.
+The model will be used to generate the action types, actions, reducers, sagas and dispatchers for this particular
+entity (i.e. users). Below you can find a more in depth description on the many options that can be used during a
+model instantiation.
 
 ### Model Options
 
-#### Namespace
+An object with a few key-value pairs. Being [namespace](#namespace) and [state](#namespace) mandatory, while
+[selectors](#selectors), [reducers](#reducers), [effects](#effects) are optional. For more info see
+[this](/react-resux/interfaces/modeloptions.md).
 
-The namespace of a model will preffix all its reducers and effects' action types. This value must be unique and,
-as a matter of fact, resux will enforce it.
+### Models's API
 
-##### Syntax
-
-A string.
-
-#### State
-
-State represents the initial state of the model's reducer.
-
-##### Syntax
-
-Anything, but most commonly an object.
-
-#### Selectors
-
-Selectors are functions that receive the entire state as an argument and returns a pice of it or, perhpas transform it.
-Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow comparing its variables.
-
-##### Syntax
-
-A function receives the entire state as an argument and returns a pice of it or, perhpas transform it.
-
-#### Reducers
-
-Reducers are functions used for synchronously changing the current state of a given model. A reducer will be
-triggered whenever an action is dispatched, which contains an actionType equals to modelNamespace.reducerName.
-
-##### Syntax
-
-A function that receives the entire state and the action as arguments respectively. It shouldn't return data,
-like vanilla reducers. Instead it should change the state argument in place. Resux uses
-[immer](https://github.com/immerjs/immer) under the hood, which means that the state is made immutable by
-tracking property access.
-
-#### Effects
-
-Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever an action
-is dispatched, which contains an actionType equals to modelNamespace.effectName. They are wrapped by a
-[takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from redux-saga.
-
-##### Syntax
-
-A function generator that receives an action and an object with redux saga's effects as arguments respectively. The
-saga effects won't include takeLeading, takeLatest, and takeEvery blocking effects. For using those use a Subscriber
-instead.
+For more info see [this](/react-resux/classes/model.md).
 
 ## Subscriber
 
 Subscribers provide a way to link models' effects/reducers, so that they get triggered by the same non-namespaced
 action type, on a leading, latest, or every action basis. That is, they provide the means for generating redux sagas
-employing takeLeading, takeLatest, or takeEvery effects. For instantiating a subscriber you need to provide an array.
-See [Subscriber's Constructor](#subscribers-constructor) section below for more info. Those models' action creators
-will be available within the subscriber's effects. See the [Subscriber's API](#subscribers-api) section below for
-more info.
+employing takeLeading, takeLatest, or takeEvery effects. Those models' action creators will be available within the
+subscriber's effects.
 
 #### Example:
 ```javascript
@@ -132,28 +82,6 @@ export const pageSubscriber = new Subscriber([userModel]).takeLatest(
 );
 ```
 
-### Subscriber's Constructor
-
-Expects an array of model instances as the only argument.
-
 ### Subscriber's API
 
-#### takeLeading
-
-Adds a blocking effect that watches for the action type passed as first argument. If multiple actions
-exist at the time of execution, only the first will be picqued while others will be dropped. Behaviour
-that can be used as the basis for a throtling/debouncing implementation. It uses a
-[takeLeading](https://redux-saga.js.org/docs/api/#takeleadingpattern-saga-args) effect under the hood.
-
-#### takeLatest
-
-Adds a blocking effect that watches for the action type passed as first argument. If multiple actions
-exist at the time of execution, only the latest will be picqued while others will be dropped. Behaviour
-that can be used as the basis for a throtling/debouncing implementation. It uses a
-[takeLatest](https://redux-saga.js.org/docs/api/#takelatestpattern-saga-args) effect under the hood.
-
-#### takeEvery
-
-Adds a blocking effect that watches for the action type passed as first argument. If multiple actions
-exist at the time of execution, all of them will be taken into account. It uses a
-[takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect under the hood.
+For more info see [this](/react-resux/classes/subscriber.md).
