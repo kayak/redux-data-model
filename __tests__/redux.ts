@@ -1,6 +1,6 @@
 import * as allSagaEffects from 'redux-saga/effects'
 import {combineModelReducers, Model, resuxRootSaga, Subscriber} from '../src';
-import {connectResuxFunc} from '../src/redux';
+import {connectResuxImpl} from '../src/redux';
 
 describe('resuxRootSaga', () => {
   let articleModel;
@@ -61,7 +61,7 @@ describe('combineModelReducers', () => {
   });
 });
 
-describe('connectResuxFunc', () => {
+describe('connectResuxImpl', () => {
   let articleModel;
   let selectorsSpy;
   let actionCreatorsSpy;
@@ -84,12 +84,12 @@ describe('connectResuxFunc', () => {
   });
 
   it('calls selectors in article model', () => {
-    connectResuxFunc([articleModel]);
+    connectResuxImpl([articleModel]);
     expect(selectorsSpy).toHaveBeenCalled();
   });
 
   it('returns a list with two items', () => {
-    const result = connectResuxFunc([articleModel]);
+    const result = connectResuxImpl([articleModel]);
     expect(result).toHaveLength(2);
   });
 
@@ -106,18 +106,18 @@ describe('connectResuxFunc', () => {
     });
 
     it('calls actionCreators in article model', () => {
-      connectResuxFunc([articleModel]);
+      connectResuxImpl([articleModel]);
       expect(actionCreatorsSpy).toHaveBeenCalled();
     });
 
     it('calls actionCreators in subscriber', () => {
-      connectResuxFunc([subscriberA]);
+      connectResuxImpl([subscriberA]);
       expect(subscriberActionCreatorSpy).toHaveBeenCalled();
     });
 
     it('passes dispatch and actionCreators to the user provided map state to props func', () => {
       // @ts-ignore
-      const [connectedMapStateToProps, connectedMapDispatchToProps] = connectResuxFunc(
+      const [connectedMapStateToProps, connectedMapDispatchToProps] = connectResuxImpl(
         [articleModel, subscriberA], null, mapDispatchToPropsSpy,
       );
       connectedMapDispatchToProps(1);
@@ -130,13 +130,13 @@ describe('connectResuxFunc', () => {
 
   describe('without subscribers', () => {
     it('calls actionCreators in article model', () => {
-      connectResuxFunc([articleModel]);
+      connectResuxImpl([articleModel]);
       expect(actionCreatorsSpy).toHaveBeenCalled();
     });
 
     it('passes dispatch and actionCreators to the user provided map state to props func', () => {
       // @ts-ignore
-      const [connectedMapStateToProps, connectedMapDispatchToProps] = connectResuxFunc(
+      const [connectedMapStateToProps, connectedMapDispatchToProps] = connectResuxImpl(
         [articleModel], null, mapDispatchToPropsSpy,
       );
       connectedMapDispatchToProps(1);

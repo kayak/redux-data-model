@@ -1,4 +1,4 @@
-import {flatten, isFunction, isNil, memoize, uniq} from 'lodash';
+import {flatten, isFunction, isNil, uniq} from 'lodash';
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch, ReducersMapObject} from 'redux';
 import {SagaIterator} from '@redux-saga/core';
@@ -7,7 +7,10 @@ import {MapDispatchToPropsWithActionCreators, MapStateToPropsWithSelectors} from
 import {Model} from './model';
 import {Subscriber} from './subscriber';
 
-export function connectResuxFunc(
+/**
+ * @ignore
+ */
+export function connectResuxImpl(
   modelsOrSubscribers: (Model|Subscriber)[],
   userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any>=null,
   userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any>=null,
@@ -64,12 +67,11 @@ export function connectResuxFunc(
 }
 
 /**
- * Resux's equivalent for redux's connect function.
+ * Equivalent to redux's connect function. This should be used when the hooks api is not desired or
+ * supported. Otherwise check [[useModelActions]], [[useModelSelector]], and [[useSubscriberActions]] up.
  *
  * @example
- * const store = createStore(combineReducers({
- *   ...combineModelReducers([modelA, modelB]),
- * }), applyMiddleware(sagaMiddleware));
+ * const ConnectedComponent = connectResux([modelA, modelB], mapStateToProps, mapDispatchToProps)
  *
  * @param modelsOrSubscribers An array of either Model or Subscriber instances.
  * @param userProvidedMapStateToProps A mapToProps equivalent, which has a third argument with all selectors.
@@ -77,15 +79,16 @@ export function connectResuxFunc(
  *                                       models' action creators and a fourth argument with all subscriber's
  *                                       action creators.
  * @returns A connect HOC.
+ * @category High Order Component (HOC)
  */
-function connectResuxHoc(
+export function connectResux(
   modelsOrSubscribers: (Model|Subscriber)[],
   userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any>=null,
   userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any>=null,
 ) {
   return connect(
     // @ts-ignore
-    ...connectResuxFunc(
+    ...connectResuxImpl(
       modelsOrSubscribers, userProvidedMapStateToProps, userProvidedMapDispatchToProps,
     )
   );
@@ -96,12 +99,16 @@ function connectResuxHoc(
  * redux is aware of any reducers produced by models.
  *
  * @example
- * sagaMiddleware.run(() => resuxRootSaga([modelA, subscriberA]));
+ * const store = createStore(combineReducers({
+ *   ...combineModelReducers([modelA, modelB]),
+ * }), applyMiddleware(sagaMiddleware));
  *
  * @param models An array of Model instances.
  * @returns A reducer's map object.
+ * @throws {DuplicatedModelNamespaceError} When multiple models have the same namespace.
+ * @category Redux/Saga Setup
  */
-function combineModelReducersFunc(models: Model[]): ReducersMapObject {
+export function combineModelReducers(models: Model[]): ReducersMapObject {
   const modelNamespaces = models.map(model => model.namespace);
   const reducers = {};
 
@@ -120,9 +127,6 @@ function combineModelReducersFunc(models: Model[]): ReducersMapObject {
   return reducers;
 }
 
-export const combineModelReducers = memoize(combineModelReducersFunc);
-export const connectResux = memoize(connectResuxHoc);
-
 /**
  * Returns a root saga generator that can be passed to sagaMiddleware's run function, so that redux-saga is aware
  * of any sagas produced by either models or subscribers.
@@ -132,6 +136,7 @@ export const connectResux = memoize(connectResuxHoc);
  *
  * @param sagaContainers An array of either Model or Subscriber instances.
  * @returns A root saga.
+ * @category Redux/Saga Setup
  */
 export function* resuxRootSaga(sagaContainers: (Model | Subscriber)[]): SagaIterator {
   const sagas: any[] = flatten(sagaContainers.map(sagaContainer => sagaContainer.reduxSagas));

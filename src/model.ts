@@ -29,8 +29,11 @@ import {
   throttle,
 } from 'redux-saga/effects'
 import {createSelector} from 'reselect';
-import {EffectFunction, ModelOptions, ReducerFunction, SelectorFunction} from './baseTypes';
+import {EffectFunction, ReducerFunction, SelectorFunction} from './baseTypes';
 
+/**
+ * @ignore
+ */
 export const sagaEffects = {
   actionChannel,
   all,
@@ -64,13 +67,133 @@ const defaultReducer = (
   action,
 ) => state;
 
+/**
+ * Model options are used for initialising a [[Model]] instance.
+ */
+export interface ModelOptions {
+  /**
+   * The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
+   * and, as a matter of fact, resux will enforce it.
+   *
+   * @example namespace: 'pageA'
+   * @example namespace: 'pageB'
+   */
+  namespace: string;
+  /**
+   * State represents the initial state of the model's reducer.
+   *
+   * @example state: 0
+   * @example state: []
+   * @example state: {
+   *     isLoading: {},
+   *     data: {},
+   * }
+   */
+  state: Record<string, any>;
+  /**
+   * Selectors are functions that receive the entire state and returns a piece of it or, perhaps transform it.
+   * Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow
+   * comparing its variables. The first argument of a selector function is the state, then following by any
+   * other arguments passed in an eventual mapStateToProps. Last but not least, an object with the selectors
+   * for the model in question is implicitly provided, so that selectors can be composed.
+   *
+   * @example count: (state) => state,
+   * @example userIds: (state, modelSelectors) => modelSelectors.userIds(state),
+   * @example user: (state, userId) => state[0],
+   * @example isLoading: (state, userId, modelSelectors) => modelSelectors.isLoading(state, userId),
+   *
+   */
+  selectors?: Record<string, SelectorFunction>;
+  /**
+   * Reducers are functions used for synchronously changing the current state of a given model. A reducer will
+   * be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
+   * A reducer function receives the entire state and the action as arguments respectively. It shouldn't return
+   * data, like vanilla reducers. Instead it should change the state argument in place. Resux uses
+   * [immer](https://github.com/immerjs/immer) under the hood, which means that the state is made immutable
+   * by tracking property access.
+   *
+   * @example
+   * increment(state, {}) {
+   *   state.count += 1;
+   * }
+   * @example
+   * decrement: (state, {}) => {
+   *   state.count -= 1;
+   * }
+   * @example
+   * saveData(state, { data, userId }) {
+   *   state.isLoading[userId] = false;
+   *   state.data[userId] = data;
+   * }
+   */
+  reducers?: Record<string, ReducerFunction>;
+  /**
+   * Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
+   * an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
+   * by a [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from redux-saga.
+   * An effect function receives an action and an object with redux saga's effects as arguments respectively.
+   * The saga effects won't include takeLeading, takeLatest, and takeEvery blocking effects. For using those
+   * employ a Subscriber instead.
+   *
+   * @example
+   * *fetchPostsByUser({ userId }, { call, put }) {
+   *   try {
+   *     const data = yield call(fetchApi, `http://jsonplaceholder.typicode.com/posts/?user=${userId}`);
+   *     yield put({type: "posts.savePostsByUser", data, userId});
+   *   } catch (error) {
+   *     console.log(error)
+   *   }
+   * },
+   */
+  effects?: Record<string, EffectFunction>;
+}
+
+/**
+ * Models are the most basic data structure/abstraction in this library. They require a set of options to be
+ * provided when initializing them. The model will be used to generate the action types, actions, reducers,
+ * dispatchers, and sagas, based on the model's options that were provided.
+ */
 export class Model {
   public readonly namespace: string;
   public readonly state: Record<string, any>;
+  /**
+   * @ignore
+   */
   public readonly modelSelectors?: Record<string, SelectorFunction>;
+  /**
+   * @ignore
+   */
   public readonly modelReducers?: Record<string, ReducerFunction>;
+  /**
+   * @ignore
+   */
   public readonly modelEffects?: Record<string, EffectFunction>;
 
+  /**
+   * Creates a model instance.
+   *
+   * @example
+   * const counterModel = new Model({
+   *   namespace: 'counter',
+   *   state: {
+   *      count: 0,
+   *   },
+   *   selectors: {
+   *       count: (state) => state.counter.count,
+   *   },
+   *   reducers: {
+   *      increment(state, {}) {
+   *        state.count += 1;
+   *      },
+   *        decrement(state, {}) {
+   *        state.count -= 1;
+   *      },
+   *   },
+   *  // effects: {...}
+   * });
+   *
+   * @param options A model's options.
+   */
   public constructor(options: ModelOptions) {
     this.namespace = options.namespace;
     this.state = options.state;

@@ -21,11 +21,3 @@ type MapStateToPropsWithSelectors<TStateProps, TOwnProps, State> =
       ownProps: TOwnProps,
       modelSelectors: Record<string, SelectorFunction>
     ) => TStateProps;
-
-interface ModelOptions {
-  namespace: string;
-  state: Record<string, any>;
-  selectors?: Record<string, SelectorFunction>;
-  reducers?: Record<string, ReducerFunction>;
-  effects?: Record<string, EffectFunction>;
-}

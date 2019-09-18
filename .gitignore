@@ -33,4 +33,4 @@ dist/
 .next/
 *.tgz
 CHANGELOG
-typedocApi.json
+docs/api
