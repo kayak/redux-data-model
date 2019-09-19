@@ -46,7 +46,7 @@ export const userModel = new Model({
     effects: {
         *fetchUser({ userId }, { call, put }) {
             try {
-                const data = yield call(fetchApi, `http://jsonplaceholder.typicode.com/users/${userId}`);
+                const data = yield call(fetchApi, `//jsonplaceholder.typicode.com/users/${userId}`);
                 yield put({type: "users.saveUser", data, userId});
              } catch (error) {
                 console.log(error)
@@ -83,7 +83,7 @@ export const postModel = new Model({
     effects: {
         *fetchPostsByUser({ userId }, { call, put }) {
             try {
-                const data = yield call(fetchApi, `http://jsonplaceholder.typicode.com/posts/?user=${userId}`);
+                const data = yield call(fetchApi, `//jsonplaceholder.typicode.com/posts/?user=${userId}`);
                 yield put({type: "posts.savePostsByUser", data, userId});
              } catch (error) {
                 console.log(error)

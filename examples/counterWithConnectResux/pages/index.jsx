@@ -2,7 +2,7 @@ import {
   combineModelReducers,
   Model,
   resuxRootSaga,
-  connectModels,
+  connectResux,
 } from 'react-resux';
 import createSagaMiddleware from 'redux-saga';
 import {
@@ -75,7 +75,7 @@ function mapStateToProps(state, props, selectors) {
   };
 }
 
-const WrappedTestComponent = connectModels([counterModel], mapStateToProps)(TestComponent);
+const WrappedTestComponent = connectResux([counterModel], mapStateToProps)(TestComponent);
 
 export default () => {
   return (
