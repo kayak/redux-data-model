@@ -34,3 +34,4 @@ dist/
 *.tgz
 CHANGELOG
 docs/api
+examples/*/package-lock.json
