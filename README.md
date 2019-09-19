@@ -32,7 +32,7 @@ $ yarn add react-resux
 * Boilerplate reduction (i.e. actions, dispatchers, reducers).
 * Immutability with normal JavaScript objects and arrays. No new APIs to learn!
 * Async, typescript, memoised selectors, and hooks support.
-* Tiny footprint (i.e. ~2KB).
+* Tiny footprint (i.e. ~6KB).
 
 ## Demos
 

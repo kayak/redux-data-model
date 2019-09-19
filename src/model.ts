@@ -1,5 +1,5 @@
 import produce from 'immer';
-import {get, toPairs,} from 'lodash';
+import {get, toPairs} from 'lodash';
 import {ActionCreatorsMapObject, AnyAction, Reducer} from 'redux';
 import {Saga} from '@redux-saga/core';
 import {

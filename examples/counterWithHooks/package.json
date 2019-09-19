@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@types/redux-logger": "3.0.7",
-    "lodash": "4.17.15",
     "next": "9.0.3",
     "react-json-tree": "0.11.2",
     "react-resux": "latest",
