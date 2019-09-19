@@ -5,6 +5,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/kayak/react-resux/badge.svg)](https://coveralls.io/github/kayak/react-resux)
 [![David](https://img.shields.io/david/kayak/react-resux.svg)](https://david-dm.org/kayak/react-resux)
 [![David](https://img.shields.io/david/dev/kayak/react-resux.svg)](https://david-dm.org/kayak/react-resux)
+[![Bundle Phobia](https://img.shields.io/bundlephobia/minzip/react-resux)](https://bundlephobia.com/result?p=react-resux)
+[![License](https://img.shields.io/npm/l/react-resux)](https://www.npmjs.com/package/react-resux)
 
 # Introduction
 
