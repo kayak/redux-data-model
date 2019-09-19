@@ -34,11 +34,14 @@ $ yarn add react-resux
 
 ## Demos
 
-* [__counterWithConnectResux__](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResux): 
+* [__counterWithConnectResux__](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResux)
+([Demo](https://codesandbox.io/embed/react-resux-connect-resuxjs-xe2o1)): 
 Simple count example without hooks api.
-* [__counterWithHooks__](https://github.com/kayak/react-resux/tree/master/examples/counterWithHooks): 
+* [__counterWithHooks__](https://github.com/kayak/react-resux/tree/master/examples/counterWithHooks)
+([Demo](https://codesandbox.io/embed/react-resux-hooksjs-o1c7p)):
 Simple count example with hooks api.
-* [__rest__](https://github.com/kayak/react-resux/tree/master/examples/rest): 
+* [__rest__](https://github.com/kayak/react-resux/tree/master/examples/rest)
+([Demo](https://codesandbox.io/embed/react-resux-restjs-m9zdf)):
 Multi model rest example, using subscribers and hooks api. 
 Data is fetched from [jsonplaceholder.typicode.com](http://jsonplaceholder.typicode.com/)
 
