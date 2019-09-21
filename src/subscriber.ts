@@ -11,7 +11,7 @@ import {Model} from './model';
 export class Subscriber {
   public readonly models: Model[];
   public effectNames: string[];
-  private subscriberReduxSagas: Saga[];
+  private _reduxSagas: Saga[];
 
   /**
    * Creates a subscriber instance.
@@ -21,7 +21,7 @@ export class Subscriber {
   public constructor(models: Model[]) {
     this.models = models;
     this.effectNames = [];
-    this.subscriberReduxSagas = [];
+    this._reduxSagas = [];
 
     this.takeLatest = this.takeLatest.bind(this);
     this.takeLeading = this.takeLeading.bind(this);
@@ -65,7 +65,7 @@ export class Subscriber {
     const modelActionCreators = this.modelActionCreators();
 
     this.effectNames.push(actionType);
-    this.subscriberReduxSagas.push(
+    this._reduxSagas.push(
       ...actionGenerators.map(generator => function *() {
         yield sagaEffect(
           actionType, function *(action) {
@@ -126,6 +126,6 @@ export class Subscriber {
    * @returns An array of sagas.
    */
   public get reduxSagas(): Saga[] {
-    return this.subscriberReduxSagas;
+    return this._reduxSagas;
   }
 }
