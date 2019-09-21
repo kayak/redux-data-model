@@ -214,6 +214,9 @@ describe('Model', () => {
           selectA: selectASpy,
         },
       });
+      const allState = {
+        [modelX.namespace]: state,
+      };
       const selectors = modelX.modelSelectors();
 
       it('returns an entry for the provided selector', () => {
@@ -223,12 +226,12 @@ describe('Model', () => {
       });
 
       it('calls selector func when selector entry is called', () => {
-        selectors.selectA(state, 1);
-        expect(selectASpy).toHaveBeenCalledWith(state, 1);
+        selectors.selectA(allState, 1);
+        expect(selectASpy).toHaveBeenCalledWith(state, 1, allState);
       });
 
       it('returns result of selector func', () => {
-        expect(selectors.selectA(state)).toEqual(selectASpy.mock.results[0].value);
+        expect(selectors.selectA(allState)).toEqual(selectASpy.mock.results[0].value);
       });
     });
   });

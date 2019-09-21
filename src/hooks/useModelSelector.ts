@@ -14,7 +14,7 @@ import {Model} from '../model';
  * @category React Hook
  */
 export function useModelSelector(model: Model, selectorFunc): Record<string, (ScopeId) => any> {
-  const selectors = React.useMemo(() => model.selectors(), [model]);
+  const selectors = React.useMemo(() => model.modelSelectors(), [model]);
   return useSelector(
     (state: Record<string, any>) => selectorFunc(state, selectors),
   );

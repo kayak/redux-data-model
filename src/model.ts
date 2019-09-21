@@ -93,15 +93,14 @@ export interface ModelOptions {
   /**
    * Selectors are functions that receive the entire state and returns a piece of it or, perhaps transform it.
    * Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow
-   * comparing its variables. The first argument of a selector function is the state, then following by any
-   * other arguments passed in an eventual mapStateToProps. Last but not least, an object with the selectors
-   * for the model in question is implicitly provided, so that selectors can be composed.
+   * comparing its variables. The first argument of a selector function is the namespaced state, following
+   * by any other positional arguments passed in an eventual call within a mapStateToProps. Last but not least,
+   * the last argument is the entire redux state.
    *
    * @example count: (state) => state,
-   * @example userIds: (state, modelSelectors) => modelSelectors.userIds(state),
+   * @example userIds: (state, allState) => allState.modelNamespace.data.map(user => user.id),
    * @example user: (state, userId) => state.data[userId],
-   * @example isLoading: (state, userId, modelSelectors) => modelSelectors.isLoading(state, userId),
-   *
+   * @example isLoading: (state, userId, allState) => allState.modelNamespace.isLoading[userId],
    */
   selectors?: SelectorMap;
   /**
@@ -113,11 +112,11 @@ export interface ModelOptions {
    * by tracking property access.
    *
    * @example
-   * increment(state, {}) {
+   * increment(state, action) {
    *   state.count += 1;
    * }
    * @example
-   * decrement: (state, {}) => {
+   * decrement: (state, action) => {
    *   state.count -= 1;
    * }
    * @example
@@ -136,10 +135,10 @@ export interface ModelOptions {
    * employ a Subscriber instead.
    *
    * @example
-   * *fetchPostsByUser({ userId }, { call, put }, actionCreators) {
+   * *fetchPostsByUser({ userId }, sagaEffects, actionCreators) {
    *   try {
-   *     const data = yield call(fetchApi, `http://jsonplaceholder.typicode.com/posts/?user=${userId}`);
-   *     yield put(actionCreators.saveUser({data, userId}));
+   *     const data = yield sagaEffects.call(fetchApi, `http://jsonplaceholder.typicode.com/posts/?user=${userId}`);
+   *     yield sagaEffects.put(actionCreators.saveUser({data, userId}));
    *   } catch (error) {
    *     console.log(error)
    *   }
@@ -274,7 +273,8 @@ export class Model {
     const selectors = {};
 
     for (const [selectorName, selectorFunc] of toPairs(this._selectors)) {
-      selectors[selectorName] = createSelector([selectorFunc], data => data);
+      const namespacedSelectorFunc = (allState, ...args) => selectorFunc(allState[this._namespace], ...args, allState);
+      selectors[selectorName] = createSelector([namespacedSelectorFunc], data => data);
     }
 
     return selectors;
