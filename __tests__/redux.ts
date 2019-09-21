@@ -27,7 +27,7 @@ describe('resuxRootSaga', () => {
 
 describe('combineModelReducers', () => {
   let articleModel;
-  let reducersSpy;
+  let modelReducersSpy;
   let result;
 
   beforeEach(() => {
@@ -35,22 +35,22 @@ describe('combineModelReducers', () => {
       namespace: 'articles',
       state: {},
     });
-    reducersSpy = jest.spyOn(articleModel, 'reducers').mockImplementation(
+    modelReducersSpy = jest.spyOn(articleModel, 'modelReducers').mockImplementation(
       // Implements an identity reducer
       () => (data) => data
     );
     result = combineModelReducers([articleModel]);
   });
 
-  it('calls reducers in article model', () => {
-    expect(reducersSpy).toHaveBeenCalled();
+  it('calls modelReducers in article model', () => {
+    expect(modelReducersSpy).toHaveBeenCalled();
   });
 
   it('returns a reducer mapping object with the reducers of the article model', () => {
-    expect(result).toEqual({[articleModel.namespace]: reducersSpy.mock.results[0].value});
+    expect(result).toEqual({[articleModel.namespace]: modelReducersSpy.mock.results[0].value});
   });
 
-  it('throws when multiple modals have the same namespace', () => {
+  it('throws when multiple models have the same namespace', () => {
     expect(() => {
       combineModelReducers([articleModel, articleModel])
     }).toThrow({
@@ -63,7 +63,7 @@ describe('combineModelReducers', () => {
 
 describe('connectResuxImpl', () => {
   let articleModel;
-  let selectorsSpy;
+  let modelSelectorsSpy;
   let actionCreatorsSpy;
   let mapDispatchToPropsSpy;
 
@@ -72,20 +72,20 @@ describe('connectResuxImpl', () => {
       namespace: 'articles',
       state: {},
     });
-    selectorsSpy = jest.spyOn(articleModel, 'selectors').mockImplementation(
-      // Implements an identity reducer
+    modelSelectorsSpy = jest.spyOn(articleModel, 'modelSelectors').mockImplementation(
+      // Implements an identity selector
       () => (data) => data
     );
     actionCreatorsSpy = jest.spyOn(articleModel, 'actionCreators').mockImplementation(
-      // Implements an identity reducer
+      // Implements an identity action creator
       () => (data) => data
     );
     mapDispatchToPropsSpy = jest.fn();
   });
 
-  it('calls selectors in article model', () => {
+  it('calls modelSelectors in article model', () => {
     connectResuxImpl([articleModel]);
-    expect(selectorsSpy).toHaveBeenCalled();
+    expect(modelSelectorsSpy).toHaveBeenCalled();
   });
 
   it('returns a list with two items', () => {
@@ -100,7 +100,7 @@ describe('connectResuxImpl', () => {
     beforeEach(() => {
       subscriberA = new Subscriber([articleModel]);
       subscriberActionCreatorSpy = jest.spyOn(subscriberA, 'actionCreators').mockImplementation(
-        // Implements an identity reducer
+        // Implements an identity action creator
         () => (data) => data
       );
     });

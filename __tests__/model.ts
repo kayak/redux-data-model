@@ -3,18 +3,100 @@ import {Model} from '../src';
 import {sagaEffects} from '../src/model';
 
 describe('Model', () => {
+  let modelOptions;
   let articleModel;
 
   beforeAll(() => {
-    articleModel = new Model({
+    modelOptions = {
       namespace: 'articles',
       state: {},
+    };
+    articleModel = new Model(modelOptions);
+  });
+
+  describe('constructor', () => {
+    it('throws when namespace is not a string', () => {
+      expect(() => new Model({
+        ...modelOptions,
+        namespace: [],
+      })).toThrow({
+        name: '',
+        message: 'Namespace must be a string. The provided namespace type was: object'
+      });
+    });
+
+    it('throws when namespace is empty', () => {
+      expect(() => new Model({
+        ...modelOptions,
+        namespace: '',
+      })).toThrow({
+        name: '',
+        message: 'Namespace must be a non empty string.'
+      });
+    });
+
+    it('throws when a reducer and effect have the same action type', () => {
+      expect(() => new Model({
+        ...modelOptions,
+        reducers: {
+          whatever: jest.fn(),
+        },
+        effects: {
+          whatever: jest.fn(),
+        },
+      })).toThrow({
+        name: '',
+        message: 'Reducer and effect action types must be unique in [articles] model. ' +
+        'The provided reducer/effect action types were: whatever, whatever'
+      });
     });
   });
 
   describe('namespace', () => {
     it('returns the namespace', () => {
-      expect(articleModel.namespace).toEqual('articles');
+      expect(articleModel.namespace).toEqual(modelOptions.namespace);
+    });
+  });
+
+  describe('state', () => {
+    it('returns the state', () => {
+      expect(articleModel.state).toEqual(modelOptions.state);
+    });
+  });
+
+  describe('selectors', () => {
+    it('returns an empty object when none is available', () => {
+      expect(articleModel.selectors).toEqual({});
+    });
+
+    it('returns the selectors', () => {
+      const modelOptionsWithSelectors = {...modelOptions, selectors: {}};
+      const model = new Model(modelOptionsWithSelectors);
+      expect(model.selectors).toEqual(modelOptionsWithSelectors.selectors);
+    });
+  });
+
+  describe('reducers', () => {
+    it('returns an empty object when none is available', () => {
+      expect(articleModel.state).toEqual({});
+    });
+
+    it('returns the reducers', () => {
+      const modelOptionsWithReducers = {...modelOptions, reducers: {}};
+      const model = new Model(modelOptionsWithReducers);
+      expect(model.reducers).toEqual(modelOptionsWithReducers.reducers);
+    });
+  });
+
+  describe('effects', () => {
+    it('returns an empty object when none is available', () => {
+      expect(articleModel.effects).toEqual({});
+    });
+
+    it('returns the effects', () => {
+      const modelOptionsWithEffects = {...modelOptions, effects: {}};
+      const model = new Model(modelOptionsWithEffects);
+      expect(model.effects).toEqual(modelOptionsWithEffects.effects);
     });
   });
 
@@ -35,6 +117,13 @@ describe('Model', () => {
       expect(articleModel.actionCreator('ola', actionData)).toEqual(
         {...actionData, type: articleModel.actionType('ola')}
       );
+    });
+
+    it('throws when action data is not a plain obeject', () => {
+      expect(() => articleModel.actionCreator('ola', [])).toThrow({
+        name: '',
+        message: 'Action data must be a plain object, when calling action [ola] in [articles] model.'
+      });
     });
   });
 
@@ -109,7 +198,7 @@ describe('Model', () => {
     });
   });
 
-  describe('selectors', () => {
+  describe('modelSelectors', () => {
     it('returns an empty object when no selectors exists', () => {
       expect(articleModel.actionCreators()).toEqual({});
     });
@@ -125,7 +214,7 @@ describe('Model', () => {
           selectA: selectASpy,
         },
       });
-      const selectors = modelX.selectors();
+      const selectors = modelX.modelSelectors();
 
       it('returns an entry for the provided selector', () => {
         expect(selectors).toEqual(
@@ -144,9 +233,9 @@ describe('Model', () => {
     });
   });
 
-  describe('reducers', () => {
+  describe('modelReducers', () => {
     it('returns a non nil value when no reducers exist', () => {
-      expect(articleModel.reducers()).toEqual(expect.anything());
+      expect(articleModel.modelReducers()).toEqual(expect.anything());
     });
 
     describe('when reducers are present', () => {
@@ -161,7 +250,7 @@ describe('Model', () => {
           reducerA: reducerASpy,
         },
       });
-      const reducers = modelX.reducers();
+      const reducers = modelX.modelReducers();
       const action = modelX.actionCreator('reducerA');
 
       it('calls reducer func when reducer entry is called', () => {
@@ -175,9 +264,9 @@ describe('Model', () => {
     });
   });
 
-  describe('effects', () => {
+  describe('modelEffects', () => {
     it('returns an empty object when no effects exists', () => {
-      expect(articleModel.effects()).toEqual({});
+      expect(articleModel.modelEffects()).toEqual({});
     });
 
     describe('when effects are present', () => {
@@ -191,7 +280,13 @@ describe('Model', () => {
           effectA: effectASpy,
         },
       });
-      const effects = modelX.effects();
+      let actionCreatorsSpy;
+      let effects;
+
+      beforeEach(() => {
+        actionCreatorsSpy = jest.spyOn(modelX, 'actionCreators');
+        effects = modelX.modelEffects();
+      });
 
       it('returns an entry for the provided effect', () => {
         expect(effects).toEqual(
@@ -201,7 +296,9 @@ describe('Model', () => {
 
       it('calls effect func when selector entry is called', () => {
         effects.effectA({userId: 1});
-        expect(effectASpy).toHaveBeenCalledWith({userId: 1}, sagaEffects);
+        expect(effectASpy).toHaveBeenCalledWith(
+          {userId: 1}, sagaEffects, actionCreatorsSpy.mock.results[0].value,
+        );
       });
 
       it('returns result of effect func', () => {
@@ -227,6 +324,7 @@ describe('Model', () => {
           effectA: effectASpy,
         },
       });
+      const actionCreatorsSpy = jest.spyOn(modelX, 'actionCreators');
       const actionData = {userId: 1};
 
       beforeEach(() => {
@@ -248,7 +346,7 @@ describe('Model', () => {
       it('calls effectASpy with the right arguments', () => {
         gen.next().value.payload.args[1](actionData, sagaEffects);
         expect(effectASpy).toHaveBeenCalledWith(
-          actionData, sagaEffects,
+          actionData, sagaEffects, actionCreatorsSpy.mock.results[0].value,
         );
       });
     });

@@ -28,7 +28,7 @@ export function connectResuxImpl(
   ) as Subscriber[];
 
   for (const model of models) {
-    selectors[model.namespace] = model.selectors();
+    selectors[model.namespace] = model.modelSelectors();
     modelActionCreators[model.namespace] = model.actionCreators();
     defaultMapDispatchToProps[model.namespace] = modelActionCreators[model.namespace];
   }
@@ -113,7 +113,7 @@ export function combineModelReducers(models: Model[]): ReducersMapObject {
   const reducers = {};
 
   for (const model of models) {
-    reducers[model.namespace] = model.reducers();
+    reducers[model.namespace] = model.modelReducers();
   }
 
   if (uniq(modelNamespaces).length !== modelNamespaces.length) {

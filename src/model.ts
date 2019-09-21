@@ -1,5 +1,5 @@
 import produce from 'immer';
-import {get, toPairs} from 'lodash';
+import {get, isPlainObject, isString, keys, size, toPairs, uniq} from 'lodash';
 import {ActionCreatorsMapObject, AnyAction, Reducer} from 'redux';
 import {Saga} from '@redux-saga/core';
 import {
@@ -27,9 +27,9 @@ import {
   takeEvery as blockingEffectTakeEvery,
   takeMaybe,
   throttle,
-} from 'redux-saga/effects'
+} from 'redux-saga/effects';
 import {createSelector} from 'reselect';
-import {EffectFunction, ReducerFunction, SelectorFunction} from './baseTypes';
+import {EffectMap, EffectModelMap, ReducerMap, SelectorMap, SelectorModelMap, State} from './baseTypes';
 
 /**
  * @ignore
@@ -89,7 +89,7 @@ export interface ModelOptions {
    *     data: {},
    * }
    */
-  state: Record<string, any>;
+  state: State;
   /**
    * Selectors are functions that receive the entire state and returns a piece of it or, perhaps transform it.
    * Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow
@@ -99,11 +99,11 @@ export interface ModelOptions {
    *
    * @example count: (state) => state,
    * @example userIds: (state, modelSelectors) => modelSelectors.userIds(state),
-   * @example user: (state, userId) => state[0],
+   * @example user: (state, userId) => state.data[userId],
    * @example isLoading: (state, userId, modelSelectors) => modelSelectors.isLoading(state, userId),
    *
    */
-  selectors?: Record<string, SelectorFunction>;
+  selectors?: SelectorMap;
   /**
    * Reducers are functions used for synchronously changing the current state of a given model. A reducer will
    * be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
@@ -126,7 +126,7 @@ export interface ModelOptions {
    *   state.data[userId] = data;
    * }
    */
-  reducers?: Record<string, ReducerFunction>;
+  reducers?: ReducerMap;
   /**
    * Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
    * an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
@@ -136,16 +136,16 @@ export interface ModelOptions {
    * employ a Subscriber instead.
    *
    * @example
-   * *fetchPostsByUser({ userId }, { call, put }) {
+   * *fetchPostsByUser({ userId }, { call, put }, actionCreators) {
    *   try {
    *     const data = yield call(fetchApi, `http://jsonplaceholder.typicode.com/posts/?user=${userId}`);
-   *     yield put({type: "posts.savePostsByUser", data, userId});
+   *     yield put(actionCreators.saveUser({data, userId}));
    *   } catch (error) {
    *     console.log(error)
    *   }
    * },
    */
-  effects?: Record<string, EffectFunction>;
+  effects?: EffectMap;
 }
 
 /**
@@ -154,20 +154,11 @@ export interface ModelOptions {
  * dispatchers, and sagas, based on the model's options that were provided.
  */
 export class Model {
-  public readonly namespace: string;
-  public readonly state: Record<string, any>;
-  /**
-   * @ignore
-   */
-  public readonly modelSelectors?: Record<string, SelectorFunction>;
-  /**
-   * @ignore
-   */
-  public readonly modelReducers?: Record<string, ReducerFunction>;
-  /**
-   * @ignore
-   */
-  public readonly modelEffects?: Record<string, EffectFunction>;
+  private readonly _namespace: string;
+  private readonly _state: State;
+  private readonly _selectors?: SelectorMap;
+  private readonly _reducers?: ReducerMap;
+  private readonly _effects?: EffectMap;
 
   /**
    * Creates a model instance.
@@ -182,10 +173,10 @@ export class Model {
    *       count: (state) => state.counter.count,
    *   },
    *   reducers: {
-   *      increment(state, {}) {
+   *      increment(state, action) {
    *        state.count += 1;
    *      },
-   *        decrement(state, {}) {
+   *      decrement(state, action) {
    *        state.count -= 1;
    *      },
    *   },
@@ -193,30 +184,65 @@ export class Model {
    * });
    *
    * @param options A model's options.
+   * @throws {NamespaceIsntAStringError} When namespace isn't a string.
+   * @throws {EmptyNamespaceError} When namespace is an empty string.
+   * @throws {DuplicatedActionTypesError} When reducer and/or effect action types are duplicated.
    */
   public constructor(options: ModelOptions) {
-    this.namespace = options.namespace;
-    this.state = options.state;
-    this.modelSelectors = options.selectors || {};
-    this.modelReducers = options.reducers || {};
-    this.modelEffects = options.effects || {};
+    this._namespace = options.namespace;
+    this._state = options.state;
+    this._selectors = options.selectors || {};
+    this._reducers = options.reducers || {};
+    this._effects = options.effects || {};
 
-    this.selectors = this.selectors.bind(this);
-    this.reducers = this.reducers.bind(this);
-    this.effects = this.effects.bind(this);
+    const actionTypes = [].concat(...keys(this._reducers)).concat(...keys(this._effects));
+
+    if (!isString(this._namespace)) {
+      throw {
+        name: 'NamespaceIsntAStringError',
+        message: `Namespace must be a string. The provided namespace type was: ${typeof this._namespace}`,
+      };
+    }
+
+    if (size(this._namespace) < 1) {
+      throw {
+        name: 'EmptyNamespaceError',
+        message: `Namespace must be a non empty string.`,
+      };
+    }
+
+    if (uniq(actionTypes).length !== actionTypes.length) {
+      throw {
+        name: 'DuplicatedActionTypesError',
+        message: `Reducer and effect action types must be unique in [${this._namespace}] model. The provided ` +
+        `reducer/effect action types were: ${actionTypes.join(', ')}`,
+      };
+    }
+
+    this.modelSelectors = this.modelSelectors.bind(this);
+    this.modelReducers = this.modelReducers.bind(this);
+    this.modelEffects = this.modelEffects.bind(this);
   }
 
   /**
    * @ignore
    */
   public actionType(actionName: string): string {
-    return `${this.namespace}.${actionName}`;
+    return `${this._namespace}.${actionName}`;
   }
 
   /**
    * @ignore
    */
   public actionCreator(actionName: string, actionData: object = {}): AnyAction {
+    if (!isPlainObject(actionData)) {
+      throw {
+        name: 'ActionDataIsntPlainObjectError',
+        message: `Action data must be a plain object, when calling action [${actionName}] in ` +
+        `[${this._namespace}] model.`,
+      };
+    }
+
     return {...actionData, type: this.actionType(actionName)};
   }
 
@@ -230,11 +256,11 @@ export class Model {
   public actionCreators(): ActionCreatorsMapObject {
     const actions = {};
 
-    for (const reducerName in this.modelReducers) {
+    for (const reducerName in this._reducers) {
       actions[reducerName] = (actionData: object = {}) => this.actionCreator(reducerName, actionData);
     }
 
-    for (const effectName in this.modelEffects) {
+    for (const effectName in this._effects) {
       actions[effectName] = (actionData: object = {}) => this.actionCreator(effectName, actionData);
     }
 
@@ -244,10 +270,10 @@ export class Model {
   /**
    * @ignore
    */
-  public selectors(): Record<string, SelectorFunction> {
+  public modelSelectors(): SelectorModelMap {
     const selectors = {};
 
-    for (const [selectorName, selectorFunc] of toPairs(this.modelSelectors)) {
+    for (const [selectorName, selectorFunc] of toPairs(this._selectors)) {
       selectors[selectorName] = createSelector([selectorFunc], data => data);
     }
 
@@ -257,10 +283,10 @@ export class Model {
   /**
    * @ignore
    */
-  public reducers(): Reducer<unknown, AnyAction> {
+  public modelReducers(): Reducer<unknown, AnyAction> {
     const reducers = {};
 
-    for (const [reducerName, reducerFunc] of toPairs(this.modelReducers)) {
+    for (const [reducerName, reducerFunc] of toPairs(this._reducers)) {
       const actionType = this.actionType(reducerName);
       reducers[actionType] = reducerFunc;
     }
@@ -268,17 +294,18 @@ export class Model {
     return produce((draft: object, action: AnyAction) => {
       const reducerFunc = get(reducers, action.type, defaultReducer);
       reducerFunc(draft, action);
-    }, this.state);
+    }, this._state);
   }
 
   /**
    * @ignore
    */
-  public effects(): Record<string, EffectFunction> {
+  public modelEffects(): EffectModelMap {
     const effects = {};
+    const actionCreators = this.actionCreators();
 
-    for (const [effectName, effectFunc] of toPairs(this.modelEffects)) {
-      effects[effectName] = (actionData: object = {}) => effectFunc(actionData, sagaEffects);
+    for (const [effectName, effectFunc] of toPairs(this._effects)) {
+      effects[effectName] = (actionData: object = {}) => effectFunc(actionData, sagaEffects, actionCreators);
     }
 
     return effects;
@@ -294,13 +321,59 @@ export class Model {
   public get reduxSagas(): Saga[] {
     const reduxSagas = [];
 
-    for (const [effectName, effectFunc] of toPairs(this.effects())) {
+    for (const [effectName, effectFunc] of toPairs(this.modelEffects())) {
       const actionType = this.actionType(effectName);
       reduxSagas.push(function *() {
+        // @ts-ignore
         yield blockingEffectTakeEvery(actionType, effectFunc);
       });
     }
 
     return reduxSagas;
+  }
+
+  /**
+   * Returns the namespace.
+   *
+   * @returns A string.
+   */
+  public get namespace(): string {
+    return this._namespace;
+  }
+
+  /**
+   * Returns the initial state.
+   *
+   * @returns An initial state.
+   */
+  public get state(): State {
+    return this._state;
+  }
+
+  /**
+   * Returns the selectors.
+   *
+   * @returns A selectors map.
+   */
+  public get selectors(): SelectorMap {
+    return this._selectors;
+  }
+
+  /**
+   * Returns the reducers.
+   *
+   * @returns A reducer function.
+   */
+  public get reducers(): ReducerMap {
+    return this._reducers;
+  }
+
+  /**
+   * Returns the effects.
+   *
+   * @returns An effect map.
+   */
+  public get effects(): EffectMap {
+    return this._effects;
   }
 }
