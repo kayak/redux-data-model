@@ -1,8 +1,8 @@
 import {
   combineModelReducers,
+  connectResux,
   Model,
   resuxRootSaga,
-  connectResux,
 } from 'react-resux';
 import createSagaMiddleware from 'redux-saga';
 import {
@@ -11,7 +11,6 @@ import {
   createStore,
 } from 'redux';
 import logger from 'redux-logger';
-
 import {
   Provider,
   useSelector,

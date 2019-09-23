@@ -15,7 +15,6 @@ import {
 } from 'redux';
 import logger from 'redux-logger';
 import * as _ from 'lodash';
-
 import {
   Provider,
   useSelector,
