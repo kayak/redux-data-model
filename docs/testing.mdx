@@ -96,14 +96,14 @@ const actionCreators = counterModel.actionCreators();
 
 it('asyncIncrement effect yields put increment reducer', () => {
   const gen = counterModel.modelEffects.asyncIncrement(action, sagaEffects);
-  expect(gen.next()).toEqual(
+  expect(gen.next().value).toEqual(
     sagaEffects.put(actionCreators.increment())
   );
 });
 
 it('asyncDecrement effect yields put decrement reducer', () => {
   const gen = counterModel.modelEffects.asyncDecrement(action, sagaEffects);
-  expect(gen.next()).toEqual(
+  expect(gen.next().value).toEqual(
     sagaEffects.put(actionCreators.decrement())
   );
 });
