@@ -8,10 +8,8 @@ route: /hooks
 React-Resux is a hooks-first library and it provides three distinct hooks as part of its public API. They are:
 
 ## useModelSelector
-Returns the result of a given a selector, which has the state and perhaps additional arguments as arguments.
-
-It's an equivalent of redux's [useSelector](https://react-redux.js.org/next/api/hooks#useselector), with the difference
-that it memoizes values in order to minimise unnecessary re-renders.
+Returns the result of a given a selector, which has the state and perhaps additional arguments as arguments. For
+more info see its [API](/react-resux/README.md#usemodelselector) reference.
 
 #### Read data example:
 ```javascript
@@ -32,7 +30,7 @@ export default function({page}) {
 ## useModelActions
 
 Returns an object with all reducer/effect action creators, defined in the provided model, already bound with
-redux's dispatch.
+redux's dispatch. For more info see its [API](/react-resux/README.md#usemodelactions) reference.
 
 #### Read data example:
 ```javascript
@@ -51,7 +49,7 @@ export default function({page}) {
 ## useSubscriberActions
 
 Returns an object with all effect action creators, defined in the provided subscriber, already bound with redux's
-dispatch.
+dispatch. For more info see its [API](/react-resux/README.md#usesubscriberactions) reference.
 
 #### Read data example:
 ```javascript

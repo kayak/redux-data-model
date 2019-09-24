@@ -5,10 +5,21 @@ route: /development
 
 # Development
 
+## Building
+
+To build run:
+
+```bash
+npm run build
+```
+
+We are enforcing size limits with [size-limit](https://github.com/ai/size-limit), so that we keep the cost of using
+this library in check.
+
 ## Linting
 
 We use eslint with [@typescript-eslint/parser](https://github.com/typescript-eslint/typescript-eslint) as our linter
-tool. To run:
+tool. To lint run:
 
 ```bash
 npm run lint
@@ -33,6 +44,21 @@ We use [docz](https://www.docz.site/) as our documentation framework. To see the
 npm run docs:watch
 ```
 
+Before generating the documentation, we are injecting API markdown files created with [typedoc](https://typedoc.org/),
+as a way to document the code per se.
+
+## Changelog
+
+We use [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) as our automated
+changelog/release notes generator. To generate a changelog file run:
+
+```bash
+npm run changelog
+```
+
+We don't commit changelog files though and this should only be used for testing purposes. Partial changelogs will
+be transparently used as the description of new github releases, when publishing a version.
+
 ## Deploying & Publishing
 
 To publish a new package on [NPM](http://npmjs.com) run:
@@ -41,7 +67,9 @@ To publish a new package on [NPM](http://npmjs.com) run:
 npm run release
 ```
 
-To publish the documentation run:
+Besides publishing the package, the command above will build the package, bump its version, commit that, tag the
+new version, push commits/tags to github and then create a github release. This process is automatically handled by
+[release-it](https://github.com/release-it/release-it). To publish the documentation on github pages run:
 
 ```bash
 npm run release:docs
