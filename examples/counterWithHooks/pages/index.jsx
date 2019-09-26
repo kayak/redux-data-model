@@ -25,13 +25,13 @@ export const counterModel = new Model({
         count: 0,
     },
     selectors: {
-        count: (state) => state.counter.count,
+        count: (state) => state.count,
     },
     reducers: {
-        increment(state, {}) {
+        increment(state, action) {
           state.count += 1;
         },
-        decrement(state, {}) {
+        decrement(state, action) {
           state.count -= 1;
         },
     },

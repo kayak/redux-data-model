@@ -33,20 +33,20 @@ export const userModel = new Model({
         data: {},
     },
     selectors: {
-        loadingByUser: (state, userId) => _.get(state, `users.loading[${userId}]`, true),
-        userById: (state, userId) => _.get(state, `users.data[${userId}]`),
+        loadingByUser: (state, userId) => _.get(state, `loading[${userId}]`, true),
+        userById: (state, userId) => _.get(state, `data[${userId}]`),
     },
     reducers: {
-        saveUser(state, { data, userId }) {
+        saveUser(state, {data, userId}) {
           state.loading[userId] = false;
           state.data[userId] = data;
         },
     },
     effects: {
-        *fetchUser({ userId }, { call, put }) {
+        *fetchUser({userId}, {call, put}, actionCreators) {
             try {
                 const data = yield call(fetchApi, `//jsonplaceholder.typicode.com/users/${userId}`);
-                yield put({type: "users.saveUser", data, userId});
+                yield put(actionCreators.saveUser({data, userId}));
              } catch (error) {
                 console.log(error)
              }
@@ -61,29 +61,29 @@ export const postModel = new Model({
         postsByUserId: {},
     },
     selectors: {
-        loadingByUser: (state, userId) => _.get(state, `posts.loading[${userId}]`, true),
-        postsAsItems: (state, userId) => _.get(state, `posts.postsByUserId[${userId}]`, []).map(
+        loadingByUser: (state, userId) => _.get(state, `loading[${userId}]`, true),
+        postsAsItems: (state, userId) => _.get(state, `postsByUserId[${userId}]`, []).map(
           post => ({id: post.id, label: `${post.id}. ${post.title}`, status: post.published ? 'Done' : 'To Do'})
         ),
     },
     reducers: {
-        savePostsByUser(state, { data, userId }) {
+        savePostsByUser(state, {data, userId}) {
             state.loading[userId] = false;
             state.postsByUserId[userId] = data;
         },
-        switchPublishedByUser(state, { userId }) {
+        switchPublishedByUser(state, {userId}) {
             state.postsByUserId[userId].forEach(post => post.published = !post.published);
         },
-        switchPublishedByUserAndPost(state, { userId, postId }) {
+        switchPublishedByUserAndPost(state, {userId, postId}) {
             const post = state.postsByUserId[userId].find(post => post.id === postId);
             post.published = !post.published;
         },
     },
     effects: {
-        *fetchPostsByUser({ userId }, { call, put }) {
+        *fetchPostsByUser({userId}, {call, put}, {savePostsByUser}) {
             try {
                 const data = yield call(fetchApi, `//jsonplaceholder.typicode.com/posts/?user=${userId}`);
-                yield put({type: "posts.savePostsByUser", data, userId});
+                yield put(savePostsByUser({data, userId}));
              } catch (error) {
                 console.log(error)
              }

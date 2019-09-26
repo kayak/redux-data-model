@@ -25,30 +25,30 @@ export const counterModel = new Model({
     count: 0
   },
   selectors: {
-    count: state => state.counter.count
+    count: state => state.count
   },
   reducers: {
-    increment(state, {}) {
+    increment(state, action) {
       state.count += 1;
     },
-    decrement(state, {}) {
+    decrement(state, action) {
       state.count -= 1;
     }
   },
   effects: {
-    *tryToIncrement(action, sagaEffects) {
+    *tryToIncrement(action, sagaEffects, {increment}) {
       const hasConfirmed = yield sagaEffects.call(showConfirm, {
         text: "Are you sure you want to increment?"
       });
 
-      if (hasConfirmed) yield sagaEffects.put({ type: "counter.increment" });
+      if (hasConfirmed) yield sagaEffects.put(increment());
     },
-    *tryToDecrement(action, sagaEffects) {
+    *tryToDecrement(action, sagaEffects, {decrement}) {
       const hasConfirmed = yield sagaEffects.call(showConfirm, {
         text: "Are you sure you want to decrement?"
       });
 
-      if (hasConfirmed) yield sagaEffects.put({ type: "counter.decrement" });
+      if (hasConfirmed) yield sagaEffects.put(decrement());
     }
   }
 });
