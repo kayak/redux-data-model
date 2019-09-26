@@ -87,7 +87,6 @@ export function connectResux(
   userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any>=null,
 ) {
   return connect(
-    // @ts-ignore
     ...connectResuxImpl(
       modelsOrSubscribers, userProvidedMapStateToProps, userProvidedMapDispatchToProps,
     )

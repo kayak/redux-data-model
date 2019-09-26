@@ -62,9 +62,8 @@ export const sagaEffects = {
 
 const defaultReducer = (
   state,
-  // @ts-ignore
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  action,
+  _action,
 ) => state;
 
 /**
@@ -324,7 +323,6 @@ export class Model {
     for (const [effectName, effectFunc] of toPairs(this.modelEffects())) {
       const actionType = this.actionType(effectName);
       reduxSagas.push(function *() {
-        // @ts-ignore
         yield blockingEffectTakeEvery(actionType, effectFunc);
       });
     }
