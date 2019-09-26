@@ -27,20 +27,20 @@ export const userModel = new Model({
 
     // Optional options
     selectors: {
-        loadingByUser: (state, userId) => _.get(state, `users.loading[${userId}]`, true),
-        userById: (state, userId) => _.get(state, `users.data[${userId}]`),
+        loadingByUser: (state, userId) => _.get(state, `loading[${userId}]`, true),
+        userById: (state, userId) => _.get(state, `data[${userId}]`),
     },
     reducers: {
-        saveUser(state, { data, userId }) {
+        saveUser(state, {data, userId}) {
           state.loading[userId] = false;
           state.data[userId] = data;
         },
     },
     effects: {
-        *fetchUser({ userId }, { call, put }) {
+        *fetchUser({userId}, {call, put}, {saveUser}) {
             try {
                 const data = yield call(fetchApi, `http://jsonplaceholder.typicode.com/users/${userId}`);
-                yield put({type: "users.saveUser", data, userId});
+                yield put(saveUser({data, userId}));
              } catch (error) {
                 console.log(error)
              }
