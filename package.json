@@ -1,6 +1,6 @@
 {
   "name": "react-resux",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Opinionated, Redux abstraction with built-in immutability, normalization, and selectors support.",
   "engines": {
     "node": ">= 10.13"
