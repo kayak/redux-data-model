@@ -20,8 +20,8 @@ type MapDispatchToPropsWithActionCreatorsFunction<TDispatchProps, TOwnProps> =
     (
       dispatch: Dispatch<Action>,
       ownProps: TOwnProps,
-      modelActionCreators: ActionCreatorsMapObject,
-      subscriberActionCreators: ActionCreatorsMapObject,
+      modelActionCreators: Record<string, ActionCreatorsMapObject>,
+      subscriberActionCreators: Record<string, ActionCreatorsMapObject>,
     ) => TDispatchProps;
 type MapDispatchToPropsWithActionCreators<TDispatchProps, TOwnProps> =
     MapDispatchToPropsWithActionCreatorsFunction<TDispatchProps, TOwnProps> | TDispatchProps;
@@ -30,5 +30,5 @@ type MapStateToPropsWithSelectors<TStateProps, TOwnProps, State> =
     (
       state: State,
       ownProps: TOwnProps,
-      modelSelectors: Record<string, SelectorFunction>
+      modelSelectors: Record<string, SelectorMap>
     ) => TStateProps;

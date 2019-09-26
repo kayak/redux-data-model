@@ -273,20 +273,22 @@ describe('Model', () => {
     });
 
     describe('when effects are present', () => {
-      const effectASpy = jest.fn();
       const state = {};
-      const modelX = new Model({
-        namespace: 'articles',
-        state,
-        effects: {
-          // @ts-ignore
-          effectA: effectASpy,
-        },
-      });
+      let effectASpy;
+      let modelX;
       let actionCreatorsSpy;
       let effects;
 
       beforeEach(() => {
+        effectASpy = jest.fn();
+        modelX = new Model({
+          namespace: 'articles',
+          state,
+          effects: {
+            // @ts-ignore
+            effectA: effectASpy,
+          },
+        });
         actionCreatorsSpy = jest.spyOn(modelX, 'actionCreators');
         effects = modelX.modelEffects();
       });
@@ -317,20 +319,23 @@ describe('Model', () => {
 
     describe('when effects are present', () => {
       let gen;
-      const effectASpy = jest.fn();
       const state = {};
-      const modelX = new Model({
-        namespace: 'articles',
-        state,
-        effects: {
-          // @ts-ignore
-          effectA: effectASpy,
-        },
-      });
-      const actionCreatorsSpy = jest.spyOn(modelX, 'actionCreators');
+      let effectASpy;
+      let modelX;
+      let actionCreatorsSpy;
       const actionData = {userId: 1};
 
       beforeEach(() => {
+        effectASpy = jest.fn();
+        modelX = new Model({
+          namespace: 'articles',
+          state,
+          effects: {
+            // @ts-ignore
+            effectA: effectASpy,
+          },
+        });
+        actionCreatorsSpy = jest.spyOn(modelX, 'actionCreators');
         gen = modelX.reduxSagas[0]();
       });
 

@@ -1,5 +1,5 @@
 import produce from 'immer';
-import {get, isPlainObject, isString, keys, size, toPairs, uniq} from 'lodash';
+import {get, isPlainObject, isString, keys, size, toPairs, uniq, memoize} from 'lodash';
 import {ActionCreatorsMapObject, AnyAction, Reducer} from 'redux';
 import {Saga} from '@redux-saga/core';
 import {
@@ -169,7 +169,7 @@ export class Model {
    *      count: 0,
    *   },
    *   selectors: {
-   *       count: (state) => state.counter.count,
+   *       count: (state) => state.count,
    *   },
    *   reducers: {
    *      increment(state, action) {
@@ -218,9 +218,9 @@ export class Model {
       };
     }
 
-    this.modelSelectors = this.modelSelectors.bind(this);
-    this.modelReducers = this.modelReducers.bind(this);
-    this.modelEffects = this.modelEffects.bind(this);
+    this.modelSelectors = memoize(this.modelSelectors.bind(this));
+    this.modelReducers = memoize(this.modelReducers.bind(this));
+    this.modelEffects = memoize(this.modelEffects.bind(this));
   }
 
   /**
