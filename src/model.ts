@@ -63,7 +63,7 @@ export const sagaEffects = {
 const defaultReducer = (
   state,
   // @ts-ignore
-  // eslint-disable @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   action,
 ) => state;
 
