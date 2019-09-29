@@ -129,7 +129,9 @@ export interface ModelOptions {
    * Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
    * an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
    * by a [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from redux-saga.
-   * An effect function receives an action and an object with redux saga's effects as arguments respectively.
+   * An effect function receives an action, an object with saga's effects, and the action creators as arguments
+   * respectively. For a list of saga's effects available to you see
+   * [this](https://redux-saga.js.org/docs/api/#effect-creators).
    * The saga effects won't include takeLeading, takeLatest, and takeEvery blocking effects. For using those
    * employ a Subscriber instead.
    *

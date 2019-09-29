@@ -3,9 +3,13 @@ name: Concepts
 route: /concepts
 ---
 
+# Concepts
+
+React-resux has only a few core concepts. Namely [models](#model) and [subscribers](#subscriber).
+
 ## Model
 
-Models are the most basic data structure/abstraction in this library. They require a set of options to be provided
+Models are the most basic data structure/abstraction in react-resux. They require a set of options to be provided
 when initializing them.
 
 #### Example:
@@ -49,9 +53,9 @@ export const userModel = new Model({
 });
 ```
 
-The model will be used to generate the action types, actions, reducers, sagas and dispatchers for this particular
-entity (i.e. users). Below you can find a more in depth description on the many options that can be used during a
-model instantiation.
+A model consists of the set of state, selectors, actions, reducers and asynchrounous workflows (i.e. effects) that
+are related to a given entity (e.g.. users). Below you can find a more in depth description on the many options
+that can be used during a model instantiation.
 
 ### Model Options
 
@@ -70,8 +74,10 @@ For more info see [this](/react-resux/classes/model.md).
 
 Subscribers provide a way to link models' effects/reducers, so that they get triggered by the same non-namespaced
 action type, on a leading, latest, or every action basis. That is, they provide the means for generating redux sagas
-employing takeLeading, takeLatest, or takeEvery effects. Those models' action creators will be available within the
-subscriber's effects.
+employing [takeLeading](https://redux-saga.js.org/docs/api/#takeleadingpattern-saga-args),
+[takeLatest](https://redux-saga.js.org/docs/api/#takelatestpattern-saga-args), or
+[takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect creators. Those models' action
+creators will be available within the subscriber's effects.
 
 #### Example:
 ```javascript
