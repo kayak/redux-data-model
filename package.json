@@ -70,7 +70,6 @@
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-filesize": "6.2.0",
     "rollup-plugin-node-resolve": "5.2.0",
-    "rollup-plugin-terser": "5.1.1",
     "rollup-plugin-typescript2": "0.24.0",
     "source-map-loader": "0.2.4",
     "ts-loader": "6.0.4",
