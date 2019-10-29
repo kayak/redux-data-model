@@ -2,9 +2,11 @@ import {
   combineModelReducers,
   Model,
   resuxRootSaga,
+} from 'react-resux';
+import {
   useModelActions,
   useModelSelector,
-} from 'react-resux';
+} from 'react-resux-hooks';
 import createSagaMiddleware from 'redux-saga';
 import {
   applyMiddleware,

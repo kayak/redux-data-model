@@ -9,7 +9,7 @@
     "node": true,
     "jest/globals": true
   },
-  "plugins": ["react", "import", "jest", "@typescript-eslint"],
+  "plugins": ["react", "import", "jest", "react-hooks", "@typescript-eslint"],
   "rules": {
     "max-len": ["error", { "code": 120 }],
     "react/jsx-filename-extension": "off",

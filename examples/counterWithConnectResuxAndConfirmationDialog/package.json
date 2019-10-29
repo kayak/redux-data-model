@@ -5,11 +5,11 @@
   "description": "react-resux-connect-resux-with-alerts-example",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf .next",
     "test": "echo \"Nothing to test\" && exit 0",
     "start": "next"
   },
   "dependencies": {
-    "@types/redux-logger": "3.0.7",
     "next": "9.0.3",
     "react-json-tree": "0.11.2",
     "react-resux": "0.4.0",
