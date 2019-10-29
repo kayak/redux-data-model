@@ -2,7 +2,8 @@ import {mount} from 'enzyme';
 import * as React from 'react';
 import {Provider} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import {Model, Subscriber, useSubscriberActions} from '../../src';
+import {Model, Subscriber} from 'react-resux';
+import {useSubscriberActions} from '../src';
 
 const mockStore = configureMockStore([]);
 

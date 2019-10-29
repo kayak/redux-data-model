@@ -1,17 +1,18 @@
 {
   "name": "react-resux-hooks.js",
-  "version": "1.0.0",
+  "version": "0.4.0",
+  "private": true,
   "description": "react-resux-hooks-example",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Nothing to test\" && exit 0",
     "start": "next"
   },
   "dependencies": {
     "@types/redux-logger": "3.0.7",
     "next": "9.0.3",
     "react-json-tree": "0.11.2",
-    "react-resux": "latest",
+    "react-resux": "0.4.0",
     "redux-logger": "3.0.6"
   }
 }

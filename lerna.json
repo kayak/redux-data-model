@@ -1,0 +1,18 @@
+{
+  "packages": [
+    "packages/*",
+    "examples/*"
+  ],
+  "command": {
+    "publish": {
+      "conventionalCommits": true,
+      "ignoreChanges": [
+        "*.md",
+        "*.mdx"
+      ],
+      "message": "chore(release): publish",
+      "yes": true
+    }
+  },
+  "version": "0.4.0"
+}

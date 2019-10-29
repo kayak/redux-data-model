@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useDispatch} from 'react-redux';
 import {ActionCreatorsMapObject, bindActionCreators, Dispatch} from 'redux';
-import {Subscriber} from '../subscriber';
+import {Subscriber} from 'react-resux';
 
 /**
  * A react hook for returning already bound action creators for the provided subscriber. If you don't want/need

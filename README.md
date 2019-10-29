@@ -17,14 +17,16 @@ Opinionated, Redux abstraction with built-in immutability, async and more. Heavi
 Using npm:
 
 ```bash
-$ npm install react-resux --save
+$ npm install react-resux react-resux-hooks --save
 ```
 
 Using yarn:
 
 ```bash
-$ yarn add react-resux
+$ yarn add react-resux react-resux-hooks
 ```
+
+Naturally, the react-resux-hooks package is optional, in case you're willing to use our hooks API.
 
 ## Benefits
 

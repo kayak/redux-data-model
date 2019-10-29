@@ -1,5 +1,5 @@
 {
-    "src": ["src/index.ts"],
+    "src": ["packages/react-resux/src/index.ts", "packages/react-resux-hooks/src/index.ts"],
     "exclude": ["**/__tests__/**"],
     "module": "commonjs",
     "excludeNotExported": true,

@@ -2,7 +2,8 @@ import {mount} from 'enzyme';
 import * as React from 'react';
 import {Provider} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import {Model, useModelSelector} from '../../src';
+import {Model} from 'react-resux';
+import {useModelSelector} from '../src';
 
 const mockStore = configureMockStore([]);
 

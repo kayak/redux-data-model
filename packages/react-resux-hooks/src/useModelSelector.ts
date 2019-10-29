@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useSelector} from 'react-redux';
-import {Model} from '../model';
+import {Model} from 'react-resux';
 
 /**
  * A react hook for returning data from the provided model's state, by the means of one of its selectors. If you

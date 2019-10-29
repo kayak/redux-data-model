@@ -1,11 +1,11 @@
 [
     {
-        "path": "dist/cjs/index.js",
+        "path": "packages/*/dist/cjs/index.js",
         "limit": "3 KB",
         "webpack": false
     },
     {
-        "path": "dist/esm/index.js",
+        "path": "packages/*/dist/esm/index.js",
         "limit": "3 KB",
         "webpack": false
     }

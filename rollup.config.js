@@ -5,7 +5,7 @@ import typescript from 'rollup-plugin-typescript2';
 import {terser} from 'rollup-plugin-terser';
 import pkg from './package.json';
 
-export default {
+export default props => ({
   input: 'src/index.ts',
   output: [
     {
@@ -30,4 +30,5 @@ export default {
     terser(),
     filesize(),
   ],
-}
+  ...props,
+});

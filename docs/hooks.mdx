@@ -5,6 +5,8 @@ route: /hooks
 
 # Hooks
 
+> WARNING: This requires the react-resux-hooks package to be installed.
+
 React-Resux is a hooks-first library and it provides three distinct hooks as part of its public API. They are:
 
 ## useModelSelector
@@ -13,7 +15,7 @@ more info see its [API](/react-resux/README.md#usemodelselector) reference.
 
 #### Read data example:
 ```javascript
-import {useModelSelector} from 'react-resux';
+import {useModelSelector} from 'react-resux-hooks';
 import {modelX} from './modelX';
 
 export default function({page}) {
@@ -34,7 +36,7 @@ redux's dispatch. For more info see its [API](/react-resux/README.md#usemodelact
 
 #### Read data example:
 ```javascript
-import {useModelActions} from 'react-resux';
+import {useModelActions} from 'react-resux-hooks';
 import {modelX} from './modelX';
 
 export default function({page}) {
@@ -53,13 +55,13 @@ dispatch. For more info see its [API](/react-resux/README.md#usesubscriberaction
 
 #### Read data example:
 ```javascript
-import {useSubscriberAction} from 'react-resux';
+import {useSubscriberActions} from 'react-resux-hooks';
 import {subscriberX} from './modelX';
 
 export default function({page}) {
   // We assume here that modelX has an effect called fetchPageA defined.
   // Fyi subscriberXActions will contain all effects defined on subscriberX.
-  const subscriberXActions = useSubscriberAction(subscriberX);
+  const subscriberXActions = useSubscriberActions(subscriberX);
 
   return (<button onClick={subscriberXActions.fetchPageA}>Click here to fetch page a!</button>)
 }
