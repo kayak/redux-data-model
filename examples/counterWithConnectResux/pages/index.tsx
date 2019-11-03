@@ -27,20 +27,25 @@ export const counterModel = new Model({
         count: (state) => state.count,
     },
     reducers: {
-        increment(state, action) {
+        increment(state, _action) {
           state.count += 1;
         },
-        decrement(state, action) {
+        decrement(state, _action) {
           state.count -= 1;
         },
     },
 });
 
 const sagaMiddleware = createSagaMiddleware();
+const middlewares = [sagaMiddleware];
+
+if (process.env.NODE_ENV === `development`) {
+  middlewares.push(logger);
+}
 
 const store = createStore(combineReducers({
   ...combineModelReducers([counterModel]),
-}), applyMiddleware(logger, sagaMiddleware));
+}), applyMiddleware(...middlewares));
 
 sagaMiddleware.run(() => resuxRootSaga([counterModel]));
 
@@ -51,11 +56,11 @@ function TestComponent({count, counter}) {
   return (
     <>
       <div>
-        <strong>Count:</strong> {count}
+        <strong>Count:</strong> <span id="counterValue">{count}</span>
       </div>
       <div>
-        <button onClick={() => counter.increment()}>Increment</button> |{' '}
-        <button onClick={() => counter.decrement()}>Decrement</button>
+        <button id="incrementButton" onClick={() => counter.increment()}>Increment</button> |{' '}
+        <button id="decrementButton" onClick={() => counter.decrement()}>Decrement</button>
       </div>
       <br/>
       <hr/>
@@ -68,7 +73,7 @@ function TestComponent({count, counter}) {
   );
 }
 
-function mapStateToProps(state, props, selectors) {
+function mapStateToProps(state, _props, selectors) {
   return {
     count: selectors.counter.count(state),
   };

@@ -1,0 +1,543 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndexPage matches snapshot 1`] = `
+<Component>
+  <Provider
+    store={
+      Object {
+        "@@observable": [Function],
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      }
+    }
+  >
+    <Connect(TestComponent)>
+      <TestComponent
+        count={0}
+        counter={
+          Object {
+            "decrement": [Function],
+            "increment": [Function],
+          }
+        }
+        subscribers={Object {}}
+      >
+        <div>
+          <strong>
+            Count:
+          </strong>
+           
+          <span
+            id="counterValue"
+          >
+            0
+          </span>
+        </div>
+        <div>
+          <button
+            id="incrementButton"
+            onClick={[Function]}
+          >
+            Increment
+          </button>
+           |
+           
+          <button
+            id="decrementButton"
+            onClick={[Function]}
+          >
+            Decrement
+          </button>
+        </div>
+        <br />
+        <hr />
+        <br />
+        <div>
+          <strong>
+            State (Open console to see actions as they are triggered):
+          </strong>
+          <JSONTree
+            collectionLimit={50}
+            data={
+              Object {
+                "counter": Object {
+                  "count": 0,
+                },
+              }
+            }
+            getItemString={[Function]}
+            hideRoot={false}
+            invertTheme={true}
+            isCustomNode={[Function]}
+            keyPath={
+              Array [
+                "root",
+              ]
+            }
+            labelRenderer={[Function]}
+            postprocessValue={[Function]}
+            shouldExpandNode={[Function]}
+            valueRenderer={[Function]}
+          >
+            <ul
+              style={
+                Object {
+                  "MozUserSelect": "none",
+                  "WebkitUserSelect": "none",
+                  "backgroundColor": "#002b36",
+                  "border": 0,
+                  "listStyle": "none",
+                  "marginBottom": "0.5em",
+                  "marginLeft": "0.125em",
+                  "marginRight": 0,
+                  "marginTop": "0.5em",
+                  "padding": 0,
+                }
+              }
+            >
+              <JSONNode
+                collectionLimit={50}
+                getItemString={[Function]}
+                hideRoot={false}
+                isCustomNode={[Function]}
+                keyPath={
+                  Array [
+                    "root",
+                  ]
+                }
+                labelRenderer={[Function]}
+                postprocessValue={[Function]}
+                shouldExpandNode={[Function]}
+                styling={[Function]}
+                value={
+                  Object {
+                    "counter": Object {
+                      "count": 0,
+                    },
+                  }
+                }
+                valueRenderer={[Function]}
+              >
+                <JSONObjectNode
+                  collectionLimit={50}
+                  data={
+                    Object {
+                      "counter": Object {
+                        "count": 0,
+                      },
+                    }
+                  }
+                  getItemString={[Function]}
+                  hideRoot={false}
+                  isCustomNode={[Function]}
+                  key="root"
+                  keyPath={
+                    Array [
+                      "root",
+                    ]
+                  }
+                  labelRenderer={[Function]}
+                  nodeType="Object"
+                  postprocessValue={[Function]}
+                  shouldExpandNode={[Function]}
+                  styling={[Function]}
+                  value={
+                    Object {
+                      "counter": Object {
+                        "count": 0,
+                      },
+                    }
+                  }
+                  valueRenderer={[Function]}
+                >
+                  <JSONNestedNode
+                    circularCache={Array []}
+                    collectionLimit={50}
+                    createItemString={[Function]}
+                    data={
+                      Object {
+                        "counter": Object {
+                          "count": 0,
+                        },
+                      }
+                    }
+                    expandable={true}
+                    getItemString={[Function]}
+                    hideRoot={false}
+                    isCustomNode={[Function]}
+                    keyPath={
+                      Array [
+                        "root",
+                      ]
+                    }
+                    labelRenderer={[Function]}
+                    level={0}
+                    nodeType="Object"
+                    nodeTypeIndicator="{}"
+                    postprocessValue={[Function]}
+                    shouldExpandNode={[Function]}
+                    styling={[Function]}
+                    value={
+                      Object {
+                        "counter": Object {
+                          "count": 0,
+                        },
+                      }
+                    }
+                    valueRenderer={[Function]}
+                  >
+                    <li
+                      style={
+                        Object {
+                          "marginLeft": 0,
+                          "paddingLeft": 0,
+                          "paddingTop": "0.25em",
+                          "position": "relative",
+                        }
+                      }
+                    >
+                      <JSONArrow
+                        arrowStyle="single"
+                        expanded={true}
+                        nodeType="Object"
+                        onClick={[Function]}
+                        styling={[Function]}
+                      >
+                        <div
+                          onClick={[Function]}
+                          style={
+                            Object {
+                              "cursor": "pointer",
+                              "display": "inline-block",
+                              "paddingLeft": 0,
+                              "paddingRight": "0.5em",
+                            }
+                          }
+                        >
+                          <div
+                            style={
+                              Object {
+                                "MozTransform": "rotateZ(90deg)",
+                                "MozTransformOrigin": "45% 50%",
+                                "MozTransition": "150ms",
+                                "WebkitTransform": "rotateZ(90deg)",
+                                "WebkitTransformOrigin": "45% 50%",
+                                "WebkitTransition": "150ms",
+                                "color": "#268bd2",
+                                "fontSize": "0.75em",
+                                "lineHeight": "1.1em",
+                                "marginLeft": 0,
+                                "position": "relative",
+                                "transform": "rotateZ(90deg)",
+                                "transformOrigin": "45% 50%",
+                                "transition": "150ms",
+                              }
+                            }
+                          >
+                            ▶
+                          </div>
+                        </div>
+                      </JSONArrow>
+                      <label
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "MozUserSelect": "inherit",
+                            "WebkitUserSelect": "inherit",
+                            "color": "#268bd2",
+                            "cursor": "pointer",
+                            "display": "inline-block",
+                            "margin": 0,
+                            "padding": 0,
+                          }
+                        }
+                      >
+                        <span>
+                          root
+                          :
+                        </span>
+                      </label>
+                      <span
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "color": "#657b83",
+                            "cursor": "default",
+                            "paddingLeft": "0.5em",
+                          }
+                        }
+                      >
+                        <span>
+                          <span
+                            style={
+                              Object {
+                                "marginLeft": "0.3em",
+                                "marginRight": "0.3em",
+                              }
+                            }
+                          >
+                            {}
+                          </span>
+                           
+                          1 key
+                        </span>
+                      </span>
+                      <ul
+                        style={
+                          Object {
+                            "display": "block",
+                            "listStyle": "none",
+                            "margin": 0,
+                            "padding": 0,
+                          }
+                        }
+                      >
+                        <JSONNode
+                          circularCache={
+                            Array [
+                              Object {
+                                "count": 0,
+                              },
+                            ]
+                          }
+                          collectionLimit={50}
+                          createItemString={[Function]}
+                          data={
+                            Object {
+                              "counter": Object {
+                                "count": 0,
+                              },
+                            }
+                          }
+                          expandable={true}
+                          getItemString={[Function]}
+                          hideRoot={false}
+                          isCircular={false}
+                          isCustomNode={[Function]}
+                          key="Node--counter"
+                          keyPath={
+                            Array [
+                              "counter",
+                              "root",
+                            ]
+                          }
+                          labelRenderer={[Function]}
+                          level={1}
+                          nodeType="Object"
+                          nodeTypeIndicator="{}"
+                          postprocessValue={[Function]}
+                          shouldExpandNode={[Function]}
+                          styling={[Function]}
+                          value={
+                            Object {
+                              "count": 0,
+                            }
+                          }
+                          valueRenderer={[Function]}
+                        >
+                          <JSONObjectNode
+                            circularCache={
+                              Array [
+                                Object {
+                                  "count": 0,
+                                },
+                              ]
+                            }
+                            collectionLimit={50}
+                            createItemString={[Function]}
+                            data={
+                              Object {
+                                "count": 0,
+                              }
+                            }
+                            expandable={true}
+                            getItemString={[Function]}
+                            hideRoot={false}
+                            isCircular={false}
+                            isCustomNode={[Function]}
+                            key="counter"
+                            keyPath={
+                              Array [
+                                "counter",
+                                "root",
+                              ]
+                            }
+                            labelRenderer={[Function]}
+                            level={1}
+                            nodeType="Object"
+                            nodeTypeIndicator="{}"
+                            postprocessValue={[Function]}
+                            shouldExpandNode={[Function]}
+                            styling={[Function]}
+                            value={
+                              Object {
+                                "count": 0,
+                              }
+                            }
+                            valueRenderer={[Function]}
+                          >
+                            <JSONNestedNode
+                              circularCache={
+                                Array [
+                                  Object {
+                                    "count": 0,
+                                  },
+                                ]
+                              }
+                              collectionLimit={50}
+                              createItemString={[Function]}
+                              data={
+                                Object {
+                                  "count": 0,
+                                }
+                              }
+                              expandable={true}
+                              getItemString={[Function]}
+                              hideRoot={false}
+                              isCircular={false}
+                              isCustomNode={[Function]}
+                              keyPath={
+                                Array [
+                                  "counter",
+                                  "root",
+                                ]
+                              }
+                              labelRenderer={[Function]}
+                              level={1}
+                              nodeType="Object"
+                              nodeTypeIndicator="{}"
+                              postprocessValue={[Function]}
+                              shouldExpandNode={[Function]}
+                              styling={[Function]}
+                              value={
+                                Object {
+                                  "count": 0,
+                                }
+                              }
+                              valueRenderer={[Function]}
+                            >
+                              <li
+                                style={
+                                  Object {
+                                    "marginLeft": "0.875em",
+                                    "paddingLeft": 0,
+                                    "paddingTop": "0.25em",
+                                    "position": "relative",
+                                  }
+                                }
+                              >
+                                <JSONArrow
+                                  arrowStyle="single"
+                                  expanded={false}
+                                  nodeType="Object"
+                                  onClick={[Function]}
+                                  styling={[Function]}
+                                >
+                                  <div
+                                    onClick={[Function]}
+                                    style={
+                                      Object {
+                                        "cursor": "pointer",
+                                        "display": "inline-block",
+                                        "paddingLeft": 0,
+                                        "paddingRight": "0.5em",
+                                      }
+                                    }
+                                  >
+                                    <div
+                                      style={
+                                        Object {
+                                          "MozTransform": "rotateZ(0deg)",
+                                          "MozTransformOrigin": "45% 50%",
+                                          "MozTransition": "150ms",
+                                          "WebkitTransform": "rotateZ(0deg)",
+                                          "WebkitTransformOrigin": "45% 50%",
+                                          "WebkitTransition": "150ms",
+                                          "color": "#268bd2",
+                                          "fontSize": "0.75em",
+                                          "lineHeight": "1.1em",
+                                          "marginLeft": 0,
+                                          "position": "relative",
+                                          "transform": "rotateZ(0deg)",
+                                          "transformOrigin": "45% 50%",
+                                          "transition": "150ms",
+                                        }
+                                      }
+                                    >
+                                      ▶
+                                    </div>
+                                  </div>
+                                </JSONArrow>
+                                <label
+                                  onClick={[Function]}
+                                  style={
+                                    Object {
+                                      "MozUserSelect": "inherit",
+                                      "WebkitUserSelect": "inherit",
+                                      "color": "#268bd2",
+                                      "cursor": "pointer",
+                                      "display": "inline-block",
+                                      "margin": 0,
+                                      "padding": 0,
+                                    }
+                                  }
+                                >
+                                  <span>
+                                    counter
+                                    :
+                                  </span>
+                                </label>
+                                <span
+                                  onClick={[Function]}
+                                  style={
+                                    Object {
+                                      "color": "#859900",
+                                      "cursor": "default",
+                                      "paddingLeft": "0.5em",
+                                    }
+                                  }
+                                >
+                                  <span>
+                                    <span
+                                      style={
+                                        Object {
+                                          "marginLeft": "0.3em",
+                                          "marginRight": "0.3em",
+                                        }
+                                      }
+                                    >
+                                      {}
+                                    </span>
+                                     
+                                    1 key
+                                  </span>
+                                </span>
+                                <ul
+                                  style={
+                                    Object {
+                                      "display": "block",
+                                      "listStyle": "none",
+                                      "margin": 0,
+                                      "padding": 0,
+                                    }
+                                  }
+                                />
+                              </li>
+                            </JSONNestedNode>
+                          </JSONObjectNode>
+                        </JSONNode>
+                      </ul>
+                    </li>
+                  </JSONNestedNode>
+                </JSONObjectNode>
+              </JSONNode>
+            </ul>
+          </JSONTree>
+        </div>
+      </TestComponent>
+    </Connect(TestComponent)>
+  </Provider>
+</Component>
+`;

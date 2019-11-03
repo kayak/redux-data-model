@@ -1,30 +1,16 @@
-import {
-  combineModelReducers,
-  Model,
-  resuxRootSaga,
-  Subscriber,
-} from 'react-resux';
-import {
-  useModelActions,
-  useModelSelector,
-  useSubscriberActions,
-} from 'react-resux-hooks';
+import {combineModelReducers, Model, resuxRootSaga, Subscriber,} from 'react-resux';
+import {useModelActions, useModelSelector, useSubscriberActions,} from 'react-resux-hooks';
 import createSagaMiddleware from 'redux-saga';
-import {
-  applyMiddleware,
-  combineReducers,
-  createStore,
-} from 'redux';
+import {applyMiddleware, combineReducers, createStore,} from 'redux';
 import logger from 'redux-logger';
 import * as _ from 'lodash';
-import {
-  Provider,
-  useSelector,
-} from 'react-redux';
+import {Provider, useSelector,} from 'react-redux';
 import * as React from 'react';
 import JSONTree from 'react-json-tree';
+import * as fetch from 'isomorphic-unfetch';
 
 async function fetchApi(url) {
+  // @ts-ignore
   return await fetch(url).then(response => response.json());
 }
 
@@ -101,13 +87,17 @@ export const pageSubscriber = new Subscriber([userModel, postModel]).takeLatest(
 );
 
 const sagaMiddleware = createSagaMiddleware();
+const middlewares = [sagaMiddleware];
+
+if (process.env.NODE_ENV === `development`) {
+  middlewares.push(logger);
+}
 
 const store = createStore(combineReducers({
   ...combineModelReducers([postModel, userModel]),
-}), applyMiddleware(logger, sagaMiddleware));
+}), applyMiddleware(...middlewares));
 
 sagaMiddleware.run(() => resuxRootSaga([userModel, postModel, pageSubscriber]));
-
 
 function TestComponent() {
   const [userId, setUserId] = React.useState(1);
@@ -163,6 +153,7 @@ function TestComponent() {
 export default () => {
   return (
     <Provider store={store}>
+      // @ts-ignore
       <TestComponent />
     </Provider>
   );

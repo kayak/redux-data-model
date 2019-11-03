@@ -1,6 +1,7 @@
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+import * as Swal from "sweetalert2";
+import * as withReactContent from "sweetalert2-react-content";
 
+// @ts-ignore
 const ReactSwal = withReactContent(Swal).mixin({
   customClass: {
     confirmButton: "btn btn-lg btn-primary mx-2 px-5",

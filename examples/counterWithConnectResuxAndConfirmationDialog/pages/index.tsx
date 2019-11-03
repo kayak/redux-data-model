@@ -28,22 +28,22 @@ export const counterModel = new Model({
     count: state => state.count
   },
   reducers: {
-    increment(state, action) {
+    increment(state, _action) {
       state.count += 1;
     },
-    decrement(state, action) {
+    decrement(state, _action) {
       state.count -= 1;
     }
   },
   effects: {
-    *tryToIncrement(action, sagaEffects, {increment}) {
+    *tryToIncrement(_action, sagaEffects, {increment}) {
       const hasConfirmed = yield sagaEffects.call(showConfirm, {
         text: "Are you sure you want to increment?"
       });
 
       if (hasConfirmed) yield sagaEffects.put(increment());
     },
-    *tryToDecrement(action, sagaEffects, {decrement}) {
+    *tryToDecrement(_action, sagaEffects, {decrement}) {
       const hasConfirmed = yield sagaEffects.call(showConfirm, {
         text: "Are you sure you want to decrement?"
       });
@@ -54,13 +54,15 @@ export const counterModel = new Model({
 });
 
 const sagaMiddleware = createSagaMiddleware();
+const middlewares = [sagaMiddleware];
 
-const store = createStore(
-  combineReducers({
-    ...combineModelReducers([counterModel])
-  }),
-  applyMiddleware(logger, sagaMiddleware)
-);
+if (process.env.NODE_ENV === `development`) {
+  middlewares.push(logger);
+}
+
+const store = createStore(combineReducers({
+  ...combineModelReducers([counterModel]),
+}), applyMiddleware(...middlewares));
 
 sagaMiddleware.run(() => resuxRootSaga([counterModel]));
 
@@ -71,11 +73,11 @@ function TestComponent({ count, counter }) {
   return (
     <>
       <div>
-        <strong>Count:</strong> {count}
+        <strong>Count:</strong> <span id="counterValue">{count}</span>
       </div>
       <div>
-        <button onClick={() => counter.tryToIncrement()}>Increment</button> |{" "}
-        <button onClick={() => counter.tryToDecrement()}>Decrement</button>
+        <button id="incrementButton" onClick={() => counter.tryToIncrement()}>Increment</button> |{" "}
+        <button id="decrementButton" onClick={() => counter.tryToDecrement()}>Decrement</button>
       </div>
       <br />
       <hr />
@@ -90,7 +92,7 @@ function TestComponent({ count, counter }) {
   );
 }
 
-function mapStateToProps(state, props, selectors) {
+function mapStateToProps(state, _props, selectors) {
   return {
     count: selectors.counter.count(state)
   };
