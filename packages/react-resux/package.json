@@ -15,7 +15,7 @@
     "url": "git+https://github.com/kayak/react-resux.git"
   },
   "scripts": {
-    "clean": "rimraf dist js_coverage .docz .rpt2_cache",
+    "clean": "rimraf dist js_coverage .rpt2_cache",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "test": "jest",

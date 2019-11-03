@@ -1,9 +1,7 @@
 ---
-name: FAQ
-route: /faq
+title: FAQ
+id: faq
 ---
-
-# FAQ
 
 ## Is using vanilla redux/redux-sagas and react-resux together fine?
 Yep, perfectly fine. No problem.

@@ -1,9 +1,7 @@
 ---
-name: Testing
-route: /testing
+title: Testing
+id: testing
 ---
-
-# Testing
 
 One of the main design decisions of this library, was to keep it easier to test the business logic in your selectors,
 reducers, and effects, in spite of the abstraction. As a matter of fact, we believe it's actually simpler than

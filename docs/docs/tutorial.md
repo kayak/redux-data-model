@@ -1,9 +1,7 @@
 ---
-name: Getting Started
-route: /gettingStarted
+title: Tutorial
+id: tutorial
 ---
-
-# Getting Started
 
 This tutorial will introduce you to the basics of react-resux by building a counter application, which will
 not only display the current counter value, but that also provides the means for incrementing/decrementing.
@@ -96,9 +94,7 @@ For the sake of example, the application state would be somewhat similar to:
 
 Notice that countModel.state is namespaced with the namespace option provided to the [model]. By now you probably
 realised that [model]'s namespaces must be unique. And you'd be totally right to assume that. In fact react-resux
-will enforce that when calling
-[combineModelReducers](https://kayak.github.io/react-resux/README.md#combinemodelreducers) function. Enough of
-digressions though.
+will enforce that when calling [combineModelReducers] function. Enough of digressions though.
 
 ## Getting to the UI
 
@@ -482,7 +478,7 @@ export default function CountComponent({count, counter}) {
 }
 ```
 
-It does look more compact than previous solutions, so we'd strongly recommend you to use our [hooks] API instead of
+It does look more compact than previous solutions, so we'd strongly recommend you to use [our Hooks API] instead of
 the [connectResux] high order component ([HOC]).
 
 ## Next up
@@ -497,14 +493,16 @@ via a simple interface.
 [react-redux]: https://react-redux.js.org/
 [redux-saga]: https://redux-saga.js.org/
 [connect]: https://react-redux.js.org/api/connect
-[connectResux]: https://kayak.github.io/react-resux/README.md#connectresux
 [redux middleware]: https://redux.js.org/advanced/middleware
 [sweetalert2]: https://sweetalert2.github.io/
 [immer]: https://github.com/immerjs/immer
 
-[model]: /react-resux/concepts#model
-[subscriber]: /react-resux/concepts#subscriber
-[useModelActions]: /react-resux/README.md#usemodelactions
-[useSubscriberActions]: /react-resux/README.md#usesubscriberactions
-[useModelSelector]: /react-resux/README.md#usemodelselector
-[Integrating with Redux/Redux Saga]: /react-resux/redux-integration
+[model]: concepts#model
+[subscriber]: concepts#subscriber
+[connectResux]: api/README.md#connectresux
+[useModelActions]: api/README.md#usemodelactions
+[useSubscriberActions]: api/README.md#usesubscriberactions
+[useModelSelector]: api/README.md#usemodelselector
+[combineModelReducers]: api/README.md#combinemodelreducers
+[Integrating with Redux/Redux Saga]: redux-integration
+[our Hooks API]: hooks

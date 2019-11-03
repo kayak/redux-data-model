@@ -1,9 +1,7 @@
 ---
-name: Development
-route: /development
+title: Development
+id: development
 ---
-
-# Development
 
 ## Building
 
@@ -38,7 +36,7 @@ npm run test:coverage
 
 ## Documentation
 
-We use [docz](https://www.docz.site/) as our documentation framework. To see the documentation in dev mode run:
+We use [docusaurus](https://docusaurus.io/) as our documentation framework. To see the documentation in dev mode run:
 
 ```bash
 npm run docs:watch

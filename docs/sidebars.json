@@ -1,0 +1,20 @@
+{
+  "docs": {
+    "Introduction": ["introduction", "concepts"],
+    "Getting Started": ["tutorial", "redux-integration", "hooks"],
+    "Testing": ["testing"],
+    "Contributing": ["development"],
+    "FAQ": ["faq"]
+  },
+  "api": {
+    "API": [
+      "api/api-index"
+    ],
+    "Classes": [
+      "api/classes/api-classes-model", "api/classes/api-classes-subscriber"
+    ],
+    "Interfaces": [
+      "api/interfaces/api-interfaces-model-options"
+    ]
+  }
+}

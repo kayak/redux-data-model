@@ -1,9 +1,7 @@
 ---
-name: Introduction
-route: /
+title: Introduction
+id: introduction
 ---
-
-# Introduction
 
 Opinionated, Redux abstraction with built-in immutability, async and more. Heavily dva inspired.
 
@@ -33,7 +31,7 @@ Naturally, the react-resux-hooks package is optional, in case you're willing to 
 
 ## Getting started
 
-We do a deep dive on how react-resux works in our [getting started](/react-resux/gettingStarted) tutorial. If you
+We do a deep dive on how react-resux works in our [getting started](tutorial.md) tutorial. If you
 are curious about the concepts involved or just want to grasp how our API looks like, read the
-[concepts](/react-resux/concepts) section. For a good overview on how to test your code, see the
-[testing](/react-resux/testing) section.
+[concepts](concepts.md) section. For a good overview on how to test your code, see the
+[testing](testing.md) section.

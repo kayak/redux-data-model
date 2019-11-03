@@ -1,7 +1,7 @@
 ---
-name: Classes - Model
-menu: API
-route: /classes/model.md
+title: API - Classes - Subscriber
+sidebar_label: Subscriber
+id: api-classes-subscriber
 ---
 
 # React-Resux API Reference Guide

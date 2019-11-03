@@ -7,7 +7,7 @@
     "excludeProtected": true,
     "mode": "file",
     "readme": "none",
-    "out": "./docs/api",
+    "out": "./docs/docs/api",
     "theme": "markdown",
     "tsconfig": "tsconfig.json",
     "listInvalidSymbolLinks": true,

@@ -1,9 +1,7 @@
 ---
-name: Hooks
-route: /hooks
+title: Hooks
+id: hooks
 ---
-
-# Hooks
 
 > WARNING: This requires the react-resux-hooks package to be installed.
 
@@ -11,7 +9,7 @@ React-Resux is a hooks-first library and it provides three distinct hooks as par
 
 ## useModelSelector
 Returns the result of a given a selector, which has the state and perhaps additional arguments as arguments. For
-more info see its [API](/react-resux/README.md#usemodelselector) reference.
+more info see its [API](api/README.md#usemodelselector) reference.
 
 #### Read data example:
 ```javascript
@@ -32,7 +30,7 @@ export default function({page}) {
 ## useModelActions
 
 Returns an object with all reducer/effect action creators, defined in the provided model, already bound with
-redux's dispatch. For more info see its [API](/react-resux/README.md#usemodelactions) reference.
+redux's dispatch. For more info see its [API](api/README.md#usemodelactions) reference.
 
 #### Read data example:
 ```javascript
@@ -51,7 +49,7 @@ export default function({page}) {
 ## useSubscriberActions
 
 Returns an object with all effect action creators, defined in the provided subscriber, already bound with redux's
-dispatch. For more info see its [API](/react-resux/README.md#usesubscriberactions) reference.
+dispatch. For more info see its [API](api/README.md#usesubscriberactions) reference.
 
 #### Read data example:
 ```javascript

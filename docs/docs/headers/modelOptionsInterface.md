@@ -1,7 +1,7 @@
 ---
-name: Index
-menu: API
-route: /README.md
+title: API - Interfaces - ModelOptions
+sidebar_label: ModelOptions
+id: api-interfaces-model-options
 ---
 
 # React-Resux API Reference Guide

@@ -1,9 +1,7 @@
 ---
-name: Integrating with Redux/Redux Saga
-route: /redux-integration
+title: Integrating with Redux/Redux Saga
+id: redux-integration
 ---
-
-# Integrating with Redux/Redux Saga
 
 Before you can use a model in your components, you have to hook its model's reducers into redux. The same applies for
 hooking the subscribers and model's effects into redux-saga. For such do:
@@ -33,5 +31,5 @@ sagaMiddleware.run(() => resuxRootSaga([modelA, modelB, subscriberX]));
 ```
 
 For more info on the API required for setting redux and saga up, see
-[combineModelReducers](/react-resux/README.md#combinemodelreducers) and
-[resuxRootSaga](/react-resux/README.md#resuxrootsaga).
+[combineModelReducers](api/README.md#combinemodelreducers) and
+[resuxRootSaga](api/README.md#resuxrootsaga).

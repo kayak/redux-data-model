@@ -1,9 +1,7 @@
 ---
-name: Concepts
-route: /concepts
+title: Concepts
+id: concepts
 ---
-
-# Concepts
 
 React-resux has only a few core concepts. Namely [models](#model) and [subscribers](#subscriber).
 
@@ -59,16 +57,16 @@ that can be used during a model instantiation.
 
 ### Model Options
 
-An object with a few key-value pairs. Being [namespace](/react-resux/interfaces/modeloptions.md#namespace) and
-[state](/react-resux/interfaces/modeloptions.md#state) mandatory, while
-[selectors](/react-resux/interfaces/modeloptions.md#optional-selectors),
-[reducers](/react-resux/interfaces/modeloptions.md#optional-reducers),
-[effects](/react-resux/interfaces/modeloptions.md#optional-effects) are optional. For more info see
-[this](/react-resux/interfaces/modeloptions.md).
+An object with a few key-value pairs. Being [namespace](api/interfaces/modeloptions.md#namespace) and
+[state](api/interfaces/modeloptions.md#state) mandatory, while
+[selectors](api/interfaces/modeloptions.md#optional-selectors),
+[reducers](api/interfaces/modeloptions.md#optional-reducers),
+[effects](api/interfaces/modeloptions.md#optional-effects) are optional. For more info see
+[this](api/interfaces/modeloptions.md).
 
 ### Models's API
 
-For more info see [this](/react-resux/classes/model.md).
+For more info see [this](api/classes/model.md).
 
 ## Subscriber
 
@@ -93,4 +91,4 @@ export const pageSubscriber = new Subscriber([userModel]).takeLatest(
 
 ### Subscriber's API
 
-For more info see [this](/react-resux/classes/subscriber.md).
+For more info see [this](api/classes/subscriber.md).

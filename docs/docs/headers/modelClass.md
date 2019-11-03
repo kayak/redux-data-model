@@ -1,7 +1,7 @@
 ---
-name: Interface - ModelOptions
-menu: API
-route: /interfaces/modeloptions.md
+title: API - Classes - Model
+sidebar_label: Model
+id: api-classes-model
 ---
 
 # React-Resux API Reference Guide
