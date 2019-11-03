@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Blog · React-Resux</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Opinionated, Redux abstraction with built-in immutability, async and more. Heavily dva inspired."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Blog · React-Resux"/><meta property="og:type" content="website"/><meta property="og:url" content="https://kayak.github.io/react-resux/"/><meta property="og:description" content="Opinionated, Redux abstraction with built-in immutability, async and more. Heavily dva inspired."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/react-resux/undefined"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-resux/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-resux/css/main.css"/><script src="/react-resux/js/codetabs.js"></script></head><body class="blog"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-resux/"><h2 class="headerTitle">React-Resux</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/react-resux/docs/introduction" target="_self">Docs</a></li><li class=""><a href="/react-resux/docs/api/api-index" target="_self">API</a></li><li class=""><a href="https://github.com/kayak/react-resux" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Recent Posts</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Recent Posts</h3><ul class=""><li class="navListItem"><a class="navItem" href="/react-resux/blog/2016/03/11/example">Blog Title</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer postContainer blogContainer"><div class="wrapper"><div class="posts"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/react-resux/blog/2016/03/11/example">Blog Title</a></h1><p class="post-meta">March 11, 2016</p><div class="authorBlock"><p class="post-authorName"><a href="http://twitter.com/" target="_blank" rel="noreferrer noopener">Blog Author</a></p><div class="authorPhoto"><a href="http://twitter.com/" target="_blank" rel="noreferrer noopener"><img src="https://graph.facebook.com/100002976521003/picture/?height=200&amp;width=200" alt="Blog Author"/></a></div></div></header><article class="post-content"><div><span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum massa eget nulla aliquet sagittis. Proin odio tortor, vulputate ut odio in, ultrices ultricies augue. Cras ornare ultrices lorem malesuada iaculis. Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.</p>
+</span></div><div class="read-more"><a class="button" href="/react-resux/blog/2016/03/11/example">Read More</a></div></article></div><div class="docs-prevnext"></div></div></div></div></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/react-resux/" class="nav-home"></a><div><h5>Docs</h5><a href="/react-resux/docs/introduction">Introduction</a><a href="/react-resux/docs/tutorial">Getting Started</a><a href="/react-resux/docs/testing">Testing</a><a href="/react-resux/faq">FAQ</a></div><div><h5>More</h5><a class="github-button" href="https://github.com/kayak/react-resux/" data-icon="octicon-star" data-count-href="/kayak/react-resux/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2019 KAYAK Germany, GmbH</section></footer></div></body></html>

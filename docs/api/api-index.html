@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>API - Index · React-Resux</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="# React-Resux API Reference Guide"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="API - Index · React-Resux"/><meta property="og:type" content="website"/><meta property="og:url" content="https://kayak.github.io/react-resux/"/><meta property="og:description" content="# React-Resux API Reference Guide"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/react-resux/undefined"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-resux/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-resux/css/main.css"/><script src="/react-resux/js/codetabs.js"></script></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-resux/"><h2 class="headerTitle">React-Resux</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/react-resux/docs/introduction" target="_self">Docs</a></li><li class="siteNavGroupActive siteNavItemActive"><a href="/react-resux/docs/api/api-index" target="_self">API</a></li><li class=""><a href="https://github.com/kayak/react-resux" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>API</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">API</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/react-resux/docs/api/api-index">Index</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Classes</h3><ul class=""><li class="navListItem"><a class="navItem" href="/react-resux/docs/api/classes/api-classes-model">Model</a></li><li class="navListItem"><a class="navItem" href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Interfaces</h3><ul class=""><li class="navListItem"><a class="navItem" href="/react-resux/docs/api/interfaces/api-interfaces-model-options">ModelOptions</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">API - Index</h1></header><article><div><span><h1><a class="anchor" aria-hidden="true" id="react-resux-api-reference-guide"></a><a href="#react-resux-api-reference-guide" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>React-Resux API Reference Guide</h1>
+<p>This reference guide lists all methods exposed by react-resux. Contributions like linguistic improvements, adding
+more details to the descriptions or additional examples are highly appreciated! Please note that the docs are
+generated from source.</p>
+<p><a href="/react-resux/docs/api/api-index">react-resux</a></p>
+<h1><a class="anchor" aria-hidden="true" id="react-resux"></a><a href="#react-resux" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>react-resux</h1>
+<h2><a class="anchor" aria-hidden="true" id="index"></a><a href="#index" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Index</h2>
+<h3><a class="anchor" aria-hidden="true" id="classes"></a><a href="#classes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Classes</h3>
+<ul>
+<li><a href="/react-resux/docs/api/classes/api-classes-model">Model</a></li>
+<li><a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a></li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="interfaces"></a><a href="#interfaces" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Interfaces</h3>
+<ul>
+<li><a href="/react-resux/docs/api/interfaces/api-interfaces-model-options">ModelOptions</a></li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="high-order-component-hoc-functions"></a><a href="#high-order-component-hoc-functions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>High Order Component (HOC) Functions</h3>
+<ul>
+<li><a href="/react-resux/docs/api/api-index#connectresux">connectResux</a></li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="react-hook-functions"></a><a href="#react-hook-functions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>React Hook Functions</h3>
+<ul>
+<li><a href="/react-resux/docs/api/api-index#usemodelactions">useModelActions</a></li>
+<li><a href="/react-resux/docs/api/api-index#usemodelselector">useModelSelector</a></li>
+<li><a href="/react-resux/docs/api/api-index#usesubscriberactions">useSubscriberActions</a></li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="redux-saga-setup-functions"></a><a href="#redux-saga-setup-functions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Redux/Saga Setup Functions</h3>
+<ul>
+<li><a href="/react-resux/docs/api/api-index#combinemodelreducers">combineModelReducers</a></li>
+<li><a href="/react-resux/docs/api/api-index#resuxrootsaga">resuxRootSaga</a></li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="high-order-component-hoc-functions-1"></a><a href="#high-order-component-hoc-functions-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>High Order Component (HOC) Functions</h2>
+<h3><a class="anchor" aria-hidden="true" id="connectresux"></a><a href="#connectresux" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>connectResux</h3>
+<p>▸ <strong>connectResux</strong>(<code>modelsOrSubscribers</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a> | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>[], <code>userProvidedMapStateToProps</code>: MapStateToPropsWithSelectors‹any, any, any›, <code>userProvidedMapDispatchToProps</code>: MapDispatchToPropsWithActionCreators‹any, any›): <em>any</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/redux.ts#L84">react-resux/src/redux.ts:84</a></em></p>
+<p>Equivalent to redux's connect function. This should be used when the hooks api is not desired or
+supported. Otherwise check <a href="/react-resux/docs/api/api-index#usemodelactions">useModelActions</a>, <a href="/react-resux/docs/api/api-index#usemodelselector">useModelSelector</a>, and <a href="/react-resux/docs/api/api-index#usesubscriberactions">useSubscriberActions</a> up.</p>
+<p><strong><code>example</code></strong>
+const ConnectedComponent = connectResux([modelA, modelB], mapStateToProps, mapDispatchToProps)</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr><th>Name</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>modelsOrSubscribers</code></td><td><a href="/react-resux/docs/api/classes/api-classes-model">Model</a> | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>[]</td><td>-</td><td>An array of either Model or Subscriber instances.</td></tr>
+<tr><td><code>userProvidedMapStateToProps</code></td><td>MapStateToPropsWithSelectors‹any, any, any›</td><td>null</td><td>A mapToProps equivalent, which has a third argument with all selectors.</td></tr>
+<tr><td><code>userProvidedMapDispatchToProps</code></td><td>MapDispatchToPropsWithActionCreators‹any, any›</td><td>null</td><td>A mapDispatchToProps equivalent, which has a third argument with all                                       models' action creators and a fourth argument with all subscriber's                                       action creators.</td></tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>any</em></p>
+<p>A connect HOC.</p>
+<hr>
+<h2><a class="anchor" aria-hidden="true" id="react-hook-functions-1"></a><a href="#react-hook-functions-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>React Hook Functions</h2>
+<h3><a class="anchor" aria-hidden="true" id="usemodelactions"></a><a href="#usemodelactions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>useModelActions</h3>
+<p>▸ <strong>useModelActions</strong>(<code>model</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a>): <em>ActionCreatorsMapObject</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux-hooks/src/useModelActions.ts#L17">react-resux-hooks/src/useModelActions.ts:17</a></em></p>
+<p>A react hook for returning already bound action creators for the provided model. If you don't want/need to use
+the hooks api, check <a href="/react-resux/docs/api/api-index#connectresux">connectResux</a> up.</p>
+<p><strong><code>example</code></strong>
+const modelActions = useModelActions(model);</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr><th>Name</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>model</code></td><td><a href="/react-resux/docs/api/classes/api-classes-model">Model</a></td><td>A model instance.</td></tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>ActionCreatorsMapObject</em></p>
+<p>An object with already bound action creators.</p>
+<hr>
+<h3><a class="anchor" aria-hidden="true" id="usemodelselector"></a><a href="#usemodelselector" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>useModelSelector</h3>
+<p>▸ <strong>useModelSelector</strong>(<code>model</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a>, <code>selectorFunc</code>: any): <em>Record‹string, function›</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux-hooks/src/useModelSelector.ts#L16">react-resux-hooks/src/useModelSelector.ts:16</a></em></p>
+<p>A react hook for returning data from the provided model's state, by the means of one of its selectors. If you
+don't want/need to use the hooks api, check <a href="/react-resux/docs/api/api-index#connectresux">connectResux</a> up.</p>
+<p><strong><code>example</code></strong>
+const someDataFromState = useModelSelector(model, (state, selectors) =&gt; selectors.count(state));</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr><th>Name</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>model</code></td><td><a href="/react-resux/docs/api/classes/api-classes-model">Model</a></td><td>A model instance.</td></tr>
+<tr><td><code>selectorFunc</code></td><td>any</td><td>-</td></tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>Record‹string, function›</em></p>
+<p>Data from model's state.</p>
+<hr>
+<h3><a class="anchor" aria-hidden="true" id="usesubscriberactions"></a><a href="#usesubscriberactions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>useSubscriberActions</h3>
+<p>▸ <strong>useSubscriberActions</strong>(<code>subscriber</code>: <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>): <em>ActionCreatorsMapObject</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux-hooks/src/useSubscriberActions.ts#L17">react-resux-hooks/src/useSubscriberActions.ts:17</a></em></p>
+<p>A react hook for returning already bound action creators for the provided subscriber. If you don't want/need
+to use the hooks api, check <a href="/react-resux/docs/api/api-index#connectresux">connectResux</a> up.</p>
+<p><strong><code>example</code></strong>
+const subscriberActions = useSubscriberActions(subscriber);</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr><th>Name</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>subscriber</code></td><td><a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a></td><td>A subscriber instance.</td></tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>ActionCreatorsMapObject</em></p>
+<p>An object with already bound action creators.</p>
+<hr>
+<h2><a class="anchor" aria-hidden="true" id="redux-saga-setup-functions-1"></a><a href="#redux-saga-setup-functions-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Redux/Saga Setup Functions</h2>
+<h3><a class="anchor" aria-hidden="true" id="combinemodelreducers"></a><a href="#combinemodelreducers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>combineModelReducers</h3>
+<p>▸ <strong>combineModelReducers</strong>(<code>models</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a>[]): <em>ReducersMapObject</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/redux.ts#L110">react-resux/src/redux.ts:110</a></em></p>
+<p>Returns a reducer map object that can be deconstructed into the combineReducers helper, from redux, so that
+redux is aware of any reducers produced by models.</p>
+<p><strong><code>example</code></strong>
+const store = createStore(combineReducers({
+...combineModelReducers([modelA, modelB]),
+}), applyMiddleware(sagaMiddleware));</p>
+<p><strong><code>throws</code></strong> {DuplicatedModelNamespaceError} When multiple models have the same namespace.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr><th>Name</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>models</code></td><td><a href="/react-resux/docs/api/classes/api-classes-model">Model</a>[]</td><td>An array of Model instances.</td></tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>ReducersMapObject</em></p>
+<p>A reducer's map object.</p>
+<hr>
+<h3><a class="anchor" aria-hidden="true" id="resuxrootsaga"></a><a href="#resuxrootsaga" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resuxRootSaga</h3>
+<p>▸ <strong>resuxRootSaga</strong>(<code>sagaContainers</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a> | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>[]): <em>SagaIterator</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/redux.ts#L140">react-resux/src/redux.ts:140</a></em></p>
+<p>Returns a root saga generator that can be passed to sagaMiddleware's run function, so that redux-saga is aware
+of any sagas produced by either models or subscribers.</p>
+<p><strong><code>example</code></strong>
+sagaMiddleware.run(() =&gt; resuxRootSaga([modelA, subscriberA]));</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr><th>Name</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>sagaContainers</code></td><td><a href="/react-resux/docs/api/classes/api-classes-model">Model</a> | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>[]</td><td>An array of either Model or Subscriber instances.</td></tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>SagaIterator</em></p>
+<p>A root saga.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-next button" href="/react-resux/docs/api/classes/api-classes-model"><span>Model</span><span class="arrow-next"> →</span></a></div></div></div></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/react-resux/" class="nav-home"></a><div><h5>Docs</h5><a href="/react-resux/docs/introduction">Introduction</a><a href="/react-resux/docs/tutorial">Getting Started</a><a href="/react-resux/docs/testing">Testing</a><a href="/react-resux/faq">FAQ</a></div><div><h5>More</h5><a class="github-button" href="https://github.com/kayak/react-resux/" data-icon="octicon-star" data-count-href="/kayak/react-resux/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2019 KAYAK Germany, GmbH</section></footer></div></body></html>
