@@ -1,7 +1,7 @@
 {
   "packages": [
-    "packages/*",
-    "examples/*"
+    "examples/*",
+    "packages/*"
   ],
   "command": {
     "publish": {
@@ -14,5 +14,5 @@
       "yes": true
     }
   },
-  "version": "0.4.0"
+  "version": "0.5.0"
 }
