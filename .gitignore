@@ -33,7 +33,6 @@ dist/
 *.tgz
 CHANGELOG
 docs/api
-examples/*/package-lock.json
 lerna-debug.log
 npm-debug.log
 packages/*/lib
