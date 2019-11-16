@@ -5,8 +5,10 @@
   "description": "react-resux-connect-resux-example",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf .next",
+    "clean": "rimraf .next js_coverage",
     "test": "jest",
+    "test:watch": "jest --watchAll --verbose",
+    "test:coverage": "jest --verbose --coverage",
     "start": "next"
   },
   "dependencies": {

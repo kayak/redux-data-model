@@ -17,7 +17,7 @@ import {
 } from 'react-redux';
 import * as React from 'react';
 import JSONTree from 'react-json-tree';
-import {showConfirm} from '../alerts';
+import {showConfirm} from '../utils/alerts';
 
 export const counterModel = new Model({
   namespace: "counter",
