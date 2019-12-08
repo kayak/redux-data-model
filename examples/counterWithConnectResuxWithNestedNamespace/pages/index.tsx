@@ -19,21 +19,21 @@ import * as React from 'react';
 import JSONTree from 'react-json-tree';
 
 export const counterModel = new Model({
-    namespace: 'projectA.counter',
-    state: {
-        count: 0,
+  namespace: 'projectA.counter',
+  state: {
+    count: 0,
+  },
+  selectors: {
+    count: (state) => state.count,
+  },
+  reducers: {
+    increment(state, _action) {
+      state.count += 1;
     },
-    selectors: {
-        count: (state) => state.count,
+    decrement(state, _action) {
+      state.count -= 1;
     },
-    reducers: {
-        increment(state, _action) {
-          state.count += 1;
-        },
-        decrement(state, _action) {
-          state.count -= 1;
-        },
-    },
+  },
 });
 
 const sagaMiddleware = createSagaMiddleware();

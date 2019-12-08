@@ -6,7 +6,10 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf .next js_coverage",
+    "lint": "eslint pages --ext .ts,.tsx",
+    "lint:fix": "eslint pages --ext .ts,.tsx --fix",
     "test": "jest",
+    "test:update": "jest -u",
     "test:watch": "jest --watchAll --verbose",
     "test:coverage": "jest --verbose --coverage",
     "start": "next"

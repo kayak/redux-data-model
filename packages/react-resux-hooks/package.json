@@ -19,6 +19,7 @@
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "test": "jest",
+    "test:update": "jest -u",
     "test:watch": "jest --watchAll --verbose",
     "test:coverage": "jest --verbose --coverage",
     "coveralls": "coveralls",

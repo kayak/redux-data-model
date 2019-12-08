@@ -19,6 +19,7 @@
     "lint": "lerna run --parallel lint",
     "lint:fix": "lerna run --parallel lint:fix",
     "test": "lerna run --parallel test",
+    "test:update": "lerna run test:update",
     "test:watch": "lerna run test:watch",
     "test:coverage": "lerna run test:coverage",
     "docs:watch": "npm run typedoc:build && npm --prefix docs start",
