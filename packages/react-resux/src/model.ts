@@ -1,6 +1,6 @@
 import produce from 'immer';
-import {get, isPlainObject, isString, keys, size, toPairs, uniq, memoize} from 'lodash';
-import {ActionCreatorsMapObject, AnyAction, Reducer} from 'redux';
+import {get, isPlainObject, isString, keys, memoize, size, toPairs, uniq} from 'lodash';
+import {AnyAction, Reducer} from 'redux';
 import {Saga} from '@redux-saga/core';
 import {
   actionChannel,
@@ -29,7 +29,16 @@ import {
   throttle,
 } from 'redux-saga/effects';
 import {createSelector} from 'reselect';
-import {EffectMap, EffectModelMap, ReducerMap, SelectorMap, SelectorModelMap, State} from './baseTypes';
+import {resuxBlockingGenerator} from './saga';
+import {
+  ActionCreatorsMapObject,
+  EffectMap,
+  EffectModelMap,
+  ReducerMap,
+  SelectorMap,
+  SelectorModelMap,
+  State
+} from './baseTypes';
 
 /**
  * @ignore
@@ -66,16 +75,39 @@ const defaultReducer = (
   _action,
 ) => state;
 
+const namespaceRegex = new RegExp('^([A-Za-z0-9]+)([.][A-Za-z0-9]+)*$');
+
+/**
+ * @ignore
+ */
+interface ActionInternalsObject {
+  resolve: Function;
+  reject: Function;
+}
+
+/**
+ * @ignore
+ */
+interface ActionWithInternals extends AnyAction {
+  type: string;
+  payload: object;
+  __actionInternals: ActionInternalsObject;
+}
+
 /**
  * Model options are used for initialising a [[Model]] instance.
  */
 export interface ModelOptions {
   /**
    * The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
-   * and, as a matter of fact, resux will enforce it.
+   * and, as a matter of fact, resux will enforce it. The namespace is effectively an object's path in which the
+   * state will be stored, which can introduce new nesting levels in the store. This might be useful if you
+   * need to put resux's data somewhere else that not on the root level of the store.
    *
    * @example namespace: 'pageA'
    * @example namespace: 'pageB'
+   * @example namespace: 'projectA.pageA'
+   * @example namespace: 'projectA.pageB'
    */
   namespace: string;
   /**
@@ -211,6 +243,14 @@ export class Model {
       };
     }
 
+    if (!namespaceRegex.test(this._namespace)) {
+      throw {
+        name: 'InvalidNamespaceError',
+        message: `Namespace can only contain letters, numbers and/or dots, when nesting the data is needed. ` +
+        `It was validated against the following regex: ${String(namespaceRegex)}`,
+      };
+    }
+
     if (uniq(actionTypes).length !== actionTypes.length) {
       throw {
         name: 'DuplicatedActionTypesError',
@@ -234,8 +274,10 @@ export class Model {
   /**
    * @ignore
    */
-  public actionCreator(actionName: string, actionData: object = {}): AnyAction {
-    if (!isPlainObject(actionData)) {
+  public actionCreator(
+    actionName: string, payload: object = {}, __actionInternals: ActionInternalsObject=undefined,
+  ): ActionWithInternals {
+    if (!isPlainObject(payload)) {
       throw {
         name: 'ActionDataIsntPlainObjectError',
         message: `Action data must be a plain object, when calling action [${actionName}] in ` +
@@ -243,7 +285,7 @@ export class Model {
       };
     }
 
-    return {...actionData, type: this.actionType(actionName)};
+    return {type: this.actionType(actionName), payload, __actionInternals};
   }
 
   /**
@@ -257,11 +299,17 @@ export class Model {
     const actions = {};
 
     for (const reducerName in this._reducers) {
-      actions[reducerName] = (actionData: object = {}) => this.actionCreator(reducerName, actionData);
+      actions[reducerName] = (payload: object = {}, __actionInternals: ActionInternalsObject=undefined) => (
+        this.actionCreator(reducerName, payload, __actionInternals)
+      );
+      actions[reducerName].isEffect = false;
     }
 
     for (const effectName in this._effects) {
-      actions[effectName] = (actionData: object = {}) => this.actionCreator(effectName, actionData);
+      actions[effectName] = (payload: object = {}, __actionInternals: ActionInternalsObject=undefined) => (
+        this.actionCreator(effectName, payload, __actionInternals)
+      );
+      actions[effectName].isEffect = true;
     }
 
     return actions;
@@ -274,7 +322,10 @@ export class Model {
     const selectors = {};
 
     for (const [selectorName, selectorFunc] of toPairs(this._selectors)) {
-      const namespacedSelectorFunc = (allState, ...args) => selectorFunc(allState[this._namespace], ...args, allState);
+      const namespacedSelectorFunc = (allState, ...args) => {
+        const namespacedState = get(allState, this._namespace);
+        return selectorFunc(namespacedState, ...args, allState);
+      };
       selectors[selectorName] = createSelector([namespacedSelectorFunc], data => data);
     }
 
@@ -306,7 +357,7 @@ export class Model {
     const actionCreators = this.actionCreators();
 
     for (const [effectName, effectFunc] of toPairs(this._effects)) {
-      effects[effectName] = (actionData: object = {}) => effectFunc(actionData, sagaEffects, actionCreators);
+      effects[effectName] = (payload: object = {}) => effectFunc(payload, sagaEffects, actionCreators);
     }
 
     return effects;
@@ -317,6 +368,7 @@ export class Model {
    * calling its respective effect. For taking only latest or leading actions, at any given moment, look for
    * subscribers instead.
    *
+   * @throws {NonCompatibleActionError} When bindResuxActionCreators was not used to bind the action creators.
    * @returns An array of sagas.
    */
   public get reduxSagas(): Saga[] {
@@ -324,9 +376,7 @@ export class Model {
 
     for (const [effectName, effectFunc] of toPairs(this.modelEffects())) {
       const actionType = this.actionType(effectName);
-      reduxSagas.push(function *() {
-        yield blockingEffectTakeEvery(actionType, effectFunc);
-      });
+      reduxSagas.push(resuxBlockingGenerator(blockingEffectTakeEvery, actionType, effectFunc));
     }
 
     return reduxSagas;

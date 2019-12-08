@@ -1,4 +1,7 @@
+import {combineReducers} from 'redux';
 import {combineModelReducers, Model} from '../../src';
+
+jest.mock('redux', () => ({combineReducers: jest.fn()}));
 
 describe('combineModelReducers', () => {
   let articleModel;
@@ -23,6 +26,20 @@ describe('combineModelReducers', () => {
 
   it('returns a reducer mapping object with the reducers of the article model', () => {
     expect(result).toEqual({[articleModel.namespace]: modelReducersSpy.mock.results[0].value});
+  });
+
+  it('returns a reducer mapping object with nested reducers when an object path is present in the namespace', () => {
+    const nestedArticleModel = new Model({
+      namespace: 'projectA.articles',
+      state: {},
+    });
+    const nestedModelReducersSpy = jest.spyOn(nestedArticleModel, 'modelReducers').mockImplementation(
+      // Implements an identity reducer
+      () => (data) => data
+    );
+    expect(
+      combineModelReducers([nestedArticleModel])
+    ).toEqual({projectA: combineReducers({articles: nestedModelReducersSpy.mock.results[0].value})});
   });
 
   it('throws when multiple models have the same namespace', () => {

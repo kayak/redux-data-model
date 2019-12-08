@@ -5,7 +5,9 @@ describe('Subscriber', () => {
   let articleModel;
   let subscriber;
   let reducerASpy;
-  let action;
+  let __actionInternals;
+  let actionWithoutInternals;
+  let actionWithInternals;
 
   beforeEach(() => {
     reducerASpy = jest.fn();
@@ -17,24 +19,26 @@ describe('Subscriber', () => {
       }
     });
     subscriber = new Subscriber([articleModel]);
-    action = {type: articleModel.actionType('reducerA')};
+    __actionInternals = {resolve: jest.fn(), reject: jest.fn()};
+    actionWithoutInternals = {type: articleModel.actionType('reducerA'), payload: {}};
+    actionWithInternals = {...actionWithoutInternals, __actionInternals};
   });
 
   describe('modelActionCreators', () => {
-    let actionCreatorSpy;
+    let actionCreatorsSpy;
 
     beforeEach(() => {
-      actionCreatorSpy = jest.spyOn(articleModel, 'actionCreators');
+      actionCreatorsSpy = jest.spyOn(articleModel, 'actionCreators');
     });
 
     it('returns an entry for every model with their actionCreators', () => {
       expect(subscriber.modelActionCreators()).toEqual(
-        {[articleModel.namespace]: actionCreatorSpy.mock.results[0].value}
+        {[articleModel.namespace]: actionCreatorsSpy.mock.results[0].value}
       );
     });
   });
 
-  describe('actionCreators', () => {
+  describe('actionWithInternalsCreators', () => {
     it('returns an empty object when no reducers or effects exists', () => {
       expect(subscriber.actionCreators()).toEqual({});
     });
@@ -63,18 +67,18 @@ describe('Subscriber', () => {
       expect(subscriber.reduxSagas).toEqual([]);
     });
 
-    it('returns an empty list when action generator list is empty for a subscription', () => {
+    it('returns an empty list when actionWithInternals generator list is empty for a subscription', () => {
       expect(subscriber.takeLeading('takeLeadingEffect', []).reduxSagas).toEqual([]);
     });
 
-    it('returns a saga per action generator in a subscription', () => {
+    it('returns a saga per actionWithInternals generator in a subscription', () => {
       expect(subscriber.takeLeading('takeLeadingEffect', [
         jest.fn(),
         jest.fn(),
       ]).reduxSagas).toHaveLength(2);
     });
 
-    it('returns a saga per action generator in a subscription for as many subscriptions exist', () => {
+    it('returns a saga per actionWithInternals generator in a subscription for as many subscriptions exist', () => {
       expect(
         subscriber.takeLeading('takeLeadingEffect1', [
         jest.fn(),
@@ -90,8 +94,8 @@ describe('Subscriber', () => {
 
       beforeEach(() => {
         gen = subscriber.takeLeading('whatever',
-          [(action, {articles}) =>
-            articles.reducerA(action.page)],
+          [(actionWithInternals, {articles}) =>
+            articles.reducerA(actionWithInternals.page)],
         ).reduxSagas[0]();
       });
 
@@ -108,9 +112,9 @@ describe('Subscriber', () => {
       });
 
       it('calls generator that yields put(reducerAAction)', () => {
-        const worker = gen.next().value.payload.args[1](action);
+        const worker = gen.next().value.payload.args[1](actionWithInternals);
         expect(worker.next().value).toEqual(
-          allSagaEffects.put(action)
+          allSagaEffects.put(actionWithoutInternals)
         );
       });
     });
@@ -120,7 +124,7 @@ describe('Subscriber', () => {
 
       beforeEach(() => {
         gen = subscriber.takeLatest('whatever',
-          [(action, {articles}) => articles.reducerA(action.page)],
+          [(actionWithInternals, {articles}) => articles.reducerA(actionWithInternals.page)],
         ).reduxSagas[0]();
       });
 
@@ -137,9 +141,9 @@ describe('Subscriber', () => {
       });
 
       it('calls generator that yields put(reducerAAction)', () => {
-        const worker = gen.next().value.payload.args[1](action);
+        const worker = gen.next().value.payload.args[1](actionWithInternals);
         expect(worker.next().value).toEqual(
-          allSagaEffects.put(action)
+          allSagaEffects.put(actionWithoutInternals)
         );
       });
     });
@@ -149,7 +153,7 @@ describe('Subscriber', () => {
 
       beforeEach(() => {
         gen = subscriber.takeEvery('whatever',
-          [(action, {articles}) => articles.reducerA(action.page)],
+          [(actionWithInternals, {articles}) => articles.reducerA(actionWithInternals.page)],
         ).reduxSagas[0]();
       });
 
@@ -166,9 +170,9 @@ describe('Subscriber', () => {
       });
 
       it('calls generator that yields put(reducerAAction)', () => {
-        const worker = gen.next().value.payload.args[1](action);
+        const worker = gen.next().value.payload.args[1](actionWithInternals);
         expect(worker.next().value).toEqual(
-          allSagaEffects.put(action)
+          allSagaEffects.put(actionWithoutInternals)
         );
       });
     });

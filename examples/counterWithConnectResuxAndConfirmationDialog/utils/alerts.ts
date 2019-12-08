@@ -24,3 +24,10 @@ export async function showConfirm(options) {
   if (result.value !== true) return false;
   return true;
 }
+
+export async function notifySucess(options) {
+  alert({
+    icon: "success",
+    ...options,
+  });
+}

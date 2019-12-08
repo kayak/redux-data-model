@@ -1,23 +1,11 @@
-import {
-  combineModelReducers,
-  connectResux,
-  Model,
-  resuxRootSaga,
-} from 'react-resux';
+import {combineModelReducers, connectResux, Model, resuxRootSaga,} from 'react-resux';
 import createSagaMiddleware from 'redux-saga';
-import {
-  applyMiddleware,
-  combineReducers,
-  createStore,
-} from 'redux';
+import {applyMiddleware, combineReducers, createStore,} from 'redux';
 import logger from 'redux-logger';
-import {
-  Provider,
-  useSelector,
-} from 'react-redux';
+import {Provider, useSelector,} from 'react-redux';
 import * as React from 'react';
 import JSONTree from 'react-json-tree';
-import {showConfirm} from '../utils/alerts';
+import {notifySucess, showConfirm} from '../utils/alerts';
 
 export const counterModel = new Model({
   namespace: "counter",
@@ -76,8 +64,20 @@ function TestComponent({ count, counter }) {
         <strong>Count:</strong> <span id="counterValue">{count}</span>
       </div>
       <div>
-        <button id="incrementButton" onClick={() => counter.tryToIncrement()}>Increment</button> |{" "}
-        <button id="decrementButton" onClick={() => counter.tryToDecrement()}>Decrement</button>
+        <button
+          id="incrementButton"
+          onClick={() => counter.tryToIncrement().then(
+            () => notifySucess({text: 'Increment dialog was closed without errors'})
+          )}>
+          Increment
+        </button> |{" "}
+        <button
+          id="decrementButton"
+          onClick={() => counter.tryToDecrement().then(
+            () => notifySucess({text: 'Decrement dialog was closed without errors'})
+          )}>
+          Decrement
+        </button>
       </div>
       <br />
       <hr />

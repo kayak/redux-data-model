@@ -2,7 +2,7 @@ import {mount} from 'enzyme';
 import * as React from 'react';
 import {Provider} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import {Model, connectResux} from '../../src';
+import {connectResux, Model} from '../../src';
 
 const mockStore = configureMockStore([]);
 
@@ -40,9 +40,10 @@ describe('connectResux', () => {
         }
       },
       effects: {
-        *tryToIncrease(_action, effects, actionCreators) {
+        * tryToIncrease(_action, effects, actionCreators) {
           yield effects.put(actionCreators.increase());
-        }
+          return 1;
+        },
       },
     };
     counterModel = new Model(modelOptions);
@@ -55,8 +56,8 @@ describe('connectResux', () => {
 
     beforeAll(() => {
       ConnectedCounter = connectResux(
-       [counterModel],
-       (state, _props, selectors) => {
+        [counterModel],
+        (state, _props, selectors) => {
           return {
             count: selectors.counter.count(state),
           }
@@ -71,7 +72,7 @@ describe('connectResux', () => {
     });
 
     it('can access data from the store with a model selector', () => {
-       const wrapper = mount(
+      const wrapper = mount(
         <Provider store={store}>
           <ConnectedCounter/>
         </Provider>
@@ -87,8 +88,8 @@ describe('connectResux', () => {
 
     beforeAll(() => {
       ConnectedCounterThatFiresCallback = connectResux(
-       [counterModel],
-       null,
+        [counterModel],
+        null,
       )(CounterThatFiresCallback);
     });
 
@@ -98,24 +99,74 @@ describe('connectResux', () => {
       });
     });
 
-    it('will dispatch the respective reducer action when reducer callback is called', () => {
-       mount(
-        <Provider store={store}>
-          <ConnectedCounterThatFiresCallback actionCaller={actions => actions.increment()}/>
-        </Provider>
-      );
+    describe('when reducer callback is called', () => {
+      it('will dispatch the respective reducer action', () => {
+        mount(
+          <Provider store={store}>
+            <ConnectedCounterThatFiresCallback actionCaller={actions => actions.increment()}/>
+          </Provider>
+        );
 
-      expect(store.getActions()[0]).toEqual(actionCreators.increment())
+        const action = actionCreators.increment();
+        expect(store.getActions()[0]).toEqual({
+          type: action.type,
+          payload: action.payload,
+          __actionInternals: {
+            resolve: expect.anything(),
+            reject: expect.anything(),
+          }
+        });
+      });
+
+      it('returns a Promise', async () => {
+        let effectPromise;
+
+        await mount(
+          <Provider store={store}>
+            <ConnectedCounterThatFiresCallback actionCaller={actions => (
+              effectPromise = actions.increment())
+            }/>
+          </Provider>
+        );
+
+        expect(effectPromise).toStrictEqual(expect.any(Promise));
+      });
     });
 
-    it('will dispatch the respective effect action when effect callback is called', () => {
-       mount(
-        <Provider store={store}>
-          <ConnectedCounterThatFiresCallback actionCaller={actions => actions.tryToIncrease()}/>
-        </Provider>
-      );
+    describe('when effect callback is called', () => {
+      it('will dispatch the respective effect action', () => {
+        mount(
+          <Provider store={store}>
+            <ConnectedCounterThatFiresCallback actionCaller={actions => (
+              actions.tryToIncrease())
+            }/>
+          </Provider>
+        );
 
-      expect(store.getActions()[0]).toEqual(actionCreators.tryToIncrease())
+        const action = actionCreators.tryToIncrease();
+        expect(store.getActions()[0]).toEqual({
+          type: action.type,
+          payload: action.payload,
+          __actionInternals: {
+            resolve: expect.anything(),
+            reject: expect.anything(),
+          }
+        });
+      });
+
+      it('returns a Promise', async () => {
+        let effectPromise;
+
+        await mount(
+          <Provider store={store}>
+            <ConnectedCounterThatFiresCallback actionCaller={actions => (
+              effectPromise = actions.tryToIncrease())
+            }/>
+          </Provider>
+        );
+
+        expect(effectPromise).toStrictEqual(expect.any(Promise));
+      });
     });
   });
 

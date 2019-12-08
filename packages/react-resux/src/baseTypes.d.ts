@@ -1,5 +1,14 @@
 import {AnyAction, Dispatch} from 'redux';
-import {Action, ActionCreatorsMapObject} from "react-redux";
+import {Action} from "react-redux";
+
+export interface ActionCreator<A> {
+  (...args: any[]): A;
+  isEffect: boolean;
+}
+
+interface ActionCreatorsMapObject<A = any> {
+  [key: string]: ActionCreator<A>;
+}
 
 type SelectorFunction = (state: State, ...arguments: any[]) => any;
 type ReducerFunction = (state: State, action: AnyAction) => void;
@@ -16,12 +25,25 @@ type EffectModelFunction = (actionData: object) => any;
 type SelectorModelMap = Record<string, SelectorModelFunction>;
 type EffectModelMap = Record<string, EffectModelFunction>;
 
+type NamespacedActionCreatorsMapObject = Record<
+string, ActionCreator<any> | NamespacedActionCreatorsMapObject
+>;
+type NamespacedSelectorsMapObject = Record<
+string, SelectorFunction | NamespacedSelectorsMapObject
+>;
+
+type BoundActionCreatorThatReturnsAPromise = (actionData: object) => Promise<any>;
+
+type BoundNamespacedActionCreatorsMapObject = Record<
+string, BoundNamespacedActionCreatorsMapObject | BoundActionCreatorThatReturnsAPromise
+>;
+
 type MapDispatchToPropsWithActionCreatorsFunction<TDispatchProps, TOwnProps> =
     (
       dispatch: Dispatch<Action>,
       ownProps: TOwnProps,
-      modelActionCreators: Record<string, ActionCreatorsMapObject>,
-      subscriberActionCreators: Record<string, ActionCreatorsMapObject>,
+      modelActionCreators: NamespacedActionCreatorsMapObject,
+      subscriberActionCreators: NamespacedActionCreatorsMapObject,
     ) => TDispatchProps;
 type MapDispatchToPropsWithActionCreators<TDispatchProps, TOwnProps> =
     MapDispatchToPropsWithActionCreatorsFunction<TDispatchProps, TOwnProps> | TDispatchProps;
@@ -30,5 +52,16 @@ type MapStateToPropsWithSelectors<TStateProps, TOwnProps, State> =
     (
       state: State,
       ownProps: TOwnProps,
-      modelSelectors: Record<string, SelectorMap>
+      modelSelectors: NamespacedSelectorsMapObject,
     ) => TStateProps;
+
+interface ActionInternals {
+  resolve: Function;
+  reject: Function;
+}
+
+interface ActionWithInternals {
+  type: string;
+  payload: any;
+  __actionInternals: ActionInternals;
+}

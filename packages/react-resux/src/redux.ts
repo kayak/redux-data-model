@@ -1,11 +1,50 @@
-import {flatten, isFunction, isNil, uniq} from 'lodash';
+import {get, identity, isFunction, isNil, isPlainObject, mapValues, set, toPairs, uniq} from 'lodash';
 import {connect} from 'react-redux';
-import {bindActionCreators, Dispatch, ReducersMapObject} from 'redux';
-import {SagaIterator} from '@redux-saga/core';
-import {all, call, spawn} from 'redux-saga/effects';
-import {MapDispatchToPropsWithActionCreators, MapStateToPropsWithSelectors} from './baseTypes';
+import {combineReducers, Dispatch, ReducersMapObject} from 'redux';
+import {
+  ActionCreatorsMapObject,
+  BoundNamespacedActionCreatorsMapObject,
+  MapDispatchToPropsWithActionCreators,
+  MapStateToPropsWithSelectors,
+  NamespacedActionCreatorsMapObject,
+  NamespacedSelectorsMapObject,
+} from './baseTypes';
 import {Model} from './model';
 import {Subscriber} from './subscriber';
+
+/**
+ * @ignore
+ */
+const defaultActionInternals = {resolve: identity, reject: identity};
+
+/**
+ * Turns an object whose values are action creators or nested objects with them, into an object with the
+ * same keys, but with every action creator wrapped into a dispatch call so they may be invoked directly.
+ * A Promise will be returned on every invocation, which can be used to track if the action was properly
+ * processed (i.e. resolved) or caused an exception (i.e. rejected).
+ *
+ * @param actionCreators a namespaced action creator's map object. This can have multiple levels of nesting,
+ *                       depending on the namespaces of the models involved.
+ * @param dispatch A dispatch function available on the Store instance..
+ * @returns An object mimicking the original object, but with each function immediately dispatching the
+ *          action returned by the corresponding action creator. And returning a Promise, which will resolve/
+ *          reject once done.
+ * @category Redux/Saga Setup
+ */
+export function bindResuxActionCreators(
+  actionCreators: ActionCreatorsMapObject,
+  dispatch: Dispatch
+): BoundNamespacedActionCreatorsMapObject {
+  return mapValues(actionCreators,actionCreator => function(actionData: object) {
+    let promise = Promise.resolve();
+    if (actionCreator.isEffect) {
+      promise = new Promise((resolve, reject) => dispatch(actionCreator(actionData, {resolve, reject})));
+    } else {
+      dispatch(actionCreator(actionData, defaultActionInternals));
+    }
+    return promise;
+  });
+}
 
 /**
  * @ignore
@@ -15,10 +54,9 @@ export function connectResuxImpl(
   userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any>=null,
   userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any>=null,
 ) {
-  const selectors = {};
-  const modelActionCreators = {};
-  const subscriberActionCreators = {};
-  const defaultMapDispatchToProps = {};
+  const selectors: NamespacedSelectorsMapObject = {};
+  const modelActionCreators: NamespacedActionCreatorsMapObject = {};
+  const subscriberActionCreators: NamespacedActionCreatorsMapObject = {};
 
   const models: Model[] = modelsOrSubscribers.filter(
     obj => obj instanceof Model
@@ -28,14 +66,12 @@ export function connectResuxImpl(
   ) as Subscriber[];
 
   for (const model of models) {
-    selectors[model.namespace] = model.modelSelectors();
-    modelActionCreators[model.namespace] = model.actionCreators();
-    defaultMapDispatchToProps[model.namespace] = modelActionCreators[model.namespace];
+    set(selectors, model.namespace, model.modelSelectors());
+    set(modelActionCreators, model.namespace, model.actionCreators());
   }
 
   for (const subscriber of subscribers) {
     Object.assign(subscriberActionCreators, subscriber.actionCreators());
-    Object.assign(defaultMapDispatchToProps, subscriberActionCreators);
   }
 
   const mapStateToPropsFunc = !isNil(userProvidedMapStateToProps) && ((state, props=null) => {
@@ -43,13 +79,17 @@ export function connectResuxImpl(
   });
 
   const mapDispatchToPropsFunc = (dispatch: Dispatch) => {
-    // Bind dispatch function
-    defaultMapDispatchToProps['subscribers'] = bindActionCreators(subscriberActionCreators, dispatch);
-    for (const model of models) {
-      defaultMapDispatchToProps[model.namespace] = bindActionCreators(modelActionCreators[model.namespace], dispatch);
-    }
+    const result = {};
 
-    const result = {...defaultMapDispatchToProps};
+    // Bind dispatch function
+    result['subscribers'] = bindResuxActionCreators(subscriberActionCreators, dispatch);
+    for (const model of models) {
+      set(
+        result,
+        model.namespace,
+        bindResuxActionCreators(get(modelActionCreators, model.namespace), dispatch),
+      );
+    }
 
     if (!isNil(userProvidedMapDispatchToProps)) {
       Object.assign(
@@ -94,6 +134,21 @@ export function connectResux(
 }
 
 /**
+ * @ignore
+ */
+function combineReducersRecursively(reducerTree, level=0) {
+  if (!isPlainObject(reducerTree))
+    return reducerTree;
+
+  const newReducerTree = {};
+  for (const [reducerKey, reducerValue] of toPairs(reducerTree)) {
+    newReducerTree[reducerKey] = combineReducersRecursively(reducerValue, level + 1);
+  }
+
+  return (level != 0) ? combineReducers(newReducerTree): newReducerTree;
+}
+
+/**
  * Returns a reducer map object that can be deconstructed into the combineReducers helper, from redux, so that
  * redux is aware of any reducers produced by models.
  *
@@ -109,10 +164,10 @@ export function connectResux(
  */
 export function combineModelReducers(models: Model[]): ReducersMapObject {
   const modelNamespaces = models.map(model => model.namespace);
-  const reducers = {};
+  const reducerTree = {};
 
   for (const model of models) {
-    reducers[model.namespace] = model.modelReducers();
+    set(reducerTree, model.namespace, model.modelReducers());
   }
 
   if (uniq(modelNamespaces).length !== modelNamespaces.length) {
@@ -123,35 +178,5 @@ export function combineModelReducers(models: Model[]): ReducersMapObject {
     };
   }
 
-  return reducers;
-}
-
-/**
- * Returns a root saga generator that can be passed to sagaMiddleware's run function, so that redux-saga is aware
- * of any sagas produced by either models or subscribers.
- *
- * @example
- * sagaMiddleware.run(() => resuxRootSaga([modelA, subscriberA]));
- *
- * @param sagaContainers An array of either Model or Subscriber instances.
- * @returns A root saga.
- * @category Redux/Saga Setup
- */
-export function* resuxRootSaga(sagaContainers: (Model | Subscriber)[]): SagaIterator {
-  const sagas: any[] = flatten(sagaContainers.map(sagaContainer => sagaContainer.reduxSagas));
-
-  yield all(
-    sagas.map(blockingSaga =>
-      spawn(function* () {
-        while (true) {
-          try {
-            yield call(blockingSaga);
-            break;
-          } catch (e) {
-            console.log(e);
-          }
-        }
-      })
-    )
-  );
+  return combineReducersRecursively(reducerTree);
 }

@@ -117,7 +117,7 @@ function TestComponent() {
     pageActions.fetchPage({userId});
   }, [userId]);
 
-  if (loadingUser) return `Loading user #${userId}...`;
+  if (loadingUser) return (<div>Loading user #{userId}...</div>);
 
   return (
     <>
@@ -137,7 +137,9 @@ function TestComponent() {
           </div>
         ))}
 
-        <button onClick={() => postActions.switchPublishedByUser({userId})}>Switch state from all comments</button>
+        <button onClick={() => postActions.switchPublishedByUser({userId})}>
+          Switch state from all comments
+        </button>
       </div>
       <br/>
       <hr/>
@@ -153,7 +155,6 @@ function TestComponent() {
 export default () => {
   return (
     <Provider store={store}>
-      // @ts-ignore
       <TestComponent />
     </Provider>
   );

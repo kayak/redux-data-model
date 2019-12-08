@@ -1,7 +1,8 @@
-import {ActionCreatorsMapObject} from "redux";
 import {Saga} from '@redux-saga/core';
 import * as sagaEffects from 'redux-saga/effects'
 import {Model} from './model';
+import {resuxBlockingGenerator} from './saga';
+import {ActionCreatorsMapObject} from "./baseTypes";
 
 /**
  * Subscribers provide a way to link models' effects/reducers, so that they get triggered by the same non-namespaced
@@ -40,6 +41,7 @@ export class Subscriber {
 
     for (const effectName of this.effectNames) {
       actions[effectName] = (actionData: object = {}) => ({...actionData, type: effectName});
+      actions[effectName].isEffect = true;
     }
 
     return actions;
@@ -61,19 +63,16 @@ export class Subscriber {
   /**
    * @ignore
    */
-  protected take(sagaEffect, actionType: string, actionGenerators): Subscriber {
+  protected take(sagaBlockingEffect, actionType: string, actionGenerators): Subscriber {
     const modelActionCreators = this.modelActionCreators();
 
     this.effectNames.push(actionType);
     this._reduxSagas.push(
-      ...actionGenerators.map(generator => function *() {
-        yield sagaEffect(
-          actionType, function *(action) {
-            yield sagaEffects.put(generator(action, modelActionCreators));
-          }
-        );
-      }
-      )
+      ...actionGenerators.map(effectFunc => resuxBlockingGenerator(
+        sagaBlockingEffect, actionType, function *(action) {
+          yield sagaEffects.put(effectFunc(action, modelActionCreators));
+        }
+      )),
     );
 
     return this;

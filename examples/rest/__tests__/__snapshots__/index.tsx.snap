@@ -13,9 +13,12 @@ exports[`IndexPage matches snapshot 1`] = `
       }
     }
   >
-    // @ts-ignore
     <TestComponent>
-      Loading user #1...
+      <div>
+        Loading user #
+        1
+        ...
+      </div>
     </TestComponent>
   </Provider>
 </Component>

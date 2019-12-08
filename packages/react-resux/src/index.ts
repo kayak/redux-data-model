@@ -1,3 +1,4 @@
 export { Model, ModelOptions } from './model';
 export { Subscriber } from './subscriber';
-export { combineModelReducers, connectResux, resuxRootSaga } from './redux';
+export { resuxRootSaga } from './saga';
+export { combineModelReducers, bindResuxActionCreators, connectResux } from './redux';

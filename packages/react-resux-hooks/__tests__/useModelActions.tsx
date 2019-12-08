@@ -66,7 +66,15 @@ describe('useModelActions', () => {
       </Provider>
     );
 
-    expect(store.getActions()[0]).toEqual(actionCreators.increase())
+    const action = actionCreators.increase();
+    expect(store.getActions()[0]).toEqual({
+      type: action.type,
+      payload: action.payload,
+      __actionInternals: {
+        resolve: expect.anything(),
+        reject: expect.anything(),
+      }
+    });
   });
 
   it('will dispatch the respective effect action when effect callback is called', () => {
@@ -76,6 +84,14 @@ describe('useModelActions', () => {
       </Provider>
     );
 
-    expect(store.getActions()[0]).toEqual(actionCreators.tryToIncrease())
+    const action = actionCreators.tryToIncrease();
+    expect(store.getActions()[0]).toEqual({
+      type: action.type,
+      payload: action.payload,
+      __actionInternals: {
+        resolve: expect.anything(),
+        reject: expect.anything(),
+      }
+    });
   });
 });
