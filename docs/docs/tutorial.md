@@ -111,7 +111,6 @@ use the [connect] high order component ([HOC]) like:
 
 ```javascript
 import {connect} from 'react-redux';
-import {countModel} from './models';
 
 export function Counter({count}) {
   return count;
@@ -435,6 +434,53 @@ function CountComponent({count, counter}) {
       <div>
         <button onClick={counter.confirmBeforeIncrementing}>Increment</button> |
         <button onClick={counter.confirmBeforeDecrementing}>Decrement</button>
+      </div>
+    </div>
+  );
+}
+
+function mapStateToProps(state, props, selectors) {
+  return {
+    count: selectors.counter.count(state),
+  };
+}
+
+export default connectResux([countModel], mapStateToProps)(CountComponent);
+```
+
+Now let's say we need to redirect to another page, when the user is done with the incrementation (i.e. clicking
+yes in the dialog), or that we need to display an error message if something went wrong (e.g. a REST request
+within one of our effects raised an exception). That's actually quite easy to do. Every dispatcher returns a
+promise when called. Dispatchers for effects will resolve if the effect was succesfull or reject if an exception
+was raised within the effect (i.e. saga generator). In case of a reducer's dispatcher, an already resolved
+promise is returned. That means we could change the code above to:
+
+```javascript
+import {connectResux} from 'react-resux';
+import {countModel} from './models';
+
+function CountComponent({count, counter}) {
+  return (
+    <div>
+      <div>Count: {count}</div>
+      <div>
+        <button onClick={
+            () => counter.confirmBeforeIncrementing().then(
+                //...
+            ).rejects(
+                // shows an error message
+            )}
+        >
+            Increment
+        </button> |
+        <button onClick={
+            () => counter.confirmBeforeDecrementing().then(
+                // ...
+            ).rejects(
+                // shows an error message
+            )}>
+                Decrement
+         </button>
       </div>
     </div>
   );
