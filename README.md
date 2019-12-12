@@ -44,6 +44,9 @@ Simple count example without hooks api.
 * [__counterWithConnectResuxAndConfirmationDialog__](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResuxAndConfirmationDialog)
 ([Demo](https://codesandbox.io/s/github/kayak/react-resux/tree/master/examples/counterWithConnectResuxAndConfirmationDialog)): 
 Simple count example without hooks api and using a confirmation dialog, prior to incrementing/decrementing.
+* [__counterWithConnectResuxWithNestedNamespace__](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResuxWithNestedNamespace)
+([Demo](https://codesandbox.io/s/github/kayak/react-resux/tree/master/examples/counterWithConnectResuxWithNestedNamespace)): 
+Simple count example without hooks api. It uses a nested namespace, so that data can be grouped in different parts of the store.
 * [__counterWithHooks__](https://github.com/kayak/react-resux/tree/master/examples/counterWithHooks)
 ([Demo](https://codesandbox.io/s/github/kayak/react-resux/tree/master/examples/counterWithHooks)):
 Simple count example with hooks api.
