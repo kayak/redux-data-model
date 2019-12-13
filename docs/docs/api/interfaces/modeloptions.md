@@ -36,7 +36,7 @@ Model options are used for initialising a [Model](../classes/model.md) instance.
 
 • **effects**? : *EffectMap*
 
-*Defined in [react-resux/src/model.ts:180](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L180)*
+*Defined in [packages/react-resux/src/model.ts:164](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L164)*
 
 Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
 an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
@@ -63,7 +63,7 @@ ___
 
 • **namespace**: *string*
 
-*Defined in [react-resux/src/model.ts:112](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L112)*
+*Defined in [packages/react-resux/src/model.ts:96](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L96)*
 
 The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
 and, as a matter of fact, resux will enforce it. The namespace is effectively an object's path in which the
@@ -84,7 +84,7 @@ ___
 
 • **reducers**? : *ReducerMap*
 
-*Defined in [react-resux/src/model.ts:159](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L159)*
+*Defined in [packages/react-resux/src/model.ts:143](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L143)*
 
 Reducers are functions used for synchronously changing the current state of a given model. A reducer will
 be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
@@ -115,7 +115,7 @@ ___
 
 • **selectors**? : *SelectorMap*
 
-*Defined in [react-resux/src/model.ts:136](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L136)*
+*Defined in [packages/react-resux/src/model.ts:120](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L120)*
 
 Selectors are functions that receive the entire state and returns a piece of it or, perhaps transform it.
 Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow
@@ -137,7 +137,7 @@ ___
 
 • **state**: *State*
 
-*Defined in [react-resux/src/model.ts:123](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L123)*
+*Defined in [packages/react-resux/src/model.ts:107](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L107)*
 
 State represents the initial state of the model's reducer.
 

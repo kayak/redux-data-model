@@ -47,7 +47,7 @@ dispatchers, and sagas, based on the model's options that were provided.
 
 \+ **new Model**(`options`: [ModelOptions](../interfaces/modeloptions.md)): *[Model](model.md)*
 
-*Defined in [react-resux/src/model.ts:193](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L193)*
+*Defined in [packages/react-resux/src/model.ts:177](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L177)*
 
 Creates a model instance.
 
@@ -91,7 +91,7 @@ Name | Type | Description |
 
 • **get effects**(): *EffectMap*
 
-*Defined in [react-resux/src/model.ts:426](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L426)*
+*Defined in [packages/react-resux/src/model.ts:393](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L393)*
 
 Returns the effects.
 
@@ -105,7 +105,7 @@ ___
 
 • **get namespace**(): *string*
 
-*Defined in [react-resux/src/model.ts:390](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L390)*
+*Defined in [packages/react-resux/src/model.ts:357](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L357)*
 
 Returns the namespace.
 
@@ -119,7 +119,7 @@ ___
 
 • **get reducers**(): *ReducerMap*
 
-*Defined in [react-resux/src/model.ts:417](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L417)*
+*Defined in [packages/react-resux/src/model.ts:384](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L384)*
 
 Returns the reducers.
 
@@ -133,7 +133,7 @@ ___
 
 • **get reduxSagas**(): *Saga[]*
 
-*Defined in [react-resux/src/model.ts:374](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L374)*
+*Defined in [packages/react-resux/src/model.ts:341](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L341)*
 
 Returns an array of sagas, one for each of the declared effects. They will default to taking every action and
 calling its respective effect. For taking only latest or leading actions, at any given moment, look for
@@ -151,7 +151,7 @@ ___
 
 • **get selectors**(): *SelectorMap*
 
-*Defined in [react-resux/src/model.ts:408](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L408)*
+*Defined in [packages/react-resux/src/model.ts:375](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L375)*
 
 Returns the selectors.
 
@@ -165,7 +165,7 @@ ___
 
 • **get state**(): *State*
 
-*Defined in [react-resux/src/model.ts:399](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L399)*
+*Defined in [packages/react-resux/src/model.ts:366](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L366)*
 
 Returns the initial state.
 
@@ -179,7 +179,7 @@ An initial state.
 
 ▸ **actionCreators**(): *ActionCreatorsMapObject*
 
-*Defined in [react-resux/src/model.ts:298](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L298)*
+*Defined in [packages/react-resux/src/model.ts:265](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/model.ts#L265)*
 
 Returns an object with action creators, one for each of the declared reducers and effects. Only useful for
 testing purposes, read the docs section on testing for more info. Also supports the inner workings of this

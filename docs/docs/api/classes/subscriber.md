@@ -50,7 +50,7 @@ sagas employing takeLeading, takeLatest, or takeEvery effects.
 
 \+ **new Subscriber**(`models`: [Model](model.md)[]): *[Subscriber](subscriber.md)*
 
-*Defined in [react-resux/src/subscriber.ts:15](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L15)*
+*Defined in [packages/react-resux/src/subscriber.ts:16](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/subscriber.ts#L16)*
 
 Creates a subscriber instance.
 
@@ -68,7 +68,7 @@ Name | Type | Description |
 
 • **effectNames**: *string[]*
 
-*Defined in [react-resux/src/subscriber.ts:14](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L14)*
+*Defined in [packages/react-resux/src/subscriber.ts:15](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/subscriber.ts#L15)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 • **models**: *[Model](model.md)[]*
 
-*Defined in [react-resux/src/subscriber.ts:13](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L13)*
+*Defined in [packages/react-resux/src/subscriber.ts:14](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/subscriber.ts#L14)*
 
 ## Accessors
 
@@ -84,7 +84,7 @@ ___
 
 • **get reduxSagas**(): *Saga[]*
 
-*Defined in [react-resux/src/subscriber.ts:127](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L127)*
+*Defined in [packages/react-resux/src/subscriber.ts:130](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/subscriber.ts#L130)*
 
 Returns an array of sagas, one for each of the declared effects.
 
@@ -98,7 +98,7 @@ An array of sagas.
 
 ▸ **actionCreators**(): *ActionCreatorsMapObject*
 
-*Defined in [react-resux/src/subscriber.ts:39](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L39)*
+*Defined in [packages/react-resux/src/subscriber.ts:40](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/subscriber.ts#L40)*
 
 Returns an object with action creators, one for each of the declared effects. Only useful for testing purposes,
 read the docs section on testing for more info. Also supports the inner workings of this class.
@@ -113,7 +113,7 @@ ___
 
 ▸ **takeEvery**(`actionType`: string, `actionGenerators`: any): *[Subscriber](subscriber.md)*
 
-*Defined in [react-resux/src/subscriber.ts:118](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L118)*
+*Defined in [packages/react-resux/src/subscriber.ts:121](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/subscriber.ts#L121)*
 
 Adds a subscription, which will watch for the provided actionType. It will default to taking every action and
 calling the respective action generator, which is equivalent to the behaviour of effects declared in models.
@@ -136,7 +136,7 @@ ___
 
 ▸ **takeLatest**(`actionType`: string, `actionGenerators`: any): *[Subscriber](subscriber.md)*
 
-*Defined in [react-resux/src/subscriber.ts:91](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L91)*
+*Defined in [packages/react-resux/src/subscriber.ts:94](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/subscriber.ts#L94)*
 
 Adds a subscription, which will watch for the provided actionType. It will default to taking only the latest
 action at any given moment and calling the respective action generator. This is useful for implementing
@@ -160,7 +160,7 @@ ___
 
 ▸ **takeLeading**(`actionType`: string, `actionGenerators`: any): *[Subscriber](subscriber.md)*
 
-*Defined in [react-resux/src/subscriber.ts:105](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L105)*
+*Defined in [packages/react-resux/src/subscriber.ts:108](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/subscriber.ts#L108)*
 
 Adds a subscription, which will watch for the provided actionType. It will default to taking only the leading
 action at any given moment and calling the respective action generator. This is useful for implementing

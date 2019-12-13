@@ -47,7 +47,7 @@ generated from source.
 
 ▸ **connectResux**(`modelsOrSubscribers`: [Model](classes/model.md)‹› | [Subscriber](classes/subscriber.md)‹›[], `userProvidedMapStateToProps`: MapStateToPropsWithSelectors‹any, any, any›, `userProvidedMapDispatchToProps`: MapDispatchToPropsWithActionCreators‹any, any›): *any*
 
-*Defined in [react-resux/src/redux/connectResux.ts:22](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/redux/connectResux.ts#L22)*
+*Defined in [packages/react-resux/src/redux/connectResux.ts:22](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/redux/connectResux.ts#L22)*
 
 Equivalent to redux's connect function. This should be used when the hooks api is not desired or
 supported. Otherwise check [useModelActions](README.md#usemodelactions), [useModelSelector](README.md#usemodelselector), and [useSubscriberActions](README.md#usesubscriberactions) up.
@@ -75,7 +75,7 @@ ___
 
 ▸ **useModelActions**(`model`: [Model](classes/model.md)): *BoundActionCreatorsMapObject*
 
-*Defined in [react-resux-hooks/src/useModelActions.ts:19](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux-hooks/src/useModelActions.ts#L19)*
+*Defined in [packages/react-resux-hooks/src/useModelActions.ts:19](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux-hooks/src/useModelActions.ts#L19)*
 
 A react hook for returning already bound action creators for the provided model. If you don't want/need to use
 the hooks api, check [connectResux](README.md#connectresux) up.
@@ -101,7 +101,7 @@ ___
 
 ▸ **useModelSelector**(`model`: [Model](classes/model.md), `selectorFunc`: SelectorFunction): *any*
 
-*Defined in [react-resux-hooks/src/useModelSelector.ts:19](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux-hooks/src/useModelSelector.ts#L19)*
+*Defined in [packages/react-resux-hooks/src/useModelSelector.ts:19](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux-hooks/src/useModelSelector.ts#L19)*
 
 A react hook for returning data from the provided model's state, by the means of one of its selectors. If you
 don't want/need to use the hooks api, check [connectResux](README.md#connectresux) up.
@@ -126,7 +126,7 @@ ___
 
 ▸ **useSubscriberActions**(`subscriber`: [Subscriber](classes/subscriber.md)): *BoundActionCreatorsMapObject*
 
-*Defined in [react-resux-hooks/src/useSubscriberActions.ts:19](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux-hooks/src/useSubscriberActions.ts#L19)*
+*Defined in [packages/react-resux-hooks/src/useSubscriberActions.ts:19](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux-hooks/src/useSubscriberActions.ts#L19)*
 
 A react hook for returning already bound action creators for the provided subscriber. If you don't want/need
 to use the hooks api, check [connectResux](README.md#connectresux) up.
@@ -154,7 +154,7 @@ ___
 
 ▸ **bindResuxActionCreators**(`actionCreators`: ActionCreatorsMapObject, `dispatch`: Dispatch): *BoundNamespacedActionCreatorsMapObject*
 
-*Defined in [react-resux/src/redux/bindResuxActionCreators.ts:24](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/redux/bindResuxActionCreators.ts#L24)*
+*Defined in [packages/react-resux/src/redux/bindResuxActionCreators.ts:24](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/redux/bindResuxActionCreators.ts#L24)*
 
 Turns an object whose values are action creators or nested objects with them, into an object with the
 same keys, but with every action creator wrapped into a dispatch call so they may be invoked directly.
@@ -180,7 +180,7 @@ ___
 
 ▸ **combineModelReducers**(`models`: [Model](classes/model.md)[]): *ReducersMapObject*
 
-*Defined in [react-resux/src/redux/combineModelReducers.ts:34](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/redux/combineModelReducers.ts#L34)*
+*Defined in [packages/react-resux/src/redux/combineModelReducers.ts:34](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/redux/combineModelReducers.ts#L34)*
 
 Returns a reducer map object that can be deconstructed into the combineReducers helper, from redux, so that
 redux is aware of any reducers produced by models.
@@ -208,7 +208,7 @@ ___
 
 ▸ **resuxRootSaga**(`sagaContainers`: [Model](classes/model.md)‹› | [Subscriber](classes/subscriber.md)‹›[]): *SagaIterator*
 
-*Defined in [react-resux/src/saga.ts:55](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/saga.ts#L55)*
+*Defined in [packages/react-resux/src/saga.ts:55](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/saga.ts#L55)*
 
 Returns a root saga generator that can be passed to sagaMiddleware's run function, so that redux-saga is aware
 of any sagas produced by either models or subscribers.
