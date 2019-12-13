@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/kayak/react-resux/compare/v0.5.0...v0.6.0) (2019-12-13)
+
+
+### Features
+
+* returns a promise when calling action creators ([d5a57cb](https://github.com/kayak/react-resux/commit/d5a57cb636c63e306c1850d755e8097e5f3af968))
+
+
+
+
+
 # 0.5.0 (2019-11-16)
 
 
