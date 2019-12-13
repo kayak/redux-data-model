@@ -1,5 +1,5 @@
 import produce from 'immer';
-import {get, isPlainObject, isString, keys, memoize, size, toPairs, uniq} from 'lodash';
+import {get, isString, keys, memoize, size, toPairs, uniq} from 'lodash';
 import {AnyAction, Reducer} from 'redux';
 import {Saga} from '@redux-saga/core';
 import {
@@ -39,6 +39,7 @@ import {
   SelectorModelMap,
   State
 } from './baseTypes';
+import {actionCreator, ActionInternalsObject} from "./utils";
 
 /**
  * @ignore
@@ -76,23 +77,6 @@ const defaultReducer = (
 ) => state;
 
 const namespaceRegex = new RegExp('^([A-Za-z0-9]+)([.][A-Za-z0-9]+)*$');
-
-/**
- * @ignore
- */
-interface ActionInternalsObject {
-  resolve: Function;
-  reject: Function;
-}
-
-/**
- * @ignore
- */
-interface ActionWithInternals extends AnyAction {
-  type: string;
-  payload: object;
-  __actionInternals: ActionInternalsObject;
-}
 
 /**
  * Model options are used for initialising a [[Model]] instance.
@@ -272,23 +256,6 @@ export class Model {
   }
 
   /**
-   * @ignore
-   */
-  public actionCreator(
-    actionName: string, payload: object = {}, __actionInternals: ActionInternalsObject=undefined,
-  ): ActionWithInternals {
-    if (!isPlainObject(payload)) {
-      throw {
-        name: 'ActionDataIsntPlainObjectError',
-        message: `Action data must be a plain object, when calling action [${actionName}] in ` +
-        `[${this._namespace}] model.`,
-      };
-    }
-
-    return {type: this.actionType(actionName), payload, __actionInternals};
-  }
-
-  /**
    * Returns an object with action creators, one for each of the declared reducers and effects. Only useful for
    * testing purposes, read the docs section on testing for more info. Also supports the inner workings of this
    * class.
@@ -300,14 +267,14 @@ export class Model {
 
     for (const reducerName in this._reducers) {
       actions[reducerName] = (payload: object = {}, __actionInternals: ActionInternalsObject=undefined) => (
-        this.actionCreator(reducerName, payload, __actionInternals)
+        actionCreator(this.actionType(reducerName), payload, __actionInternals)
       );
       actions[reducerName].isEffect = false;
     }
 
     for (const effectName in this._effects) {
       actions[effectName] = (payload: object = {}, __actionInternals: ActionInternalsObject=undefined) => (
-        this.actionCreator(effectName, payload, __actionInternals)
+        actionCreator(this.actionType(effectName), payload, __actionInternals)
       );
       actions[effectName].isEffect = true;
     }

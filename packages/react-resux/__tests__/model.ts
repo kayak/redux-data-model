@@ -1,6 +1,8 @@
 import * as allSagaEffects from "redux-saga/effects";
 import {Model} from '../src';
 import {sagaEffects} from '../src/model';
+import {actionCreator} from '../src/utils';
+
 
 describe('Model', () => {
   let modelOptions;
@@ -140,31 +142,6 @@ describe('Model', () => {
     expect(articleModel.actionType('ola')).toEqual(`${articleModel.namespace}.ola`);
   });
 
-  describe('actionCreator', () => {
-    it('returns an object with type, payload and __actionInternals', () => {
-      const payload = {1: 2};
-      const __actionInternals = {};
-      expect(articleModel.actionCreator('ola', payload, __actionInternals)).toEqual(
-        {type: articleModel.actionType('ola'), payload, __actionInternals}
-      );
-    });
-
-    it('returns an object with the right type even when payload defines type too', () => {
-      const payload = {type: 2, 1: 2};
-      const __actionInternals = {};
-      expect(articleModel.actionCreator('ola', payload, __actionInternals)).toEqual(
-        {type: articleModel.actionType('ola'), payload, __actionInternals}
-      );
-    });
-
-    it('throws when action data is not a plain obeject', () => {
-      expect(() => articleModel.actionCreator('ola', [])).toThrow({
-        name: '',
-        message: 'Action data must be a plain object, when calling action [ola] in [articles] model.'
-      });
-    });
-  });
-
   describe('actionCreators', () => {
     it('returns an empty object when no reducers or effects exists', () => {
       expect(articleModel.actionCreators()).toEqual({});
@@ -180,7 +157,6 @@ describe('Model', () => {
           loadSomethingReducer: loadSomethingReducerSpy,
         },
       });
-      const actionCreatorSpy = jest.spyOn(modelX, 'actionCreator');
       const actionCreators = modelX.actionCreators();
       const payload = {1: 2};
 
@@ -190,14 +166,9 @@ describe('Model', () => {
         );
       });
 
-      it('calls actionCreator func when actionCreator entry is called', () => {
-        actionCreators.loadSomethingReducer(payload);
-        expect(actionCreatorSpy).toHaveBeenCalledWith('loadSomethingReducer', payload, undefined);
-      });
-
       it('returns result of actionCreator func', () => {
         expect(actionCreators.loadSomethingReducer(payload)).toEqual(
-          modelX.actionCreator('loadSomethingReducer', payload)
+          actionCreator(modelX.actionType('loadSomethingReducer'), payload)
         );
       });
     });
@@ -212,7 +183,6 @@ describe('Model', () => {
           loadSomethingEffect: loadSomethingEffectSpy,
         },
       });
-      const actionCreatorSpy = jest.spyOn(modelX, 'actionCreator');
       const actionCreators = modelX.actionCreators();
       const payload = {1: 2};
 
@@ -222,14 +192,9 @@ describe('Model', () => {
         );
       });
 
-      it('calls actionCreator func when actionCreator entry is called', () => {
-        actionCreators.loadSomethingEffect(payload);
-        expect(actionCreatorSpy).toHaveBeenCalledWith('loadSomethingEffect', payload, undefined);
-      });
-
       it('returns result of actionCreator func', () => {
         expect(actionCreators.loadSomethingEffect(payload)).toEqual(
-          modelX.actionCreator('loadSomethingEffect', payload)
+          actionCreator(modelX.actionType('loadSomethingEffect'), payload)
         );
       });
     });
@@ -313,20 +278,27 @@ describe('Model', () => {
     });
 
     describe('when reducers are present', () => {
-      // @ts-ignore
-      const reducerASpy = jest.fn().mockImplementation((state, action) => state.ola = 'hi');
-      const state = {};
-      const modelX = new Model({
-        namespace: 'articles',
-        state,
-        reducers: {
-          // @ts-ignore
-          reducerA: reducerASpy,
-        },
+      let reducerASpy;
+      let state;
+      let modelX;
+      let reducers;
+      let reducerAction;
+
+      beforeEach(() => {
+        // @ts-ignore
+        reducerASpy = jest.fn().mockImplementation((state, action) => state.ola = 'hi');
+        state = {};
+        modelX = new Model({
+          namespace: 'articles',
+          state,
+          reducers: {
+            // @ts-ignore
+            reducerA: reducerASpy,
+          },
+        });
+        reducers = modelX.modelReducers();
+        reducerAction = actionCreator(modelX.actionType('reducerA'));
       });
-      const reducers = modelX.modelReducers();
-      const reducerAction = modelX.actionCreator('reducerA');
-      reducerAction.type = modelX.actionType('reducerA');
 
       it('calls reducer func when reducer entry is called', () => {
         reducers(state, reducerAction);
@@ -345,7 +317,7 @@ describe('Model', () => {
     });
 
     describe('when effects are present', () => {
-      const state = {};
+      let state;
       let effectASpy;
       let modelX;
       let actionCreatorsSpy;
@@ -353,6 +325,7 @@ describe('Model', () => {
 
       beforeEach(() => {
         effectASpy = jest.fn();
+        state = {};
         modelX = new Model({
           namespace: 'articles',
           state,

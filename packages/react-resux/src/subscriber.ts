@@ -2,7 +2,8 @@ import {Saga} from '@redux-saga/core';
 import * as sagaEffects from 'redux-saga/effects'
 import {Model} from './model';
 import {resuxBlockingGenerator} from './saga';
-import {ActionCreatorsMapObject} from "./baseTypes";
+import {ActionCreatorsMapObject,} from "./baseTypes";
+import {actionCreator, ActionInternalsObject} from "./utils";
 
 /**
  * Subscribers provide a way to link models' effects/reducers, so that they get triggered by the same non-namespaced
@@ -40,7 +41,9 @@ export class Subscriber {
     const actions = {};
 
     for (const effectName of this.effectNames) {
-      actions[effectName] = (actionData: object = {}) => ({...actionData, type: effectName});
+      actions[effectName] = (payload: object = {}, __actionInternals: ActionInternalsObject=undefined) => (
+        actionCreator(effectName, payload, __actionInternals)
+      );
       actions[effectName].isEffect = true;
     }
 

@@ -69,7 +69,13 @@ describe('useSubscriberActions', () => {
       </Provider>
     );
 
-    expect(store.getActions()[0]).toEqual(actionCreators.takeLeadingAndDo())
+    expect(store.getActions()[0]).toEqual({
+    ...actionCreators.takeLeadingAndDo(),
+      __actionInternals: {
+        resolve: expect.any(Function),
+        reject: expect.any(Function),
+      },
+    })
   });
 
   it('will dispatch the takeLatestAndDo action when the respective callback is called', () => {
@@ -79,7 +85,13 @@ describe('useSubscriberActions', () => {
       </Provider>
     );
 
-    expect(store.getActions()[0]).toEqual(actionCreators.takeLatestAndDo())
+    expect(store.getActions()[0]).toEqual({
+    ...actionCreators.takeLatestAndDo(),
+      __actionInternals: {
+        resolve: expect.any(Function),
+        reject: expect.any(Function),
+      },
+    })
   });
 
   it('will dispatch the takeEveryAndDo action when the respective callback is called', () => {
@@ -89,7 +101,13 @@ describe('useSubscriberActions', () => {
       </Provider>
     );
 
-    expect(store.getActions()[0]).toEqual(actionCreators.takeEveryAndDo())
+    expect(store.getActions()[0]).toEqual({
+    ...actionCreators.takeEveryAndDo(),
+      __actionInternals: {
+        resolve: expect.any(Function),
+        reject: expect.any(Function),
+      },
+    })
   });
 
 });

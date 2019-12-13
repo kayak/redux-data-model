@@ -117,6 +117,16 @@ describe('Subscriber', () => {
           allSagaEffects.put(actionWithoutInternals)
         );
       });
+
+      it('throws NonCompatibleActionError when action is not compatible', () => {
+        const nonCompatibleAction = {type: 'whatever', payload: {}};
+        expect(() => gen.next().value.payload.args[1](nonCompatibleAction).next()).toThrow({
+          name: 'NonCompatibleActionError',
+          message: `The provided action lacks the internals for being resux-able. Be sure to use ` +
+            `bindResuxActionCreators instead of redux's bindActionCreators. The action in question ` +
+            `is: ${JSON.stringify(nonCompatibleAction)}`,
+        });
+      });
     });
 
     describe('takeLatest', () => {
@@ -146,6 +156,16 @@ describe('Subscriber', () => {
           allSagaEffects.put(actionWithoutInternals)
         );
       });
+
+      it('throws NonCompatibleActionError when action is not compatible', () => {
+        const nonCompatibleAction = {type: 'whatever', payload: {}};
+        expect(() => gen.next().value.payload.args[1](nonCompatibleAction).next()).toThrow({
+          name: 'NonCompatibleActionError',
+          message: `The provided action lacks the internals for being resux-able. Be sure to use ` +
+            `bindResuxActionCreators instead of redux's bindActionCreators. The action in question ` +
+            `is: ${JSON.stringify(nonCompatibleAction)}`,
+        });
+      });
     });
 
     describe('takeEvery', () => {
@@ -174,6 +194,16 @@ describe('Subscriber', () => {
         expect(worker.next().value).toEqual(
           allSagaEffects.put(actionWithoutInternals)
         );
+      });
+
+      it('throws NonCompatibleActionError when action is not compatible', () => {
+        const nonCompatibleAction = {type: 'whatever', payload: {}};
+        expect(() => gen.next().value.payload.args[1](nonCompatibleAction).next()).toThrow({
+          name: 'NonCompatibleActionError',
+          message: `The provided action lacks the internals for being resux-able. Be sure to use ` +
+            `bindResuxActionCreators instead of redux's bindActionCreators. The action in question ` +
+            `is: ${JSON.stringify(nonCompatibleAction)}`,
+        });
       });
     });
   });

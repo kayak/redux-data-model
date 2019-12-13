@@ -1,8 +1,9 @@
 import {AnyAction, Dispatch} from 'redux';
 import {Action} from "react-redux";
+import {ActionInternalsObject} from "./utils";
 
 export interface ActionCreator<A> {
-  (...args: any[]): A;
+  (payload: object, __actionInternals: ActionInternalsObject): A;
   isEffect: boolean;
 }
 
