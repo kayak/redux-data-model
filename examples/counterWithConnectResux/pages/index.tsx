@@ -69,7 +69,7 @@ function TestComponent({count, counter}) {
         <strong>State (Open console to see actions as they are triggered):</strong>
         <JSONTree data={allState} />
       </div>
-  </>
+    </>
   );
 }
 
