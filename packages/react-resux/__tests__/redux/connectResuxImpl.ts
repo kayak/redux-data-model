@@ -1,5 +1,5 @@
 import {Model, Subscriber} from '../../src';
-import {connectResuxImpl} from '../../src/redux';
+import {connectResuxImpl} from '../../src/redux/connectResuxImpl';
 
 describe('connectResuxImpl', () => {
   let articleModel;

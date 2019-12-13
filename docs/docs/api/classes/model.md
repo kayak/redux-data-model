@@ -14,7 +14,6 @@ generated from source.
 
 # Class: Model
 
-
 Models are the most basic data structure/abstraction in this library. They require a set of options to be
 provided when initializing them. The model will be used to generate the action types, actions, reducers,
 dispatchers, and sagas, based on the model's options that were provided.
@@ -48,7 +47,7 @@ dispatchers, and sagas, based on the model's options that were provided.
 
 \+ **new Model**(`options`: [ModelOptions](../interfaces/modeloptions.md)): *[Model](model.md)*
 
-*Defined in [react-resux/src/model.ts:161](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L161)*
+*Defined in [react-resux/src/model.ts:193](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L193)*
 
 Creates a model instance.
 
@@ -92,7 +91,7 @@ Name | Type | Description |
 
 • **get effects**(): *EffectMap*
 
-*Defined in [react-resux/src/model.ts:376](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L376)*
+*Defined in [react-resux/src/model.ts:426](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L426)*
 
 Returns the effects.
 
@@ -106,7 +105,7 @@ ___
 
 • **get namespace**(): *string*
 
-*Defined in [react-resux/src/model.ts:340](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L340)*
+*Defined in [react-resux/src/model.ts:390](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L390)*
 
 Returns the namespace.
 
@@ -120,7 +119,7 @@ ___
 
 • **get reducers**(): *ReducerMap*
 
-*Defined in [react-resux/src/model.ts:367](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L367)*
+*Defined in [react-resux/src/model.ts:417](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L417)*
 
 Returns the reducers.
 
@@ -134,11 +133,13 @@ ___
 
 • **get reduxSagas**(): *Saga[]*
 
-*Defined in [react-resux/src/model.ts:322](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L322)*
+*Defined in [react-resux/src/model.ts:374](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L374)*
 
 Returns an array of sagas, one for each of the declared effects. They will default to taking every action and
 calling its respective effect. For taking only latest or leading actions, at any given moment, look for
 subscribers instead.
+
+**`throws`** {NonCompatibleActionError} When bindResuxActionCreators was not used to bind the action creators.
 
 **Returns:** *Saga[]*
 
@@ -150,7 +151,7 @@ ___
 
 • **get selectors**(): *SelectorMap*
 
-*Defined in [react-resux/src/model.ts:358](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L358)*
+*Defined in [react-resux/src/model.ts:408](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L408)*
 
 Returns the selectors.
 
@@ -164,7 +165,7 @@ ___
 
 • **get state**(): *State*
 
-*Defined in [react-resux/src/model.ts:349](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L349)*
+*Defined in [react-resux/src/model.ts:399](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L399)*
 
 Returns the initial state.
 
@@ -178,7 +179,7 @@ An initial state.
 
 ▸ **actionCreators**(): *ActionCreatorsMapObject*
 
-*Defined in [react-resux/src/model.ts:256](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L256)*
+*Defined in [react-resux/src/model.ts:298](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L298)*
 
 Returns an object with action creators, one for each of the declared reducers and effects. Only useful for
 testing purposes, read the docs section on testing for more info. Also supports the inner workings of this

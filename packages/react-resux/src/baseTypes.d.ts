@@ -25,18 +25,16 @@ type EffectModelFunction = (actionData: object) => any;
 type SelectorModelMap = Record<string, SelectorModelFunction>;
 type EffectModelMap = Record<string, EffectModelFunction>;
 
-type NamespacedActionCreatorsMapObject = Record<
-string, ActionCreator<any> | NamespacedActionCreatorsMapObject
->;
-type NamespacedSelectorsMapObject = Record<
-string, SelectorFunction | NamespacedSelectorsMapObject
->;
+// Ideally value would be ActionCreator<any> | NamespacedActionCreatorsMapObject, but that creates circular references
+type NamespacedActionCreatorsMapObject = Record<string, any>;
+// Ideally value would be SelectorFunction | NamespacedSelectorsMapObject, but that creates circular references
+type NamespacedSelectorsMapObject = Record<string, any>;
 
 type BoundActionCreatorThatReturnsAPromise = (actionData: object) => Promise<any>;
 
-type BoundNamespacedActionCreatorsMapObject = Record<
-string, BoundNamespacedActionCreatorsMapObject | BoundActionCreatorThatReturnsAPromise
->;
+// Ideally value would be BoundActionCreatorThatReturnsAPromise | BoundNamespacedActionCreatorsMapObject, but
+// that creates circular references
+type BoundNamespacedActionCreatorsMapObject = Record<string, any>;
 
 type MapDispatchToPropsWithActionCreatorsFunction<TDispatchProps, TOwnProps> =
     (

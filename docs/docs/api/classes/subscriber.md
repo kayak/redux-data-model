@@ -14,7 +14,6 @@ generated from source.
 
 # Class: Subscriber
 
-
 Subscribers provide a way to link models' effects/reducers, so that they get triggered by the same non-namespaced
 action type, on a leading, latest, or every action basis. That is, they provide the means for generating redux
 sagas employing takeLeading, takeLatest, or takeEvery effects.
@@ -51,7 +50,7 @@ sagas employing takeLeading, takeLatest, or takeEvery effects.
 
 \+ **new Subscriber**(`models`: [Model](model.md)[]): *[Subscriber](subscriber.md)*
 
-*Defined in [react-resux/src/subscriber.ts:14](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/subscriber.ts#L14)*
+*Defined in [react-resux/src/subscriber.ts:15](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L15)*
 
 Creates a subscriber instance.
 
@@ -69,7 +68,7 @@ Name | Type | Description |
 
 • **effectNames**: *string[]*
 
-*Defined in [react-resux/src/subscriber.ts:13](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/subscriber.ts#L13)*
+*Defined in [react-resux/src/subscriber.ts:14](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L14)*
 
 ___
 
@@ -77,7 +76,7 @@ ___
 
 • **models**: *[Model](model.md)[]*
 
-*Defined in [react-resux/src/subscriber.ts:12](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/subscriber.ts#L12)*
+*Defined in [react-resux/src/subscriber.ts:13](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L13)*
 
 ## Accessors
 
@@ -85,7 +84,7 @@ ___
 
 • **get reduxSagas**(): *Saga[]*
 
-*Defined in [react-resux/src/subscriber.ts:128](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/subscriber.ts#L128)*
+*Defined in [react-resux/src/subscriber.ts:127](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L127)*
 
 Returns an array of sagas, one for each of the declared effects.
 
@@ -99,7 +98,7 @@ An array of sagas.
 
 ▸ **actionCreators**(): *ActionCreatorsMapObject*
 
-*Defined in [react-resux/src/subscriber.ts:38](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/subscriber.ts#L38)*
+*Defined in [react-resux/src/subscriber.ts:39](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L39)*
 
 Returns an object with action creators, one for each of the declared effects. Only useful for testing purposes,
 read the docs section on testing for more info. Also supports the inner workings of this class.
@@ -114,7 +113,7 @@ ___
 
 ▸ **takeEvery**(`actionType`: string, `actionGenerators`: any): *[Subscriber](subscriber.md)*
 
-*Defined in [react-resux/src/subscriber.ts:119](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/subscriber.ts#L119)*
+*Defined in [react-resux/src/subscriber.ts:118](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L118)*
 
 Adds a subscription, which will watch for the provided actionType. It will default to taking every action and
 calling the respective action generator, which is equivalent to the behaviour of effects declared in models.
@@ -137,7 +136,7 @@ ___
 
 ▸ **takeLatest**(`actionType`: string, `actionGenerators`: any): *[Subscriber](subscriber.md)*
 
-*Defined in [react-resux/src/subscriber.ts:92](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/subscriber.ts#L92)*
+*Defined in [react-resux/src/subscriber.ts:91](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L91)*
 
 Adds a subscription, which will watch for the provided actionType. It will default to taking only the latest
 action at any given moment and calling the respective action generator. This is useful for implementing
@@ -161,7 +160,7 @@ ___
 
 ▸ **takeLeading**(`actionType`: string, `actionGenerators`: any): *[Subscriber](subscriber.md)*
 
-*Defined in [react-resux/src/subscriber.ts:106](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/subscriber.ts#L106)*
+*Defined in [react-resux/src/subscriber.ts:105](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/subscriber.ts#L105)*
 
 Adds a subscription, which will watch for the provided actionType. It will default to taking only the leading
 action at any given moment and calling the respective action generator. This is useful for implementing

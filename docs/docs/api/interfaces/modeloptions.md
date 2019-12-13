@@ -14,7 +14,6 @@ generated from source.
 
 # Interface: ModelOptions
 
-
 Model options are used for initialising a [Model](../classes/model.md) instance.
 
 ## Hierarchy
@@ -37,7 +36,7 @@ Model options are used for initialising a [Model](../classes/model.md) instance.
 
 • **effects**? : *EffectMap*
 
-*Defined in [react-resux/src/model.ts:148](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L148)*
+*Defined in [react-resux/src/model.ts:180](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L180)*
 
 Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
 an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
@@ -64,14 +63,20 @@ ___
 
 • **namespace**: *string*
 
-*Defined in [react-resux/src/model.ts:80](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L80)*
+*Defined in [react-resux/src/model.ts:112](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L112)*
 
 The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
-and, as a matter of fact, resux will enforce it.
+and, as a matter of fact, resux will enforce it. The namespace is effectively an object's path in which the
+state will be stored, which can introduce new nesting levels in the store. This might be useful if you
+need to put resux's data somewhere else that not on the root level of the store.
 
 **`example`** namespace: 'pageA'
 
 **`example`** namespace: 'pageB'
+
+**`example`** namespace: 'projectA.pageA'
+
+**`example`** namespace: 'projectA.pageB'
 
 ___
 
@@ -79,7 +84,7 @@ ___
 
 • **reducers**? : *ReducerMap*
 
-*Defined in [react-resux/src/model.ts:127](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L127)*
+*Defined in [react-resux/src/model.ts:159](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L159)*
 
 Reducers are functions used for synchronously changing the current state of a given model. A reducer will
 be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
@@ -110,7 +115,7 @@ ___
 
 • **selectors**? : *SelectorMap*
 
-*Defined in [react-resux/src/model.ts:104](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L104)*
+*Defined in [react-resux/src/model.ts:136](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L136)*
 
 Selectors are functions that receive the entire state and returns a piece of it or, perhaps transform it.
 Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow
@@ -132,7 +137,7 @@ ___
 
 • **state**: *State*
 
-*Defined in [react-resux/src/model.ts:91](https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L91)*
+*Defined in [react-resux/src/model.ts:123](https://github.com/kayak/kaytum/blob/f60c566/packages/react-resux/src/model.ts#L123)*
 
 State represents the initial state of the model's reducer.
 
