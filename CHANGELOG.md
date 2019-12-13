@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/kayak/react-resux/compare/v0.6.0...v0.6.1) (2019-12-13)
+
+
+### Bug Fixes
+
+* add action internals to action creator of subscriber model ([45af66c](https://github.com/kayak/react-resux/commit/45af66cd69a0e07691ebd7092a0be88825b9933b))
+
+
+
+
+
 # [0.6.0](https://github.com/kayak/react-resux/compare/v0.5.0...v0.6.0) (2019-12-13)
 
 

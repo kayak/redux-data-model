@@ -1,6 +1,6 @@
 {
   "name": "react-resux-hooks",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Hooks support for react-resux.",
   "author": "Lucas Lira Gomes <llira@kayak.com>",
   "homepage": "https://kayak.github.io/react-resux/",
@@ -43,7 +43,7 @@
     "jest": "^24.9.0",
     "jest-extended": "^0.11.2",
     "jsdom-global": "^3.0.2",
-    "react-resux": "^0.6.0",
+    "react-resux": "^0.6.1",
     "react-test-renderer": "^16.10.2",
     "redux-mock-store": "^1.5.3",
     "ts-jest": "^24.1.0"
