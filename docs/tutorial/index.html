@@ -141,7 +141,6 @@ will enforce that when calling <a href="/react-resux/docs/api/api-index#combinem
 <p>That doesn't have access to the counter <a href="concepts#model">model</a> yet, so let's do that. Since react-resux uses <a href="https://redux.js.org/">redux</a>, we could just
 use the <a href="https://react-redux.js.org/api/connect">connect</a> high order component (<a href="https://reactjs.org/docs/higher-order-components.html">HOC</a>) like:</p>
 <pre><code class="hljs css language-javascript"><span class="hljs-keyword">import</span> {connect} <span class="hljs-keyword">from</span> <span class="hljs-string">'react-redux'</span>;
-<span class="hljs-keyword">import</span> {countModel} <span class="hljs-keyword">from</span> <span class="hljs-string">'./models'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Counter</span>(<span class="hljs-params">{count}</span>) </span>{
   <span class="hljs-keyword">return</span> count;
@@ -427,6 +426,50 @@ mapDispatchToProps:</p>
       <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{counter.confirmBeforeIncrementing}</span>&gt;</span>Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> |
         <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{counter.confirmBeforeDecrementing}</span>&gt;</span>Decrement<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapStateToProps</span>(<span class="hljs-params">state, props, selectors</span>) </span>{
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">count</span>: selectors.counter.count(state),
+  };
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connectResux([countModel], mapStateToProps)(CountComponent);
+</code></pre>
+<p>Now let's say we need to redirect to another page, when the user is done with the incrementation (i.e. clicking
+yes in the dialog), or that we need to display an error message if something went wrong (e.g. a REST request
+within one of our effects raised an exception). That's actually quite easy to do. Every dispatcher returns a
+promise when called. Dispatchers for effects will resolve if the effect was succesfull or reject if an exception
+was raised within the effect (i.e. saga generator). In case of a reducer's dispatcher, an already resolved
+promise is returned. That means we could change the code above to:</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">import</span> {connectResux} <span class="hljs-keyword">from</span> <span class="hljs-string">'react-resux'</span>;
+<span class="hljs-keyword">import</span> {countModel} <span class="hljs-keyword">from</span> <span class="hljs-string">'./models'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CountComponent</span>(<span class="hljs-params">{count, counter}</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Count: {count}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span>
+            () =&gt;</span> counter.confirmBeforeIncrementing().then(
+                //...
+            ).rejects(
+                // shows an error message
+            )}
+        &gt;
+            Increment
+        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> |
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span>
+            () =&gt;</span> counter.confirmBeforeDecrementing().then(
+                // ...
+            ).rejects(
+                // shows an error message
+            )}&gt;
+                Decrement
+         <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
   );

@@ -94,7 +94,7 @@ dispatchers, and sagas, based on the model's options that were provided.</p>
 <h2><a class="anchor" aria-hidden="true" id="constructors-1"></a><a href="#constructors-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Constructors</h2>
 <h3><a class="anchor" aria-hidden="true" id="constructor"></a><a href="#constructor" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>constructor</h3>
 <p>+ <strong>new Model</strong>(<code>options</code>: <a href="/react-resux/docs/api/interfaces/api-interfaces-model-options">ModelOptions</a>): <em><a href="/react-resux/docs/api/classes/api-classes-model">Model</a></em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L161">react-resux/src/model.ts:161</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L193">react-resux/src/model.ts:193</a></em></p>
 <p>Creates a model instance.</p>
 <p><strong><code>example</code></strong>
 const counterModel = new Model({
@@ -131,51 +131,52 @@ state.count -= 1;
 <h2><a class="anchor" aria-hidden="true" id="accessors-1"></a><a href="#accessors-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Accessors</h2>
 <h3><a class="anchor" aria-hidden="true" id="effects"></a><a href="#effects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>effects</h3>
 <p>• <strong>get effects</strong>(): <em>EffectMap</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L376">react-resux/src/model.ts:376</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L426">react-resux/src/model.ts:426</a></em></p>
 <p>Returns the effects.</p>
 <p><strong>Returns:</strong> <em>EffectMap</em></p>
 <p>An effect map.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="namespace"></a><a href="#namespace" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>namespace</h3>
 <p>• <strong>get namespace</strong>(): <em>string</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L340">react-resux/src/model.ts:340</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L390">react-resux/src/model.ts:390</a></em></p>
 <p>Returns the namespace.</p>
 <p><strong>Returns:</strong> <em>string</em></p>
 <p>A string.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="reducers"></a><a href="#reducers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>reducers</h3>
 <p>• <strong>get reducers</strong>(): <em>ReducerMap</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L367">react-resux/src/model.ts:367</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L417">react-resux/src/model.ts:417</a></em></p>
 <p>Returns the reducers.</p>
 <p><strong>Returns:</strong> <em>ReducerMap</em></p>
 <p>A reducer function.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="reduxsagas"></a><a href="#reduxsagas" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>reduxSagas</h3>
 <p>• <strong>get reduxSagas</strong>(): <em>Saga[]</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L322">react-resux/src/model.ts:322</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L374">react-resux/src/model.ts:374</a></em></p>
 <p>Returns an array of sagas, one for each of the declared effects. They will default to taking every action and
 calling its respective effect. For taking only latest or leading actions, at any given moment, look for
 subscribers instead.</p>
+<p><strong><code>throws</code></strong> {NonCompatibleActionError} When bindResuxActionCreators was not used to bind the action creators.</p>
 <p><strong>Returns:</strong> <em>Saga[]</em></p>
 <p>An array of sagas.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="selectors"></a><a href="#selectors" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>selectors</h3>
 <p>• <strong>get selectors</strong>(): <em>SelectorMap</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L358">react-resux/src/model.ts:358</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L408">react-resux/src/model.ts:408</a></em></p>
 <p>Returns the selectors.</p>
 <p><strong>Returns:</strong> <em>SelectorMap</em></p>
 <p>A selectors map.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="state"></a><a href="#state" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>state</h3>
 <p>• <strong>get state</strong>(): <em>State</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L349">react-resux/src/model.ts:349</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L399">react-resux/src/model.ts:399</a></em></p>
 <p>Returns the initial state.</p>
 <p><strong>Returns:</strong> <em>State</em></p>
 <p>An initial state.</p>
 <h2><a class="anchor" aria-hidden="true" id="methods-1"></a><a href="#methods-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h2>
 <h3><a class="anchor" aria-hidden="true" id="actioncreators"></a><a href="#actioncreators" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>actionCreators</h3>
 <p>▸ <strong>actionCreators</strong>(): <em>ActionCreatorsMapObject</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L256">react-resux/src/model.ts:256</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L298">react-resux/src/model.ts:298</a></em></p>
 <p>Returns an object with action creators, one for each of the declared reducers and effects. Only useful for
 testing purposes, read the docs section on testing for more info. Also supports the inner workings of this
 class.</p>

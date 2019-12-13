@@ -83,7 +83,7 @@ generated from source.</p>
 <h2><a class="anchor" aria-hidden="true" id="properties-1"></a><a href="#properties-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties</h2>
 <h3><a class="anchor" aria-hidden="true" id="optional-effects"></a><a href="#optional-effects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Optional</code> effects</h3>
 <p>• <strong>effects</strong>? : <em>EffectMap</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L148">react-resux/src/model.ts:148</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L180">react-resux/src/model.ts:180</a></em></p>
 <p>Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
 an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
 by a <a href="https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args">takeEvery</a> effect, from redux-saga.
@@ -104,15 +104,19 @@ console.log(error)
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="namespace"></a><a href="#namespace" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>namespace</h3>
 <p>• <strong>namespace</strong>: <em>string</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L80">react-resux/src/model.ts:80</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L112">react-resux/src/model.ts:112</a></em></p>
 <p>The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
-and, as a matter of fact, resux will enforce it.</p>
+and, as a matter of fact, resux will enforce it. The namespace is effectively an object's path in which the
+state will be stored, which can introduce new nesting levels in the store. This might be useful if you
+need to put resux's data somewhere else that not on the root level of the store.</p>
 <p><strong><code>example</code></strong> namespace: 'pageA'</p>
 <p><strong><code>example</code></strong> namespace: 'pageB'</p>
+<p><strong><code>example</code></strong> namespace: 'projectA.pageA'</p>
+<p><strong><code>example</code></strong> namespace: 'projectA.pageB'</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="optional-reducers"></a><a href="#optional-reducers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Optional</code> reducers</h3>
 <p>• <strong>reducers</strong>? : <em>ReducerMap</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L127">react-resux/src/model.ts:127</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L159">react-resux/src/model.ts:159</a></em></p>
 <p>Reducers are functions used for synchronously changing the current state of a given model. A reducer will
 be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
 A reducer function receives the entire state and the action as arguments respectively. It shouldn't return
@@ -135,7 +139,7 @@ state.data[userId] = data;
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="optional-selectors"></a><a href="#optional-selectors" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Optional</code> selectors</h3>
 <p>• <strong>selectors</strong>? : <em>SelectorMap</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L104">react-resux/src/model.ts:104</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L136">react-resux/src/model.ts:136</a></em></p>
 <p>Selectors are functions that receive the entire state and returns a piece of it or, perhaps transform it.
 Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow
 comparing its variables. The first argument of a selector function is the namespaced state, following
@@ -148,7 +152,7 @@ the last argument is the entire redux state.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="state"></a><a href="#state" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>state</h3>
 <p>• <strong>state</strong>: <em>State</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/model.ts#L91">react-resux/src/model.ts:91</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/model.ts#L123">react-resux/src/model.ts:123</a></em></p>
 <p>State represents the initial state of the model's reducer.</p>
 <p><strong><code>example</code></strong> state: 0</p>
 <p><strong><code>example</code></strong> state: []</p>

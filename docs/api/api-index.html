@@ -88,13 +88,14 @@ generated from source.</p>
 </ul>
 <h3><a class="anchor" aria-hidden="true" id="redux-saga-setup-functions"></a><a href="#redux-saga-setup-functions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Redux/Saga Setup Functions</h3>
 <ul>
+<li><a href="/react-resux/docs/api/api-index#bindresuxactioncreators">bindResuxActionCreators</a></li>
 <li><a href="/react-resux/docs/api/api-index#combinemodelreducers">combineModelReducers</a></li>
 <li><a href="/react-resux/docs/api/api-index#resuxrootsaga">resuxRootSaga</a></li>
 </ul>
 <h2><a class="anchor" aria-hidden="true" id="high-order-component-hoc-functions-1"></a><a href="#high-order-component-hoc-functions-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>High Order Component (HOC) Functions</h2>
 <h3><a class="anchor" aria-hidden="true" id="connectresux"></a><a href="#connectresux" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>connectResux</h3>
-<p>▸ <strong>connectResux</strong>(<code>modelsOrSubscribers</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a> | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>[], <code>userProvidedMapStateToProps</code>: MapStateToPropsWithSelectors‹any, any, any›, <code>userProvidedMapDispatchToProps</code>: MapDispatchToPropsWithActionCreators‹any, any›): <em>any</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/redux.ts#L84">react-resux/src/redux.ts:84</a></em></p>
+<p>▸ <strong>connectResux</strong>(<code>modelsOrSubscribers</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a>‹› | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>‹›[], <code>userProvidedMapStateToProps</code>: MapStateToPropsWithSelectors‹any, any, any›, <code>userProvidedMapDispatchToProps</code>: MapDispatchToPropsWithActionCreators‹any, any›): <em>any</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/redux/connectResux.ts#L22">react-resux/src/redux/connectResux.ts:22</a></em></p>
 <p>Equivalent to redux's connect function. This should be used when the hooks api is not desired or
 supported. Otherwise check <a href="/react-resux/docs/api/api-index#usemodelactions">useModelActions</a>, <a href="/react-resux/docs/api/api-index#usemodelselector">useModelSelector</a>, and <a href="/react-resux/docs/api/api-index#usesubscriberactions">useSubscriberActions</a> up.</p>
 <p><strong><code>example</code></strong>
@@ -105,7 +106,7 @@ const ConnectedComponent = connectResux([modelA, modelB], mapStateToProps, mapDi
 <tr><th>Name</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>modelsOrSubscribers</code></td><td><a href="/react-resux/docs/api/classes/api-classes-model">Model</a> | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>[]</td><td>-</td><td>An array of either Model or Subscriber instances.</td></tr>
+<tr><td><code>modelsOrSubscribers</code></td><td><a href="/react-resux/docs/api/classes/api-classes-model">Model</a>‹› | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>‹›[]</td><td>-</td><td>An array of either Model or Subscriber instances.</td></tr>
 <tr><td><code>userProvidedMapStateToProps</code></td><td>MapStateToPropsWithSelectors‹any, any, any›</td><td>null</td><td>A mapToProps equivalent, which has a third argument with all selectors.</td></tr>
 <tr><td><code>userProvidedMapDispatchToProps</code></td><td>MapDispatchToPropsWithActionCreators‹any, any›</td><td>null</td><td>A mapDispatchToProps equivalent, which has a third argument with all                                       models' action creators and a fourth argument with all subscriber's                                       action creators.</td></tr>
 </tbody>
@@ -115,8 +116,8 @@ const ConnectedComponent = connectResux([modelA, modelB], mapStateToProps, mapDi
 <hr>
 <h2><a class="anchor" aria-hidden="true" id="react-hook-functions-1"></a><a href="#react-hook-functions-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>React Hook Functions</h2>
 <h3><a class="anchor" aria-hidden="true" id="usemodelactions"></a><a href="#usemodelactions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>useModelActions</h3>
-<p>▸ <strong>useModelActions</strong>(<code>model</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a>): <em>ActionCreatorsMapObject</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux-hooks/src/useModelActions.ts#L17">react-resux-hooks/src/useModelActions.ts:17</a></em></p>
+<p>▸ <strong>useModelActions</strong>(<code>model</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a>): <em>BoundActionCreatorsMapObject</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux-hooks/src/useModelActions.ts#L19">react-resux-hooks/src/useModelActions.ts:19</a></em></p>
 <p>A react hook for returning already bound action creators for the provided model. If you don't want/need to use
 the hooks api, check <a href="/react-resux/docs/api/api-index#connectresux">connectResux</a> up.</p>
 <p><strong><code>example</code></strong>
@@ -130,12 +131,14 @@ const modelActions = useModelActions(model);</p>
 <tr><td><code>model</code></td><td><a href="/react-resux/docs/api/classes/api-classes-model">Model</a></td><td>A model instance.</td></tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong> <em>ActionCreatorsMapObject</em></p>
-<p>An object with already bound action creators.</p>
+<p><strong>Returns:</strong> <em>BoundActionCreatorsMapObject</em></p>
+<p>An object with already bound action creators. The bound action creators return a promise when invoked,
+which can be used to track if the action was properly processed (i.e. resolved) or caused an exception
+(i.e. rejected).</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="usemodelselector"></a><a href="#usemodelselector" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>useModelSelector</h3>
-<p>▸ <strong>useModelSelector</strong>(<code>model</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a>, <code>selectorFunc</code>: any): <em>Record‹string, function›</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux-hooks/src/useModelSelector.ts#L16">react-resux-hooks/src/useModelSelector.ts:16</a></em></p>
+<p>▸ <strong>useModelSelector</strong>(<code>model</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a>, <code>selectorFunc</code>: SelectorFunction): <em>any</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux-hooks/src/useModelSelector.ts#L19">react-resux-hooks/src/useModelSelector.ts:19</a></em></p>
 <p>A react hook for returning data from the provided model's state, by the means of one of its selectors. If you
 don't want/need to use the hooks api, check <a href="/react-resux/docs/api/api-index#connectresux">connectResux</a> up.</p>
 <p><strong><code>example</code></strong>
@@ -147,15 +150,15 @@ const someDataFromState = useModelSelector(model, (state, selectors) =&gt; selec
 </thead>
 <tbody>
 <tr><td><code>model</code></td><td><a href="/react-resux/docs/api/classes/api-classes-model">Model</a></td><td>A model instance.</td></tr>
-<tr><td><code>selectorFunc</code></td><td>any</td><td>-</td></tr>
+<tr><td><code>selectorFunc</code></td><td>SelectorFunction</td><td>A selector func, which will call one of the selectors in the provided model. The first                     argument must be the entire redux state, followed by the selectors map of the model.</td></tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong> <em>Record‹string, function›</em></p>
+<p><strong>Returns:</strong> <em>any</em></p>
 <p>Data from model's state.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="usesubscriberactions"></a><a href="#usesubscriberactions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>useSubscriberActions</h3>
-<p>▸ <strong>useSubscriberActions</strong>(<code>subscriber</code>: <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>): <em>ActionCreatorsMapObject</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux-hooks/src/useSubscriberActions.ts#L17">react-resux-hooks/src/useSubscriberActions.ts:17</a></em></p>
+<p>▸ <strong>useSubscriberActions</strong>(<code>subscriber</code>: <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>): <em>BoundActionCreatorsMapObject</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux-hooks/src/useSubscriberActions.ts#L19">react-resux-hooks/src/useSubscriberActions.ts:19</a></em></p>
 <p>A react hook for returning already bound action creators for the provided subscriber. If you don't want/need
 to use the hooks api, check <a href="/react-resux/docs/api/api-index#connectresux">connectResux</a> up.</p>
 <p><strong><code>example</code></strong>
@@ -169,13 +172,37 @@ const subscriberActions = useSubscriberActions(subscriber);</p>
 <tr><td><code>subscriber</code></td><td><a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a></td><td>A subscriber instance.</td></tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong> <em>ActionCreatorsMapObject</em></p>
-<p>An object with already bound action creators.</p>
+<p><strong>Returns:</strong> <em>BoundActionCreatorsMapObject</em></p>
+<p>An object with already bound action creators. The bound action creators return a promise when invoked,
+which can be used to track if the action was properly processed (i.e. resolved) or caused an exception
+(i.e. rejected).</p>
 <hr>
 <h2><a class="anchor" aria-hidden="true" id="redux-saga-setup-functions-1"></a><a href="#redux-saga-setup-functions-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Redux/Saga Setup Functions</h2>
+<h3><a class="anchor" aria-hidden="true" id="bindresuxactioncreators"></a><a href="#bindresuxactioncreators" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>bindResuxActionCreators</h3>
+<p>▸ <strong>bindResuxActionCreators</strong>(<code>actionCreators</code>: ActionCreatorsMapObject, <code>dispatch</code>: Dispatch): <em>BoundNamespacedActionCreatorsMapObject</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/redux/bindResuxActionCreators.ts#L24">react-resux/src/redux/bindResuxActionCreators.ts:24</a></em></p>
+<p>Turns an object whose values are action creators or nested objects with them, into an object with the
+same keys, but with every action creator wrapped into a dispatch call so they may be invoked directly.
+A Promise will be returned on every invocation, which can be used to track if the action was properly
+processed (i.e. resolved) or caused an exception (i.e. rejected).</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr><th>Name</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>actionCreators</code></td><td>ActionCreatorsMapObject</td><td>a namespaced action creator's map object. This can have multiple levels of nesting,                       depending on the namespaces of the models involved.</td></tr>
+<tr><td><code>dispatch</code></td><td>Dispatch</td><td>A dispatch function available on the Store instance..</td></tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>BoundNamespacedActionCreatorsMapObject</em></p>
+<p>An object mimicking the original object, but with each function immediately dispatching the
+action returned by the corresponding action creator. And returning a Promise, which will resolve/
+reject once done.</p>
+<hr>
 <h3><a class="anchor" aria-hidden="true" id="combinemodelreducers"></a><a href="#combinemodelreducers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>combineModelReducers</h3>
 <p>▸ <strong>combineModelReducers</strong>(<code>models</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a>[]): <em>ReducersMapObject</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/redux.ts#L110">react-resux/src/redux.ts:110</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/redux/combineModelReducers.ts#L34">react-resux/src/redux/combineModelReducers.ts:34</a></em></p>
 <p>Returns a reducer map object that can be deconstructed into the combineReducers helper, from redux, so that
 redux is aware of any reducers produced by models.</p>
 <p><strong><code>example</code></strong>
@@ -196,8 +223,8 @@ const store = createStore(combineReducers({
 <p>A reducer's map object.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="resuxrootsaga"></a><a href="#resuxrootsaga" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resuxRootSaga</h3>
-<p>▸ <strong>resuxRootSaga</strong>(<code>sagaContainers</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a> | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>[]): <em>SagaIterator</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/164e3a8/packages/react-resux/src/redux.ts#L140">react-resux/src/redux.ts:140</a></em></p>
+<p>▸ <strong>resuxRootSaga</strong>(<code>sagaContainers</code>: <a href="/react-resux/docs/api/classes/api-classes-model">Model</a>‹› | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>‹›[]): <em>SagaIterator</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/kaytum/blob/cc62ef0/packages/react-resux/src/saga.ts#L55">react-resux/src/saga.ts:55</a></em></p>
 <p>Returns a root saga generator that can be passed to sagaMiddleware's run function, so that redux-saga is aware
 of any sagas produced by either models or subscribers.</p>
 <p><strong><code>example</code></strong>
@@ -208,7 +235,7 @@ sagaMiddleware.run(() =&gt; resuxRootSaga([modelA, subscriberA]));</p>
 <tr><th>Name</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>sagaContainers</code></td><td><a href="/react-resux/docs/api/classes/api-classes-model">Model</a> | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>[]</td><td>An array of either Model or Subscriber instances.</td></tr>
+<tr><td><code>sagaContainers</code></td><td><a href="/react-resux/docs/api/classes/api-classes-model">Model</a>‹› | <a href="/react-resux/docs/api/classes/api-classes-subscriber">Subscriber</a>‹›[]</td><td>An array of either Model or Subscriber instances.</td></tr>
 </tbody>
 </table>
 <p><strong>Returns:</strong> <em>SagaIterator</em></p>
