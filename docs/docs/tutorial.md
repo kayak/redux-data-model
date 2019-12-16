@@ -3,9 +3,9 @@ title: Tutorial
 id: tutorial
 ---
 
-This tutorial will introduce you to the basics of react-resux by building a counter application, which will
-not only display the current counter value, but that also provides the means for incrementing/decrementing.
-Additionaly, the application requires a confirmation step, whenever its user tries to increment/decrement
+This tutorial will introduce you to the basics of react-resux by building a counter application which will both
+display the current counter value as well as provide the means for incrementing/decrementing.
+Additionaly, the application requires a confirmation step whenever its user tries to increment/decrement
 the counter value.
 
 ## TLDR
@@ -14,7 +14,7 @@ This tutorial is composed of both the
 [counterWithConnectResux](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResux) and
 [counterWithConnectResuxAndConfirmationDialog](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResuxAndConfirmationDialog)
 examples. In the end, our high order component ([HOC]) API will be replaced with its hook based equivalent,
-such as in [counterWithHooks](https://github.com/kayak/react-resux/tree/master/examples/counterWithHooks) example.
+as shown in the [counterWithHooks](https://github.com/kayak/react-resux/tree/master/examples/counterWithHooks) example.
 To see all examples click [here](https://github.com/kayak/react-resux#demos).
 
 ## Prerequisites
@@ -54,12 +54,12 @@ So far our entities and their attributes look like this:
 ## Creating our first model
 
 Central to react-resux is the concept of a [model]. The [model] consists of the set of state, selectors, actions,
-reducers and asynchrounous workflows (i.e. effects) that are related to a given entity. In orther words, they
+reducers and asynchrounous workflows (i.e. effects) that are related to a given entity. In other words, they
 represent the boilerplate around a given reducer plus the async bits handled by some [redux middleware]. This
-means that in order to make our application work, we need to describe to react-resux how our [model] looks like.
+means that in order to make our application work, we need to describe to react-resux what our [model] looks like.
 
 To define a [model] for an entity in react-resux is to provide a set of options when instantiating a [model] class.
-Each instanted [model] needs at least its namespace and initial state to be provided. Therefore, the simplest
+Each instantiated [model] needs at least its namespace and initial state to be provided. Therefore, the simplest
 [model] we could define would be:
 
 ```javascript
@@ -77,7 +77,7 @@ export const countModel = new Model({
 At this point were not even using this [model], so let's try to display that count value we defined in the state
 option. Before proceeding with actual UI work, we'd need to hook our [model] to both [redux] and our favourite
 [redux middleware] (i.e. [redux-saga]) for handling async workflows. The way we can do that is explained in the
-[Integrating with Redux/Redux Saga] section. Assuming you've set everything right, you can now try to see your
+[Integrating with Redux/Redux Saga] section. Assuming you've set up everything correctly, you can now try to see your
 models' state in your application redux state, by using something like
 [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd).
 
@@ -94,11 +94,11 @@ For the sake of example, the application state would be somewhat similar to:
 
 Notice that countModel.state is namespaced with the namespace option provided to the [model]. By now you probably
 realised that [model]'s namespaces must be unique. And you'd be totally right to assume that. In fact react-resux
-will enforce that when calling [combineModelReducers] function. Enough of digressions though.
+will enforce that when calling the [combineModelReducers] function. Enough of digressions though.
 
 ## Getting to the UI
 
-Let's assume a very simple component, that just displays the counter's count. Something on the lines of:
+Let's assume a very simple component, that just displays the counter's count. Something along the lines of:
 
 ```javascript
 export function Counter({count}) {
@@ -106,7 +106,7 @@ export function Counter({count}) {
 }
 ```
 
-That doesn't have access to the counter [model] yet, so let's do that. Since react-resux uses [redux], we could just
+It doesn't have access to the counter [model] yet, so let's do that. Since react-resux uses [redux], we could just
 use the [connect] high order component ([HOC]) like:
 
 ```javascript
@@ -125,14 +125,14 @@ function mapStateToProps(state, props) {
 export default connect(mapStateToProps)(Counter);
 ```
 
-That's all nice and swell, but react-resux actually provide more powerful constructs for connecting your components
+That's all nice and swell, but react-resux actually provides more powerful constructs for connecting your components
 to the redux state. For such we have two options. To use [connectResux] high order component ([HOC]) or the equivalent
 [hooks] API. Later on we will dive into the [hooks] API, but for now [connectResux] will do the trick.
 
 ## Reading data through selectors
 
 As you might have imagined, [connectResux] is to react-resux, what [connect] is to [redux]. In other words, it allows
-your component to dispatch action, for modifying the state, or reading from the state. But before we go about
+your component to dispatch actions, for modifying the state, or reading from the state. But before we go about
 using [connectResux], let's add a selector to our [model], so that we can read data from it.
 
 ```javascript
@@ -169,15 +169,15 @@ function mapStateToProps(state, props, selectors) {
 export default connectResux([countModel], mapStateToProps)(CountComponent);
 ```
 
-So we can definitely see a few similarities between [connectResux] and [connect] here. Both have an user defined
-mapStateToProps and, as a matter of fact, can also have an user defined mapDispatchToProps function. Notice
+So we can definitely see a few similarities between [connectResux] and [connect] here. Both have a user defined
+mapStateToProps and, as a matter of fact, can also have a user defined mapDispatchToProps function. Notice
 that the first argument of [connectResux] is the list of models the component is going to employ. You might have
-also noticed that the [connectResux]'s mapStateToProps also get a third argument. Namely the selectors object,
+also noticed that the [connectResux]'s mapStateToProps also gets a third argument. Namely the selectors object,
 which contain namespaced references to all the selectors in the [connectResux]'s provided models. It's important
 to mention that those selectors are all memoised under the hood, so that more complex selectors don't get
 re-computed when data hasn't actually changed.
 
-You can also extra arguments to the selectors, perhaps some id you get from the props. For such just pass extra
+You can also provide extra arguments to the selectors, perhaps some id you get from the props. Just pass extra
 positional arguments to the selector call in the mapStateToProps function. Such as in:
 
 ```javascript
@@ -250,7 +250,7 @@ mapStateToProps, if you havent set any. This default mapDispatchToProps, would h
 ```
 
 So like selectors, in mapStateToProps, your default mapDispatchToProps is namespaced by the models' namespace.
-Let's try to change the example with selectors, in other to use the default mapDispatchToProps for modifying our
+Let's try to change the example with selectors, in order to use the default mapDispatchToProps for modifying our
 redux state via reducers:
 
 ```javascript
@@ -284,7 +284,7 @@ export default connectResux([countModel], mapStateToProps)(CountComponent);
 
 Simple right. We just needed to get the counter prop, since that's the namespace of the counter [model] and voilà.
 But what about when you want to define a custom mapDispatchToProps, like when you need to mix vanilla [redux] with
-react-resux. Like in react-redux, mapDispatchToProps can be declared in either a function form or a object shortand
+react-resux. Like in react-redux, mapDispatchToProps can be declared in either a function form or a object shorthand
 notation. As a function that would look like:
 
 ```javascript
@@ -355,8 +355,8 @@ Now we have the basic functionality, we still need a confirmation step via a dia
 increment/decrement the counter value. For such dialog we are going to use the [sweetalert2], but any would fit.
 
 Although we could implement that with reducers, effects would better capture the logic and
-allow for easier testability, that's harder when the logic for displaying plus confiming is on the component
-level. Effects are essentialy an way to implement asynchronous workflows that are very easy to test. Certainly
+allow for easier testability, that's harder when the logic for displaying plus confirming is on the component
+level. Effects are essentially a way to implement asynchronous workflows that are very easy to test. Certainly
 a consequence of effects being based on [redux-saga]. That said, let's see how our counter [model] should look
 like with the bespoke effects:
 
@@ -364,9 +364,9 @@ like with the bespoke effects:
 import {Model} from 'react-resux';
 import Swal from "sweetalert2";
 
-// Fyi async/await functions are just syntax sugar for functions that return a promisse
+// Fyi async/await functions are just syntactic sugar for functions that return a promise
 async function showConfirm(options) {
-  const result = await ReactSwal.fire({
+  const result = await Swal.fire({
     showCancelButton: true,
     showConfirmButton: true,
       ...options
@@ -396,17 +396,17 @@ export const countModel = new Model({
       },
     },
     effects: {
-      confirmBeforeIncrementing(action, {call, put}, {increment, decrement}) {
+      * confirmBeforeIncrementing(action, {call, put}, {increment, decrement}) {
         // Arguments are action, sagaEffects and actionCreators
-        const hasConfirmed = yield sagaEffects.call(showConfirm, {
+        const hasConfirmed = yield call(showConfirm, {
           text: "Are you sure you want to increment?"
         });
 
         if (hasConfirmed) yield put(increment());
       },
-      confirmBeforeDecrementing(action, {call, put}, {increment, decrement}) {
+      * confirmBeforeDecrementing(action, {call, put}, {increment, decrement}) {
         // Arguments are action, sagaEffects and actionCreators
-        const hasConfirmed = yield sagaEffects.call(showConfirm, {
+        const hasConfirmed = yield call(showConfirm, {
           text: "Are you sure you want to decrement?"
         });
 
@@ -508,7 +508,7 @@ the get go. For such, we expose three [hooks], namely [useModelActions], [useSub
 import {useModelActions, useModelSelector} from 'react-resux';
 import {countModel} from './models';
 
-export default function CountComponent({count, counter}) {
+export default function CountComponent() {
   const {confirmBeforeIncrementing, confirmBeforeDecrementing} = useModelActions(counterModel);
   const count = useModelSelector(counterModel, (state, selectors) => selectors.count(state));
 
