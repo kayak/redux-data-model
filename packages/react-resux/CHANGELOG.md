@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/kayak/react-resux/compare/v0.6.1...v0.6.2) (2019-12-17)
+
+
+### Bug Fixes
+
+* change model reducers to receive the payload straight away ([6a249f6](https://github.com/kayak/react-resux/commit/6a249f609907224e2c2a58ae44d76841039387bd))
+
+
+
+
+
 ## [0.6.1](https://github.com/kayak/react-resux/compare/v0.6.0...v0.6.1) (2019-12-13)
 
 
