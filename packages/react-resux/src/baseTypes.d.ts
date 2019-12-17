@@ -3,7 +3,7 @@ import {Action} from "react-redux";
 import {ActionInternalsObject} from "./utils";
 
 export interface ActionCreator<A> {
-  (payload: object, __actionInternals: ActionInternalsObject): A;
+  (payload: object, __actionInternals?: ActionInternalsObject): A;
   isEffect: boolean;
 }
 

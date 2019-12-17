@@ -32,6 +32,7 @@ import {createSelector} from 'reselect';
 import {resuxBlockingGenerator} from './saga';
 import {
   ActionCreatorsMapObject,
+  ActionWithInternals,
   EffectMap,
   EffectModelMap,
   ReducerMap,
@@ -310,9 +311,9 @@ export class Model {
       reducers[actionType] = reducerFunc;
     }
 
-    return produce((draft: object, action: AnyAction) => {
+    return produce((draft: object, action: ActionWithInternals) => {
       const reducerFunc = get(reducers, action.type, defaultReducer);
-      reducerFunc(draft, action);
+      reducerFunc(draft, action.payload);
     }, this._state);
   }
 
