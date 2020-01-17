@@ -45,22 +45,3 @@ export default function({page}) {
   return (<button onClick={modelXActions.swapValue}>Click here to swap value!</button>);
 }
 ```
-
-## useSubscriberActions
-
-Returns an object with all effect action creators, defined in the provided subscriber, already bound with redux's
-dispatch. For more info see its [API](api/README.md#usesubscriberactions) reference.
-
-#### Read data example:
-```javascript
-import {useSubscriberActions} from 'react-resux-hooks';
-import {subscriberX} from './modelX';
-
-export default function({page}) {
-  // We assume here that modelX has an effect called fetchPageA defined.
-  // Fyi subscriberXActions will contain all effects defined on subscriberX.
-  const subscriberXActions = useSubscriberActions(subscriberX);
-
-  return (<button onClick={subscriberXActions.fetchPageA}>Click here to fetch page a!</button>)
-}
-```

@@ -13,9 +13,9 @@ scope for a state management abstraction. Its documentation and community is mos
 ## Are there similar alternatives to this library?
 Besides [dva], there's [kea]. On the [mobx] side of the force there's also [mobx-state-tree].
 
-## I like redux-thunks, redux-observable, redux-pack, or other async middleware. Is it possible to use anything other than redux-saga for effects in models/subscribers?
+## I like redux-thunks, redux-observable, redux-pack, or other async middleware. Is it possible to use anything other than redux-saga for effects in models?
 No. That said we guarantee [redux-saga] won't disappoint you. If you strongly want to stick to any of those other
-async [middlewares], but don't want to give up on react-resux, consider using react-resux without effects/subscribers.
+async [middlewares], but don't want to give up on react-resux, consider using react-resux without effects.
 
 [dva]: https://github.com/dvajs/dva
 [kea]: https://github.com/keajs/kea

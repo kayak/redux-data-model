@@ -501,8 +501,8 @@ implement your own.
 ## Going further: Using our Hooks API
 
 [Hooks] are the new sensation in the [react] world and rightfully so. In fact, we took them into account since
-the get go. For such, we expose three [hooks], namely [useModelActions], [useSubscriberActions], and
-[useModelSelector]. So that we could, write the previous examples as:
+the get go. For such, we expose two [hooks], namely [useModelActions] and [useModelSelector]. So that we could,
+write the previous examples as:
 
 ```javascript
 import {useModelActions, useModelSelector} from 'react-resux';
@@ -527,11 +527,6 @@ export default function CountComponent() {
 It does look more compact than previous solutions, so we'd strongly recommend you to use [our Hooks API] instead of
 the [connectResux] high order component ([HOC]).
 
-## Next up
-
-In (the still TODO) part 2 of this tutorial, we will discover how to use a [subscriber] to make [model] collaborate
-via a simple interface.
-
 [react]: https://reactjs.org/
 [hooks]: https://reactjs.org/docs/hooks-reference.html
 [HOC]: https://reactjs.org/docs/higher-order-components.html
@@ -544,10 +539,8 @@ via a simple interface.
 [immer]: https://github.com/immerjs/immer
 
 [model]: concepts#model
-[subscriber]: concepts#subscriber
 [connectResux]: api/README.md#connectresux
 [useModelActions]: api/README.md#usemodelactions
-[useSubscriberActions]: api/README.md#usesubscriberactions
 [useModelSelector]: api/README.md#usemodelselector
 [combineModelReducers]: api/README.md#combinemodelreducers
 [Integrating with Redux/Redux Saga]: redux-integration

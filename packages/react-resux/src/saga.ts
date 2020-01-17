@@ -2,7 +2,6 @@ import {flatten, get, isNil} from 'lodash';
 import {SagaIterator} from '@redux-saga/core';
 import {all, call, spawn} from 'redux-saga/effects';
 import {Model} from './model';
-import {Subscriber} from './subscriber';
 import {ActionWithInternals, EffectModelFunction} from './baseTypes';
 
 /**
@@ -43,16 +42,16 @@ export function resuxBlockingGenerator(
 
 /**
  * Returns a root saga generator that can be passed to sagaMiddleware's run function, so that redux-saga is aware
- * of any sagas produced by either models or subscribers.
+ * of any sagas produced by models.
  *
  * @example
- * sagaMiddleware.run(() => resuxRootSaga([modelA, subscriberA]));
+ * sagaMiddleware.run(() => resuxRootSaga([modelA, modelB]));
  *
- * @param sagaContainers An array of either Model or Subscriber instances.
+ * @param sagaContainers An array of Model instances.
  * @returns A root saga.
  * @category Redux/Saga Setup
  */
-export function* resuxRootSaga(sagaContainers: (Model | Subscriber)[]): SagaIterator {
+export function* resuxRootSaga(sagaContainers: Model[]): SagaIterator {
   const sagas: any[] = flatten(sagaContainers.map(sagaContainer => sagaContainer.reduxSagas));
 
   yield all(

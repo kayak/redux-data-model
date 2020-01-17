@@ -114,6 +114,3 @@ inside a generator. That's possible by passing an argument to its
 Also, whenever you need to inject an exception within a generator, in order to test a try-catch block, you can use
 the [throw](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator/throw) method.
 
-## Subscriber
-
-TODO

@@ -1,4 +1,4 @@
-import {Model, Subscriber} from '../../src';
+import {Model} from '../../src';
 import {connectResuxImpl} from '../../src/redux/connectResuxImpl';
 
 describe('connectResuxImpl', () => {
@@ -33,57 +33,20 @@ describe('connectResuxImpl', () => {
     expect(result).toHaveLength(2);
   });
 
-  describe('with subscribers', () => {
-    let subscriberA;
-    let subscriberActionCreatorSpy;
-
-    beforeEach(() => {
-      subscriberA = new Subscriber([articleModel]);
-      subscriberActionCreatorSpy = jest.spyOn(subscriberA, 'actionCreators').mockImplementation(
-        // Implements an identity action creator
-        () => (data) => data
-      );
-    });
-
-    it('calls actionCreators in article model', () => {
-      connectResuxImpl([articleModel]);
-      expect(actionCreatorsSpy).toHaveBeenCalled();
-    });
-
-    it('calls actionCreators in subscriber', () => {
-      connectResuxImpl([subscriberA]);
-      expect(subscriberActionCreatorSpy).toHaveBeenCalled();
-    });
-
-    it('passes dispatch and actionCreators to the user provided map state to props func', () => {
-      // @ts-ignore
-      const [connectedMapStateToProps, connectedMapDispatchToProps] = connectResuxImpl(
-        [articleModel, subscriberA], null, mapDispatchToPropsSpy,
-      );
-      connectedMapDispatchToProps(1);
-      expect(mapDispatchToPropsSpy).toHaveBeenCalledWith(
-        1, {[articleModel.namespace]: actionCreatorsSpy.mock.results[0].value},
-        {...subscriberActionCreatorSpy.mock.results[0].value},
-      );
-    });
+  it('calls actionCreators in article model', () => {
+    connectResuxImpl([articleModel]);
+    expect(actionCreatorsSpy).toHaveBeenCalled();
   });
 
-  describe('without subscribers', () => {
-    it('calls actionCreators in article model', () => {
-      connectResuxImpl([articleModel]);
-      expect(actionCreatorsSpy).toHaveBeenCalled();
-    });
-
-    it('passes dispatch and actionCreators to the user provided map state to props func', () => {
-      // @ts-ignore
-      const [connectedMapStateToProps, connectedMapDispatchToProps] = connectResuxImpl(
-        [articleModel], null, mapDispatchToPropsSpy,
-      );
-      connectedMapDispatchToProps(1);
-      expect(mapDispatchToPropsSpy).toHaveBeenCalledWith(
-        1, {[articleModel.namespace]: actionCreatorsSpy.mock.results[0].value}, {},
-      );
-    });
+  it('passes dispatch and actionCreators to the user provided map state to props func', () => {
+    // @ts-ignore
+    const [connectedMapStateToProps, connectedMapDispatchToProps] = connectResuxImpl(
+      [articleModel], null, mapDispatchToPropsSpy,
+    );
+    connectedMapDispatchToProps(1);
+    expect(mapDispatchToPropsSpy).toHaveBeenCalledWith(
+      1, {[articleModel.namespace]: actionCreatorsSpy.mock.results[0].value},
+    );
   });
 
   describe('with nested namespace', () => {
@@ -115,7 +78,7 @@ describe('connectResuxImpl', () => {
       );
       connectedMapDispatchToProps(1);
       expect(mapDispatchToPropsSpy).toHaveBeenCalledWith(
-        1, {projectA: {articles: actionCreatorsSpy.mock.results[0].value}}, {},
+        1, {projectA: {articles: actionCreatorsSpy.mock.results[0].value}},
       );
     });
   });

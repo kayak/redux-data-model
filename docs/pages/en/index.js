@@ -83,7 +83,7 @@ class Index extends React.Component {
       <Block layout="fourColumn">
         {[
           {
-            content: 'Only a few public interfaces (i.e. combineModelReducers, subscribersRootSaga, Model, Subscriber, connectResux or equivalent hooks).',
+            content: 'Only a few public interfaces (i.e. combineModelReducers, resuxRootSaga, Model, connectResux or equivalent hooks).',
             // image: `${baseUrl}img/undraw_react.svg`,
             // imageAlign: 'top',
             title: 'Easy to use and learn',

@@ -24,7 +24,6 @@ exports[`IndexPage matches snapshot 1`] = `
             },
           }
         }
-        subscribers={Object {}}
       >
         <div>
           <strong>

@@ -4,7 +4,7 @@ id: redux-integration
 ---
 
 Before you can use a model in your components, you have to hook its model's reducers into redux. The same applies for
-hooking the subscribers and model's effects into redux-saga. For such do:
+hooking the model's effects into redux-saga. For such do:
 
 ```javascript
 import {
@@ -19,7 +19,6 @@ import {
 } from 'redux';
 
 import {modelA, modelB} from './models';
-import {subscriberX} from './subscribers';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -27,7 +26,7 @@ const store = createStore(combineReducers({
   ...combineModelReducers([modelA, modelB]),
 }), applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(() => resuxRootSaga([modelA, modelB, subscriberX]));
+sagaMiddleware.run(() => resuxRootSaga([modelA, modelB]));
 ```
 
 For more info on the API required for setting redux and saga up, see

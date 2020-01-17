@@ -9,10 +9,6 @@
         "title": "API - Classes - Model",
         "sidebar_label": "Model"
       },
-      "api/classes/api-classes-subscriber": {
-        "title": "API - Classes - Subscriber",
-        "sidebar_label": "Subscriber"
-      },
       "api/interfaces/api-interfaces-model-options": {
         "title": "API - Interfaces - ModelOptions",
         "sidebar_label": "ModelOptions"
@@ -41,10 +37,6 @@
       "headers/api-index": {
         "title": "API - Index",
         "sidebar_label": "Index"
-      },
-      "headers/api-classes-subscriber": {
-        "title": "API - Classes - Subscriber",
-        "sidebar_label": "Subscriber"
       },
       "hooks": {
         "title": "Hooks"

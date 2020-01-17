@@ -19,7 +19,6 @@ generated from source.
 ### Classes
 
 * [Model](classes/model.md)
-* [Subscriber](classes/subscriber.md)
 
 ### Interfaces
 
@@ -33,7 +32,6 @@ generated from source.
 
 * [useModelActions](README.md#usemodelactions)
 * [useModelSelector](README.md#usemodelselector)
-* [useSubscriberActions](README.md#usesubscriberactions)
 
 ### Redux/Saga Setup Functions
 
@@ -45,12 +43,12 @@ generated from source.
 
 ###  connectResux
 
-▸ **connectResux**(`modelsOrSubscribers`: [Model](classes/model.md)‹› | [Subscriber](classes/subscriber.md)‹›[], `userProvidedMapStateToProps`: MapStateToPropsWithSelectors‹any, any, any›, `userProvidedMapDispatchToProps`: MapDispatchToPropsWithActionCreators‹any, any›): *any*
+▸ **connectResux**(`models`: [Model](classes/model.md)[], `userProvidedMapStateToProps`: MapStateToPropsWithSelectors‹any, any, any›, `userProvidedMapDispatchToProps`: MapDispatchToPropsWithActionCreators‹any, any›): *any*
 
-*Defined in [packages/react-resux/src/redux/connectResux.ts:22](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/redux/connectResux.ts#L22)*
+*Defined in [packages/react-resux/src/redux/connectResux.ts:20](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux/src/redux/connectResux.ts#L20)*
 
 Equivalent to redux's connect function. This should be used when the hooks api is not desired or
-supported. Otherwise check [useModelActions](README.md#usemodelactions), [useModelSelector](README.md#usemodelselector), and [useSubscriberActions](README.md#usesubscriberactions) up.
+supported. Otherwise check [useModelActions](README.md#usemodelactions) and [useModelSelector](README.md#usemodelselector) up.
 
 **`example`** 
 const ConnectedComponent = connectResux([modelA, modelB], mapStateToProps, mapDispatchToProps)
@@ -59,9 +57,9 @@ const ConnectedComponent = connectResux([modelA, modelB], mapStateToProps, mapDi
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`modelsOrSubscribers` | [Model](classes/model.md)‹› &#124; [Subscriber](classes/subscriber.md)‹›[] | - | An array of either Model or Subscriber instances. |
+`models` | [Model](classes/model.md)[] | - | An array of Model instances. |
 `userProvidedMapStateToProps` | MapStateToPropsWithSelectors‹any, any, any› | null | A mapToProps equivalent, which has a third argument with all selectors. |
-`userProvidedMapDispatchToProps` | MapDispatchToPropsWithActionCreators‹any, any› | null | A mapDispatchToProps equivalent, which has a third argument with all                                       models' action creators and a fourth argument with all subscriber's                                       action creators. |
+`userProvidedMapDispatchToProps` | MapDispatchToPropsWithActionCreators‹any, any› | null | A mapDispatchToProps equivalent, which has a third argument with all                                       models' action creators. |
 
 **Returns:** *any*
 
@@ -75,7 +73,7 @@ ___
 
 ▸ **useModelActions**(`model`: [Model](classes/model.md)): *BoundActionCreatorsMapObject*
 
-*Defined in [packages/react-resux-hooks/src/useModelActions.ts:19](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux-hooks/src/useModelActions.ts#L19)*
+*Defined in [packages/react-resux-hooks/src/useModelActions.ts:19](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux-hooks/src/useModelActions.ts#L19)*
 
 A react hook for returning already bound action creators for the provided model. If you don't want/need to use
 the hooks api, check [connectResux](README.md#connectresux) up.
@@ -101,7 +99,7 @@ ___
 
 ▸ **useModelSelector**(`model`: [Model](classes/model.md), `selectorFunc`: SelectorFunction): *any*
 
-*Defined in [packages/react-resux-hooks/src/useModelSelector.ts:19](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux-hooks/src/useModelSelector.ts#L19)*
+*Defined in [packages/react-resux-hooks/src/useModelSelector.ts:19](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux-hooks/src/useModelSelector.ts#L19)*
 
 A react hook for returning data from the provided model's state, by the means of one of its selectors. If you
 don't want/need to use the hooks api, check [connectResux](README.md#connectresux) up.
@@ -122,39 +120,13 @@ Data from model's state.
 
 ___
 
-###  useSubscriberActions
-
-▸ **useSubscriberActions**(`subscriber`: [Subscriber](classes/subscriber.md)): *BoundActionCreatorsMapObject*
-
-*Defined in [packages/react-resux-hooks/src/useSubscriberActions.ts:19](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux-hooks/src/useSubscriberActions.ts#L19)*
-
-A react hook for returning already bound action creators for the provided subscriber. If you don't want/need
-to use the hooks api, check [connectResux](README.md#connectresux) up.
-
-**`example`** 
-const subscriberActions = useSubscriberActions(subscriber);
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`subscriber` | [Subscriber](classes/subscriber.md) | A subscriber instance. |
-
-**Returns:** *BoundActionCreatorsMapObject*
-
-An object with already bound action creators. The bound action creators return a promise when invoked,
-         which can be used to track if the action was properly processed (i.e. resolved) or caused an exception
-         (i.e. rejected).
-
-___
-
 ## Redux/Saga Setup Functions
 
 ###  bindResuxActionCreators
 
 ▸ **bindResuxActionCreators**(`actionCreators`: ActionCreatorsMapObject, `dispatch`: Dispatch): *BoundNamespacedActionCreatorsMapObject*
 
-*Defined in [packages/react-resux/src/redux/bindResuxActionCreators.ts:24](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/redux/bindResuxActionCreators.ts#L24)*
+*Defined in [packages/react-resux/src/redux/bindResuxActionCreators.ts:24](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux/src/redux/bindResuxActionCreators.ts#L24)*
 
 Turns an object whose values are action creators or nested objects with them, into an object with the
 same keys, but with every action creator wrapped into a dispatch call so they may be invoked directly.
@@ -180,7 +152,7 @@ ___
 
 ▸ **combineModelReducers**(`models`: [Model](classes/model.md)[]): *ReducersMapObject*
 
-*Defined in [packages/react-resux/src/redux/combineModelReducers.ts:34](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/redux/combineModelReducers.ts#L34)*
+*Defined in [packages/react-resux/src/redux/combineModelReducers.ts:34](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux/src/redux/combineModelReducers.ts#L34)*
 
 Returns a reducer map object that can be deconstructed into the combineReducers helper, from redux, so that
 redux is aware of any reducers produced by models.
@@ -206,21 +178,21 @@ ___
 
 ###  resuxRootSaga
 
-▸ **resuxRootSaga**(`sagaContainers`: [Model](classes/model.md)‹› | [Subscriber](classes/subscriber.md)‹›[]): *SagaIterator*
+▸ **resuxRootSaga**(`sagaContainers`: [Model](classes/model.md)[]): *SagaIterator*
 
-*Defined in [packages/react-resux/src/saga.ts:55](https://github.com/kayak/react-resux/blob/6030822/packages/react-resux/src/saga.ts#L55)*
+*Defined in [packages/react-resux/src/saga.ts:54](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux/src/saga.ts#L54)*
 
 Returns a root saga generator that can be passed to sagaMiddleware's run function, so that redux-saga is aware
-of any sagas produced by either models or subscribers.
+of any sagas produced by models.
 
 **`example`** 
-sagaMiddleware.run(() => resuxRootSaga([modelA, subscriberA]));
+sagaMiddleware.run(() => resuxRootSaga([modelA, modelB]));
 
 **Parameters:**
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`sagaContainers` | [Model](classes/model.md)‹› &#124; [Subscriber](classes/subscriber.md)‹›[] | An array of either Model or Subscriber instances. |
+`sagaContainers` | [Model](classes/model.md)[] | An array of Model instances. |
 
 **Returns:** *SagaIterator*
 

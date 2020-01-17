@@ -7,35 +7,22 @@ import {
   NamespacedSelectorsMapObject,
 } from '../baseTypes';
 import {Model} from '../model';
-import {Subscriber} from '../subscriber';
 import {bindResuxActionCreators} from './bindResuxActionCreators';
 
 /**
  * @ignore
  */
 export function connectResuxImpl(
-  modelsOrSubscribers: (Model|Subscriber)[],
+  models: Model[],
   userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any>=null,
   userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any>=null,
 ) {
   const selectors: NamespacedSelectorsMapObject = {};
   const modelActionCreators: NamespacedActionCreatorsMapObject = {};
-  const subscriberActionCreators: NamespacedActionCreatorsMapObject = {};
-
-  const models: Model[] = modelsOrSubscribers.filter(
-    obj => obj instanceof Model
-  ) as Model[];
-  const subscribers: Subscriber[] = modelsOrSubscribers.filter(
-    obj => obj instanceof Subscriber
-  ) as Subscriber[];
 
   for (const model of models) {
     set(selectors, model.namespace, model.modelSelectors());
     set(modelActionCreators, model.namespace, model.actionCreators());
-  }
-
-  for (const subscriber of subscribers) {
-    Object.assign(subscriberActionCreators, subscriber.actionCreators());
   }
 
   const mapStateToPropsFunc = !isNil(userProvidedMapStateToProps) && ((state, props=null) => {
@@ -46,7 +33,6 @@ export function connectResuxImpl(
     const result = {};
 
     // Bind dispatch function
-    result['subscribers'] = bindResuxActionCreators(subscriberActionCreators, dispatch);
     for (const model of models) {
       set(
         result,
@@ -59,7 +45,7 @@ export function connectResuxImpl(
       Object.assign(
         result,
         isFunction(userProvidedMapDispatchToProps) ?
-          userProvidedMapDispatchToProps(dispatch, modelActionCreators, subscriberActionCreators) :
+          userProvidedMapDispatchToProps(dispatch, modelActionCreators) :
           userProvidedMapDispatchToProps
       );
     }

@@ -7,7 +7,7 @@ Opinionated, Redux abstraction with built-in immutability, async and more. Heavi
 
 ## Benefits
 
-* Easy to use and learn. Only a few public interfaces (i.e. combineModelReducers, subscribersRootSaga, Model, Subscriber, connectResux or equivalent hooks).
+* Easy to use and learn. Only a few public interfaces (i.e. combineModelReducers, resuxRootSaga, Model, connectResux or equivalent hooks).
 * Boilerplate reduction (i.e. actions, dispatchers, reducers).
 * Immutability with normal JavaScript objects and arrays. No new APIs to learn!
 * Async, typescript, memoised selectors, and hooks support.

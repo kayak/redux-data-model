@@ -1,5 +1,5 @@
-import {combineModelReducers, Model, resuxRootSaga, Subscriber,} from 'react-resux';
-import {useModelActions, useModelSelector, useSubscriberActions,} from 'react-resux-hooks';
+import {combineModelReducers, Model, resuxRootSaga,} from 'react-resux';
+import {useModelActions, useModelSelector,} from 'react-resux-hooks';
 import createSagaMiddleware from 'redux-saga';
 import {applyMiddleware, combineReducers, createStore,} from 'redux';
 import logger from 'redux-logger';
@@ -78,13 +78,6 @@ export const postModel = new Model({
   },
 });
 
-export const pageSubscriber = new Subscriber([userModel, postModel]).takeLatest(
-  'fetchPage', [
-    (action, {users}) => users.fetchUser(action),
-    (action, {posts}) => posts.fetchPostsByUser(action),
-  ]
-);
-
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware];
 
@@ -96,11 +89,11 @@ const store = createStore(combineReducers({
   ...combineModelReducers([postModel, userModel]),
 }), applyMiddleware(...middlewares));
 
-sagaMiddleware.run(() => resuxRootSaga([userModel, postModel, pageSubscriber]));
+sagaMiddleware.run(() => resuxRootSaga([userModel, postModel]));
 
 function TestComponent() {
   const [userId, setUserId] = React.useState(1);
-  const pageActions = useSubscriberActions(pageSubscriber);
+  const userActions = useModelActions(userModel);
   const postActions = useModelActions(postModel);
 
   // Only used for displaying entire state
@@ -113,7 +106,8 @@ function TestComponent() {
   const postItems = useModelSelector(postModel, (state, selectors) => selectors.postsAsItems(state, userId));
 
   React.useEffect(() => {
-    pageActions.fetchPage({userId});
+    userActions.fetchUser({userId});
+    postActions.fetchPostsByUser({userId});
   }, [userId]);
 
   if (loadingUser) return (<div>Loading user #{userId}...</div>);

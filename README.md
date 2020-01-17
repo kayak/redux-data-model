@@ -30,7 +30,7 @@ Naturally, the react-resux-hooks package is optional, in case you're willing to 
 
 ## Benefits
 
-* Easy to use and learn. Only a few public interfaces (i.e. combineModelReducers, subscribersRootSaga, Model, Subscriber, connectResux or equivalent hooks).
+* Easy to use and learn. Only a few public interfaces (i.e. combineModelReducers, resuxRootSaga, Model, connectResux or equivalent hooks).
 * Boilerplate reduction (i.e. actions, dispatchers, reducers).
 * Immutability with normal JavaScript objects and arrays. No new APIs to learn!
 * Async, typescript, memoised selectors, and hooks support.
@@ -52,7 +52,7 @@ Simple count example without hooks api. It uses a nested namespace, so that data
 Simple count example with hooks api.
 * [__rest__](https://github.com/kayak/react-resux/tree/master/examples/rest)
 ([Demo](https://codesandbox.io/s/github/kayak/react-resux/tree/master/examples/rest)):
-Multi model rest example, using subscribers and hooks api. 
+Multi model rest example, using hooks api. 
 Data is fetched from [jsonplaceholder.typicode.com](http://jsonplaceholder.typicode.com/)
 
 ## Documentation

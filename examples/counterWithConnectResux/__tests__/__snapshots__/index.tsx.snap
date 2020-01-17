@@ -22,7 +22,6 @@ exports[`IndexPage matches snapshot 1`] = `
             "increment": [Function],
           }
         }
-        subscribers={Object {}}
       >
         <div>
           <strong>

@@ -149,8 +149,7 @@ export interface ModelOptions {
    * An effect function receives an action, an object with saga's effects, and the action creators as arguments
    * respectively. For a list of saga's effects available to you see
    * [this](https://redux-saga.js.org/docs/api/#effect-creators).
-   * The saga effects won't include takeLeading, takeLatest, and takeEvery blocking effects. For using those
-   * employ a Subscriber instead.
+   * The saga effects won't include takeLeading, takeLatest, and takeEvery blocking effects.
    *
    * @example
    * *fetchPostsByUser({ userId }, sagaEffects, actionCreators) {
@@ -333,8 +332,7 @@ export class Model {
 
   /**
    * Returns an array of sagas, one for each of the declared effects. They will default to taking every action and
-   * calling its respective effect. For taking only latest or leading actions, at any given moment, look for
-   * subscribers instead.
+   * calling its respective effect.
    *
    * @throws {NonCompatibleActionError} When bindResuxActionCreators was not used to bind the action creators.
    * @returns An array of sagas.

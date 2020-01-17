@@ -11,7 +11,7 @@
       "api/api-index"
     ],
     "Classes": [
-      "api/classes/api-classes-model", "api/classes/api-classes-subscriber"
+      "api/classes/api-classes-model"
     ],
     "Interfaces": [
       "api/interfaces/api-interfaces-model-options"
