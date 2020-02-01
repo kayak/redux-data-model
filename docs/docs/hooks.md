@@ -3,9 +3,9 @@ title: Hooks
 id: hooks
 ---
 
-> WARNING: This requires the react-resux-hooks package to be installed.
+> WARNING: This requires the redux-data-model-hooks package to be installed.
 
-React-Resux is a hooks-first library and it provides three distinct hooks as part of its public API. They are:
+Redux-Data-Model is a hooks-first library and it provides three distinct hooks as part of its public API. They are:
 
 ## useModelSelector
 Returns the result of a given a selector, which has the state and perhaps additional arguments as arguments. For
@@ -13,7 +13,7 @@ more info see its [API](api/README.md#usemodelselector) reference.
 
 #### Read data example:
 ```javascript
-import {useModelSelector} from 'react-resux-hooks';
+import {useModelSelector} from 'redux-data-model-hooks';
 import {modelX} from './modelX';
 
 export default function({page}) {
@@ -34,7 +34,7 @@ redux's dispatch. For more info see its [API](api/README.md#usemodelactions) ref
 
 #### Read data example:
 ```javascript
-import {useModelActions} from 'react-resux-hooks';
+import {useModelActions} from 'redux-data-model-hooks';
 import {modelX} from './modelX';
 
 export default function({page}) {

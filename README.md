@@ -1,12 +1,12 @@
-# React-Resux
+# Redux-Data-Model
 
-[![NPM](https://img.shields.io/npm/v/react-resux.svg)](https://www.npmjs.com/package/react-resux)
-[![Build Status](https://travis-ci.org/kayak/react-resux.png?branch=master)](https://travis-ci.org/kayak/react-resux)
-[![Coverage Status](https://coveralls.io/repos/github/kayak/react-resux/badge.svg)](https://coveralls.io/github/kayak/react-resux)
-[![David](https://img.shields.io/david/kayak/react-resux.svg)](https://david-dm.org/kayak/react-resux)
-[![David](https://img.shields.io/david/dev/kayak/react-resux.svg)](https://david-dm.org/kayak/react-resux)
-[![Bundle Phobia](https://img.shields.io/bundlephobia/minzip/react-resux)](https://bundlephobia.com/result?p=react-resux)
-[![License](https://img.shields.io/npm/l/react-resux)](https://www.npmjs.com/package/react-resux)
+[![NPM](https://img.shields.io/npm/v/redux-data-model.svg)](https://www.npmjs.com/package/redux-data-model)
+[![Build Status](https://travis-ci.org/kayak/redux-data-model.png?branch=master)](https://travis-ci.org/kayak/redux-data-model)
+[![Coverage Status](https://coveralls.io/repos/github/kayak/redux-data-model/badge.svg)](https://coveralls.io/github/kayak/redux-data-model)
+[![David](https://img.shields.io/david/kayak/redux-data-model.svg)](https://david-dm.org/kayak/redux-data-model)
+[![David](https://img.shields.io/david/dev/kayak/redux-data-model.svg)](https://david-dm.org/kayak/redux-data-model)
+[![Bundle Phobia](https://img.shields.io/bundlephobia/minzip/redux-data-model)](https://bundlephobia.com/result?p=redux-data-model)
+[![License](https://img.shields.io/npm/l/redux-data-model)](https://www.npmjs.com/package/redux-data-model)
 
 # Introduction
 
@@ -17,20 +17,20 @@ Opinionated, Redux abstraction with built-in immutability, async and more. Heavi
 Using npm:
 
 ```bash
-$ npm install react-resux react-resux-hooks --save
+$ npm install redux-data-model redux-data-model-hooks --save
 ```
 
 Using yarn:
 
 ```bash
-$ yarn add react-resux react-resux-hooks
+$ yarn add redux-data-model redux-data-model-hooks
 ```
 
-Naturally, the react-resux-hooks package is optional, in case you're willing to use our hooks API.
+Naturally, the redux-data-model-hooks package is optional, in case you're willing to use our hooks API.
 
 ## Benefits
 
-* Easy to use and learn. Only a few public interfaces (i.e. combineModelReducers, resuxRootSaga, Model, connectResux or equivalent hooks).
+* Easy to use and learn. Only a few public interfaces (i.e. combineModelReducers, modelRootSaga, Model, connectModel or equivalent hooks).
 * Boilerplate reduction (i.e. actions, dispatchers, reducers).
 * Immutability with normal JavaScript objects and arrays. No new APIs to learn!
 * Async, typescript, memoised selectors, and hooks support.
@@ -38,26 +38,26 @@ Naturally, the react-resux-hooks package is optional, in case you're willing to 
 
 ## Demos
 
-* [__counterWithConnectResux__](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResux)
-([Demo](https://codesandbox.io/s/github/kayak/react-resux/tree/master/examples/counterWithConnectResux)): 
+* [__counterWithConnectModel__](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithConnectModel)
+([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/counterWithConnectModel)): 
 Simple count example without hooks api.
-* [__counterWithConnectResuxAndConfirmationDialog__](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResuxAndConfirmationDialog)
-([Demo](https://codesandbox.io/s/github/kayak/react-resux/tree/master/examples/counterWithConnectResuxAndConfirmationDialog)): 
+* [__counterWithConnectModelAndConfirmationDialog__](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithConnectModelAndConfirmationDialog)
+([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/counterWithConnectModelAndConfirmationDialog)): 
 Simple count example without hooks api and using a confirmation dialog, prior to incrementing/decrementing.
-* [__counterWithConnectResuxWithNestedNamespace__](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResuxWithNestedNamespace)
-([Demo](https://codesandbox.io/s/github/kayak/react-resux/tree/master/examples/counterWithConnectResuxWithNestedNamespace)): 
+* [__counterWithConnectModelWithNestedNamespace__](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithConnectModelWithNestedNamespace)
+([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/counterWithConnectModelWithNestedNamespace)): 
 Simple count example without hooks api. It uses a nested namespace, so that data can be grouped in different parts of the store.
-* [__counterWithHooks__](https://github.com/kayak/react-resux/tree/master/examples/counterWithHooks)
-([Demo](https://codesandbox.io/s/github/kayak/react-resux/tree/master/examples/counterWithHooks)):
+* [__counterWithHooks__](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithHooks)
+([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/counterWithHooks)):
 Simple count example with hooks api.
-* [__rest__](https://github.com/kayak/react-resux/tree/master/examples/rest)
-([Demo](https://codesandbox.io/s/github/kayak/react-resux/tree/master/examples/rest)):
+* [__rest__](https://github.com/kayak/redux-data-model/tree/master/examples/rest)
+([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/rest)):
 Multi model rest example, using hooks api. 
 Data is fetched from [jsonplaceholder.typicode.com](http://jsonplaceholder.typicode.com/)
 
 ## Documentation
 
-Documentation is available here: https://kayak.github.io/react-resux/
+Documentation is available here: https://kayak.github.io/redux-data-model/
 
 ## License
 

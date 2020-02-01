@@ -3,7 +3,7 @@ title: Tutorial
 id: tutorial
 ---
 
-This tutorial will introduce you to the basics of react-resux by building a counter application which will both
+This tutorial will introduce you to the basics of redux-data-model by building a counter application which will both
 display the current counter value as well as provide the means for incrementing/decrementing.
 Additionaly, the application requires a confirmation step whenever its user tries to increment/decrement
 the counter value.
@@ -11,11 +11,11 @@ the counter value.
 ## TLDR
 
 This tutorial is composed of both the
-[counterWithConnectResux](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResux) and
-[counterWithConnectResuxAndConfirmationDialog](https://github.com/kayak/react-resux/tree/master/examples/counterWithConnectResuxAndConfirmationDialog)
+[counterWithConnectModel](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithConnectModel) and
+[counterWithConnectModelAndConfirmationDialog](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithConnectModelAndConfirmationDialog)
 examples. In the end, our high order component ([HOC]) API will be replaced with its hook based equivalent,
-as shown in the [counterWithHooks](https://github.com/kayak/react-resux/tree/master/examples/counterWithHooks) example.
-To see all examples click [here](https://github.com/kayak/react-resux#demos).
+as shown in the [counterWithHooks](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithHooks) example.
+To see all examples click [here](https://github.com/kayak/redux-data-model#demos).
 
 ## Prerequisites
 
@@ -24,25 +24,25 @@ use it, you may wish to read [this tutorial](https://facebook.github.io/react/tu
 
 ### Do I need to learn redux and react-redux?
 
-React-resux is heavily based on [redux] and [react-redux]. A basic understanding of [redux] will help you
-being familiar with concepts such as reducers, actions, action creators, middlewares, etc, which react-resux
+Redux-data-model is heavily based on [redux] and [react-redux]. A basic understanding of [redux] will help you
+being familiar with concepts such as reducers, actions, action creators, middlewares, etc, which redux-data-model
 also depend upon. Likewise, knowing [react-redux] will help the connecting of the data with [react] components.
 
 ### Do I need to learn redux-saga?
 
-React-resux uses [redux-saga] for asynchronous bits, when implementing asynchronous workflows that would often
+Redux-data-model uses [redux-saga] for asynchronous bits, when implementing asynchronous workflows that would often
 involve multiple reducers at different points in time. If you don't know what [redux-saga] is and how to
 use it, you may wish to read [this tutorial](https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html)
 first.
 
 ## Overview
 
-React-resux is an opinionated, [redux] abstraction with built-in immutability, async and more. If the above sentence
+Redux-data-model is an opinionated, [redux] abstraction with built-in immutability, async and more. If the above sentence
 confused you, don't worry. We will dive deeper together and explore what it means step by step.
 
 ## Getting Started
 
-When building applications with react-resux, the first exercise that will help you building your application is
+When building applications with redux-data-model, the first exercise that will help you building your application is
 thinking about what is the minimal set of entities. In our example application we will deal with a counter, so we
 need a counter entity. The counter entity will have a count attribute, in order to track the count number.
 
@@ -53,17 +53,17 @@ So far our entities and their attributes look like this:
 
 ## Creating our first model
 
-Central to react-resux is the concept of a [model]. The [model] consists of the set of state, selectors, actions,
+Central to redux-data-model is the concept of a [model]. The [model] consists of the set of state, selectors, actions,
 reducers and asynchrounous workflows (i.e. effects) that are related to a given entity. In other words, they
 represent the boilerplate around a given reducer plus the async bits handled by some [redux middleware]. This
-means that in order to make our application work, we need to describe to react-resux what our [model] looks like.
+means that in order to make our application work, we need to describe to redux-data-model what our [model] looks like.
 
-To define a [model] for an entity in react-resux is to provide a set of options when instantiating a [model] class.
+To define a [model] for an entity in redux-data-model is to provide a set of options when instantiating a [model] class.
 Each instantiated [model] needs at least its namespace and initial state to be provided. Therefore, the simplest
 [model] we could define would be:
 
 ```javascript
-import {Model} from 'react-resux';
+import {Model} from 'redux-data-model';
 
 export const countModel = new Model({
     // Mandatory options
@@ -93,7 +93,7 @@ For the sake of example, the application state would be somewhat similar to:
 ```
 
 Notice that countModel.state is namespaced with the namespace option provided to the [model]. By now you probably
-realised that [model]'s namespaces must be unique. And you'd be totally right to assume that. In fact react-resux
+realised that [model]'s namespaces must be unique. And you'd be totally right to assume that. In fact redux-data-model
 will enforce that when calling the [combineModelReducers] function. Enough of digressions though.
 
 ## Getting to the UI
@@ -106,7 +106,7 @@ export function Counter({count}) {
 }
 ```
 
-It doesn't have access to the counter [model] yet, so let's do that. Since react-resux uses [redux], we could just
+It doesn't have access to the counter [model] yet, so let's do that. Since redux-data-model uses [redux], we could just
 use the [connect] high order component ([HOC]) like:
 
 ```javascript
@@ -125,18 +125,18 @@ function mapStateToProps(state, props) {
 export default connect(mapStateToProps)(Counter);
 ```
 
-That's all nice and swell, but react-resux actually provides more powerful constructs for connecting your components
-to the redux state. For such we have two options. To use [connectResux] high order component ([HOC]) or the equivalent
-[hooks] API. Later on we will dive into the [hooks] API, but for now [connectResux] will do the trick.
+That's all nice and swell, but redux-data-model actually provides more powerful constructs for connecting your components
+to the redux state. For such we have two options. To use [connectModel] high order component ([HOC]) or the equivalent
+[hooks] API. Later on we will dive into the [hooks] API, but for now [connectModel] will do the trick.
 
 ## Reading data through selectors
 
-As you might have imagined, [connectResux] is to react-resux, what [connect] is to [redux]. In other words, it allows
+As you might have imagined, [connectModel] is to redux-data-model, what [connect] is to [redux]. In other words, it allows
 your component to dispatch actions, for modifying the state, or reading from the state. But before we go about
-using [connectResux], let's add a selector to our [model], so that we can read data from it.
+using [connectModel], let's add a selector to our [model], so that we can read data from it.
 
 ```javascript
-import {Model} from 'react-resux';
+import {Model} from 'redux-data-model';
 
 export const countModel = new Model({
     // Mandatory options
@@ -150,10 +150,10 @@ export const countModel = new Model({
 });
 ```
 
-Now let's change our component to use [connectResux]:
+Now let's change our component to use [connectModel]:
 
 ```javascript
-import {connectResux} from 'react-resux';
+import {connectModel} from 'redux-data-model';
 import {countModel} from './models';
 
 function CountComponent({count}) {
@@ -166,14 +166,14 @@ function mapStateToProps(state, props, selectors) {
   };
 }
 
-export default connectResux([countModel], mapStateToProps)(CountComponent);
+export default connectModel([countModel], mapStateToProps)(CountComponent);
 ```
 
-So we can definitely see a few similarities between [connectResux] and [connect] here. Both have a user defined
+So we can definitely see a few similarities between [connectModel] and [connect] here. Both have a user defined
 mapStateToProps and, as a matter of fact, can also have a user defined mapDispatchToProps function. Notice
-that the first argument of [connectResux] is the list of models the component is going to employ. You might have
-also noticed that the [connectResux]'s mapStateToProps also gets a third argument. Namely the selectors object,
-which contain namespaced references to all the selectors in the [connectResux]'s provided models. It's important
+that the first argument of [connectModel] is the list of models the component is going to employ. You might have
+also noticed that the [connectModel]'s mapStateToProps also gets a third argument. Namely the selectors object,
+which contain namespaced references to all the selectors in the [connectModel]'s provided models. It's important
 to mention that those selectors are all memoised under the hood, so that more complex selectors don't get
 re-computed when data hasn't actually changed.
 
@@ -194,7 +194,7 @@ Given we can now display the counter's count, how about adding two buttons to ou
 one for decrementing the count. Before we do any sort of UI work, we need to define those reducers in our [model]:
 
 ```javascript
-import {Model} from 'react-resux';
+import {Model} from 'redux-data-model';
 
 export const countModel = new Model({
     // Mandatory options
@@ -221,7 +221,7 @@ export const countModel = new Model({
 
 Notice we have declared three different reducers. Those are mostly for example's sake, since changeCountByX alone
 would suffice. More importantly, is the fact that we are changing the redux state inplace, which might seem a
-terrible practice to some of you. That's not the case since react-resux will enforce immutability via property
+terrible practice to some of you. That's not the case since redux-data-model will enforce immutability via property
 accessors with [immer], so don't ever bother about destructuring/constructing data and/or deep copying values
 ever again. As a consequence, you can just use shallow comparisons, in order to decide when you need to
 re-render a component.
@@ -235,7 +235,7 @@ quite simple. See a few action examples below:
 
 One can rightfully assume here they could dispatch those actions and have the respective [model]'s reducers triggered.
 In other words, any action with type as modelNamespace.reducerName, will trigger the reducerName in question.
-Unlike [connect], [connectResux] won't inject dispatch into connected components. That's because it sets a default
+Unlike [connect], [connectModel] won't inject dispatch into connected components. That's because it sets a default
 mapStateToProps, if you havent set any. This default mapDispatchToProps, would have a shape like:
 
 ```json
@@ -254,7 +254,7 @@ Let's try to change the example with selectors, in order to use the default mapD
 redux state via reducers:
 
 ```javascript
-import {connectResux} from 'react-resux';
+import {connectModel} from 'redux-data-model';
 import {countModel} from './models';
 
 function CountComponent({count, counter}) {
@@ -279,16 +279,16 @@ function mapStateToProps(state, props, selectors) {
   };
 }
 
-export default connectResux([countModel], mapStateToProps)(CountComponent);
+export default connectModel([countModel], mapStateToProps)(CountComponent);
 ```
 
 Simple right. We just needed to get the counter prop, since that's the namespace of the counter [model] and voilà.
 But what about when you want to define a custom mapDispatchToProps, like when you need to mix vanilla [redux] with
-react-resux. Like in react-redux, mapDispatchToProps can be declared in either a function form or a object shorthand
+redux-data-model. Like in react-redux, mapDispatchToProps can be declared in either a function form or a object shorthand
 notation. As a function that would look like:
 
 ```javascript
-import {connectResux} from 'react-resux';
+import {connectModel} from 'redux-data-model';
 import {countModel} from './models';
 
 function CountComponent({count, increment, decrement}) {
@@ -315,13 +315,13 @@ function mapDispatchToProps(dispatch, props, actionCreators) {
   };
 }
 
-export default connectResux([countModel], mapStateToProps, mapDispatchToProps);
+export default connectModel([countModel], mapStateToProps, mapDispatchToProps);
 ```
 
 Meanwhile by using the object shorthand notation you could just have:
 
 ```javascript
-import {connectResux} from 'react-resux';
+import {connectModel} from 'redux-data-model';
 import {countModel} from './models';
 
 function CountComponent({count, increment, decrement}) {
@@ -343,7 +343,7 @@ function mapStateToProps(state, props, selectors) {
 
 const mapDispatchToProps = {increment, decrement} = countModel.actionCreators();
 
-export default connectResux([countModel], mapStateToProps, mapDispatchToProps);
+export default connectModel([countModel], mapStateToProps, mapDispatchToProps);
 ```
 
 All that said, you probably noticed that the default mapStateToProps is way easier to implement than both of these
@@ -361,7 +361,7 @@ a consequence of effects being based on [redux-saga]. That said, let's see how o
 like with the bespoke effects:
 
 ```javascript
-import {Model} from 'react-resux';
+import {Model} from 'redux-data-model';
 import Swal from "sweetalert2";
 
 // Fyi async/await functions are just syntactic sugar for functions that return a promise
@@ -424,7 +424,7 @@ as reducers on the component level. So you could just change your component to, 
 mapDispatchToProps:
 
 ```javascript
-import {connectResux} from 'react-resux';
+import {connectModel} from 'redux-data-model';
 import {countModel} from './models';
 
 function CountComponent({count, counter}) {
@@ -445,7 +445,7 @@ function mapStateToProps(state, props, selectors) {
   };
 }
 
-export default connectResux([countModel], mapStateToProps)(CountComponent);
+export default connectModel([countModel], mapStateToProps)(CountComponent);
 ```
 
 Now let's say we need to redirect to another page, when the user is done with the incrementation (i.e. clicking
@@ -456,7 +456,7 @@ was raised within the effect (i.e. saga generator). In case of a reducer's dispa
 promise is returned. That means we could change the code above to:
 
 ```javascript
-import {connectResux} from 'react-resux';
+import {connectModel} from 'redux-data-model';
 import {countModel} from './models';
 
 function CountComponent({count, counter}) {
@@ -492,7 +492,7 @@ function mapStateToProps(state, props, selectors) {
   };
 }
 
-export default connectResux([countModel], mapStateToProps)(CountComponent);
+export default connectModel([countModel], mapStateToProps)(CountComponent);
 ```
 
 Neat right? That covers basically all the functionality that the [model] class exposes. So now you can go ahead and
@@ -505,7 +505,7 @@ the get go. For such, we expose two [hooks], namely [useModelActions] and [useMo
 write the previous examples as:
 
 ```javascript
-import {useModelActions, useModelSelector} from 'react-resux';
+import {useModelActions, useModelSelector} from 'redux-data-model';
 import {countModel} from './models';
 
 export default function CountComponent() {
@@ -525,7 +525,7 @@ export default function CountComponent() {
 ```
 
 It does look more compact than previous solutions, so we'd strongly recommend you to use [our Hooks API] instead of
-the [connectResux] high order component ([HOC]).
+the [connectModel] high order component ([HOC]).
 
 [react]: https://reactjs.org/
 [hooks]: https://reactjs.org/docs/hooks-reference.html
@@ -539,7 +539,7 @@ the [connectResux] high order component ([HOC]).
 [immer]: https://github.com/immerjs/immer
 
 [model]: concepts#model
-[connectResux]: api/README.md#connectresux
+[connectModel]: api/README.md#connectmodel
 [useModelActions]: api/README.md#usemodelactions
 [useModelSelector]: api/README.md#usemodelselector
 [combineModelReducers]: api/README.md#combinemodelreducers

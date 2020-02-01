@@ -3,16 +3,16 @@ title: Concepts
 id: concepts
 ---
 
-React-resux has only a few core concepts.
+Redux-data-model has only a few core concepts.
 
 ## Model
 
-Models are the most basic data structure/abstraction in react-resux. They require a set of options to be provided
+Models are the most basic data structure/abstraction in redux-data-model. They require a set of options to be provided
 when initializing them.
 
 #### Example:
 ```javascript
-import {Model} from 'react-resux';
+import {Model} from 'redux-data-model';
 import _ from 'lodash';
 
 async function fetchApi(url) {

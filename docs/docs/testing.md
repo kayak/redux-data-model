@@ -11,7 +11,7 @@ testing vanilla redux. Given the model below, let's try to test it with [jest](h
 
 ### Example:
 ```javascript
-import {Model} from 'react-resux';
+import {Model} from 'redux-data-model';
 import _ from 'lodash';
 
 export const counterModel = new Model({

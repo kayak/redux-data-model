@@ -4,15 +4,15 @@ sidebar_label: Index
 id: api-index
 ---
 
-# React-Resux API Reference Guide
+# Redux-Data-Model API Reference Guide
 
-This reference guide lists all methods exposed by react-resux. Contributions like linguistic improvements, adding
+This reference guide lists all methods exposed by redux-data-model. Contributions like linguistic improvements, adding
 more details to the descriptions or additional examples are highly appreciated! Please note that the docs are
 generated from source.
 
-[react-resux](README.md)
+[redux-data-model](README.md)
 
-# react-resux
+# redux-data-model
 
 ## Index
 
@@ -26,7 +26,7 @@ generated from source.
 
 ### High Order Component (HOC) Functions
 
-* [connectResux](README.md#connectresux)
+* [connectModel](README.md#connectmodel)
 
 ### React Hook Functions
 
@@ -35,23 +35,23 @@ generated from source.
 
 ### Redux/Saga Setup Functions
 
-* [bindResuxActionCreators](README.md#bindresuxactioncreators)
+* [bindModelActionCreators](README.md#bindmodelactioncreators)
 * [combineModelReducers](README.md#combinemodelreducers)
-* [resuxRootSaga](README.md#resuxrootsaga)
+* [modelRootSaga](README.md#modelrootsaga)
 
 ## High Order Component (HOC) Functions
 
-###  connectResux
+###  connectModel
 
-▸ **connectResux**(`models`: [Model](classes/model.md)[], `userProvidedMapStateToProps`: MapStateToPropsWithSelectors‹any, any, any›, `userProvidedMapDispatchToProps`: MapDispatchToPropsWithActionCreators‹any, any›): *any*
+▸ **connectModel**(`models`: [Model](classes/model.md)[], `userProvidedMapStateToProps`: MapStateToPropsWithSelectors‹any, any, any›, `userProvidedMapDispatchToProps`: MapDispatchToPropsWithActionCreators‹any, any›): *any*
 
-*Defined in [packages/react-resux/src/redux/connectResux.ts:20](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux/src/redux/connectResux.ts#L20)*
+*Defined in [packages/redux-data-model/src/redux/connectModel.ts:20](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/redux/connectModel.ts#L20)*
 
 Equivalent to redux's connect function. This should be used when the hooks api is not desired or
 supported. Otherwise check [useModelActions](README.md#usemodelactions) and [useModelSelector](README.md#usemodelselector) up.
 
 **`example`** 
-const ConnectedComponent = connectResux([modelA, modelB], mapStateToProps, mapDispatchToProps)
+const ConnectedComponent = connectModel([modelA, modelB], mapStateToProps, mapDispatchToProps)
 
 **Parameters:**
 
@@ -73,10 +73,10 @@ ___
 
 ▸ **useModelActions**(`model`: [Model](classes/model.md)): *BoundActionCreatorsMapObject*
 
-*Defined in [packages/react-resux-hooks/src/useModelActions.ts:19](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux-hooks/src/useModelActions.ts#L19)*
+*Defined in [packages/redux-data-model-hooks/src/useModelActions.ts:19](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model-hooks/src/useModelActions.ts#L19)*
 
 A react hook for returning already bound action creators for the provided model. If you don't want/need to use
-the hooks api, check [connectResux](README.md#connectresux) up.
+the hooks api, check [connectModel](README.md#connectmodel) up.
 
 **`example`** 
 const modelActions = useModelActions(model);
@@ -99,10 +99,10 @@ ___
 
 ▸ **useModelSelector**(`model`: [Model](classes/model.md), `selectorFunc`: SelectorFunction): *any*
 
-*Defined in [packages/react-resux-hooks/src/useModelSelector.ts:19](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux-hooks/src/useModelSelector.ts#L19)*
+*Defined in [packages/redux-data-model-hooks/src/useModelSelector.ts:19](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model-hooks/src/useModelSelector.ts#L19)*
 
 A react hook for returning data from the provided model's state, by the means of one of its selectors. If you
-don't want/need to use the hooks api, check [connectResux](README.md#connectresux) up.
+don't want/need to use the hooks api, check [connectModel](README.md#connectmodel) up.
 
 **`example`** 
 const someDataFromState = useModelSelector(model, (state, selectors) => selectors.count(state));
@@ -122,11 +122,11 @@ ___
 
 ## Redux/Saga Setup Functions
 
-###  bindResuxActionCreators
+###  bindModelActionCreators
 
-▸ **bindResuxActionCreators**(`actionCreators`: ActionCreatorsMapObject, `dispatch`: Dispatch): *BoundNamespacedActionCreatorsMapObject*
+▸ **bindModelActionCreators**(`actionCreators`: ActionCreatorsMapObject, `dispatch`: Dispatch): *BoundNamespacedActionCreatorsMapObject*
 
-*Defined in [packages/react-resux/src/redux/bindResuxActionCreators.ts:24](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux/src/redux/bindResuxActionCreators.ts#L24)*
+*Defined in [packages/redux-data-model/src/redux/bindModelActionCreators.ts:24](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/redux/bindModelActionCreators.ts#L24)*
 
 Turns an object whose values are action creators or nested objects with them, into an object with the
 same keys, but with every action creator wrapped into a dispatch call so they may be invoked directly.
@@ -152,7 +152,7 @@ ___
 
 ▸ **combineModelReducers**(`models`: [Model](classes/model.md)[]): *ReducersMapObject*
 
-*Defined in [packages/react-resux/src/redux/combineModelReducers.ts:34](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux/src/redux/combineModelReducers.ts#L34)*
+*Defined in [packages/redux-data-model/src/redux/combineModelReducers.ts:34](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/redux/combineModelReducers.ts#L34)*
 
 Returns a reducer map object that can be deconstructed into the combineReducers helper, from redux, so that
 redux is aware of any reducers produced by models.
@@ -176,17 +176,17 @@ A reducer's map object.
 
 ___
 
-###  resuxRootSaga
+###  modelRootSaga
 
-▸ **resuxRootSaga**(`sagaContainers`: [Model](classes/model.md)[]): *SagaIterator*
+▸ **modelRootSaga**(`sagaContainers`: [Model](classes/model.md)[]): *SagaIterator*
 
-*Defined in [packages/react-resux/src/saga.ts:54](https://github.com/kayak/react-resux/blob/2505ec2/packages/react-resux/src/saga.ts#L54)*
+*Defined in [packages/redux-data-model/src/saga.ts:54](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/saga.ts#L54)*
 
 Returns a root saga generator that can be passed to sagaMiddleware's run function, so that redux-saga is aware
 of any sagas produced by models.
 
 **`example`** 
-sagaMiddleware.run(() => resuxRootSaga([modelA, modelB]));
+sagaMiddleware.run(() => modelRootSaga([modelA, modelB]));
 
 **Parameters:**
 

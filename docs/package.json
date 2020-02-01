@@ -1,5 +1,5 @@
 {
-  "name": "react-resux-documentation",
+  "name": "redux-data-model-documentation",
   "private": true,
   "scripts": {
     "examples": "docusaurus-examples",

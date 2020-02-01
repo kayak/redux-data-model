@@ -1,12 +1,12 @@
 import {
   combineModelReducers,
   Model,
-  resuxRootSaga,
-} from 'react-resux';
+  modelRootSaga,
+} from 'redux-data-model';
 import {
   useModelActions,
   useModelSelector,
-} from 'react-resux-hooks';
+} from 'redux-data-model-hooks';
 import createSagaMiddleware from 'redux-saga';
 import {
   applyMiddleware,
@@ -50,7 +50,7 @@ const store = createStore(combineReducers({
   ...combineModelReducers([counterModel]),
 }), applyMiddleware(...middlewares));
 
-sagaMiddleware.run(() => resuxRootSaga([counterModel]));
+sagaMiddleware.run(() => modelRootSaga([counterModel]));
 
 function TestComponent() {
   const counterActions = useModelActions(counterModel);

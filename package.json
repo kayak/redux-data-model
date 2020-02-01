@@ -6,12 +6,12 @@
   "author": "Lucas Lira Gomes",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kayak/react-resux.git"
+    "url": "git+https://github.com/kayak/redux-data-model.git"
   },
   "bugs": {
-    "url": "https://github.com/kayak/react-resux/issues"
+    "url": "https://github.com/kayak/redux-data-model/issues"
   },
-  "homepage": "https://kayak.github.io/react-resux",
+  "homepage": "https://kayak.github.io/redux-data-model",
   "license": "Apache-2.0",
   "scripts": {
     "clean": "rimraf dist js_coverage .rpt2_cache && lerna run clean && lerna clean -y",

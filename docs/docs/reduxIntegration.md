@@ -9,8 +9,8 @@ hooking the model's effects into redux-saga. For such do:
 ```javascript
 import {
   combineModelReducers,
-  resuxRootSaga,
-} from 'react-resux';
+  modelRootSaga,
+} from 'redux-data-model';
 import createSagaMiddleware from 'redux-saga';
 import {
   applyMiddleware,
@@ -26,9 +26,9 @@ const store = createStore(combineReducers({
   ...combineModelReducers([modelA, modelB]),
 }), applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(() => resuxRootSaga([modelA, modelB]));
+sagaMiddleware.run(() => modelRootSaga([modelA, modelB]));
 ```
 
 For more info on the API required for setting redux and saga up, see
 [combineModelReducers](api/README.md#combinemodelreducers) and
-[resuxRootSaga](api/README.md#resuxrootsaga).
+[modelRootSaga](api/README.md#modelrootsaga).

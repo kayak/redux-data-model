@@ -1,5 +1,5 @@
-import {combineModelReducers, Model, resuxRootSaga,} from 'react-resux';
-import {useModelActions, useModelSelector,} from 'react-resux-hooks';
+import {combineModelReducers, Model, modelRootSaga,} from 'redux-data-model';
+import {useModelActions, useModelSelector,} from 'redux-data-model-hooks';
 import createSagaMiddleware from 'redux-saga';
 import {applyMiddleware, combineReducers, createStore,} from 'redux';
 import logger from 'redux-logger';
@@ -89,7 +89,7 @@ const store = createStore(combineReducers({
   ...combineModelReducers([postModel, userModel]),
 }), applyMiddleware(...middlewares));
 
-sagaMiddleware.run(() => resuxRootSaga([userModel, postModel]));
+sagaMiddleware.run(() => modelRootSaga([userModel, postModel]));
 
 function TestComponent() {
   const [userId, setUserId] = React.useState(1);

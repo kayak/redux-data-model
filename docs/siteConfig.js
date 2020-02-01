@@ -9,21 +9,21 @@
 // site configuration options.
 
 const siteConfig = {
-  title: 'React-Resux', // Title for your website.
+  title: 'Redux-Data-Model', // Title for your website.
   tagline: 'Opinionated, Redux abstraction with built-in immutability, async and more. Heavily dva inspired.',
   // For github.io type URLs, you would set the url and baseUrl like:
   url: 'https://kayak.github.io',
-  baseUrl: '/react-resux/',
+  baseUrl: '/redux-data-model/',
 
   // Used for publishing and more
-  projectName: 'react-resux',
+  projectName: 'redux-data-model',
   organizationName: 'kayak',
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     {doc: 'introduction', label: 'Docs'},
     {doc: 'api/api-index', label: 'API'},
-    {href: "https://github.com/kayak/react-resux", label: "GitHub"},
+    {href: "https://github.com/kayak/redux-data-model", label: "GitHub"},
 
   ],
 
@@ -85,7 +85,7 @@ const siteConfig = {
 
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
-  repoUrl: 'https://github.com/kayak/react-resux/',
+  repoUrl: 'https://github.com/kayak/redux-data-model/',
 
   customDocsPath: 'docs/docs',
   scrollToTop: true,
