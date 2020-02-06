@@ -1,6 +1,6 @@
 {
   "name": "redux-data-model-connect-model-with-alerts.js",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "private": true,
   "description": "redux-data-model-connect-model-with-alerts-example",
   "main": "index.js",
@@ -17,7 +17,7 @@
   "dependencies": {
     "next": "9.0.3",
     "react-json-tree": "0.11.2",
-    "redux-data-model": "^0.6.2",
+    "redux-data-model": "^0.7.0",
     "redux-logger": "3.0.6",
     "sweetalert2": "8.17.6",
     "sweetalert2-react-content": "1.1.0"
