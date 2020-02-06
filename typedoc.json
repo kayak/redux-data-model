@@ -1,5 +1,4 @@
 {
-    "src": ["packages/redux-data-model/src/index.ts", "packages/redux-data-model-hooks/src/index.ts"],
     "exclude": ["**/__tests__/**"],
     "module": "commonjs",
     "excludeNotExported": true,
@@ -11,5 +10,5 @@
     "theme": "markdown",
     "tsconfig": "tsconfig.json",
     "listInvalidSymbolLinks": true,
-    "mdHideSources": true
+    "hideSources": false
 }

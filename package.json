@@ -30,7 +30,7 @@
     "build": "lerna bootstrap && lerna run build",
     "size": "lerna run --no-private size",
     "typedoc:pre": "rimraf docs/docs/api",
-    "typedoc": "npm run build && typedoc",
+    "typedoc": "npm run build && typedoc packages/redux-data-model/src/ packages/redux-data-model-hooks/src/",
     "typedoc:post": "npm run typedoc:post:readme && npm run typedoc:post:model && npm run typedoc:post:modeloptions",
     "typedoc:post:readme": "concat -o docs/docs/api/README.md docs/docs/headers/readme.md docs/docs/api/README.md",
     "typedoc:post:model": "concat -o docs/docs/api/classes/model.md docs/docs/headers/modelClass.md docs/docs/api/classes/model.md",
@@ -86,9 +86,9 @@
     "source-map-loader": "0.2.4",
     "ts-loader": "6.2.1",
     "tslib": "1.10.0",
-    "typedoc": "0.15.4",
-    "typedoc-plugin-markdown": "2.2.14",
-    "typescript": "3.7.3"
+    "typedoc": "0.16.9",
+    "typedoc-plugin-markdown": "2.2.16",
+    "typescript": "3.7.5"
   },
   "husky": {
     "hooks": {
