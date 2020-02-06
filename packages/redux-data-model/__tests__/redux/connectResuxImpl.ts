@@ -12,6 +12,7 @@ describe('connectModelImpl', () => {
       namespace: 'articles',
       state: {},
     });
+    articleModel.markAsLoaded();
     modelSelectorsSpy = jest.spyOn(articleModel, 'modelSelectors').mockImplementation(
       // Implements an identity selector
       () => (data) => data
@@ -21,6 +22,20 @@ describe('connectModelImpl', () => {
       () => (data) => data
     );
     mapDispatchToPropsSpy = jest.fn();
+  });
+
+  it('throws when model has not been marked as loaded prior to usage', () => {
+    expect(() => {
+      articleModel = new Model({
+        namespace: 'articles',
+        state: {},
+      });
+      connectModelImpl([articleModel]);
+    }).toThrow({
+      name: '',
+      message: `Models need to be combined with combineModelReducers prior to any usage. Now make this ` +
+      `the case for: ${articleModel.namespace}`,
+    });
   });
 
   it('calls modelSelectors in article model', () => {
@@ -55,6 +70,7 @@ describe('connectModelImpl', () => {
         namespace: 'projectA.articles',
         state: {},
       });
+      articleModel.markAsLoaded();
       modelSelectorsSpy = jest.spyOn(articleModel, 'modelSelectors').mockImplementation(
         // Implements an identity selector
         () => (data) => data

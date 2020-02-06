@@ -30,6 +30,7 @@ describe('useModelSelector', () => {
       },
     };
     counterModel = new Model(modelOptions);
+    counterModel.markAsLoaded();
     store = mockStore({
       [modelOptions.namespace]: modelOptions.state,
     });

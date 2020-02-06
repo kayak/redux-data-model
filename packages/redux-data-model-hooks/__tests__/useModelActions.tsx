@@ -39,6 +39,7 @@ describe('useModelActions', () => {
       },
     };
     counterModel = new Model(modelOptions);
+    counterModel.markAsLoaded();
     actionCreators = counterModel.actionCreators();
   });
 

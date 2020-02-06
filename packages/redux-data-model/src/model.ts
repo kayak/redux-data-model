@@ -170,6 +170,7 @@ export interface ModelOptions {
  * dispatchers, and sagas, based on the model's options that were provided.
  */
 export class Model {
+  private _isLoaded: boolean;
   private readonly _namespace: string;
   private readonly _state: State;
   private readonly _selectors?: SelectorMap;
@@ -205,6 +206,7 @@ export class Model {
    * @throws {DuplicatedActionTypesError} When reducer and/or effect action types are duplicated.
    */
   public constructor(options: ModelOptions) {
+    this._isLoaded = false;
     this._namespace = options.namespace;
     this._state = options.state;
     this._selectors = options.selectors || {};
@@ -349,6 +351,15 @@ export class Model {
   }
 
   /**
+   * Returns whether the model was loaded on a combineModelReducers call.
+   *
+   * @returns A boolean.
+   */
+  public get isLoaded(): boolean {
+    return this._isLoaded;
+  }
+
+  /**
    * Returns the namespace.
    *
    * @returns A string.
@@ -391,5 +402,12 @@ export class Model {
    */
   public get effects(): EffectMap {
     return this._effects;
+  }
+
+  /**
+   * @ignore
+   */
+  public markAsLoaded() {
+    this._isLoaded = true;
   }
 }

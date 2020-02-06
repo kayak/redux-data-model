@@ -15,6 +15,7 @@ import {connectModelImpl} from './connectModelImpl';
  * @param userProvidedMapDispatchToProps A mapDispatchToProps equivalent, which has a third argument with all
  *                                       models' action creators.
  * @returns A connect HOC.
+ * @throws {ModelNotCombinedError} When model was not loaded on a combineModelReducers call.
  * @category High Order Component (HOC)
  */
 export function connectModel(

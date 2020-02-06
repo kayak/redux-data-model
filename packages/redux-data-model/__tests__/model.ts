@@ -96,6 +96,20 @@ describe('Model', () => {
     });
   });
 
+  describe('isLoaded', () => {
+    it('returns false when the model has not been marked as loaded', () => {
+      expect(articleModel.isLoaded).toEqual(false);
+    });
+
+    it('returns true when the model is marked as loaded', () => {
+      const loadedModel = new Model({
+        ...modelOptions,
+      });
+      loadedModel.markAsLoaded();
+      expect(loadedModel.isLoaded).toEqual(true);
+    });
+  });
+
   describe('state', () => {
     it('returns the state', () => {
       expect(articleModel.state).toEqual(modelOptions.state);
@@ -202,7 +216,7 @@ describe('Model', () => {
 
   describe('modelSelectors', () => {
     it('returns an empty object when no selectors exists', () => {
-      expect(articleModel.actionCreators()).toEqual({});
+      expect(articleModel.modelSelectors()).toEqual({});
     });
 
     describe('when selectors are present', () => {

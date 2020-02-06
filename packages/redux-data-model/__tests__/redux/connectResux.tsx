@@ -47,6 +47,7 @@ describe('connectModel', () => {
       },
     };
     counterModel = new Model(modelOptions);
+    counterModel.markAsLoaded();
     actionCreators = counterModel.actionCreators();
   });
 
