@@ -36,7 +36,7 @@ Model options are used for initialising a [Model](../classes/model.md) instance.
 
 • **effects**? : *EffectMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:164](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L164)*
+*Defined in [packages/redux-data-model/src/model.ts:170](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L170)*
 
 Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
 an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
@@ -62,7 +62,7 @@ ___
 
 • **namespace**: *string*
 
-*Defined in [packages/redux-data-model/src/model.ts:97](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L97)*
+*Defined in [packages/redux-data-model/src/model.ts:103](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L103)*
 
 The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
 and, as a matter of fact, redux-data-model will enforce it. The namespace is effectively an object's path
@@ -83,12 +83,12 @@ ___
 
 • **reducers**? : *ReducerMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:144](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L144)*
+*Defined in [packages/redux-data-model/src/model.ts:150](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L150)*
 
 Reducers are functions used for synchronously changing the current state of a given model. A reducer will
 be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
 A reducer function receives the entire state and the action as arguments respectively. It shouldn't return
-data, like vanilla reducers. Instead it should change the state argument in place. Resux uses
+data, like vanilla reducers. Instead it should change the state argument in place. Redux-data-model uses
 [immer](https://github.com/immerjs/immer) under the hood, which means that the state is made immutable
 by tracking property access.
 
@@ -114,7 +114,7 @@ ___
 
 • **selectors**? : *SelectorMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:121](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L121)*
+*Defined in [packages/redux-data-model/src/model.ts:127](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L127)*
 
 Selectors are functions that receive the entire state and returns a piece of it or, perhaps transform it.
 Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow
@@ -136,7 +136,7 @@ ___
 
 • **state**: *State*
 
-*Defined in [packages/redux-data-model/src/model.ts:108](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L108)*
+*Defined in [packages/redux-data-model/src/model.ts:114](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L114)*
 
 State represents the initial state of the model's reducer.
 

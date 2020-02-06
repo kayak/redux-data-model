@@ -31,6 +31,7 @@ dispatchers, and sagas, based on the model's options that were provided.
 ### Accessors
 
 * [effects](model.md#effects)
+* [isLoaded](model.md#isloaded)
 * [namespace](model.md#namespace)
 * [reducers](model.md#reducers)
 * [reduxSagas](model.md#reduxsagas)
@@ -47,7 +48,7 @@ dispatchers, and sagas, based on the model's options that were provided.
 
 \+ **new Model**(`options`: [ModelOptions](../interfaces/modeloptions.md)): *[Model](model.md)*
 
-*Defined in [packages/redux-data-model/src/model.ts:177](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L177)*
+*Defined in [packages/redux-data-model/src/model.ts:184](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L184)*
 
 Creates a model instance.
 
@@ -91,7 +92,7 @@ Name | Type | Description |
 
 • **get effects**(): *EffectMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:392](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L392)*
+*Defined in [packages/redux-data-model/src/model.ts:409](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L409)*
 
 Returns the effects.
 
@@ -101,11 +102,25 @@ An effect map.
 
 ___
 
+###  isLoaded
+
+• **get isLoaded**(): *boolean*
+
+*Defined in [packages/redux-data-model/src/model.ts:364](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L364)*
+
+Returns whether the model was loaded on a combineModelReducers call.
+
+**Returns:** *boolean*
+
+A boolean.
+
+___
+
 ###  namespace
 
 • **get namespace**(): *string*
 
-*Defined in [packages/redux-data-model/src/model.ts:356](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L356)*
+*Defined in [packages/redux-data-model/src/model.ts:373](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L373)*
 
 Returns the namespace.
 
@@ -119,7 +134,7 @@ ___
 
 • **get reducers**(): *ReducerMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:383](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L383)*
+*Defined in [packages/redux-data-model/src/model.ts:400](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L400)*
 
 Returns the reducers.
 
@@ -133,7 +148,7 @@ ___
 
 • **get reduxSagas**(): *Saga[]*
 
-*Defined in [packages/redux-data-model/src/model.ts:340](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L340)*
+*Defined in [packages/redux-data-model/src/model.ts:348](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L348)*
 
 Returns an array of sagas, one for each of the declared effects. They will default to taking every action and
 calling its respective effect.
@@ -150,7 +165,7 @@ ___
 
 • **get selectors**(): *SelectorMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:374](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L374)*
+*Defined in [packages/redux-data-model/src/model.ts:391](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L391)*
 
 Returns the selectors.
 
@@ -164,7 +179,7 @@ ___
 
 • **get state**(): *State*
 
-*Defined in [packages/redux-data-model/src/model.ts:365](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L365)*
+*Defined in [packages/redux-data-model/src/model.ts:382](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L382)*
 
 Returns the initial state.
 
@@ -178,7 +193,7 @@ An initial state.
 
 ▸ **actionCreators**(): *ActionCreatorsMapObject*
 
-*Defined in [packages/redux-data-model/src/model.ts:265](https://github.com/kayak/redux-data-model/blob/e39459f/packages/redux-data-model/src/model.ts#L265)*
+*Defined in [packages/redux-data-model/src/model.ts:273](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L273)*
 
 Returns an object with action creators, one for each of the declared reducers and effects. Only useful for
 testing purposes, read the docs section on testing for more info. Also supports the inner workings of this

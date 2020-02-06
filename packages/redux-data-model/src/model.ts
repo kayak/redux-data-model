@@ -71,12 +71,18 @@ export const sagaEffects = {
   throttle,
 };
 
+/**
+ * @ignore
+ */
 const defaultReducer = (
   state,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _action,
 ) => state;
 
+/**
+ * @ignore
+ */
 const namespaceRegex = new RegExp('^([A-Za-z0-9]+)([.][A-Za-z0-9]+)*$');
 
 /**
@@ -123,7 +129,7 @@ export interface ModelOptions {
    * Reducers are functions used for synchronously changing the current state of a given model. A reducer will
    * be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
    * A reducer function receives the entire state and the action as arguments respectively. It shouldn't return
-   * data, like vanilla reducers. Instead it should change the state argument in place. Resux uses
+   * data, like vanilla reducers. Instead it should change the state argument in place. Redux-data-model uses
    * [immer](https://github.com/immerjs/immer) under the hood, which means that the state is made immutable
    * by tracking property access.
    *
