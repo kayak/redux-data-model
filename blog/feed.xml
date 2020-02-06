@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
     <channel>
-        <title>React-Resux Blog</title>
-        <link>https://kayak.github.io/react-resux/blog</link>
-        <description>The best place to stay up-to-date with the latest React-Resux news and events.</description>
+        <title>Redux-Data-Model Blog</title>
+        <link>https://kayak.github.io/redux-data-model/blog</link>
+        <description>The best place to stay up-to-date with the latest Redux-Data-Model news and events.</description>
         <lastBuildDate>Fri, 11 Mar 2016 06:00:00 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>Feed for Node.js</generator>
         <image>
-            <title>React-Resux Blog</title>
-            <url>https://kayak.github.io/react-resux/undefined</url>
-            <link>https://kayak.github.io/react-resux/blog</link>
+            <title>Redux-Data-Model Blog</title>
+            <url>https://kayak.github.io/redux-data-model/undefined</url>
+            <link>https://kayak.github.io/redux-data-model/blog</link>
         </image>
-        <copyright>Copyright © 2019 KAYAK Germany, GmbH</copyright>
+        <copyright>Copyright © 2020 KAYAK Germany, GmbH</copyright>
         <item>
             <title><![CDATA[Blog Title]]></title>
-            <link>https://kayak.github.io/react-resux/blog/2016/03/11/example.html</link>
-            <guid>https://kayak.github.io/react-resux/blog/2016/03/11/example.html</guid>
+            <link>https://kayak.github.io/redux-data-model/blog/2016/03/11/example.html</link>
+            <guid>https://kayak.github.io/redux-data-model/blog/2016/03/11/example.html</guid>
             <pubDate>Fri, 11 Mar 2016 06:00:00 GMT</pubDate>
             <description><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum massa eget nulla aliquet sagittis. Proin odio tortor, vulputate ut odio in, ultrices ultricies augue. Cras ornare ultrices lorem malesuada iaculis. Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.</p>
 ]]></description>

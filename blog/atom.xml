@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://kayak.github.io/react-resux/blog</id>
-    <title>React-Resux Blog</title>
+    <id>https://kayak.github.io/redux-data-model/blog</id>
+    <title>Redux-Data-Model Blog</title>
     <updated>2016-03-11T06:00:00Z</updated>
     <generator>Feed for Node.js</generator>
-    <link rel="alternate" href="https://kayak.github.io/react-resux/blog"/>
-    <subtitle>The best place to stay up-to-date with the latest React-Resux news and events.</subtitle>
-    <logo>https://kayak.github.io/react-resux/undefined</logo>
-    <rights>Copyright © 2019 KAYAK Germany, GmbH</rights>
+    <link rel="alternate" href="https://kayak.github.io/redux-data-model/blog"/>
+    <subtitle>The best place to stay up-to-date with the latest Redux-Data-Model news and events.</subtitle>
+    <logo>https://kayak.github.io/redux-data-model/undefined</logo>
+    <rights>Copyright © 2020 KAYAK Germany, GmbH</rights>
     <entry>
         <title type="html"><![CDATA[Blog Title]]></title>
-        <id>https://kayak.github.io/react-resux/blog/2016/03/11/example.html</id>
-        <link href="https://kayak.github.io/react-resux/blog/2016/03/11/example.html">
+        <id>https://kayak.github.io/redux-data-model/blog/2016/03/11/example.html</id>
+        <link href="https://kayak.github.io/redux-data-model/blog/2016/03/11/example.html">
         </link>
         <updated>2016-03-11T06:00:00Z</updated>
         <summary type="html"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum massa eget nulla aliquet sagittis. Proin odio tortor, vulputate ut odio in, ultrices ultricies augue. Cras ornare ultrices lorem malesuada iaculis. Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.</p>
