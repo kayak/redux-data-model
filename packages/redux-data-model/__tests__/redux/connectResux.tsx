@@ -81,6 +81,27 @@ describe('connectModel', () => {
 
       expect(wrapper.find('#count').text()).toEqual(String(modelOptions.state.count))
     });
+
+    it('throws when model has not been marked as loaded prior to usage', () => {
+      const modelThatThrows = new Model(modelOptions);
+
+      const ConnectedCounterThatThrows = connectModel(
+        [modelThatThrows],
+        (state, _props, selectors) => ({count: selectors.counter.count(state)}),
+      )(Counter);
+
+      expect(() => {
+        mount(
+          <Provider store={store}>
+            <ConnectedCounterThatThrows/>
+          </Provider>
+        );
+      }).toThrow({
+        name: '',
+        message: `Models need to be combined with combineModelReducers prior to any usage. Now make this ` +
+        `the case for: ${modelThatThrows.namespace}`,
+      });
+    });
   });
 
   describe('when using default userProvidedMapDispatchToProps', () => {
@@ -167,6 +188,27 @@ describe('connectModel', () => {
         );
 
         expect(effectPromise).toStrictEqual(expect.any(Promise));
+      });
+    });
+
+    it('throws when model has not been marked as loaded prior to usage', () => {
+      const modelThatThrows = new Model(modelOptions);
+
+      const ConnectedCounterThatThrows = connectModel(
+        [modelThatThrows],
+        null,
+      )(CounterThatFiresCallback);
+
+      expect(() => {
+        mount(
+          <Provider store={store}>
+            <ConnectedCounterThatThrows actionCaller={actions => actions.tryToIncrease()} />
+          </Provider>
+        );
+      }).toThrow({
+        name: '',
+        message: `Models need to be combined with combineModelReducers prior to any usage. Now make this ` +
+        `the case for: ${modelThatThrows.namespace}`,
       });
     });
   });

@@ -273,17 +273,26 @@ export class Model {
   public actionCreators(): ActionCreatorsMapObject {
     const actions = {};
 
+    const actionCreatorBuilder = actionName => (
+      payload: object = {}, __actionInternals: ActionInternalsObject=undefined,
+    ) => {
+      if (!this.isLoaded) {
+        throw {
+          name: 'ModelNotCombinedError',
+          message: `Models need to be combined with combineModelReducers prior to any usage. Now ` +
+          `make this the case for: ${this._namespace}`,
+        };
+      }
+      return actionCreator(this.actionType(actionName), payload, __actionInternals);
+    };
+
     for (const reducerName in this._reducers) {
-      actions[reducerName] = (payload: object = {}, __actionInternals: ActionInternalsObject=undefined) => (
-        actionCreator(this.actionType(reducerName), payload, __actionInternals)
-      );
+      actions[reducerName] = actionCreatorBuilder(reducerName);
       actions[reducerName].isEffect = false;
     }
 
     for (const effectName in this._effects) {
-      actions[effectName] = (payload: object = {}, __actionInternals: ActionInternalsObject=undefined) => (
-        actionCreator(this.actionType(effectName), payload, __actionInternals)
-      );
+      actions[effectName] = actionCreatorBuilder(effectName);
       actions[effectName].isEffect = true;
     }
 
@@ -301,7 +310,17 @@ export class Model {
         const namespacedState = get(allState, this._namespace);
         return selectorFunc(namespacedState, ...args, allState);
       };
-      selectors[selectorName] = createSelector([namespacedSelectorFunc], data => data);
+      selectors[selectorName] = createSelector([namespacedSelectorFunc], data => {
+        if (!this.isLoaded) {
+          throw {
+            name: 'ModelNotCombinedError',
+            message: `Models need to be combined with combineModelReducers prior to any usage. Now ` +
+            `make this the case for: ${this._namespace}`,
+          };
+        }
+
+        return data;
+      });
     }
 
     return selectors;

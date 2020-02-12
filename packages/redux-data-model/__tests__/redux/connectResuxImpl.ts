@@ -24,20 +24,6 @@ describe('connectModelImpl', () => {
     mapDispatchToPropsSpy = jest.fn();
   });
 
-  it('throws when model has not been marked as loaded prior to usage', () => {
-    expect(() => {
-      articleModel = new Model({
-        namespace: 'articles',
-        state: {},
-      });
-      connectModelImpl([articleModel]);
-    }).toThrow({
-      name: '',
-      message: `Models need to be combined with combineModelReducers prior to any usage. Now make this ` +
-      `the case for: ${articleModel.namespace}`,
-    });
-  });
-
   it('calls modelSelectors in article model', () => {
     connectModelImpl([articleModel]);
     expect(modelSelectorsSpy).toHaveBeenCalled();

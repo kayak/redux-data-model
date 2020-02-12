@@ -14,6 +14,7 @@ describe('Model', () => {
       state: {},
     };
     articleModel = new Model(modelOptions);
+    articleModel.markAsLoaded();
   });
 
   describe('constructor', () => {
@@ -98,13 +99,12 @@ describe('Model', () => {
 
   describe('isLoaded', () => {
     it('returns false when the model has not been marked as loaded', () => {
-      expect(articleModel.isLoaded).toEqual(false);
+      const unloadedModel = new Model(modelOptions);
+      expect(unloadedModel.isLoaded).toEqual(false);
     });
 
     it('returns true when the model is marked as loaded', () => {
-      const loadedModel = new Model({
-        ...modelOptions,
-      });
+      const loadedModel = new Model(modelOptions);
       loadedModel.markAsLoaded();
       expect(loadedModel.isLoaded).toEqual(true);
     });
@@ -171,6 +171,7 @@ describe('Model', () => {
           loadSomethingReducer: loadSomethingReducerSpy,
         },
       });
+      modelX.markAsLoaded();
       const actionCreators = modelX.actionCreators();
       const payload = {1: 2};
 
@@ -197,6 +198,7 @@ describe('Model', () => {
           loadSomethingEffect: loadSomethingEffectSpy,
         },
       });
+      modelX.markAsLoaded();
       const actionCreators = modelX.actionCreators();
       const payload = {1: 2};
 
@@ -230,6 +232,7 @@ describe('Model', () => {
           selectA: selectASpy,
         },
       });
+      modelX.markAsLoaded();
       const allState = {
         [modelX.namespace]: state,
       };
@@ -262,6 +265,7 @@ describe('Model', () => {
           selectA: selectASpy,
         },
       });
+      modelX.markAsLoaded();
       const allState = {
         projectA: {
           articles: state

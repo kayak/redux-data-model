@@ -2,7 +2,6 @@ import * as React from 'react';
 import {useDispatch} from 'react-redux';
 import {Dispatch} from 'redux';
 import {bindModelActionCreators, BoundActionCreatorsMapObject, Model} from 'redux-data-model';
-import {checkIfModelIsCombined} from "./utils";
 
 /**
  * A react hook for returning already bound action creators for the provided model. If you don't want/need to use
@@ -19,8 +18,6 @@ import {checkIfModelIsCombined} from "./utils";
  * @category React Hook
  */
 export function useModelActions(model: Model): BoundActionCreatorsMapObject {
-  checkIfModelIsCombined(model);
-
   const dispatch: Dispatch = useDispatch();
   const actionCreators = React.useMemo(() => model.actionCreators(), [model]);
   return React.useMemo(() => bindModelActionCreators(actionCreators, dispatch), [model]);

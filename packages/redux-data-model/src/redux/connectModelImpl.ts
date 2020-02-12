@@ -1,4 +1,4 @@
-import {get, isFunction, isNil, isEmpty, set} from 'lodash';
+import {get, isFunction, isNil, set} from 'lodash';
 import {Dispatch} from 'redux';
 import {
   MapDispatchToPropsWithActionCreators,
@@ -17,24 +17,12 @@ export function connectModelImpl(
   userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any>=null,
   userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any>=null,
 ) {
-  const uncombinedModelNamespaces: Array<string> = [];
   const selectors: NamespacedSelectorsMapObject = {};
   const modelActionCreators: NamespacedActionCreatorsMapObject = {};
 
   for (const model of models) {
-    if (!model.isLoaded) {
-      uncombinedModelNamespaces.push(model.namespace);
-    }
     set(selectors, model.namespace, model.modelSelectors());
     set(modelActionCreators, model.namespace, model.actionCreators());
-  }
-
-  if (!isEmpty(uncombinedModelNamespaces)) {
-    throw {
-      name: 'ModelNotCombinedError',
-      message: `Models need to be combined with combineModelReducers prior to any usage. Now ` +
-      `make this the case for: ${uncombinedModelNamespaces.join(', ')}`,
-    };
   }
 
   const mapStateToPropsFunc = !isNil(userProvidedMapStateToProps) && ((state, props=null) => {

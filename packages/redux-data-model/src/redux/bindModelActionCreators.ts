@@ -27,10 +27,17 @@ export function bindModelActionCreators(
 ): BoundNamespacedActionCreatorsMapObject {
   return mapValues(actionCreators,actionCreator => function(actionData: object) {
     let promise = Promise.resolve();
+
+    // The action is created here so that exceptions within the action creator are not absorbed by promises.
+    const action = actionCreator(actionData, defaultActionInternals);
+
     if (actionCreator.isEffect) {
-      promise = new Promise((resolve, reject) => dispatch(actionCreator(actionData, {resolve, reject})));
+      promise = new Promise((resolve, reject) => {
+        action.__actionInternals = {resolve, reject};
+        dispatch(action);
+      });
     } else {
-      dispatch(actionCreator(actionData, defaultActionInternals));
+      dispatch(action);
     }
     return promise;
   });
