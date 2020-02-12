@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/kayak/redux-data-model/compare/v0.7.0...v0.7.1) (2020-02-12)
+
+
+### Bug Fixes
+
+* fix combineModelReducers check, which was moved to the model level ([7e0e541](https://github.com/kayak/redux-data-model/commit/7e0e541eacd373ed6cfa1bf3b1b987cc994bd496))
+
+
+
+
+
 # [0.7.0](https://github.com/kayak/redux-data-model/compare/v0.6.2...v0.7.0) (2020-02-06)
 
 

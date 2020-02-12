@@ -1,6 +1,6 @@
 {
   "name": "redux-data-model-connect-model.js",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": true,
   "description": "redux-data-model-connect-model-example",
   "main": "index.js",
@@ -17,7 +17,7 @@
   "dependencies": {
     "next": "9.0.3",
     "react-json-tree": "0.11.2",
-    "redux-data-model": "^0.7.0",
+    "redux-data-model": "^0.7.1",
     "redux-logger": "3.0.6"
   },
   "devDependencies": {
