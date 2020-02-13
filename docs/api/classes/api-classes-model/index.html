@@ -78,10 +78,15 @@ dispatchers, and sagas, based on the model's options that were provided.</p>
 <ul>
 <li><a href="/redux-data-model/docs/api/classes/api-classes-model#constructor">constructor</a></li>
 </ul>
+<h3><a class="anchor" aria-hidden="true" id="properties"></a><a href="#properties" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties</h3>
+<ul>
+<li><a href="/redux-data-model/docs/api/classes/api-classes-model#static-disableinitializationchecks">disableInitializationChecks</a></li>
+</ul>
 <h3><a class="anchor" aria-hidden="true" id="accessors"></a><a href="#accessors" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Accessors</h3>
 <ul>
 <li><a href="/redux-data-model/docs/api/classes/api-classes-model#effects">effects</a></li>
-<li><a href="/redux-data-model/docs/api/classes/api-classes-model#isloaded">isLoaded</a></li>
+<li><a href="/redux-data-model/docs/api/classes/api-classes-model#isreduxinitialized">isReduxInitialized</a></li>
+<li><a href="/redux-data-model/docs/api/classes/api-classes-model#issagainitialized">isSagaInitialized</a></li>
 <li><a href="/redux-data-model/docs/api/classes/api-classes-model#namespace">namespace</a></li>
 <li><a href="/redux-data-model/docs/api/classes/api-classes-model#reducers">reducers</a></li>
 <li><a href="/redux-data-model/docs/api/classes/api-classes-model#reduxsagas">reduxSagas</a></li>
@@ -95,7 +100,7 @@ dispatchers, and sagas, based on the model's options that were provided.</p>
 <h2><a class="anchor" aria-hidden="true" id="constructors-1"></a><a href="#constructors-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Constructors</h2>
 <h3><a class="anchor" aria-hidden="true" id="constructor"></a><a href="#constructor" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>constructor</h3>
 <p>+ <strong>new Model</strong>(<code>options</code>: <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options">ModelOptions</a>): <em><a href="/redux-data-model/docs/api/classes/api-classes-model">Model</a></em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/model.ts#L184">packages/redux-data-model/src/model.ts:184</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L193">packages/redux-data-model/src/model.ts:193</a></em></p>
 <p>Creates a model instance.</p>
 <p><strong><code>example</code></strong>
 const counterModel = new Model({
@@ -118,6 +123,7 @@ state.count -= 1;
 });</p>
 <p><strong><code>throws</code></strong> {NamespaceIsntAStringError} When namespace isn't a string.</p>
 <p><strong><code>throws</code></strong> {EmptyNamespaceError} When namespace is an empty string.</p>
+<p><strong><code>throws</code></strong> {InvalidNamespaceError} When namespace has invalid characters.</p>
 <p><strong><code>throws</code></strong> {DuplicatedActionTypesError} When reducer and/or effect action types are duplicated.</p>
 <p><strong>Parameters:</strong></p>
 <table>
@@ -129,38 +135,52 @@ state.count -= 1;
 </tbody>
 </table>
 <p><strong>Returns:</strong> <em><a href="/redux-data-model/docs/api/classes/api-classes-model">Model</a></em></p>
+<h2><a class="anchor" aria-hidden="true" id="properties-1"></a><a href="#properties-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties</h2>
+<h3><a class="anchor" aria-hidden="true" id="static-disableinitializationchecks"></a><a href="#static-disableinitializationchecks" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Static</code> disableInitializationChecks</h3>
+<p>▪ <strong>disableInitializationChecks</strong>: <em>boolean</em> = false</p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L185">packages/redux-data-model/src/model.ts:185</a></em></p>
+<p>Whether ModelNotReduxInitializedError and ModelNotSagaInitializedError should be thrown when the model
+is used without it being integrated with Redux/Saga yet. Normally you only want to disable initialization
+checks in your tests.</p>
 <h2><a class="anchor" aria-hidden="true" id="accessors-1"></a><a href="#accessors-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Accessors</h2>
 <h3><a class="anchor" aria-hidden="true" id="effects"></a><a href="#effects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>effects</h3>
 <p>• <strong>get effects</strong>(): <em>EffectMap</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/model.ts#L409">packages/redux-data-model/src/model.ts:409</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L457">packages/redux-data-model/src/model.ts:457</a></em></p>
 <p>Returns the effects.</p>
 <p><strong>Returns:</strong> <em>EffectMap</em></p>
 <p>An effect map.</p>
 <hr>
-<h3><a class="anchor" aria-hidden="true" id="isloaded"></a><a href="#isloaded" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>isLoaded</h3>
-<p>• <strong>get isLoaded</strong>(): <em>boolean</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/model.ts#L364">packages/redux-data-model/src/model.ts:364</a></em></p>
-<p>Returns whether the model was loaded on a combineModelReducers call.</p>
+<h3><a class="anchor" aria-hidden="true" id="isreduxinitialized"></a><a href="#isreduxinitialized" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>isReduxInitialized</h3>
+<p>• <strong>get isReduxInitialized</strong>(): <em>boolean</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L403">packages/redux-data-model/src/model.ts:403</a></em></p>
+<p>Returns whether the model was initialized on a <a href="/redux-data-model/docs/api/api-index#combinemodelreducers">combineModelReducers</a> call.</p>
+<p><strong>Returns:</strong> <em>boolean</em></p>
+<p>A boolean.</p>
+<hr>
+<h3><a class="anchor" aria-hidden="true" id="issagainitialized"></a><a href="#issagainitialized" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>isSagaInitialized</h3>
+<p>• <strong>get isSagaInitialized</strong>(): <em>boolean</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L412">packages/redux-data-model/src/model.ts:412</a></em></p>
+<p>Returns whether the model was initialized on a <a href="/redux-data-model/docs/api/api-index#modelrootsaga">modelRootSaga</a> call.</p>
 <p><strong>Returns:</strong> <em>boolean</em></p>
 <p>A boolean.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="namespace"></a><a href="#namespace" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>namespace</h3>
 <p>• <strong>get namespace</strong>(): <em>string</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/model.ts#L373">packages/redux-data-model/src/model.ts:373</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L421">packages/redux-data-model/src/model.ts:421</a></em></p>
 <p>Returns the namespace.</p>
 <p><strong>Returns:</strong> <em>string</em></p>
 <p>A string.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="reducers"></a><a href="#reducers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>reducers</h3>
 <p>• <strong>get reducers</strong>(): <em>ReducerMap</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/model.ts#L400">packages/redux-data-model/src/model.ts:400</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L448">packages/redux-data-model/src/model.ts:448</a></em></p>
 <p>Returns the reducers.</p>
 <p><strong>Returns:</strong> <em>ReducerMap</em></p>
 <p>A reducer function.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="reduxsagas"></a><a href="#reduxsagas" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>reduxSagas</h3>
 <p>• <strong>get reduxSagas</strong>(): <em>Saga[]</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/model.ts#L348">packages/redux-data-model/src/model.ts:348</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L387">packages/redux-data-model/src/model.ts:387</a></em></p>
 <p>Returns an array of sagas, one for each of the declared effects. They will default to taking every action and
 calling its respective effect.</p>
 <p><strong><code>throws</code></strong> {NonCompatibleActionError} When bindModelActionCreators was not used to bind the action creators.</p>
@@ -169,21 +189,21 @@ calling its respective effect.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="selectors"></a><a href="#selectors" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>selectors</h3>
 <p>• <strong>get selectors</strong>(): <em>SelectorMap</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/model.ts#L391">packages/redux-data-model/src/model.ts:391</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L439">packages/redux-data-model/src/model.ts:439</a></em></p>
 <p>Returns the selectors.</p>
 <p><strong>Returns:</strong> <em>SelectorMap</em></p>
 <p>A selectors map.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="state"></a><a href="#state" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>state</h3>
 <p>• <strong>get state</strong>(): <em>State</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/model.ts#L382">packages/redux-data-model/src/model.ts:382</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L430">packages/redux-data-model/src/model.ts:430</a></em></p>
 <p>Returns the initial state.</p>
 <p><strong>Returns:</strong> <em>State</em></p>
 <p>An initial state.</p>
 <h2><a class="anchor" aria-hidden="true" id="methods-1"></a><a href="#methods-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h2>
 <h3><a class="anchor" aria-hidden="true" id="actioncreators"></a><a href="#actioncreators" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>actionCreators</h3>
 <p>▸ <strong>actionCreators</strong>(): <em>ActionCreatorsMapObject</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/model.ts#L273">packages/redux-data-model/src/model.ts:273</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L284">packages/redux-data-model/src/model.ts:284</a></em></p>
 <p>Returns an object with action creators, one for each of the declared reducers and effects. Only useful for
 testing purposes, read the docs section on testing for more info. Also supports the inner workings of this
 class.</p>

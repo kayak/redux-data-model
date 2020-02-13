@@ -93,12 +93,13 @@ generated from source.</p>
 <h2><a class="anchor" aria-hidden="true" id="high-order-component-hoc-functions-1"></a><a href="#high-order-component-hoc-functions-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>High Order Component (HOC) Functions</h2>
 <h3><a class="anchor" aria-hidden="true" id="connectmodel"></a><a href="#connectmodel" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>connectModel</h3>
 <p>▸ <strong>connectModel</strong>(<code>models</code>: <a href="/redux-data-model/docs/api/classes/api-classes-model">Model</a>[], <code>userProvidedMapStateToProps</code>: MapStateToPropsWithSelectors‹any, any, any›, <code>userProvidedMapDispatchToProps</code>: MapDispatchToPropsWithActionCreators‹any, any›): <em>any</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/redux/connectModel.ts#L21">packages/redux-data-model/src/redux/connectModel.ts:21</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/redux/connectModel.ts#L22">packages/redux-data-model/src/redux/connectModel.ts:22</a></em></p>
 <p>Equivalent to redux's connect function. This should be used when the hooks api is not desired or
 supported. Otherwise check <a href="/redux-data-model/docs/api/api-index#usemodelactions">useModelActions</a> and <a href="/redux-data-model/docs/api/api-index#usemodelselector">useModelSelector</a> up.</p>
 <p><strong><code>example</code></strong>
 const ConnectedComponent = connectModel([modelA, modelB], mapStateToProps, mapDispatchToProps)</p>
-<p><strong><code>throws</code></strong> {ModelNotCombinedError} When model was not loaded on a combineModelReducers call.</p>
+<p><strong><code>throws</code></strong> {ModelNotReduxInitializedError} When model was not initialized on a <a href="/redux-data-model/docs/api/api-index#combinemodelreducers">combineModelReducers</a> call.</p>
+<p><strong><code>throws</code></strong> {ModelNotSagaInitializedError} When model was not initialized on a <a href="/redux-data-model/docs/api/api-index#modelrootsaga">modelRootSaga</a> call.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -116,12 +117,13 @@ const ConnectedComponent = connectModel([modelA, modelB], mapStateToProps, mapDi
 <h2><a class="anchor" aria-hidden="true" id="react-hook-functions-1"></a><a href="#react-hook-functions-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>React Hook Functions</h2>
 <h3><a class="anchor" aria-hidden="true" id="usemodelactions"></a><a href="#usemodelactions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>useModelActions</h3>
 <p>▸ <strong>useModelActions</strong>(<code>model</code>: <a href="/redux-data-model/docs/api/classes/api-classes-model">Model</a>): <em>BoundActionCreatorsMapObject</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model-hooks/src/useModelActions.ts#L21">packages/redux-data-model-hooks/src/useModelActions.ts:21</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model-hooks/src/useModelActions.ts#L21">packages/redux-data-model-hooks/src/useModelActions.ts:21</a></em></p>
 <p>A react hook for returning already bound action creators for the provided model. If you don't want/need to use
 the hooks api, check <a href="/redux-data-model/docs/api/api-index#connectmodel">connectModel</a> up.</p>
 <p><strong><code>example</code></strong>
 const modelActions = useModelActions(model);</p>
-<p><strong><code>throws</code></strong> {ModelNotCombinedError} When model was not loaded on a combineModelReducers call.</p>
+<p><strong><code>throws</code></strong> {ModelNotReduxInitializedError} When model was not initialized on a <a href="/redux-data-model/docs/api/api-index#combinemodelreducers">combineModelReducers</a> call.</p>
+<p><strong><code>throws</code></strong> {ModelNotSagaInitializedError} When model was not initialized on a <a href="/redux-data-model/docs/api/api-index#modelrootsaga">modelRootSaga</a> call.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -138,12 +140,12 @@ which can be used to track if the action was properly processed (i.e. resolved) 
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="usemodelselector"></a><a href="#usemodelselector" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>useModelSelector</h3>
 <p>▸ <strong>useModelSelector</strong>(<code>model</code>: <a href="/redux-data-model/docs/api/classes/api-classes-model">Model</a>, <code>selectorFunc</code>: SelectorFunction): <em>any</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model-hooks/src/useModelSelector.ts#L21">packages/redux-data-model-hooks/src/useModelSelector.ts:21</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model-hooks/src/useModelSelector.ts#L20">packages/redux-data-model-hooks/src/useModelSelector.ts:20</a></em></p>
 <p>A react hook for returning data from the provided model's state, by the means of one of its selectors. If you
 don't want/need to use the hooks api, check <a href="/redux-data-model/docs/api/api-index#connectmodel">connectModel</a> up.</p>
 <p><strong><code>example</code></strong>
 const someDataFromState = useModelSelector(model, (state, selectors) =&gt; selectors.count(state));</p>
-<p><strong><code>throws</code></strong> {ModelNotCombinedError} When model was not loaded on a combineModelReducers call.</p>
+<p><strong><code>throws</code></strong> {ModelNotReduxInitializedError} When model was not initialized on a <a href="/redux-data-model/docs/api/api-index#combinemodelreducers">combineModelReducers</a> call.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -160,7 +162,7 @@ const someDataFromState = useModelSelector(model, (state, selectors) =&gt; selec
 <h2><a class="anchor" aria-hidden="true" id="redux-saga-setup-functions-1"></a><a href="#redux-saga-setup-functions-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Redux/Saga Setup Functions</h2>
 <h3><a class="anchor" aria-hidden="true" id="bindmodelactioncreators"></a><a href="#bindmodelactioncreators" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>bindModelActionCreators</h3>
 <p>▸ <strong>bindModelActionCreators</strong>(<code>actionCreators</code>: ActionCreatorsMapObject, <code>dispatch</code>: Dispatch): <em>BoundNamespacedActionCreatorsMapObject</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/redux/bindModelActionCreators.ts#L24">packages/redux-data-model/src/redux/bindModelActionCreators.ts:24</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/redux/bindModelActionCreators.ts#L24">packages/redux-data-model/src/redux/bindModelActionCreators.ts:24</a></em></p>
 <p>Turns an object whose values are action creators or nested objects with them, into an object with the
 same keys, but with every action creator wrapped into a dispatch call so they may be invoked directly.
 A Promise will be returned on every invocation, which can be used to track if the action was properly
@@ -182,7 +184,7 @@ reject once done.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="combinemodelreducers"></a><a href="#combinemodelreducers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>combineModelReducers</h3>
 <p>▸ <strong>combineModelReducers</strong>(<code>models</code>: <a href="/redux-data-model/docs/api/classes/api-classes-model">Model</a>[]): <em>ReducersMapObject</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/redux/combineModelReducers.ts#L34">packages/redux-data-model/src/redux/combineModelReducers.ts:34</a></em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/redux/combineModelReducers.ts#L34">packages/redux-data-model/src/redux/combineModelReducers.ts:34</a></em></p>
 <p>Returns a reducer map object that can be deconstructed into the combineReducers helper, from redux, so that
 redux is aware of any reducers produced by models.</p>
 <p><strong><code>example</code></strong>
@@ -203,8 +205,8 @@ const store = createStore(combineReducers({
 <p>A reducer's map object.</p>
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="modelrootsaga"></a><a href="#modelrootsaga" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>modelRootSaga</h3>
-<p>▸ <strong>modelRootSaga</strong>(<code>sagaContainers</code>: <a href="/redux-data-model/docs/api/classes/api-classes-model">Model</a>[]): <em>SagaIterator</em></p>
-<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/c63f246/packages/redux-data-model/src/saga.ts#L54">packages/redux-data-model/src/saga.ts:54</a></em></p>
+<p>▸ <strong>modelRootSaga</strong>(<code>models</code>: <a href="/redux-data-model/docs/api/classes/api-classes-model">Model</a>[]): <em>SagaIterator</em></p>
+<p><em>Defined in <a href="https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/saga.ts#L54">packages/redux-data-model/src/saga.ts:54</a></em></p>
 <p>Returns a root saga generator that can be passed to sagaMiddleware's run function, so that redux-saga is aware
 of any sagas produced by models.</p>
 <p><strong><code>example</code></strong>
@@ -215,7 +217,7 @@ sagaMiddleware.run(() =&gt; modelRootSaga([modelA, modelB]));</p>
 <tr><th>Name</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>sagaContainers</code></td><td><a href="/redux-data-model/docs/api/classes/api-classes-model">Model</a>[]</td><td>An array of Model instances.</td></tr>
+<tr><td><code>models</code></td><td><a href="/redux-data-model/docs/api/classes/api-classes-model">Model</a>[]</td><td>An array of Model instances.</td></tr>
 </tbody>
 </table>
 <p><strong>Returns:</strong> <em>SagaIterator</em></p>
