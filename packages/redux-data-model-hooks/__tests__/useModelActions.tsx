@@ -39,7 +39,8 @@ describe('useModelActions', () => {
       },
     };
     counterModel = new Model(modelOptions);
-    counterModel.markAsLoaded();
+    counterModel.markAsReduxInitialized();
+    counterModel.markAsSagaInitialized();
     actionCreators = counterModel.actionCreators();
   });
 

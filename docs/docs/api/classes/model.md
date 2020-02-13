@@ -28,10 +28,15 @@ dispatchers, and sagas, based on the model's options that were provided.
 
 * [constructor](model.md#constructor)
 
+### Properties
+
+* [disableInitializationChecks](model.md#static-disableinitializationchecks)
+
 ### Accessors
 
 * [effects](model.md#effects)
-* [isLoaded](model.md#isloaded)
+* [isReduxInitialized](model.md#isreduxinitialized)
+* [isSagaInitialized](model.md#issagainitialized)
 * [namespace](model.md#namespace)
 * [reducers](model.md#reducers)
 * [reduxSagas](model.md#reduxsagas)
@@ -48,7 +53,7 @@ dispatchers, and sagas, based on the model's options that were provided.
 
 \+ **new Model**(`options`: [ModelOptions](../interfaces/modeloptions.md)): *[Model](model.md)*
 
-*Defined in [packages/redux-data-model/src/model.ts:184](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L184)*
+*Defined in [packages/redux-data-model/src/model.ts:193](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L193)*
 
 Creates a model instance.
 
@@ -76,6 +81,8 @@ const counterModel = new Model({
 
 **`throws`** {EmptyNamespaceError} When namespace is an empty string.
 
+**`throws`** {InvalidNamespaceError} When namespace has invalid characters.
+
 **`throws`** {DuplicatedActionTypesError} When reducer and/or effect action types are duplicated.
 
 **Parameters:**
@@ -86,13 +93,25 @@ Name | Type | Description |
 
 **Returns:** *[Model](model.md)*
 
+## Properties
+
+### `Static` disableInitializationChecks
+
+▪ **disableInitializationChecks**: *boolean* = false
+
+*Defined in [packages/redux-data-model/src/model.ts:185](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L185)*
+
+Whether ModelNotReduxInitializedError and ModelNotSagaInitializedError should be thrown when the model
+is used without it being integrated with Redux/Saga yet. Normally you only want to disable initialization
+checks in your tests.
+
 ## Accessors
 
 ###  effects
 
 • **get effects**(): *EffectMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:409](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L409)*
+*Defined in [packages/redux-data-model/src/model.ts:457](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L457)*
 
 Returns the effects.
 
@@ -102,13 +121,27 @@ An effect map.
 
 ___
 
-###  isLoaded
+###  isReduxInitialized
 
-• **get isLoaded**(): *boolean*
+• **get isReduxInitialized**(): *boolean*
 
-*Defined in [packages/redux-data-model/src/model.ts:364](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L364)*
+*Defined in [packages/redux-data-model/src/model.ts:403](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L403)*
 
-Returns whether the model was loaded on a combineModelReducers call.
+Returns whether the model was initialized on a [combineModelReducers](../README.md#combinemodelreducers) call.
+
+**Returns:** *boolean*
+
+A boolean.
+
+___
+
+###  isSagaInitialized
+
+• **get isSagaInitialized**(): *boolean*
+
+*Defined in [packages/redux-data-model/src/model.ts:412](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L412)*
+
+Returns whether the model was initialized on a [modelRootSaga](../README.md#modelrootsaga) call.
 
 **Returns:** *boolean*
 
@@ -120,7 +153,7 @@ ___
 
 • **get namespace**(): *string*
 
-*Defined in [packages/redux-data-model/src/model.ts:373](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L373)*
+*Defined in [packages/redux-data-model/src/model.ts:421](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L421)*
 
 Returns the namespace.
 
@@ -134,7 +167,7 @@ ___
 
 • **get reducers**(): *ReducerMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:400](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L400)*
+*Defined in [packages/redux-data-model/src/model.ts:448](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L448)*
 
 Returns the reducers.
 
@@ -148,7 +181,7 @@ ___
 
 • **get reduxSagas**(): *Saga[]*
 
-*Defined in [packages/redux-data-model/src/model.ts:348](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L348)*
+*Defined in [packages/redux-data-model/src/model.ts:387](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L387)*
 
 Returns an array of sagas, one for each of the declared effects. They will default to taking every action and
 calling its respective effect.
@@ -165,7 +198,7 @@ ___
 
 • **get selectors**(): *SelectorMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:391](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L391)*
+*Defined in [packages/redux-data-model/src/model.ts:439](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L439)*
 
 Returns the selectors.
 
@@ -179,7 +212,7 @@ ___
 
 • **get state**(): *State*
 
-*Defined in [packages/redux-data-model/src/model.ts:382](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L382)*
+*Defined in [packages/redux-data-model/src/model.ts:430](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L430)*
 
 Returns the initial state.
 
@@ -193,7 +226,7 @@ An initial state.
 
 ▸ **actionCreators**(): *ActionCreatorsMapObject*
 
-*Defined in [packages/redux-data-model/src/model.ts:273](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L273)*
+*Defined in [packages/redux-data-model/src/model.ts:284](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L284)*
 
 Returns an object with action creators, one for each of the declared reducers and effects. Only useful for
 testing purposes, read the docs section on testing for more info. Also supports the inner workings of this

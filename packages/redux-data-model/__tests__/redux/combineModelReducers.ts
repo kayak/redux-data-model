@@ -6,6 +6,7 @@ jest.mock('redux', () => ({combineReducers: jest.fn()}));
 describe('combineModelReducers', () => {
   let articleModel;
   let modelReducersSpy;
+  let markAsReduxInitializedSpy;
   let result;
 
   beforeEach(() => {
@@ -13,15 +14,17 @@ describe('combineModelReducers', () => {
       namespace: 'articles',
       state: {},
     });
-    modelReducersSpy = jest.spyOn(articleModel, 'modelReducers').mockImplementation(
-      // Implements an identity reducer
-      () => (data) => data
-    );
+    modelReducersSpy = jest.spyOn(articleModel, 'modelReducers');
+    markAsReduxInitializedSpy = jest.spyOn(articleModel, 'markAsReduxInitialized');
     result = combineModelReducers([articleModel]);
   });
 
   it('calls modelReducers in article model', () => {
     expect(modelReducersSpy).toHaveBeenCalled();
+  });
+
+  it('calls markAsReduxInitialized in article model', () => {
+    expect(markAsReduxInitializedSpy).toHaveBeenCalled();
   });
 
   it('returns a reducer mapping object with the reducers of the article model', () => {
@@ -33,10 +36,7 @@ describe('combineModelReducers', () => {
       namespace: 'projectA.articles',
       state: {},
     });
-    const nestedModelReducersSpy = jest.spyOn(nestedArticleModel, 'modelReducers').mockImplementation(
-      // Implements an identity reducer
-      () => (data) => data
-    );
+    const nestedModelReducersSpy = jest.spyOn(nestedArticleModel, 'modelReducers');
     expect(
       combineModelReducers([nestedArticleModel])
     ).toEqual({projectA: combineReducers({articles: nestedModelReducersSpy.mock.results[0].value})});

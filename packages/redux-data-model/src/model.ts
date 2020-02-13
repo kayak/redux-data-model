@@ -176,7 +176,16 @@ export interface ModelOptions {
  * dispatchers, and sagas, based on the model's options that were provided.
  */
 export class Model {
-  private _isLoaded: boolean;
+
+  /**
+   * Whether ModelNotReduxInitializedError and ModelNotSagaInitializedError should be thrown when the model
+   * is used without it being integrated with Redux/Saga yet. Normally you only want to disable initialization
+   * checks in your tests.
+   */
+  static disableInitializationChecks = false;
+
+  private _isReduxInitialized: boolean;
+  private _isSagaInitialized: boolean;
   private readonly _namespace: string;
   private readonly _state: State;
   private readonly _selectors?: SelectorMap;
@@ -209,10 +218,12 @@ export class Model {
    * @param options A model's options.
    * @throws {NamespaceIsntAStringError} When namespace isn't a string.
    * @throws {EmptyNamespaceError} When namespace is an empty string.
+   * @throws {InvalidNamespaceError} When namespace has invalid characters.
    * @throws {DuplicatedActionTypesError} When reducer and/or effect action types are duplicated.
    */
   public constructor(options: ModelOptions) {
-    this._isLoaded = false;
+    this._isReduxInitialized = false;
+    this._isSagaInitialized = false;
     this._namespace = options.namespace;
     this._state = options.state;
     this._selectors = options.selectors || {};
@@ -276,13 +287,22 @@ export class Model {
     const actionCreatorBuilder = actionName => (
       payload: object = {}, __actionInternals: ActionInternalsObject=undefined,
     ) => {
-      if (!this.isLoaded) {
+      if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
         throw {
-          name: 'ModelNotCombinedError',
-          message: `Models need to be combined with combineModelReducers prior to any usage. Now ` +
+          name: 'ModelNotReduxInitializedError',
+          message: `Models need to be initialized with combineModelReducers prior to any usage. Now ` +
           `make this the case for: ${this._namespace}`,
         };
       }
+
+      if (!this.isSagaInitialized && !Model.disableInitializationChecks) {
+        throw {
+          name: 'ModelNotSagaInitializedError',
+          message: `Models need to be initialized with modelRootSaga prior to any usage. Now ` +
+          `make this the case for: ${this._namespace}`,
+        };
+      }
+
       return actionCreator(this.actionType(actionName), payload, __actionInternals);
     };
 
@@ -311,10 +331,10 @@ export class Model {
         return selectorFunc(namespacedState, ...args, allState);
       };
       selectors[selectorName] = createSelector([namespacedSelectorFunc], data => {
-        if (!this.isLoaded) {
+        if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
           throw {
-            name: 'ModelNotCombinedError',
-            message: `Models need to be combined with combineModelReducers prior to any usage. Now ` +
+            name: 'ModelNotReduxInitializedError',
+            message: `Models need to be initialized with combineModelReducers prior to any usage. Now ` +
             `make this the case for: ${this._namespace}`,
           };
         }
@@ -376,12 +396,21 @@ export class Model {
   }
 
   /**
-   * Returns whether the model was loaded on a combineModelReducers call.
+   * Returns whether the model was initialized on a [[combineModelReducers]] call.
    *
    * @returns A boolean.
    */
-  public get isLoaded(): boolean {
-    return this._isLoaded;
+  public get isReduxInitialized(): boolean {
+    return this._isReduxInitialized;
+  }
+
+  /**
+   * Returns whether the model was initialized on a [[modelRootSaga]] call.
+   *
+   * @returns A boolean.
+   */
+  public get isSagaInitialized(): boolean {
+    return this._isSagaInitialized;
   }
 
   /**
@@ -432,7 +461,14 @@ export class Model {
   /**
    * @ignore
    */
-  public markAsLoaded() {
-    this._isLoaded = true;
+  public markAsReduxInitialized() {
+    this._isReduxInitialized = true;
+  }
+
+  /**
+   * @ignore
+   */
+  public markAsSagaInitialized() {
+    this._isSagaInitialized = true;
   }
 }

@@ -36,7 +36,7 @@ export function combineModelReducers(models: Model[]): ReducersMapObject {
   const reducerTree = {};
 
   for (const model of models) {
-    model.markAsLoaded();
+    model.markAsReduxInitialized();
     set(reducerTree, model.namespace, model.modelReducers());
   }
 

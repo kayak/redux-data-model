@@ -14,7 +14,8 @@ import {bindModelActionCreators, BoundActionCreatorsMapObject, Model} from 'redu
  * @returns An object with already bound action creators. The bound action creators return a promise when invoked,
  *          which can be used to track if the action was properly processed (i.e. resolved) or caused an exception
  *          (i.e. rejected).
- * @throws {ModelNotCombinedError} When model was not loaded on a combineModelReducers call.
+ * @throws {ModelNotReduxInitializedError} When model was not initialized on a [[combineModelReducers]] call.
+ * @throws {ModelNotSagaInitializedError} When model was not initialized on a [[modelRootSaga]] call.
  * @category React Hook
  */
 export function useModelActions(model: Model): BoundActionCreatorsMapObject {

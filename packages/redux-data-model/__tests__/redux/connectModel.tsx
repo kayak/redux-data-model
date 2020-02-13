@@ -47,7 +47,8 @@ describe('connectModel', () => {
       },
     };
     counterModel = new Model(modelOptions);
-    counterModel.markAsLoaded();
+    counterModel.markAsReduxInitialized();
+    counterModel.markAsSagaInitialized();
     actionCreators = counterModel.actionCreators();
   });
 
@@ -82,24 +83,43 @@ describe('connectModel', () => {
       expect(wrapper.find('#count').text()).toEqual(String(modelOptions.state.count))
     });
 
-    it('throws when model has not been marked as loaded prior to usage', () => {
-      const modelThatThrows = new Model(modelOptions);
+    describe('when model has not been marked as loaded prior to usage', () => {
+      let modelThatThrows;
+      let ConnectedCounterThatThrows;
 
-      const ConnectedCounterThatThrows = connectModel(
-        [modelThatThrows],
-        (state, _props, selectors) => ({count: selectors.counter.count(state)}),
-      )(Counter);
+      beforeAll(() => {
+        modelThatThrows = new Model(modelOptions);
 
-      expect(() => {
-        mount(
-          <Provider store={store}>
-            <ConnectedCounterThatThrows/>
-          </Provider>
-        );
-      }).toThrow({
-        name: '',
-        message: `Models need to be combined with combineModelReducers prior to any usage. Now make this ` +
-        `the case for: ${modelThatThrows.namespace}`,
+        ConnectedCounterThatThrows = connectModel(
+          [modelThatThrows],
+          (state, _props, selectors) => ({count: selectors.counter.count(state)}),
+        )(Counter);
+      });
+
+      it('throws', () => {
+        expect(() => {
+          mount(
+            <Provider store={store}>
+              <ConnectedCounterThatThrows/>
+            </Provider>
+          );
+        }).toThrow({
+          name: '',
+          message: `Models need to be initialized with combineModelReducers prior to any usage. Now make this ` +
+          `the case for: ${modelThatThrows.namespace}`,
+        });
+      });
+
+      it('does not thrown when Model.disableInitializationChecks is true', () => {
+        Model.disableInitializationChecks = true;
+        expect(() => {
+          mount(
+            <Provider store={store}>
+              <ConnectedCounterThatThrows/>
+            </Provider>
+          );
+        }).not.toThrow();
+        Model.disableInitializationChecks = false;
       });
     });
   });
@@ -191,24 +211,43 @@ describe('connectModel', () => {
       });
     });
 
-    it('throws when model has not been marked as loaded prior to usage', () => {
-      const modelThatThrows = new Model(modelOptions);
+    describe('when model has not been marked as loaded prior to usage', () => {
+      let modelThatThrows;
+      let ConnectedCounterThatThrows;
 
-      const ConnectedCounterThatThrows = connectModel(
-        [modelThatThrows],
-        null,
-      )(CounterThatFiresCallback);
+      beforeAll(() => {
+        modelThatThrows = new Model(modelOptions);
 
-      expect(() => {
-        mount(
-          <Provider store={store}>
-            <ConnectedCounterThatThrows actionCaller={actions => actions.tryToIncrease()} />
-          </Provider>
-        );
-      }).toThrow({
-        name: '',
-        message: `Models need to be combined with combineModelReducers prior to any usage. Now make this ` +
-        `the case for: ${modelThatThrows.namespace}`,
+        ConnectedCounterThatThrows = connectModel(
+          [modelThatThrows],
+          null,
+        )(CounterThatFiresCallback);
+      });
+
+      it('throws', () => {
+        expect(() => {
+          mount(
+            <Provider store={store}>
+              <ConnectedCounterThatThrows actionCaller={actions => actions.tryToIncrease()} />
+            </Provider>
+          );
+        }).toThrow({
+          name: '',
+          message: `Models need to be initialized with combineModelReducers prior to any usage. Now make this ` +
+          `the case for: ${modelThatThrows.namespace}`,
+        });
+      });
+
+      it('does not thrown when Model.disableInitializationChecks is true', () => {
+        Model.disableInitializationChecks = true;
+        expect(() => {
+          mount(
+            <Provider store={store}>
+              <ConnectedCounterThatThrows actionCaller={actions => actions.tryToIncrease()} />
+            </Provider>
+          );
+        }).not.toThrow();
+        Model.disableInitializationChecks = false;
       });
     });
   });

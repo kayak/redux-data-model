@@ -3,6 +3,9 @@ title: Integrating with Redux/Redux Saga
 id: redux-integration
 ---
 
+> WARNING: When the following steps are not properly done, expect to experience ModelNotReduxInitializedError
+> and ModelNotSagaInitializedError during development.
+
 Before you can use a model in your components, you have to hook its model's reducers into redux. The same applies for
 hooking the model's effects into redux-saga. For such do:
 

@@ -36,7 +36,7 @@ Model options are used for initialising a [Model](../classes/model.md) instance.
 
 • **effects**? : *EffectMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:170](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L170)*
+*Defined in [packages/redux-data-model/src/model.ts:170](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L170)*
 
 Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
 an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
@@ -62,7 +62,7 @@ ___
 
 • **namespace**: *string*
 
-*Defined in [packages/redux-data-model/src/model.ts:103](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L103)*
+*Defined in [packages/redux-data-model/src/model.ts:103](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L103)*
 
 The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
 and, as a matter of fact, redux-data-model will enforce it. The namespace is effectively an object's path
@@ -83,7 +83,7 @@ ___
 
 • **reducers**? : *ReducerMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:150](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L150)*
+*Defined in [packages/redux-data-model/src/model.ts:150](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L150)*
 
 Reducers are functions used for synchronously changing the current state of a given model. A reducer will
 be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
@@ -114,7 +114,7 @@ ___
 
 • **selectors**? : *SelectorMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:127](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L127)*
+*Defined in [packages/redux-data-model/src/model.ts:127](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L127)*
 
 Selectors are functions that receive the entire state and returns a piece of it or, perhaps transform it.
 Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow
@@ -136,7 +136,7 @@ ___
 
 • **state**: *State*
 
-*Defined in [packages/redux-data-model/src/model.ts:114](https://github.com/kayak/redux-data-model/blob/f81237f/packages/redux-data-model/src/model.ts#L114)*
+*Defined in [packages/redux-data-model/src/model.ts:114](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L114)*
 
 State represents the initial state of the model's reducer.
 

@@ -12,7 +12,7 @@ describe('connectModelImpl', () => {
       namespace: 'articles',
       state: {},
     });
-    articleModel.markAsLoaded();
+    articleModel.markAsReduxInitialized();
     modelSelectorsSpy = jest.spyOn(articleModel, 'modelSelectors').mockImplementation(
       // Implements an identity selector
       () => (data) => data
@@ -56,7 +56,7 @@ describe('connectModelImpl', () => {
         namespace: 'projectA.articles',
         state: {},
       });
-      articleModel.markAsLoaded();
+      articleModel.markAsReduxInitialized();
       modelSelectorsSpy = jest.spyOn(articleModel, 'modelSelectors').mockImplementation(
         // Implements an identity selector
         () => (data) => data

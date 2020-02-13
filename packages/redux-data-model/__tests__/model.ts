@@ -14,7 +14,6 @@ describe('Model', () => {
       state: {},
     };
     articleModel = new Model(modelOptions);
-    articleModel.markAsLoaded();
   });
 
   describe('constructor', () => {
@@ -97,16 +96,35 @@ describe('Model', () => {
     });
   });
 
-  describe('isLoaded', () => {
+  describe('Model.disableInitializationChecks', () => {
+    it('is false by default', () => {
+      expect(Model.disableInitializationChecks).toEqual(false);
+    });
+  });
+
+  describe('isReduxInitialized', () => {
     it('returns false when the model has not been marked as loaded', () => {
       const unloadedModel = new Model(modelOptions);
-      expect(unloadedModel.isLoaded).toEqual(false);
+      expect(unloadedModel.isReduxInitialized).toEqual(false);
     });
 
     it('returns true when the model is marked as loaded', () => {
       const loadedModel = new Model(modelOptions);
-      loadedModel.markAsLoaded();
-      expect(loadedModel.isLoaded).toEqual(true);
+      loadedModel.markAsReduxInitialized();
+      expect(loadedModel.isReduxInitialized).toEqual(true);
+    });
+  });
+
+  describe('isSagaInitialized', () => {
+    it('returns false when the model has not been marked as loaded', () => {
+      const unloadedModel = new Model(modelOptions);
+      expect(unloadedModel.isSagaInitialized).toEqual(false);
+    });
+
+    it('returns true when the model is marked as loaded', () => {
+      const loadedModel = new Model(modelOptions);
+      loadedModel.markAsSagaInitialized();
+      expect(loadedModel.isSagaInitialized).toEqual(true);
     });
   });
 
@@ -171,7 +189,8 @@ describe('Model', () => {
           loadSomethingReducer: loadSomethingReducerSpy,
         },
       });
-      modelX.markAsLoaded();
+      modelX.markAsReduxInitialized();
+      modelX.markAsSagaInitialized();
       const actionCreators = modelX.actionCreators();
       const payload = {1: 2};
 
@@ -198,7 +217,8 @@ describe('Model', () => {
           loadSomethingEffect: loadSomethingEffectSpy,
         },
       });
-      modelX.markAsLoaded();
+      modelX.markAsReduxInitialized();
+      modelX.markAsSagaInitialized();
       const actionCreators = modelX.actionCreators();
       const payload = {1: 2};
 
@@ -232,7 +252,7 @@ describe('Model', () => {
           selectA: selectASpy,
         },
       });
-      modelX.markAsLoaded();
+      modelX.markAsReduxInitialized();
       const allState = {
         [modelX.namespace]: state,
       };
@@ -265,7 +285,7 @@ describe('Model', () => {
           selectA: selectASpy,
         },
       });
-      modelX.markAsLoaded();
+      modelX.markAsReduxInitialized();
       const allState = {
         projectA: {
           articles: state

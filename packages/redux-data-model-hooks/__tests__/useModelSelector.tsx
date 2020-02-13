@@ -30,7 +30,8 @@ describe('useModelSelector', () => {
       },
     };
     counterModel = new Model(modelOptions);
-    counterModel.markAsLoaded();
+    counterModel.markAsReduxInitialized();
+    counterModel.markAsSagaInitialized();
     store = mockStore({
       [modelOptions.namespace]: modelOptions.state,
     });

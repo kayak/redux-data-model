@@ -47,12 +47,16 @@ export function modelBlockingGenerator(
  * @example
  * sagaMiddleware.run(() => modelRootSaga([modelA, modelB]));
  *
- * @param sagaContainers An array of Model instances.
+ * @param models An array of Model instances.
  * @returns A root saga.
  * @category Redux/Saga Setup
  */
-export function* modelRootSaga(sagaContainers: Model[]): SagaIterator {
-  const sagas: any[] = flatten(sagaContainers.map(sagaContainer => sagaContainer.reduxSagas));
+export function* modelRootSaga(models: Model[]): SagaIterator {
+  const sagas: any[] = flatten(models.map(model => model.reduxSagas));
+
+  for (const model of models) {
+    model.markAsSagaInitialized();
+  }
 
   yield all(
     sagas.map(blockingSaga =>

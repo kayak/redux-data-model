@@ -14,7 +14,7 @@ import {SelectorFunction} from "redux-data-model/src/baseTypes";
  * @param selectorFunc A selector func, which will call one of the selectors in the provided model. The first
  *                     argument must be the entire redux state, followed by the selectors map of the model.
  * @returns Data from model's state.
- * @throws {ModelNotCombinedError} When model was not loaded on a combineModelReducers call.
+ * @throws {ModelNotReduxInitializedError} When model was not initialized on a [[combineModelReducers]] call.
  * @category React Hook
  */
 export function useModelSelector(model: Model, selectorFunc: SelectorFunction): any {

@@ -3,6 +3,11 @@ title: Testing
 id: testing
 ---
 
+> WARNING: Some initialization checks are performed, when a [Model](api/classes/model.md) gets used, so that
+>          we ensure it was properly integrated with Redux/Redux Saga. Those checks are not useful when
+>          running tests and can be disabled by setting 
+>          [Model.disableInitializationChecks](api/classes/model.md#static-disableinitializationchecks) to true.
+
 One of the main design decisions of this library, was to keep it easier to test the business logic in your selectors,
 reducers, and effects, in spite of the abstraction. As a matter of fact, we believe it's actually simpler than
 testing vanilla redux. Given the model below, let's try to test it with [jest](https://jestjs.io/).
@@ -12,7 +17,8 @@ testing vanilla redux. Given the model below, let's try to test it with [jest](h
 ### Example:
 ```javascript
 import {Model} from 'redux-data-model';
-import _ from 'lodash';
+
+Model.disableInitializationChecks = true;
 
 export const counterModel = new Model({
     namespace: 'counter',
@@ -20,7 +26,7 @@ export const counterModel = new Model({
         count: 0,
     },
     selectors: {
-        count: (state) => state.counter.count,
+        count: (state) => state.count,
     },
     reducers: {
         increment(state, {}) {
