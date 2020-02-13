@@ -1,6 +1,6 @@
 {
   "name": "redux-data-model",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Opinionated, Redux abstraction with built-in immutability, normalization, and selectors support.",
   "author": "Lucas Lira Gomes <llira@kayak.com>",
   "homepage": "https://kayak.github.io/redux-data-model/",
