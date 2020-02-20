@@ -7,8 +7,8 @@ Redux-data-model has only a few core concepts.
 
 ## Model
 
-Models are the most basic data structure/abstraction in redux-data-model. They require a set of options to be provided
-when initializing them.
+[Models][model] are the most basic data structure/abstraction in redux-data-model. They require a set of
+[options][model options] to be provided when initializing them.
 
 #### Example:
 ```javascript
@@ -33,13 +33,13 @@ export const userModel = new Model({
         userById: (state, userId) => _.get(state, `data[${userId}]`),
     },
     reducers: {
-        saveUser(state, {data, userId}) {
+        saveUser(state, { data, userId }) {
           state.loading[userId] = false;
           state.data[userId] = data;
         },
     },
     effects: {
-        *fetchUser({userId}, {call, put}, {saveUser}) {
+        *fetchUser({ userId }, { call, put }, { saveUser }) {
             try {
                 const data = yield call(fetchApi, `http://jsonplaceholder.typicode.com/users/${userId}`);
                 yield put(saveUser({data, userId}));
@@ -48,22 +48,33 @@ export const userModel = new Model({
              }
         },
     },
+    blockingEffects: {
+        *fetchUser(actionType, { debounce }, { fetchUser }) {
+            yield debounce(100, actionType, fetchUser);
+        },
+    },
 });
 ```
 
-A model consists of the set of state, selectors, actions, reducers and asynchrounous workflows (i.e. effects) that
-are related to a given entity (e.g.. users). Below you can find a more in depth description on the many options
-that can be used during a model instantiation.
+A [model] consists of the set of state, selectors, reducers and asynchrounous workflows (i.e. effects and blocking
+effects) that are related to a given entity (e.g. users). Below you can find a more in depth description on the
+many [options][model options] that can be used during a model instantiation.
 
 ### Model Options
 
-An object with a few key-value pairs. Being [namespace](api/interfaces/modeloptions.md#namespace) and
-[state](api/interfaces/modeloptions.md#state) mandatory, while
-[selectors](api/interfaces/modeloptions.md#optional-selectors),
-[reducers](api/interfaces/modeloptions.md#optional-reducers),
-[effects](api/interfaces/modeloptions.md#optional-effects) are optional. For more info see
-[this](api/interfaces/modeloptions.md).
+An object with a few key-value pairs. Being [namespace] and [state] mandatory, while
+[selectors], [reducers], [effects], and [blocking effects] are optional. For more info see
+[this][model options].
 
 ### Models's API
 
-For more info see [this](api/classes/model.md).
+For more info see [this][model].
+
+[model]: api/classes/model.md
+[model options]: api/interfaces/modeloptions.md
+[namespace]: api/interfaces/modeloptions.md#namespace
+[state]: api/interfaces/modeloptions.md#state
+[selectors]: api/interfaces/modeloptions.md#optional-selectors
+[reducers]: api/interfaces/modeloptions.md#optional-reducers
+[effects]: api/interfaces/modeloptions.md#optional-effects
+[blocking effects]: api/interfaces/modeloptions.md#optional-blockingeffects

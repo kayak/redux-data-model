@@ -24,6 +24,7 @@ Model options are used for initialising a [Model](../classes/model.md) instance.
 
 ### Properties
 
+* [blockingEffects](modeloptions.md#optional-blockingeffects)
 * [effects](modeloptions.md#optional-effects)
 * [namespace](modeloptions.md#namespace)
 * [reducers](modeloptions.md#optional-reducers)
@@ -32,19 +33,46 @@ Model options are used for initialising a [Model](../classes/model.md) instance.
 
 ## Properties
 
+### `Optional` blockingEffects
+
+• **blockingEffects**? : *BlockingEffectMap*
+
+*Defined in [packages/redux-data-model/src/model.ts:210](https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L210)*
+
+Blocking effects are functions used for defining when/how [normal effects](modeloptions.md#optional-effects) will be
+executed. By default, effects are wrapped by a
+[takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from
+[redux-saga](https://redux-saga.js.org/), which means that every dispatched action will be taken into account.
+That behavior can be overridden though as long as the same name is kept, as used in the effect. If you also
+want to keep the default behaviour, then name the blocking effect differently.
+Alternatives to the [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect are
+[takeLeading](https://redux-saga.js.org/docs/api/#takeleadingpattern-saga-args),
+[takeLatest](https://redux-saga.js.org/docs/api/#takelatestpattern-saga-args),
+[debounce](https://redux-saga.js.org/docs/api/#debouncepattern-saga-args),
+and [throttle](https://redux-saga.js.org/docs/api/#throttlepattern-saga-args) effects. In can fact you can even
+build your own using loops and the [take](https://redux-saga.js.org/docs/api/#takepattern-saga-args) effect.
+
+**`example`** 
+*fetchPostsByUser(actionType, blockingSagaEffects, actionCreators) {
+  yield blockingSagaEffects.debounce(300, actionType, actionCreators.fetchPostsByUser);
+},
+
+___
+
 ### `Optional` effects
 
 • **effects**? : *EffectMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:170](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L170)*
+*Defined in [packages/redux-data-model/src/model.ts:190](https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L190)*
 
 Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
 an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
-by a [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from redux-saga.
-An effect function receives an action, an object with saga's effects, and the action creators as arguments
-respectively. For a list of saga's effects available to you see
+by a [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from
+[redux-saga](https://redux-saga.js.org/). An effect function receives an action, an object with saga's
+effects, and the action creators as arguments respectively. For a list of saga's effects available to you see
 [this](https://redux-saga.js.org/docs/api/#effect-creators).
-The saga effects won't include takeLeading, takeLatest, and takeEvery blocking effects.
+The saga effects won't include take, takeMaybe, takeLeading, takeLatest, takeEvery, debounce, and throttle
+effects. If you intend to use those look for [blocking effects](modeloptions.md#optional-blockingeffects) instead.
 
 **`example`** 
 *fetchPostsByUser({ userId }, sagaEffects, actionCreators) {
@@ -62,7 +90,7 @@ ___
 
 • **namespace**: *string*
 
-*Defined in [packages/redux-data-model/src/model.ts:103](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L103)*
+*Defined in [packages/redux-data-model/src/model.ts:122](https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L122)*
 
 The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
 and, as a matter of fact, redux-data-model will enforce it. The namespace is effectively an object's path
@@ -83,7 +111,7 @@ ___
 
 • **reducers**? : *ReducerMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:150](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L150)*
+*Defined in [packages/redux-data-model/src/model.ts:169](https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L169)*
 
 Reducers are functions used for synchronously changing the current state of a given model. A reducer will
 be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
@@ -114,7 +142,7 @@ ___
 
 • **selectors**? : *SelectorMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:127](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L127)*
+*Defined in [packages/redux-data-model/src/model.ts:146](https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L146)*
 
 Selectors are functions that receive the entire state and returns a piece of it or, perhaps transform it.
 Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow
@@ -136,7 +164,7 @@ ___
 
 • **state**: *State*
 
-*Defined in [packages/redux-data-model/src/model.ts:114](https://github.com/kayak/redux-data-model/blob/2a860dd/packages/redux-data-model/src/model.ts#L114)*
+*Defined in [packages/redux-data-model/src/model.ts:133](https://github.com/kayak/redux-data-model/blob/036e453/packages/redux-data-model/src/model.ts#L133)*
 
 State represents the initial state of the model's reducer.
 

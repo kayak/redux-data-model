@@ -1,5 +1,5 @@
 import produce from 'immer';
-import {get, isString, keys, memoize, size, toPairs, uniq} from 'lodash';
+import {get, isString, keys, memoize, size, toPairs, uniq, values} from 'lodash';
 import {AnyAction, Reducer} from 'redux';
 import {Saga} from '@redux-saga/core';
 import {
@@ -8,7 +8,6 @@ import {
   apply,
   call,
   cancel,
-  cancelled,
   cps,
   debounce,
   delay,
@@ -26,6 +25,8 @@ import {
   take,
   takeEvery as blockingEffectTakeEvery,
   takeMaybe,
+  takeLatest,
+  takeLeading,
   throttle,
 } from 'redux-saga/effects';
 import {createSelector} from 'reselect';
@@ -34,6 +35,7 @@ import {
   ActionCreatorsMapObject,
   ActionWithInternals,
   EffectMap,
+  BlockingEffectMap,
   EffectModelMap,
   ReducerMap,
   SelectorMap,
@@ -51,9 +53,7 @@ export const sagaEffects = {
   apply,
   call,
   cancel,
-  cancelled,
   cps,
-  debounce,
   delay,
   flush,
   fork,
@@ -66,9 +66,28 @@ export const sagaEffects = {
   select,
   setContext,
   spawn,
+};
+
+/**
+ * @ignore
+ */
+export const blockingSagaEffects = {
+  blockingEffectTakeEvery,
+  takeLeading,
+  takeLatest,
+  debounce,
+  throttle,
   take,
   takeMaybe,
-  throttle,
+  cancel,
+  fork,
+  spawn,
+  apply,
+  call,
+  all,
+  delay,
+  race,
+  join,
 };
 
 /**
@@ -151,11 +170,12 @@ export interface ModelOptions {
   /**
    * Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
    * an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
-   * by a [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from redux-saga.
-   * An effect function receives an action, an object with saga's effects, and the action creators as arguments
-   * respectively. For a list of saga's effects available to you see
+   * by a [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from
+   * [redux-saga](https://redux-saga.js.org/). An effect function receives an action, an object with saga's
+   * effects, and the action creators as arguments respectively. For a list of saga's effects available to you see
    * [this](https://redux-saga.js.org/docs/api/#effect-creators).
-   * The saga effects won't include takeLeading, takeLatest, and takeEvery blocking effects.
+   * The saga effects won't include take, takeMaybe, takeLeading, takeLatest, takeEvery, debounce, and throttle
+   * effects. If you intend to use those look for [[ModelOptions.blockingEffects|blocking effects]] instead.
    *
    * @example
    * *fetchPostsByUser({ userId }, sagaEffects, actionCreators) {
@@ -168,6 +188,26 @@ export interface ModelOptions {
    * },
    */
   effects?: EffectMap;
+  /**
+   * Blocking effects are functions used for defining when/how [[ModelOptions.effects|normal effects]] will be
+   * executed. By default, effects are wrapped by a
+   * [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from
+   * [redux-saga](https://redux-saga.js.org/), which means that every dispatched action will be taken into account.
+   * That behavior can be overridden though as long as the same name is kept, as used in the effect. If you also
+   * want to keep the default behaviour, then name the blocking effect differently.
+   * Alternatives to the [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect are
+   * [takeLeading](https://redux-saga.js.org/docs/api/#takeleadingpattern-saga-args),
+   * [takeLatest](https://redux-saga.js.org/docs/api/#takelatestpattern-saga-args),
+   * [debounce](https://redux-saga.js.org/docs/api/#debouncepattern-saga-args),
+   * and [throttle](https://redux-saga.js.org/docs/api/#throttlepattern-saga-args) effects. In can fact you can even
+   * build your own using loops and the [take](https://redux-saga.js.org/docs/api/#takepattern-saga-args) effect.
+   *
+   * @example
+   * *fetchPostsByUser(actionType, blockingSagaEffects, modelEffects) {
+   *   yield blockingSagaEffects.debounce(300, actionType, modelEffects.fetchPostsByUser);
+   * },
+   */
+  blockingEffects?: BlockingEffectMap;
 }
 
 /**
@@ -191,6 +231,7 @@ export class Model {
   private readonly _selectors?: SelectorMap;
   private readonly _reducers?: ReducerMap;
   private readonly _effects?: EffectMap;
+  private readonly _blockingEffects?: BlockingEffectMap;
 
   /**
    * Creates a model instance.
@@ -213,6 +254,7 @@ export class Model {
    *      },
    *   },
    *  // effects: {...}
+   *  // blockingEffects: {...}
    * });
    *
    * @param options A model's options.
@@ -229,6 +271,7 @@ export class Model {
     this._selectors = options.selectors || {};
     this._reducers = options.reducers || {};
     this._effects = options.effects || {};
+    this._blockingEffects = options.blockingEffects || {};
 
     const actionTypes = [].concat(...keys(this._reducers)).concat(...keys(this._effects));
 
@@ -275,11 +318,13 @@ export class Model {
   }
 
   /**
-   * Returns an object with action creators, one for each of the declared reducers and effects. Only useful for
-   * testing purposes, read the docs section on testing for more info. Also supports the inner workings of this
-   * class.
+   * Returns an object with action creators, one for each of the declared [[ModelOptions.reducers|reducers]],
+   * [[ModelOptions.effects|effects]] and [[ModelOptions.blockingEffects|blocking effects]].
+   * Only useful for testing purposes, read the docs section on testing for more info, or when you need to dispatch
+   * actions from a different model's
+   * [[ModelOptions.effects|effects]]/[[ModelOptions.blockingEffects|blocking effects]].
    *
-   * @returns an action creator's map object.
+   * @returns An action creator's map object.
    */
   public actionCreators(): ActionCreatorsMapObject {
     const actions = {};
@@ -309,11 +354,19 @@ export class Model {
     for (const reducerName in this._reducers) {
       actions[reducerName] = actionCreatorBuilder(reducerName);
       actions[reducerName].isEffect = false;
+      actions[reducerName].type = this.actionType(reducerName);
     }
 
     for (const effectName in this._effects) {
       actions[effectName] = actionCreatorBuilder(effectName);
       actions[effectName].isEffect = true;
+      actions[effectName].type = this.actionType(effectName);
+    }
+
+    for (const effectName in this._blockingEffects) {
+      actions[effectName] = actionCreatorBuilder(effectName);
+      actions[effectName].isEffect = true;
+      actions[effectName].type = this.actionType(effectName);
     }
 
     return actions;
@@ -368,28 +421,43 @@ export class Model {
    */
   public modelEffects(): EffectModelMap {
     const effects = {};
+    const effectSagas = {};
     const actionCreators = this.actionCreators();
 
     for (const [effectName, effectFunc] of toPairs(this._effects)) {
-      effects[effectName] = (payload: object = {}) => effectFunc(payload, sagaEffects, actionCreators);
+      const actionType = this.actionType(effectName);
+      const effectSaga = modelBlockingGenerator(
+        function *(payload: object = {}) { yield* effectFunc(payload, sagaEffects, actionCreators); }
+      );
+
+      effectSagas[effectName] = effectSaga;
+      effectSagas[effectName].type = actionType;
+
+      effects[effectName] = function* () { yield blockingEffectTakeEvery(actionType, effectSaga); };
+    }
+
+    for (const [effectName, blockingEffectFunc] of toPairs(this._blockingEffects)) {
+      const actionType = this.actionType(effectName);
+      effects[effectName] = function* () { yield* blockingEffectFunc(actionType, blockingSagaEffects, effectSagas); };
     }
 
     return effects;
   }
 
   /**
-   * Returns an array of sagas, one for each of the declared effects. They will default to taking every action and
-   * calling its respective effect.
+   * Returns an array of sagas, one for each of the declared
+   * [[ModelOptions.effects|normal effects]]/[[ModelOptions.blockingEffects|blocking effects]].
+   * [[ModelOptions.effects|Normal effects]] will default to taking every action and calling its respective effect,
+   * unless overridden by a [[ModelOptions.blockingEffects|blocking effect]].
    *
-   * @throws {NonCompatibleActionError} When bindModelActionCreators was not used to bind the action creators.
+   * @throws {NonCompatibleActionError} When [[bindModelActionCreators]] was not used to bind the action creators.
    * @returns An array of sagas.
    */
   public get reduxSagas(): Saga[] {
     const reduxSagas = [];
 
-    for (const [effectName, effectFunc] of toPairs(this.modelEffects())) {
-      const actionType = this.actionType(effectName);
-      reduxSagas.push(modelBlockingGenerator(blockingEffectTakeEvery, actionType, effectFunc));
+    for (const modelEffectFunc of values(this.modelEffects())) {
+      reduxSagas.push(modelEffectFunc);
     }
 
     return reduxSagas;
@@ -414,7 +482,7 @@ export class Model {
   }
 
   /**
-   * Returns the namespace.
+   * Returns the [[ModelOptions.namespace|namespace]] as provided in the [[Model.constructor|constructor]].
    *
    * @returns A string.
    */
@@ -423,7 +491,7 @@ export class Model {
   }
 
   /**
-   * Returns the initial state.
+   * Returns the [[ModelOptions.state|initial state]] as provided in the [[Model.constructor|constructor]].
    *
    * @returns An initial state.
    */
@@ -432,7 +500,7 @@ export class Model {
   }
 
   /**
-   * Returns the selectors.
+   * Returns the [[ModelOptions.selectors|selectors]] as provided in the [[Model.constructor|constructor]].
    *
    * @returns A selectors map.
    */
@@ -441,7 +509,7 @@ export class Model {
   }
 
   /**
-   * Returns the reducers.
+   * Returns the [[ModelOptions.reducers|reducers]] as provided in the [[Model.constructor|constructor]].
    *
    * @returns A reducer function.
    */
@@ -450,12 +518,21 @@ export class Model {
   }
 
   /**
-   * Returns the effects.
+   * Returns the [[ModelOptions.effects|effects]] as provided in the [[Model.constructor|constructor]].
    *
    * @returns An effect map.
    */
   public get effects(): EffectMap {
     return this._effects;
+  }
+
+  /**
+   * Returns the [[ModelOptions.blockingEffects|blocking effects]] as provided in the [[Model.constructor|constructor]].
+   *
+   * @returns A blocking effect map.
+   */
+  public get blockingEffects(): BlockingEffectMap {
+    return this._blockingEffects;
   }
 
   /**

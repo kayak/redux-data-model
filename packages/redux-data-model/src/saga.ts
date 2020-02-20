@@ -8,36 +8,32 @@ import {ActionWithInternals, EffectModelFunction} from './baseTypes';
  * @ignore
  */
 export function modelBlockingGenerator(
-  sagaBlockingEffect, actionType: string, effectFunc: EffectModelFunction,
+  effectFunc: EffectModelFunction,
 ) {
-  return function *() {
-    yield sagaBlockingEffect(
-      actionType,
-      function*(action: ActionWithInternals) {
-        const isNonCompatibleAction = isNil(
-          get(action, '__actionInternals.resolve', undefined) ||
-          get(action, '__actionInternals.reject', undefined)
-        );
-
-        if (isNonCompatibleAction) {
-          throw {
-            name: 'NonCompatibleActionError',
-            message: `The provided action lacks the internals for being redux-data-model-able. Be sure to ` +
-              `use bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
-              `is: ${JSON.stringify(action)}`,
-          };
-        }
-
-        const {__actionInternals: {resolve, reject}, payload} = action;
-        try {
-          const returnValue = yield* effectFunc(payload);
-          resolve(returnValue);
-        } catch(error) {
-          reject(error);
-        }
-      }
+  return function* (action: ActionWithInternals) {
+    const isNonCompatibleAction = isNil(
+      get(action, '__actionInternals.resolve', undefined) ||
+      get(action, '__actionInternals.reject', undefined)
     );
-  }
+
+    if (isNonCompatibleAction) {
+      throw {
+        name: 'NonCompatibleActionError',
+        message: `The provided action lacks the internals for being redux-data-model-able. Be sure to ` +
+          `use bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
+          `is: ${JSON.stringify(action)}`,
+      };
+    }
+
+    const {__actionInternals: {resolve, reject}, payload} = action;
+
+    try {
+      const returnValue = yield* effectFunc(payload);
+      resolve(returnValue);
+    } catch (error) {
+      reject(error);
+    }
+  };
 }
 
 /**

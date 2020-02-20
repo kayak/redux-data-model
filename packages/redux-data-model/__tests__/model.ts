@@ -170,6 +170,18 @@ describe('Model', () => {
     });
   });
 
+  describe('blockingEffects', () => {
+    it('returns an empty object when none is available', () => {
+      expect(articleModel.blockingEffects).toEqual({});
+    });
+
+    it('returns the effects', () => {
+      const modelOptionsWithBlockingEffects = {...modelOptions, blockingEffects: {}};
+      const model = new Model(modelOptionsWithBlockingEffects);
+      expect(model.blockingEffects).toEqual(modelOptionsWithBlockingEffects.blockingEffects);
+    });
+  });
+
   it('actionType returns the actionName with the namespace', () => {
     expect(articleModel.actionType('ola')).toEqual(`${articleModel.namespace}.ola`);
   });
@@ -200,6 +212,14 @@ describe('Model', () => {
         );
       });
 
+      it('provided reducer has isEffect as false', () => {
+        expect(actionCreators.loadSomethingReducer.isEffect).toEqual(false);
+      });
+
+      it('provided effect has type as action type', () => {
+        expect(actionCreators.loadSomethingReducer.type).toEqual(modelX.actionType('loadSomethingReducer'));
+      });
+
       it('returns result of actionCreator func', () => {
         expect(actionCreators.loadSomethingReducer(payload)).toEqual(
           actionCreator(modelX.actionType('loadSomethingReducer'), payload)
@@ -226,6 +246,54 @@ describe('Model', () => {
         expect(actionCreators).toEqual(
           {loadSomethingEffect: expect.anything()}
         );
+      });
+
+      it('provided effect has isEffect as true', () => {
+        expect(actionCreators.loadSomethingEffect.isEffect).toEqual(true);
+      });
+
+      it('provided effect has type as action type', () => {
+        expect(actionCreators.loadSomethingEffect.type).toEqual(modelX.actionType('loadSomethingEffect'));
+      });
+
+      it('returns result of actionCreator func', () => {
+        expect(actionCreators.loadSomethingEffect(payload)).toEqual(
+          actionCreator(modelX.actionType('loadSomethingEffect'), payload)
+        );
+      });
+    });
+
+    describe('when blocking effects are present', () => {
+      const loadSomethingEffectSpy = jest.fn();
+      const loadSomethingBlockingEffectSpy = jest.fn();
+      const modelX = new Model({
+        namespace: 'articles',
+        state: {},
+        effects: {
+          // @ts-ignore
+          loadSomethingEffect: loadSomethingEffectSpy,
+        },
+        blockingEffects: {
+          loadSomethingEffect: loadSomethingBlockingEffectSpy,
+        }
+      });
+      modelX.markAsReduxInitialized();
+      modelX.markAsSagaInitialized();
+      const actionCreators = modelX.actionCreators();
+      const payload = {1: 2};
+
+      it('returns an entry for the provided effect', () => {
+        expect(actionCreators).toEqual(
+          {loadSomethingEffect: expect.anything()}
+        );
+      });
+
+      it('provided effect has isEffect as true', () => {
+        expect(actionCreators.loadSomethingEffect.isEffect).toEqual(true);
+      });
+
+      it('provided effect has type as action type', () => {
+        expect(actionCreators.loadSomethingEffect.type).toEqual(modelX.actionType('loadSomethingEffect'));
       });
 
       it('returns result of actionCreator func', () => {
@@ -355,53 +423,7 @@ describe('Model', () => {
     });
 
     describe('when effects are present', () => {
-      let state;
-      let effectASpy;
-      let modelX;
-      let actionCreatorsSpy;
-      let effects;
-
-      beforeEach(() => {
-        effectASpy = jest.fn();
-        state = {};
-        modelX = new Model({
-          namespace: 'articles',
-          state,
-          effects: {
-            // @ts-ignore
-            effectA: effectASpy,
-          },
-        });
-        actionCreatorsSpy = jest.spyOn(modelX, 'actionCreators');
-        effects = modelX.modelEffects();
-      });
-
-      it('returns an entry for the provided effect', () => {
-        expect(effects).toEqual(
-          {effectA: expect.anything()}
-        );
-      });
-
-      it('calls effect func when selector entry is called', () => {
-        effects.effectA({userId: 1});
-        expect(effectASpy).toHaveBeenCalledWith(
-          {userId: 1}, sagaEffects, actionCreatorsSpy.mock.results[0].value,
-        );
-      });
-
-      it('returns result of effect func', () => {
-        expect(effects.effectA({userId: 1})).toEqual(effectASpy.mock.results[0].value);
-      });
-    });
-  });
-
-  describe('reduxSagas', () => {
-    it('returns an empty list when no effects exists', () => {
-      expect(articleModel.reduxSagas).toEqual([]);
-    });
-
-    describe('when effects are present', () => {
-      let gen;
+      let modelEffects;
       const state = {};
       let effectASpy;
       let modelX;
@@ -409,6 +431,7 @@ describe('Model', () => {
       const payload = {userId: 1};
       let __actionInternals;
       let action;
+      let gen;
 
       beforeEach(() => {
         effectASpy = jest.fn();
@@ -423,7 +446,14 @@ describe('Model', () => {
         __actionInternals = {resolve: jest.fn(), reject: jest.fn()};
         action = {type: 'whatever', payload, __actionInternals};
         actionCreatorsSpy = jest.spyOn(modelX, 'actionCreators');
-        gen = modelX.reduxSagas[0]();
+        modelEffects = modelX.modelEffects();
+        gen = modelEffects.effectA();
+      });
+
+      it('returns an entry for the provided effect', () => {
+        expect(modelEffects).toEqual(
+          {effectA: expect.anything()}
+        );
       });
 
       it('uses takeEvery saga effect', () => {
@@ -467,6 +497,129 @@ describe('Model', () => {
         });
         gen.next().value.payload.args[1](action).next();
         expect(__actionInternals.reject).toHaveBeenCalledWith(error);
+      });
+    });
+
+    describe('when blocking effects are present', () => {
+      let modelEffects;
+      const state = {};
+      let effectASpy;
+      let modelX;
+      let actionCreatorsSpy;
+      const payload = {userId: 1};
+      let __actionInternals;
+      let action;
+      let gen;
+
+      beforeEach(() => {
+        effectASpy = jest.fn();
+        modelX = new Model({
+          namespace: 'articles',
+          state,
+          effects: {
+            // @ts-ignore
+            effectA: function*(...args) {effectASpy(...args)},
+          },
+          blockingEffects: {
+            // @ts-ignore
+            effectA: function* (actionType, sagaBlockingEffects, {effectA}) {
+              yield sagaBlockingEffects.takeLeading(actionType, effectA);
+            },
+          },
+        });
+        __actionInternals = {resolve: jest.fn(), reject: jest.fn()};
+        action = {type: 'whatever', payload, __actionInternals};
+        actionCreatorsSpy = jest.spyOn(modelX, 'actionCreators');
+        modelEffects = modelX.modelEffects();
+        gen = modelEffects.effectA();
+      });
+
+      it('returns an entry for the provided effect', () => {
+        expect(modelEffects).toEqual(
+          {effectA: expect.anything()}
+        );
+      });
+
+     it('uses takeLeading saga effect', () => {
+        expect(gen.next().value).toEqual(
+          allSagaEffects.takeLeading(expect.anything(), expect.anything()),
+        );
+      });
+
+      it('passes the right arguments to the effectASpy effect', () => {
+        expect(gen.next().value.payload.args).toEqual(
+          [modelX.actionType('effectA'), expect.anything()],
+        );
+      });
+
+      it('calls effectA with the right arguments', () => {
+        gen.next().value.payload.args[1](action).next();
+        expect(effectASpy).toHaveBeenCalledWith(
+          payload, sagaEffects, actionCreatorsSpy.mock.results[0].value,
+        );
+      });
+
+      it('throws NonCompatibleActionError when action is not compatible', () => {
+        const nonCompatibleAction = {type: 'whatever', payload: {}};
+        expect(() => gen.next().value.payload.args[1](nonCompatibleAction).next()).toThrow({
+          name: 'NonCompatibleActionError',
+          message: `The provided action lacks the internals for being redux-data-model-able. Be sure to use ` +
+            `bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
+            `is: ${JSON.stringify(nonCompatibleAction)}`,
+        });
+      });
+
+      it('calls resolve when no exception occurred', () => {
+        gen.next().value.payload.args[1](action).next();
+        expect(__actionInternals.resolve).toHaveBeenCalledWith(undefined);
+      });
+
+      it('calls reject when an exception occurs', () => {
+        const error = new Error();
+        effectASpy.mockImplementation(() => {
+          throw error;
+        });
+        gen.next().value.payload.args[1](action).next();
+        expect(__actionInternals.reject).toHaveBeenCalledWith(error);
+      });
+    });
+  });
+
+  describe('reduxSagas', () => {
+    it('returns an empty list when no effects exists', () => {
+      expect(articleModel.reduxSagas).toEqual([]);
+    });
+
+    describe('when model effects are present', () => {
+      let state;
+      let effectASpy;
+      let modelX;
+      let modelEffectsSpy;
+      let reduxSagas;
+
+      beforeEach(() => {
+        effectASpy = jest.fn();
+        state = {};
+        modelX = new Model({
+          namespace: 'articles',
+          state,
+          effects: {
+            // @ts-ignore
+            effectA: effectASpy,
+          },
+        });
+        modelEffectsSpy = jest.spyOn(modelX, 'modelEffects');
+        reduxSagas = modelX.reduxSagas;
+      });
+
+      it('calls modelEffects', () => {
+        expect(modelEffectsSpy).toHaveBeenCalledWith();
+      });
+
+      it('returns a list with each of the effects in modelEffects method', () => {
+        expect(reduxSagas).toEqual(
+          Object.values(modelX.modelEffects())
+        );
       });
     });
   });

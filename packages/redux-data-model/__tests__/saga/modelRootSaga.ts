@@ -14,7 +14,7 @@ describe('modelRootSaga', () => {
       effects: {
         effectA: jest.fn(),
         effectB: jest.fn(),
-      }
+      },
     });
     reduxSagasSpy = jest.spyOn(articleModel, 'reduxSagas', 'get').mockImplementation(
       () => [jest.fn(), jest.fn()]
