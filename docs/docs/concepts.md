@@ -23,19 +23,28 @@ export const userModel = new Model({
     // Mandatory options
     namespace: 'users',
     state: {
-        loading: {},
-        data: {},
+        userIds: [],
+        loadingById: {},
+        userById: {},
     },
 
     // Optional options
     selectors: {
-        loadingByUser: (state, userId) => _.get(state, `loading[${userId}]`, true),
-        userById: (state, userId) => _.get(state, `data[${userId}]`),
+        // Non memoized selectors
+        loadingById: (state, userId) => _.get(state, `loadingById[${userId}]`, true),
+        userById: (state, userId) => _.get(state, `userById[${userId}]`),
+        // Memoized selectors
+        users: [
+          state => state.userIds,
+          state => state.userById,
+          (userIds, userById) => userIds.map(id => userById[id]),
+        ],
     },
     reducers: {
         saveUser(state, { data, userId }) {
-          state.loading[userId] = false;
-          state.data[userId] = data;
+          state.userIds.append(userId);
+          state.loadingById[userId] = false;
+          state.userById[userId] = data;
         },
     },
     effects: {

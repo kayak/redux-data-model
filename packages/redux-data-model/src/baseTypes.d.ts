@@ -27,7 +27,7 @@ type EffectFunction = (actionData: object, sagaEffects: any, actionCreators: Act
 type BlockingEffectFunction = (actionType: string, blockingSagaEffects: any, modelEffects: EffectMapObject) => any;
 
 type State = any;
-type SelectorMap = Record<string, SelectorFunction>;
+type SelectorMap = Record<string, SelectorFunction | Array<SelectorFunction>>;
 type ReducerMap = Record<string, ReducerFunction>;
 type EffectMap = Record<string, EffectFunction>;
 type BlockingEffectMap = Record<string, BlockingEffectFunction>;

@@ -10,7 +10,7 @@ Opinionated, Redux abstraction with built-in immutability, async and more. Heavi
 * Easy to use and learn. Only a few public interfaces (i.e. combineModelReducers, modelRootSaga, Model, connectModel or equivalent hooks).
 * Boilerplate reduction (i.e. actions, dispatchers, reducers).
 * Immutability with normal JavaScript objects and arrays. No new APIs to learn!
-* Async, typescript, memoised selectors, and hooks support.
+* Async, typescript, memoized selectors, and hooks support.
 * Tiny footprint (i.e. ~6KB).
 
 ## Installation

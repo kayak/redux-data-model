@@ -310,21 +310,29 @@ describe('Model', () => {
     });
 
     describe('when selectors are present', () => {
-      const selectASpy = jest.fn();
-      const state = {};
-      const modelX = new Model({
-        namespace: 'articles',
-        state,
-        selectors: {
-          // @ts-ignore
-          selectA: selectASpy,
-        },
+      let selectASpy;
+      let state;
+      let modelX;
+      let allState;
+      let selectors;
+
+      beforeEach(() => {
+        selectASpy = jest.fn();
+        state = {};
+        modelX = new Model({
+          namespace: 'articles',
+          state,
+          selectors: {
+            // @ts-ignore
+            selectA: selectASpy,
+          },
+        });
+        modelX.markAsReduxInitialized();
+        allState = {
+          [modelX.namespace]: state,
+        };
+        selectors = modelX.modelSelectors();
       });
-      modelX.markAsReduxInitialized();
-      const allState = {
-        [modelX.namespace]: state,
-      };
-      const selectors = modelX.modelSelectors();
 
       it('returns an entry for the provided selector', () => {
         expect(selectors).toEqual(
@@ -342,24 +350,87 @@ describe('Model', () => {
       });
     });
 
-    describe('when selectors are present in a nested namespace', () => {
-      const selectASpy = jest.fn();
-      const state = {};
-      const modelX = new Model({
-        namespace: 'projectA.articles',
-        state,
-        selectors: {
-          // @ts-ignore
-          selectA: selectASpy,
-        },
+    describe('when memoized selectors are present', () => {
+      let selectorASpy;
+      let selectorBSpy;
+      let resultSpy;
+      let state;
+      let modelX;
+      let allState;
+      let selectors;
+
+      beforeEach(() => {
+        selectorASpy = jest.fn();
+        selectorBSpy = jest.fn();
+        resultSpy = jest.fn();
+        state = {};
+        modelX = new Model({
+          namespace: 'articles',
+          state,
+          selectors: {
+            // @ts-ignore
+            selectA: [selectorASpy, selectorBSpy, resultSpy],
+          },
+        });
+        modelX.markAsReduxInitialized();
+        allState = {
+          [modelX.namespace]: state,
+        };
+        selectors = modelX.modelSelectors();
       });
-      modelX.markAsReduxInitialized();
-      const allState = {
-        projectA: {
-          articles: state
-        },
-      };
-      const selectors = modelX.modelSelectors();
+
+      it('returns an entry for the provided selector', () => {
+        expect(selectors).toEqual(
+          {selectA: expect.anything()}
+        );
+      });
+
+      it('calls selectorA func when selector entry is called', () => {
+        selectors.selectA(allState, 1);
+        expect(selectorASpy).toHaveBeenCalledWith(state, 1, allState);
+      });
+
+      it('calls selectorB func when selector entry is called', () => {
+        selectors.selectA(allState, 1);
+        expect(selectorBSpy).toHaveBeenCalledWith(state, 1, allState);
+      });
+
+      it('calls result func when selector entry is called', () => {
+        selectors.selectA(allState, 1);
+        expect(resultSpy).toHaveBeenCalledWith(selectorASpy.mock.results[0].value, selectorBSpy.mock.results[0].value);
+      });
+
+      it('returns result of the result func', () => {
+        expect(selectors.selectA(allState)).toEqual(resultSpy.mock.results[0].value);
+      });
+    });
+
+    describe('when selectors are present in a nested namespace', () => {
+      let selectASpy;
+      let state;
+      let modelX;
+      let allState;
+      let selectors;
+
+      beforeEach(() => {
+        selectASpy = jest.fn();
+        state = {};
+        modelX = new Model({
+          namespace: 'projectA.articles',
+          state,
+          selectors: {
+            // @ts-ignore
+            selectA: selectASpy,
+          },
+        });
+        modelX.markAsReduxInitialized();
+        allState = {
+          projectA: {
+            articles: state
+          },
+        };
+        selectors = modelX.modelSelectors();
+      });
 
       it('returns an entry for the provided selector', () => {
         expect(selectors).toEqual(

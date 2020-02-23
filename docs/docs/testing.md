@@ -83,6 +83,17 @@ it('initial state is properly set', () => {
 });
 ```
 
+### Testing the [selectors]:
+
+```javascript
+const selectors = counterModel.selectors;
+
+it('count selector returns the count', () => {
+  const state = {...counterModel.state};
+  expect(selectors.count(state)).toEqual(state.count);
+});
+```
+
 ### Testing the [reducers]:
 
 ```javascript

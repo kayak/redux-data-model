@@ -1,5 +1,5 @@
 import produce from 'immer';
-import {get, isString, keys, memoize, size, toPairs, uniq, values} from 'lodash';
+import {get, isString, keys, memoize, size, toPairs, uniq, values, isArray, identity} from 'lodash';
 import {AnyAction, Reducer} from 'redux';
 import {Saga} from '@redux-saga/core';
 import {
@@ -40,7 +40,7 @@ import {
   ReducerMap,
   SelectorMap,
   SelectorModelMap,
-  State
+  State, SelectorFunction
 } from './baseTypes';
 import {actionCreator, ActionInternalsObject} from "./utils";
 
@@ -126,22 +126,34 @@ export interface ModelOptions {
    * @example state: 0
    * @example state: []
    * @example state: {
-   *     isLoading: {},
-   *     data: {},
+   *   userIds: [],
+   *   loadingById: {},
+   *   userById: {},
    * }
    */
   state: State;
   /**
-   * Selectors are functions that receive the entire state and returns a piece of it or, perhaps transform it.
-   * Selectors will memoize the returned data, in order to avoid any re-renders caused by shallow
-   * comparing its variables. The first argument of a selector function is the namespaced state, following
-   * by any other positional arguments passed in an eventual call within a mapStateToProps. Last but not least,
-   * the last argument is the entire redux state.
+   * Selectors are functions that receive the entire state and returns a piece of it. The first argument
+   * of a selector function is the namespaced state, following by any other positional arguments passed
+   * in an eventual call within a mapStateToProps. Last but not least, the last argument is the entire
+   * redux state, which might be necessary when normalizing data. By default selectors won't memoize the
+   * returned data, which can be useful to avoid any re-renders caused by shallow comparing its variables.
+   * Although that's possible, a different syntax is needed. For such, a selector should be specified as an
+   * array of N input selector functions, being N a positive number higher than one, and a result function,
+   * which can apply more expensive transformations to any of the selectors data it has access to. This will
+   * work in a way that the result function will be memoized, as long as a shallow comparison of the return
+   * values of the input selectors evaluates to true. Redux-data-model uses
+   * [reselect](https://github.com/reduxjs/reselect) under the hood for that.
    *
    * @example count: (state) => state,
-   * @example userIds: (state, allState) => allState.modelNamespace.data.map(user => user.id),
-   * @example user: (state, userId) => state.data[userId],
-   * @example isLoading: (state, userId, allState) => allState.modelNamespace.isLoading[userId],
+   * @example userIds: (state, allState) => allState.modelNamespace.userIds,
+   * @example userById: (state, userId) => state.userById[userId],
+   * @example isLoading: (state, userId, allState) => allState.modelNamespace.loadingById[userId],
+   * @example users: [
+   *    state => state.userIds,
+   *    state => state.userById,
+   *    (userIds, userById) => userIds.map(id => userById[id])
+   *  ],
    */
   selectors?: SelectorMap;
   /**
@@ -161,9 +173,10 @@ export interface ModelOptions {
    *   state.count -= 1;
    * }
    * @example
-   * saveData(state, { data, userId }) {
-   *   state.isLoading[userId] = false;
-   *   state.data[userId] = data;
+   * saveUser(state, { data, userId }) {
+   *   state.userIds.append(userId);
+   *   state.loadingById[userId] = false;
+   *   state.userById[userId] = data;
    * }
    */
   reducers?: ReducerMap;
@@ -378,22 +391,36 @@ export class Model {
   public modelSelectors(): SelectorModelMap {
     const selectors = {};
 
-    for (const [selectorName, selectorFunc] of toPairs(this._selectors)) {
-      const namespacedSelectorFunc = (allState, ...args) => {
-        const namespacedState = get(allState, this._namespace);
-        return selectorFunc(namespacedState, ...args, allState);
-      };
-      selectors[selectorName] = createSelector([namespacedSelectorFunc], data => {
-        if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
-          throw {
-            name: 'ModelNotReduxInitializedError',
-            message: `Models need to be initialized with combineModelReducers prior to any usage. Now ` +
-            `make this the case for: ${this._namespace}`,
-          };
-        }
+    const namespacedSelectorFuncCreator = inputFunc => (allState, ...args) => {
+      const namespacedState = get(allState, this._namespace);
+      return inputFunc(namespacedState, ...args, allState);
+    };
 
-        return data;
-      });
+    const resultFuncCreator = resultFunc => (...args) => {
+      if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
+        throw {
+          name: 'ModelNotReduxInitializedError',
+          message: `Models need to be initialized with combineModelReducers prior to any usage. Now ` +
+          `make this the case for: ${this._namespace}`,
+        };
+      }
+
+      return resultFunc(...args);
+    };
+
+    for (const [selectorName, selectorFunc] of toPairs(this._selectors)) {
+      let inputSelectorFuncs;
+      let resultFunc;
+
+      if (isArray<SelectorFunction>(selectorFunc)) {
+        inputSelectorFuncs = selectorFunc.slice(0, -1).map(namespacedSelectorFuncCreator);
+        resultFunc = selectorFunc.slice(-1).map(resultFuncCreator)[0];
+      } else {
+        inputSelectorFuncs = [namespacedSelectorFuncCreator(selectorFunc)];
+        resultFunc = resultFuncCreator(identity);
+      }
+
+      selectors[selectorName] = createSelector(inputSelectorFuncs, resultFunc);
     }
 
     return selectors;
