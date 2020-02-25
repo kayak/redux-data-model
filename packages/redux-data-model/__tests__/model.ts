@@ -182,8 +182,27 @@ describe('Model', () => {
     });
   });
 
-  it('actionType returns the actionName with the namespace', () => {
-    expect(articleModel.actionType('ola')).toEqual(`${articleModel.namespace}.ola`);
+  describe('actionType', () => {
+    it('returns the actionName with the namespace', () => {
+      expect(articleModel.actionType('ola')).toEqual(`@@${articleModel.namespace}.ola@@`);
+    });
+
+    describe('returns the actionName alone when it already matches the action type regex', () => {
+      it('and has a normal namespace', () => {
+        const actionName = '@@someOtherModel.ola@@';
+        expect(articleModel.actionType(actionName)).toEqual(actionName);
+      });
+
+      it('and has a nested namespace with one level', () => {
+        const actionName = '@@projectA.someOtherModel.ola@@';
+        expect(articleModel.actionType(actionName)).toEqual(actionName);
+      });
+
+      it('and has a nested namespace with two levels or more', () => {
+        const actionName = '@@projectA.sectionA.someOtherModel.ola@@';
+        expect(articleModel.actionType(actionName)).toEqual(actionName);
+      });
+    });
   });
 
   describe('actionCreators', () => {
@@ -216,10 +235,6 @@ describe('Model', () => {
         expect(actionCreators.loadSomethingReducer.isEffect).toEqual(false);
       });
 
-      it('provided effect has type as action type', () => {
-        expect(actionCreators.loadSomethingReducer.type).toEqual(modelX.actionType('loadSomethingReducer'));
-      });
-
       it('returns result of actionCreator func', () => {
         expect(actionCreators.loadSomethingReducer(payload)).toEqual(
           actionCreator(modelX.actionType('loadSomethingReducer'), payload)
@@ -250,10 +265,6 @@ describe('Model', () => {
 
       it('provided effect has isEffect as true', () => {
         expect(actionCreators.loadSomethingEffect.isEffect).toEqual(true);
-      });
-
-      it('provided effect has type as action type', () => {
-        expect(actionCreators.loadSomethingEffect.type).toEqual(modelX.actionType('loadSomethingEffect'));
       });
 
       it('returns result of actionCreator func', () => {
@@ -290,10 +301,6 @@ describe('Model', () => {
 
       it('provided effect has isEffect as true', () => {
         expect(actionCreators.loadSomethingEffect.isEffect).toEqual(true);
-      });
-
-      it('provided effect has type as action type', () => {
-        expect(actionCreators.loadSomethingEffect.type).toEqual(modelX.actionType('loadSomethingEffect'));
       });
 
       it('returns result of actionCreator func', () => {
@@ -454,7 +461,7 @@ describe('Model', () => {
       expect(articleModel.modelReducers()).toEqual(expect.anything());
     });
 
-    describe('when reducers are present', () => {
+    describe('when a reducer is present', () => {
       let reducerASpy;
       let state;
       let modelX;
@@ -486,6 +493,50 @@ describe('Model', () => {
         expect(reducers(state, reducerAction)).toEqual({ola: 'hi'});
       });
     });
+
+    describe('when a reducer for the action of another model is present', () => {
+      let reducerAYSpy;
+      let reducerAXSpy;
+      let state;
+      let modelX;
+      let modelY;
+      let reducers;
+      let reducerAction;
+
+      beforeEach(() => {
+        // @ts-ignore
+        reducerAXSpy = jest.fn().mockImplementation((state, _action) => state.ola = 'hi');
+        reducerAYSpy = jest.fn().mockImplementation((state, _action) => state.ola = 'ola');
+        state = {};
+        modelY = new Model({
+          namespace: 'modelY',
+          state,
+          reducers: {
+            // @ts-ignore
+            reducerAY: reducerAYSpy,
+          },
+        });
+        modelX = new Model({
+          namespace: 'modelX',
+          state,
+          reducers: {
+            // @ts-ignore
+            [modelY.actionTypes().reducerAY]: reducerAXSpy,
+          },
+        });
+        reducers = modelX.modelReducers();
+        reducerAction = actionCreator(modelY.actionType('reducerAY'));
+      });
+
+      it('calls reducer func when reducer entry is called', () => {
+        reducers(state, reducerAction);
+        expect(reducerAXSpy).toHaveBeenCalled();
+      });
+
+      it('returns result of reducer func', () => {
+        expect(reducers(state, reducerAction)).toEqual({ola: 'hi'});
+      });
+    });
   });
 
   describe('modelEffects', () => {
@@ -493,7 +544,7 @@ describe('Model', () => {
       expect(articleModel.modelEffects()).toEqual({});
     });
 
-    describe('when effects are present', () => {
+    describe('when an effect is present', () => {
       let modelEffects;
       const state = {};
       let effectASpy;
@@ -571,7 +622,66 @@ describe('Model', () => {
       });
     });
 
-    describe('when blocking effects are present', () => {
+    describe('when an effect for the action of another model is present', () => {
+      let modelEffects;
+      let effectAXSpy;
+      let effectAYSpy;
+      let state = {};
+      let modelX;
+      let modelY;
+      let actionCreatorsSpy;
+      const payload = {userId: 1};
+      let __actionInternals;
+      let action;
+      let gen;
+
+      beforeEach(() => {
+        effectAXSpy = jest.fn();
+        effectAYSpy = jest.fn();
+        modelY = new Model({
+          namespace: 'modelY',
+          state,
+          effects: {
+            // @ts-ignore
+            effectAY: function*(...args) {effectAYSpy(...args)},
+          },
+        });
+        modelX = new Model({
+          namespace: 'modelX',
+          state,
+          effects: {
+            // @ts-ignore
+            [modelY.actionTypes().effectAY]: function*(...args) {effectAXSpy(...args)},
+          },
+        });
+        __actionInternals = {resolve: jest.fn(), reject: jest.fn()};
+        action = {type: 'whatever', payload, __actionInternals};
+        actionCreatorsSpy = jest.spyOn(modelX, 'actionCreators');
+        modelEffects = modelX.modelEffects();
+        gen = modelEffects[modelY.actionTypes().effectAY]();
+      });
+
+      it('returns an entry for the provided effect', () => {
+        expect(modelEffects).toEqual(
+          {[modelY.actionTypes().effectAY]: expect.anything()}
+        );
+      });
+
+      it('passes the right arguments to the effectAYSpy effect in modelX', () => {
+        expect(gen.next().value.payload.args).toEqual(
+          [modelY.actionType('effectAY'), expect.anything()],
+        );
+      });
+
+      it('calls effectAYSpy with the right arguments  in modelX', () => {
+        gen.next().value.payload.args[1](action).next();
+        expect(effectAXSpy).toHaveBeenCalledWith(
+          payload, sagaEffects, actionCreatorsSpy.mock.results[0].value,
+        );
+      });
+    });
+
+    describe('when a blocking effect is present', () => {
       let modelEffects;
       const state = {};
       let effectASpy;
@@ -652,6 +762,73 @@ describe('Model', () => {
         });
         gen.next().value.payload.args[1](action).next();
         expect(__actionInternals.reject).toHaveBeenCalledWith(error);
+      });
+    });
+
+    describe('when a blocking effect for the action of another model is present', () => {
+      let modelEffects;
+      let effectAXSpy;
+      let effectAYSpy;
+      let state = {};
+      let modelX;
+      let modelY;
+      let actionCreatorsSpy;
+      const payload = {userId: 1};
+      let __actionInternals;
+      let action;
+      let gen;
+
+      beforeEach(() => {
+        effectAXSpy = jest.fn();
+        effectAYSpy = jest.fn();
+        modelY = new Model({
+          namespace: 'modelY',
+          state,
+          effects: {
+            // @ts-ignore
+            effectAY: function*(...args) {effectAYSpy(...args)},
+          },
+        });
+        modelX = new Model({
+          namespace: 'modelX',
+          state,
+          effects: {
+            // @ts-ignore
+            [modelY.actionTypes().effectAY]: function* (...args) {
+              effectAXSpy(...args)
+            },
+          },
+          blockingEffects: {
+            // @ts-ignore
+            [modelY.actionTypes().effectAY]: function* (actionType, sagaBlockingEffects, modelEffects) {
+              yield sagaBlockingEffects.takeLeading(actionType, modelEffects[modelY.actionTypes().effectAY]);
+            },
+          }
+        });
+        __actionInternals = {resolve: jest.fn(), reject: jest.fn()};
+        action = {type: 'whatever', payload, __actionInternals};
+        actionCreatorsSpy = jest.spyOn(modelX, 'actionCreators');
+        modelEffects = modelX.modelEffects();
+        gen = modelEffects[modelY.actionTypes().effectAY]();
+      });
+
+      it('returns an entry for the provided effect', () => {
+        expect(modelEffects).toEqual(
+          {[modelY.actionTypes().effectAY]: expect.anything()}
+        );
+      });
+
+      it('passes the right arguments to the effectAYSpy effect in modelX', () => {
+        expect(gen.next().value.payload.args).toEqual(
+          [modelY.actionType('effectAY'), expect.anything()],
+        );
+      });
+
+      it('calls effectAYSpy with the right arguments  in modelX', () => {
+        gen.next().value.payload.args[1](action).next();
+        expect(effectAXSpy).toHaveBeenCalledWith(
+          payload, sagaEffects, actionCreatorsSpy.mock.results[0].value,
+        );
       });
     });
   });

@@ -1,5 +1,5 @@
 import produce from 'immer';
-import {get, isString, keys, memoize, size, toPairs, uniq, values, isArray, identity} from 'lodash';
+import {get, identity, isArray, isString, keys, memoize, size, toPairs, uniq, values} from 'lodash';
 import {AnyAction, Reducer} from 'redux';
 import {Saga} from '@redux-saga/core';
 import {
@@ -24,23 +24,25 @@ import {
   spawn,
   take,
   takeEvery as blockingEffectTakeEvery,
-  takeMaybe,
   takeLatest,
   takeLeading,
+  takeMaybe,
   throttle,
 } from 'redux-saga/effects';
 import {createSelector} from 'reselect';
 import {modelBlockingGenerator} from './saga';
 import {
   ActionCreatorsMapObject,
+  ActionTypesMapObject,
   ActionWithInternals,
-  EffectMap,
   BlockingEffectMap,
+  EffectMap,
   EffectModelMap,
   ReducerMap,
+  SelectorFunction,
   SelectorMap,
   SelectorModelMap,
-  State, SelectorFunction
+  State,
 } from './baseTypes';
 import {actionCreator, ActionInternalsObject} from "./utils";
 
@@ -103,6 +105,11 @@ const defaultReducer = (
  * @ignore
  */
 const namespaceRegex = new RegExp('^([A-Za-z0-9]+)([.][A-Za-z0-9]+)*$');
+
+/**
+ * @ignore
+ */
+const actionTypeRegex = new RegExp('^@@([A-Za-z0-9]+)(([.]([A-Za-z0-9]+))+)@@$');
 
 /**
  * Model options are used for initialising a [[Model]] instance.
@@ -318,6 +325,8 @@ export class Model {
       };
     }
 
+    this.actionTypes = memoize(this.actionTypes.bind(this));
+    this.actionCreators = memoize(this.actionCreators.bind(this));
     this.modelSelectors = memoize(this.modelSelectors.bind(this));
     this.modelReducers = memoize(this.modelReducers.bind(this));
     this.modelEffects = memoize(this.modelEffects.bind(this));
@@ -327,15 +336,15 @@ export class Model {
    * @ignore
    */
   public actionType(actionName: string): string {
-    return `${this._namespace}.${actionName}`;
+    return actionTypeRegex.test(actionName) ? actionName : `@@${this._namespace}.${actionName}@@`;
   }
 
   /**
    * Returns an object with action creators, one for each of the declared [[ModelOptions.reducers|reducers]],
    * [[ModelOptions.effects|effects]] and [[ModelOptions.blockingEffects|blocking effects]].
-   * Only useful for testing purposes, read the docs section on testing for more info, or when you need to dispatch
+   * Only useful for testing purposes, read the docs section on testing for more info, or when you need to process
    * actions from a different model's
-   * [[ModelOptions.effects|effects]]/[[ModelOptions.blockingEffects|blocking effects]].
+   * [[ModelOptions.reducers|reducers]]/[[ModelOptions.effects|effects]].
    *
    * @returns An action creator's map object.
    */
@@ -367,22 +376,47 @@ export class Model {
     for (const reducerName in this._reducers) {
       actions[reducerName] = actionCreatorBuilder(reducerName);
       actions[reducerName].isEffect = false;
-      actions[reducerName].type = this.actionType(reducerName);
     }
 
     for (const effectName in this._effects) {
       actions[effectName] = actionCreatorBuilder(effectName);
       actions[effectName].isEffect = true;
-      actions[effectName].type = this.actionType(effectName);
     }
 
     for (const effectName in this._blockingEffects) {
       actions[effectName] = actionCreatorBuilder(effectName);
       actions[effectName].isEffect = true;
-      actions[effectName].type = this.actionType(effectName);
     }
 
     return actions;
+  }
+
+  /**
+   * Returns an object with action types, one for each of the declared [[ModelOptions.reducers|reducers]],
+   * [[ModelOptions.effects|effects]] and [[ModelOptions.blockingEffects|blocking effects]].
+   * Only useful for testing purposes, read the docs section on testing for more info, or when you need to process
+   * actions from a different model's
+   * [[ModelOptions.reducers|reducers]]/[[ModelOptions.effects|effects]]. Being the latter a common
+   * approach when normalising data.
+   *
+   * @returns An action type's map object.
+   */
+  public actionTypes(): ActionTypesMapObject {
+    const actionsTypes = {};
+
+    for (const reducerName in this._reducers) {
+      actionsTypes[reducerName] = this.actionType(reducerName);
+    }
+
+    for (const effectName in this._effects) {
+      actionsTypes[effectName] = this.actionType(effectName);
+    }
+
+    for (const effectName in this._blockingEffects) {
+      actionsTypes[effectName] = this.actionType(effectName);
+    }
+
+    return actionsTypes;
   }
 
   /**
@@ -431,9 +465,10 @@ export class Model {
    */
   public modelReducers(): Reducer<unknown, AnyAction> {
     const reducers = {};
+    const actionTypes = this.actionTypes();
 
     for (const [reducerName, reducerFunc] of toPairs(this._reducers)) {
-      const actionType = this.actionType(reducerName);
+      const actionType = actionTypes[reducerName];
       reducers[actionType] = reducerFunc;
     }
 
@@ -449,22 +484,21 @@ export class Model {
   public modelEffects(): EffectModelMap {
     const effects = {};
     const effectSagas = {};
+    const actionTypes = this.actionTypes();
     const actionCreators = this.actionCreators();
 
     for (const [effectName, effectFunc] of toPairs(this._effects)) {
-      const actionType = this.actionType(effectName);
+      const actionType = actionTypes[effectName];
       const effectSaga = modelBlockingGenerator(
         function *(payload: object = {}) { yield* effectFunc(payload, sagaEffects, actionCreators); }
       );
 
       effectSagas[effectName] = effectSaga;
-      effectSagas[effectName].type = actionType;
-
       effects[effectName] = function* () { yield blockingEffectTakeEvery(actionType, effectSaga); };
     }
 
     for (const [effectName, blockingEffectFunc] of toPairs(this._blockingEffects)) {
-      const actionType = this.actionType(effectName);
+      const actionType = actionTypes[effectName];
       effects[effectName] = function* () { yield* blockingEffectFunc(actionType, blockingSagaEffects, effectSagas); };
     }
 

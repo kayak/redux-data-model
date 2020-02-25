@@ -1,20 +1,18 @@
 import {AnyAction, Dispatch} from 'redux';
-import {Action} from "react-redux";
+import {Action, ActionType} from "react-redux";
 import {ActionInternalsObject} from "./utils";
-import {Saga} from '@redux-saga/core';
 
 export interface ActionCreator<A> {
   (payload: object, __actionInternals?: ActionInternalsObject): A;
-  type: string;
   isEffect: boolean;
-}
-
-export interface SagaWithType extends Saga {
-  type: string;
 }
 
 interface ActionCreatorsMapObject<A = any> {
   [key: string]: ActionCreator<A>;
+}
+
+interface ActionTypesMapObject<A = any> {
+  [key: string]: ActionType<A>;
 }
 
 interface EffectMapObject {
