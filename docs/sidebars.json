@@ -10,11 +10,23 @@
     "API": [
       "api/api-index"
     ],
+    "Interfaces": [
+      "api/interfaces/api-interfaces-model-options"
+    ],
     "Classes": [
       "api/classes/api-classes-model"
     ],
-    "Interfaces": [
-      "api/interfaces/api-interfaces-model-options"
+    "Error Classes": [
+      "api/classes/api-classes-actiondataisntplainobjecterror",
+      "api/classes/api-classes-blockingeffectwithoutmatchingeffecterror",
+      "api/classes/api-classes-duplicatedmodelnamespaceerror",
+      "api/classes/api-classes-emptynamespaceerror",
+      "api/classes/api-classes-modelnotsagainitializederror",
+      "api/classes/api-classes-duplicatedactiontypeserror",
+      "api/classes/api-classes-invalidnamespaceerror",
+      "api/classes/api-classes-modelnotreduxinitializederror",
+      "api/classes/api-classes-namespaceisntastringerror",
+      "api/classes/api-classes-noncompatibleactionerror"
     ]
   }
 }

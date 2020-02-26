@@ -1,5 +1,18 @@
 import produce from 'immer';
-import {get, identity, isArray, isString, keys, memoize, size, toPairs, uniq, values} from 'lodash';
+import {
+  difference,
+  get,
+  identity,
+  isArray,
+  isEmpty,
+  isString,
+  keys,
+  memoize,
+  size,
+  toPairs,
+  uniq,
+  values
+} from 'lodash';
 import {AnyAction, Reducer} from 'redux';
 import {Saga} from '@redux-saga/core';
 import {
@@ -45,6 +58,15 @@ import {
   State,
 } from './baseTypes';
 import {actionCreator, ActionInternalsObject} from "./utils";
+import {
+  BlockingEffectWithoutMatchingEffectError,
+  DuplicatedActionTypesError,
+  EmptyNamespaceError,
+  InvalidNamespaceError,
+  ModelNotReduxInitializedError,
+  ModelNotSagaInitializedError,
+  NamespaceIsntAStringError
+} from './errors'
 
 /**
  * @ignore
@@ -213,8 +235,7 @@ export interface ModelOptions {
    * executed. By default, effects are wrapped by a
    * [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from
    * [redux-saga](https://redux-saga.js.org/), which means that every dispatched action will be taken into account.
-   * That behavior can be overridden though as long as the same name is kept, as used in the effect. If you also
-   * want to keep the default behaviour, then name the blocking effect differently.
+   * That behavior can be overridden though as long as the same name is kept, as used in the effect.
    * Alternatives to the [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect are
    * [takeLeading](https://redux-saga.js.org/docs/api/#takeleadingpattern-saga-args),
    * [takeLatest](https://redux-saga.js.org/docs/api/#takelatestpattern-saga-args),
@@ -233,12 +254,12 @@ export interface ModelOptions {
 /**
  * Models are the most basic data structure/abstraction in this library. They require a set of options to be
  * provided when initializing them. The model will be used to generate the action types, actions, reducers,
- * dispatchers, and sagas, based on the model's options that were provided.
+ * dispatchers, and sagas, based on the [[ModelOptions|model's options]] that were provided.
  */
 export class Model {
 
   /**
-   * Whether ModelNotReduxInitializedError and ModelNotSagaInitializedError should be thrown when the model
+   * Whether [[ModelNotReduxInitializedError]] and [[ModelNotSagaInitializedError]] should be thrown when the model
    * is used without it being integrated with Redux/Saga yet. Normally you only want to disable initialization
    * checks in your tests.
    */
@@ -278,10 +299,12 @@ export class Model {
    * });
    *
    * @param options A model's options.
-   * @throws {NamespaceIsntAStringError} When namespace isn't a string.
-   * @throws {EmptyNamespaceError} When namespace is an empty string.
-   * @throws {InvalidNamespaceError} When namespace has invalid characters.
-   * @throws {DuplicatedActionTypesError} When reducer and/or effect action types are duplicated.
+   * @throws [[NamespaceIsntAStringError]] When namespace isn't a string.
+   * @throws [[EmptyNamespaceError]] When namespace is an empty string.
+   * @throws [[InvalidNamespaceError]] When namespace has invalid characters.
+   * @throws [[DuplicatedActionTypesError]] When reducer and/or effect action types are duplicated.
+   * @throws [[BlockingEffectWithoutMatchingEffectError]] When blocking effect action types don't have a matching
+   *                                                      effect action type.
    */
   public constructor(options: ModelOptions) {
     this._isReduxInitialized = false;
@@ -293,36 +316,28 @@ export class Model {
     this._effects = options.effects || {};
     this._blockingEffects = options.blockingEffects || {};
 
-    const actionTypes = [].concat(...keys(this._reducers)).concat(...keys(this._effects));
+    const effectActionTypes = [...keys(this._effects)];
+    const blockingEffectActionTypes = [...keys(this._blockingEffects)];
+    const reducerAndEffectActionTypes = [].concat(...keys(this._reducers)).concat(effectActionTypes);
 
     if (!isString(this._namespace)) {
-      throw {
-        name: 'NamespaceIsntAStringError',
-        message: `Namespace must be a string. The provided namespace type was: ${typeof this._namespace}`,
-      };
+      throw new NamespaceIsntAStringError(this);
     }
 
     if (size(this._namespace) < 1) {
-      throw {
-        name: 'EmptyNamespaceError',
-        message: `Namespace must be a non empty string.`,
-      };
+      throw new EmptyNamespaceError();
     }
 
     if (!namespaceRegex.test(this._namespace)) {
-      throw {
-        name: 'InvalidNamespaceError',
-        message: `Namespace can only contain letters, numbers and/or dots, when nesting the data is needed. ` +
-        `It was validated against the following regex: ${String(namespaceRegex)}`,
-      };
+      throw new InvalidNamespaceError(namespaceRegex);
     }
 
-    if (uniq(actionTypes).length !== actionTypes.length) {
-      throw {
-        name: 'DuplicatedActionTypesError',
-        message: `Reducer and effect action types must be unique in [${this._namespace}] model. The provided ` +
-        `reducer/effect action types were: ${actionTypes.join(', ')}`,
-      };
+    if (uniq(reducerAndEffectActionTypes).length !== reducerAndEffectActionTypes.length) {
+      throw new DuplicatedActionTypesError(this, reducerAndEffectActionTypes);
+    }
+
+    if (!isEmpty(difference(blockingEffectActionTypes, effectActionTypes))) {
+      throw new BlockingEffectWithoutMatchingEffectError(this, effectActionTypes);
     }
 
     this.actionTypes = memoize(this.actionTypes.bind(this));
@@ -340,11 +355,11 @@ export class Model {
   }
 
   /**
-   * Returns an object with action creators, one for each of the declared [[ModelOptions.reducers|reducers]],
-   * [[ModelOptions.effects|effects]] and [[ModelOptions.blockingEffects|blocking effects]].
-   * Only useful for testing purposes, read the docs section on testing for more info, or when you need to process
-   * actions from a different model's
-   * [[ModelOptions.reducers|reducers]]/[[ModelOptions.effects|effects]].
+   * Returns an object with action creators, one for each of the declared [[ModelOptions.reducers|reducers]] and
+   * [[ModelOptions.effects|effects]]. Only useful for testing purposes, read the docs section on testing for
+   * more info, or when you need to process actions from a different model's
+   * [[ModelOptions.reducers|reducers]]/[[ModelOptions.effects|effects]]. Being the latter a common
+   * approach when dispatching another model's actions within your [[ModelOptions.effects|effects]].
    *
    * @returns An action creator's map object.
    */
@@ -355,19 +370,11 @@ export class Model {
       payload: object = {}, __actionInternals: ActionInternalsObject=undefined,
     ) => {
       if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
-        throw {
-          name: 'ModelNotReduxInitializedError',
-          message: `Models need to be initialized with combineModelReducers prior to any usage. Now ` +
-          `make this the case for: ${this._namespace}`,
-        };
+        throw new ModelNotReduxInitializedError(this);
       }
 
       if (!this.isSagaInitialized && !Model.disableInitializationChecks) {
-        throw {
-          name: 'ModelNotSagaInitializedError',
-          message: `Models need to be initialized with modelRootSaga prior to any usage. Now ` +
-          `make this the case for: ${this._namespace}`,
-        };
+        throw new ModelNotSagaInitializedError(this);
       }
 
       return actionCreator(this.actionType(actionName), payload, __actionInternals);
@@ -383,19 +390,13 @@ export class Model {
       actions[effectName].isEffect = true;
     }
 
-    for (const effectName in this._blockingEffects) {
-      actions[effectName] = actionCreatorBuilder(effectName);
-      actions[effectName].isEffect = true;
-    }
-
     return actions;
   }
 
   /**
-   * Returns an object with action types, one for each of the declared [[ModelOptions.reducers|reducers]],
-   * [[ModelOptions.effects|effects]] and [[ModelOptions.blockingEffects|blocking effects]].
-   * Only useful for testing purposes, read the docs section on testing for more info, or when you need to process
-   * actions from a different model's
+   * Returns an object with action types, one for each of the declared [[ModelOptions.reducers|reducers]] and
+   * [[ModelOptions.effects|effects]]. Only useful for testing purposes, read the docs section on testing for
+   * more info, or when you need to process actions from a different model's
    * [[ModelOptions.reducers|reducers]]/[[ModelOptions.effects|effects]]. Being the latter a common
    * approach when normalising data.
    *
@@ -409,10 +410,6 @@ export class Model {
     }
 
     for (const effectName in this._effects) {
-      actionsTypes[effectName] = this.actionType(effectName);
-    }
-
-    for (const effectName in this._blockingEffects) {
       actionsTypes[effectName] = this.actionType(effectName);
     }
 
@@ -432,11 +429,7 @@ export class Model {
 
     const resultFuncCreator = resultFunc => (...args) => {
       if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
-        throw {
-          name: 'ModelNotReduxInitializedError',
-          message: `Models need to be initialized with combineModelReducers prior to any usage. Now ` +
-          `make this the case for: ${this._namespace}`,
-        };
+        throw new ModelNotReduxInitializedError(this);
       }
 
       return resultFunc(...args);
@@ -511,7 +504,7 @@ export class Model {
    * [[ModelOptions.effects|Normal effects]] will default to taking every action and calling its respective effect,
    * unless overridden by a [[ModelOptions.blockingEffects|blocking effect]].
    *
-   * @throws {NonCompatibleActionError} When [[bindModelActionCreators]] was not used to bind the action creators.
+   * @throws [[NonCompatibleActionError]] When [[bindModelActionCreators]] was not used to bind the action creators.
    * @returns An array of sagas.
    */
   public get reduxSagas(): Saga[] {

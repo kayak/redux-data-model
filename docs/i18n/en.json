@@ -5,9 +5,49 @@
     "previous": "Previous",
     "tagline": "Opinionated, Redux abstraction with built-in immutability, async and more. Heavily dva inspired.",
     "docs": {
+      "api/classes/api-classes-actiondataisntplainobjecterror": {
+        "title": "API - Errors - ActionDataIsntPlainObjectError",
+        "sidebar_label": "ActionDataIsntPlainObjectError"
+      },
+      "api/classes/api-classes-blockingeffectwithoutmatchingeffecterror": {
+        "title": "API - Errors - BlockingEffectWithoutMatchingEffectError",
+        "sidebar_label": "BlockingEffectWithoutMatchingEffectError"
+      },
+      "api/classes/api-classes-duplicatedactiontypeserror": {
+        "title": "API - Errors - DuplicateActionTypesError",
+        "sidebar_label": "DuplicateActionTypesError"
+      },
+      "api/classes/api-classes-duplicatedmodelnamespaceerror": {
+        "title": "API - Errors - DuplicatedModelNamespaceError",
+        "sidebar_label": "DuplicatedModelNamespaceError"
+      },
+      "api/classes/api-classes-emptynamespaceerror": {
+        "title": "API - Errors - EmptyNamespaceError",
+        "sidebar_label": "EmptyNamespaceError"
+      },
+      "api/classes/api-classes-invalidnamespaceerror": {
+        "title": "API - Errors - InvalidNamespaceError",
+        "sidebar_label": "InvalidNamespaceError"
+      },
       "api/classes/api-classes-model": {
         "title": "API - Classes - Model",
         "sidebar_label": "Model"
+      },
+      "api/classes/api-classes-modelnotreduxinitializederror": {
+        "title": "API - Errors - ModelNotReduxInitializedError",
+        "sidebar_label": "ModelNotReduxInitializedError"
+      },
+      "api/classes/api-classes-modelnotsagainitializederror": {
+        "title": "API - Errors - ModelNotSagaInitializedError",
+        "sidebar_label": "ModelNotSagaInitializedError"
+      },
+      "api/classes/api-classes-namespaceisntastringerror": {
+        "title": "API - Errors - NamespaceIsntAStringError",
+        "sidebar_label": "NamespaceIsntAStringError"
+      },
+      "api/classes/api-classes-noncompatibleactionerror": {
+        "title": "API - Errors - NonCompatibleActionError",
+        "sidebar_label": "NonCompatibleActionError"
       },
       "api/interfaces/api-interfaces-model-options": {
         "title": "API - Interfaces - ModelOptions",
@@ -26,11 +66,51 @@
       "faq": {
         "title": "FAQ"
       },
-      "headers/api-classes-model": {
+      "headers/classes/api-classes-actiondataisntplainobjecterror": {
+        "title": "API - Errors - ActionDataIsntPlainObjectError",
+        "sidebar_label": "ActionDataIsntPlainObjectError"
+      },
+      "headers/classes/api-classes-blockingeffectwithoutmatchingeffecterror": {
+        "title": "API - Errors - BlockingEffectWithoutMatchingEffectError",
+        "sidebar_label": "BlockingEffectWithoutMatchingEffectError"
+      },
+      "headers/classes/api-classes-duplicatedactiontypeserror": {
+        "title": "API - Errors - DuplicateActionTypesError",
+        "sidebar_label": "DuplicateActionTypesError"
+      },
+      "headers/classes/api-classes-duplicatedmodelnamespaceerror": {
+        "title": "API - Errors - DuplicatedModelNamespaceError",
+        "sidebar_label": "DuplicatedModelNamespaceError"
+      },
+      "headers/classes/api-classes-emptynamespaceerror": {
+        "title": "API - Errors - EmptyNamespaceError",
+        "sidebar_label": "EmptyNamespaceError"
+      },
+      "headers/classes/api-classes-invalidnamespaceerror": {
+        "title": "API - Errors - InvalidNamespaceError",
+        "sidebar_label": "InvalidNamespaceError"
+      },
+      "headers/classes/api-classes-model": {
         "title": "API - Classes - Model",
         "sidebar_label": "Model"
       },
-      "headers/api-interfaces-model-options": {
+      "headers/classes/api-classes-modelnotreduxinitializederror": {
+        "title": "API - Errors - ModelNotReduxInitializedError",
+        "sidebar_label": "ModelNotReduxInitializedError"
+      },
+      "headers/classes/api-classes-modelnotsagainitializederror": {
+        "title": "API - Errors - ModelNotSagaInitializedError",
+        "sidebar_label": "ModelNotSagaInitializedError"
+      },
+      "headers/classes/api-classes-namespaceisntastringerror": {
+        "title": "API - Errors - NamespaceIsntAStringError",
+        "sidebar_label": "NamespaceIsntAStringError"
+      },
+      "headers/classes/api-classes-noncompatibleactionerror": {
+        "title": "API - Errors - NonCompatibleActionError",
+        "sidebar_label": "NonCompatibleActionError"
+      },
+      "headers/interfaces/api-interfaces-model-options": {
         "title": "API - Interfaces - ModelOptions",
         "sidebar_label": "ModelOptions"
       },
@@ -66,8 +146,9 @@
       "Contributing": "Contributing",
       "FAQ": "FAQ",
       "API": "API",
+      "Interfaces": "Interfaces",
       "Classes": "Classes",
-      "Interfaces": "Interfaces"
+      "Error Classes": "Error Classes"
     }
   },
   "pages-strings": {

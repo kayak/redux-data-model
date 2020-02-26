@@ -106,7 +106,8 @@ describe('connectModel', () => {
         }).toThrow({
           name: '',
           message: `Models need to be initialized with combineModelReducers prior to any usage. Now make this ` +
-          `the case for: ${modelThatThrows.namespace}`,
+          `the case for: ${modelThatThrows.namespace}. ` +
+          'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
         });
       });
 
@@ -234,7 +235,8 @@ describe('connectModel', () => {
         }).toThrow({
           name: '',
           message: `Models need to be initialized with combineModelReducers prior to any usage. Now make this ` +
-          `the case for: ${modelThatThrows.namespace}`,
+          `the case for: ${modelThatThrows.namespace}. ` +
+          'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
         });
       });
 

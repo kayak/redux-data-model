@@ -25,7 +25,8 @@ describe('actionCreator', () => {
   it('throws when action data is not a plain object', () => {
     expect(() => actionCreator('ola', [])).toThrow({
       name: '',
-      message: 'Action data must be a plain object, when calling action [ola].'
+      message: 'Action data must be a plain object, when calling action [ola]. ' +
+      'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
     });
   });
 });

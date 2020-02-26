@@ -3,6 +3,7 @@ import {SagaIterator} from '@redux-saga/core';
 import {all, call, spawn} from 'redux-saga/effects';
 import {Model} from './model';
 import {ActionWithInternals, EffectModelFunction} from './baseTypes';
+import {NonCompatibleActionError} from './errors';
 
 /**
  * @ignore
@@ -17,12 +18,7 @@ export function modelBlockingGenerator(
     );
 
     if (isNonCompatibleAction) {
-      throw {
-        name: 'NonCompatibleActionError',
-        message: `The provided action lacks the internals for being redux-data-model-able. Be sure to ` +
-          `use bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
-          `is: ${JSON.stringify(action)}`,
-      };
+      throw new NonCompatibleActionError(action);
     }
 
     const {__actionInternals: {resolve, reject}, payload} = action;

@@ -48,7 +48,8 @@ describe('combineModelReducers', () => {
     }).toThrow({
       name: '',
       message: 'Namespace in models must be unique. The following namespaces, in order, were referenced in ' +
-      'combineModelReducers: articles, articles',
+      'combineModelReducers: articles, articles. ' +
+      'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
     });
   });
 });

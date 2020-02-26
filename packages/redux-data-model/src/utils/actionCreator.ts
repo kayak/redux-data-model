@@ -1,5 +1,6 @@
 import {isPlainObject} from 'lodash';
 import {AnyAction} from "redux";
+import {ActionDataIsntPlainObjectError} from "../errors";
 
 /**
  * @ignore
@@ -25,10 +26,7 @@ export function actionCreator(
   type: string, payload: object = {}, __actionInternals: ActionInternalsObject=undefined,
 ): ActionWithInternals {
   if (!isPlainObject(payload)) {
-    throw {
-      name: 'ActionDataIsntPlainObjectError',
-      message: `Action data must be a plain object, when calling action [${type}].`,
-    };
+    throw new ActionDataIsntPlainObjectError(type);
   }
 
   return {type, payload, __actionInternals};

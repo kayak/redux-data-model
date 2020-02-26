@@ -15,8 +15,8 @@ import {connectModelImpl} from './connectModelImpl';
  * @param userProvidedMapDispatchToProps A mapDispatchToProps equivalent, which has a third argument with all
  *                                       models' action creators.
  * @returns A connect HOC.
- * @throws {ModelNotReduxInitializedError} When model was not initialized on a [[combineModelReducers]] call.
- * @throws {ModelNotSagaInitializedError} When model was not initialized on a [[modelRootSaga]] call.
+ * @throws [[ModelNotReduxInitializedError]] When model was not initialized on a [[combineModelReducers]] call.
+ * @throws [[ModelNotSagaInitializedError]] When model was not initialized on a [[modelRootSaga]] call.
  * @category High Order Component (HOC)
  */
 export function connectModel(

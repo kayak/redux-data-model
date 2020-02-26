@@ -23,7 +23,8 @@ describe('Model', () => {
         namespace: [],
       })).toThrow({
         name: '',
-        message: 'Namespace must be a string. The provided namespace type was: object'
+        message: 'Namespace must be a string. The provided namespace type was: object. ' +
+        'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
       });
     });
 
@@ -33,7 +34,8 @@ describe('Model', () => {
         namespace: '',
       })).toThrow({
         name: '',
-        message: 'Namespace must be a non empty string.'
+        message: 'Namespace must be a non empty string. ' +
+        'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
       });
     });
 
@@ -41,7 +43,8 @@ describe('Model', () => {
       const invalidNamespaceError = {
         name: '',
         message: 'Namespace can only contain letters, numbers and/or dots, when nesting the data is needed. ' +
-        'It was validated against the following regex: /^([A-Za-z0-9]+)([.][A-Za-z0-9]+)*$/'
+        'It was validated against the following regex: /^([A-Za-z0-9]+)([.][A-Za-z0-9]+)*$/. ' +
+        'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
       };
       it('like when it starts with a dot', () => {
         expect(() => new Model({
@@ -72,7 +75,6 @@ describe('Model', () => {
       });
     });
 
-
     it('throws when a reducer and effect have the same action type', () => {
       expect(() => new Model({
         ...modelOptions,
@@ -85,7 +87,25 @@ describe('Model', () => {
       })).toThrow({
         name: '',
         message: 'Reducer and effect action types must be unique in [articles] model. ' +
-        'The provided reducer/effect action types were: whatever, whatever'
+        'The provided reducer/effect action types were: whatever, whatever. ' +
+        'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
+      });
+    });
+
+    it('throws when a blocking effect has no matching effect with the same action type', () => {
+      expect(() => new Model({
+        ...modelOptions,
+        effects: {
+          whatever: jest.fn(),
+        },
+        blockingEffects: {
+          whateverAndMore: jest.fn(),
+        },
+      })).toThrow({
+        name: '',
+        message: 'Blocking effect action types should match a pre-existing effect action type in [articles] model. ' +
+        'The provided effect action types were: whatever. ' +
+        'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
       });
     });
   });
@@ -602,8 +622,9 @@ describe('Model', () => {
         expect(() => gen.next().value.payload.args[1](nonCompatibleAction).next()).toThrow({
           name: 'NonCompatibleActionError',
           message: `The provided action lacks the internals for being redux-data-model-able. Be sure to use ` +
-            `bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
-            `is: ${JSON.stringify(nonCompatibleAction)}`,
+          `bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
+          `is: ${JSON.stringify(nonCompatibleAction)}. ` +
+          'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.',
         });
       });
 
@@ -745,8 +766,9 @@ describe('Model', () => {
         expect(() => gen.next().value.payload.args[1](nonCompatibleAction).next()).toThrow({
           name: 'NonCompatibleActionError',
           message: `The provided action lacks the internals for being redux-data-model-able. Be sure to use ` +
-            `bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
-            `is: ${JSON.stringify(nonCompatibleAction)}`,
+          `bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
+          `is: ${JSON.stringify(nonCompatibleAction)}. ` +
+          'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.',
         });
       });
 

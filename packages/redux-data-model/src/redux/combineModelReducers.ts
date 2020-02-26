@@ -1,6 +1,7 @@
 import {isPlainObject, set, toPairs, uniq} from 'lodash';
 import {combineReducers, ReducersMapObject} from 'redux';
 import {Model} from '../model';
+import {DuplicatedModelNamespaceError} from '../errors';
 
 /**
  * @ignore
@@ -28,7 +29,7 @@ function combineReducersRecursively(reducerTree, level=0) {
  *
  * @param models An array of Model instances.
  * @returns A reducer's map object.
- * @throws {DuplicatedModelNamespaceError} When multiple models have the same namespace.
+ * @throws [[DuplicatedModelNamespaceError]] When multiple models have the same namespace.
  * @category Redux/Saga Setup
  */
 export function combineModelReducers(models: Model[]): ReducersMapObject {
@@ -41,11 +42,7 @@ export function combineModelReducers(models: Model[]): ReducersMapObject {
   }
 
   if (uniq(modelNamespaces).length !== modelNamespaces.length) {
-    throw {
-      name: 'DuplicatedModelNamespaceError',
-      message: `Namespace in models must be unique. The following namespaces, in order, were referenced in ` +
-      `combineModelReducers: ${modelNamespaces.join(', ')}`,
-    };
+    throw new DuplicatedModelNamespaceError(modelNamespaces);
   }
 
   return combineReducersRecursively(reducerTree);

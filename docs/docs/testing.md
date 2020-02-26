@@ -57,10 +57,6 @@ export const counterModel = new Model({
           // it will use a debounce effect.
           yield debounce(300, actionType, asyncIncrement);
       },
-      *asyncIncrementDebounceForHalfASecond(actionType, { debounce }, { asyncIncrement }) {
-          // This won't override the asyncIncrement effect, given it's named differently.
-          yield debounce(500, actionType, asyncIncrement);
-      },
     },
 });
 ```
@@ -147,13 +143,6 @@ it('asyncIncrement blocking effect yields debounce asyncIncrement effect for 300
   const gen = counterModel.blockingEffects.asyncIncrement(actionType, sagaEffects, modelEffects);
   expect(gen.next().value).toEqual(
     sagaEffects.debounce(300, actionType, modelEffects.asyncIncrement)
-  );
-});
-
-it('asyncIncrementDebounceForHalfASecond blocking effect yields debounce asyncIncrement effect for 500 milliseconds', () => {
-  const gen = counterModel.blockingEffects.asyncIncrementDebounceForHalfASecond(actionType, sagaEffects, modelEffects);
-  expect(gen.next().value).toEqual(
-    sagaEffects.debounce(500, actionType, modelEffects.asyncIncrement)
   );
 });
 ```

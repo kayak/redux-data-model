@@ -37,14 +37,13 @@ Model options are used for initialising a [Model](../classes/model.md) instance.
 
 • **blockingEffects**? : *BlockingEffectMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:223](https://github.com/kayak/redux-data-model/blob/334d989/packages/redux-data-model/src/model.ts#L223)*
+*Defined in [packages/redux-data-model/src/model.ts:251](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L251)*
 
 Blocking effects are functions used for defining when/how [normal effects](modeloptions.md#optional-effects) will be
 executed. By default, effects are wrapped by a
 [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect, from
 [redux-saga](https://redux-saga.js.org/), which means that every dispatched action will be taken into account.
-That behavior can be overridden though as long as the same name is kept, as used in the effect. If you also
-want to keep the default behaviour, then name the blocking effect differently.
+That behavior can be overridden though as long as the same name is kept, as used in the effect.
 Alternatives to the [takeEvery](https://redux-saga.js.org/docs/api/#takeeverypattern-saga-args) effect are
 [takeLeading](https://redux-saga.js.org/docs/api/#takeleadingpattern-saga-args),
 [takeLatest](https://redux-saga.js.org/docs/api/#takelatestpattern-saga-args),
@@ -63,7 +62,7 @@ ___
 
 • **effects**? : *EffectMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:203](https://github.com/kayak/redux-data-model/blob/334d989/packages/redux-data-model/src/model.ts#L203)*
+*Defined in [packages/redux-data-model/src/model.ts:232](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L232)*
 
 Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
 an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
@@ -90,7 +89,7 @@ ___
 
 • **namespace**: *string*
 
-*Defined in [packages/redux-data-model/src/model.ts:122](https://github.com/kayak/redux-data-model/blob/334d989/packages/redux-data-model/src/model.ts#L122)*
+*Defined in [packages/redux-data-model/src/model.ts:151](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L151)*
 
 The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
 and, as a matter of fact, redux-data-model will enforce it. The namespace is effectively an object's path
@@ -111,7 +110,7 @@ ___
 
 • **reducers**? : *ReducerMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:182](https://github.com/kayak/redux-data-model/blob/334d989/packages/redux-data-model/src/model.ts#L182)*
+*Defined in [packages/redux-data-model/src/model.ts:211](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L211)*
 
 Reducers are functions used for synchronously changing the current state of a given model. A reducer will
 be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
@@ -143,7 +142,7 @@ ___
 
 • **selectors**? : *SelectorMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:158](https://github.com/kayak/redux-data-model/blob/334d989/packages/redux-data-model/src/model.ts#L158)*
+*Defined in [packages/redux-data-model/src/model.ts:187](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L187)*
 
 Selectors are functions that receive the entire state and returns a piece of it. The first argument
 of a selector function is the namespaced state, following by any other positional arguments passed
@@ -177,7 +176,7 @@ ___
 
 • **state**: *State*
 
-*Defined in [packages/redux-data-model/src/model.ts:134](https://github.com/kayak/redux-data-model/blob/334d989/packages/redux-data-model/src/model.ts#L134)*
+*Defined in [packages/redux-data-model/src/model.ts:163](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L163)*
 
 State represents the initial state of the model's reducer.
 
