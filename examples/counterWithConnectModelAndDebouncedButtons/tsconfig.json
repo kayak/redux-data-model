@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "target": "es5",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "alwaysStrict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "strictNullChecks": false,
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "declaration": false
+  },
+  "include": [
+    "pages/*",
+    "__tests__/**/*"
+  ]
+}

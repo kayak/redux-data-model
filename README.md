@@ -40,20 +40,27 @@ Naturally, the redux-data-model-hooks package is optional, in case you're willin
 
 * [__counterWithConnectModel__](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithConnectModel)
 ([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/counterWithConnectModel)): 
-Simple count example without hooks api.
+Simple count example, without hooks api.
+* [__counterWithConnectModelAndDebouncedButtons__](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithConnectModelAndDebouncedButtons)
+([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/counterWithConnectModelAndDebouncedButtons)): 
+Simple count example, without hooks api, that debounces increment/decrement buttons for 3 seconds.
 * [__counterWithConnectModelAndConfirmationDialog__](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithConnectModelAndConfirmationDialog)
 ([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/counterWithConnectModelAndConfirmationDialog)): 
-Simple count example without hooks api and using a confirmation dialog, prior to incrementing/decrementing.
+Simple count example, without hooks api, that is using a confirmation dialog, prior to incrementing/decrementing.
 * [__counterWithConnectModelWithNestedNamespace__](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithConnectModelWithNestedNamespace)
 ([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/counterWithConnectModelWithNestedNamespace)): 
-Simple count example without hooks api. It uses a nested namespace, so that data can be grouped in different parts of the store.
+Simple count example, without hooks api. It uses a nested namespace, so that data can be grouped in different parts of the store.
 * [__counterWithHooks__](https://github.com/kayak/redux-data-model/tree/master/examples/counterWithHooks)
 ([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/counterWithHooks)):
-Simple count example with hooks api.
+Simple count example, with hooks api.
 * [__rest__](https://github.com/kayak/redux-data-model/tree/master/examples/rest)
 ([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/rest)):
-Multi model rest example, using hooks api. 
+Multi model rest example, with hooks api. 
 Data is fetched from [jsonplaceholder.typicode.com](http://jsonplaceholder.typicode.com/)
+* [__restWithNormalization__](https://github.com/kayak/redux-data-model/tree/master/examples/restWithNormalization)
+([Demo](https://codesandbox.io/s/github/kayak/redux-data-model/tree/master/examples/restWithNormalization)):
+Multi model rest example, with hooks api, that employs selector memoization and reuses action types across models,
+as a way to normalize data. Data is fetched from [jsonplaceholder.typicode.com](http://jsonplaceholder.typicode.com/)
 
 ## Documentation
 
