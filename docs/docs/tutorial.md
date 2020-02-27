@@ -229,12 +229,12 @@ re-render a component.
 Despite that, you might be curious on how actions can trigger the reducers we have just created. That's actually
 quite simple. See a few action examples below:
 
-* {type: 'counter.increment'}
-* {type: 'counter.decrement'}
-* {type: 'counter.changeCountByX', x: 1}
+* {type: '@@counter.increment@@'}
+* {type: '@@counter.decrement@@'}
+* {type: '@@counter.changeCountByX@@', x: 1}
 
-One can rightfully assume here they could dispatch those actions and have the respective [model]'s reducers triggered.
-In other words, any action with type as modelNamespace.reducerName, will trigger the reducerName in question.
+One can assume here they could dispatch those actions and have the respective [model]'s reducers triggered, that
+won't work but the action types are precisely the same.
 Unlike [connect], [connectModel] won't inject dispatch into connected components. That's because it sets a default
 mapStateToProps, if you havent set any. This default mapDispatchToProps, would have a shape like:
 
