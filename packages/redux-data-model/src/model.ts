@@ -483,16 +483,22 @@ export class Model {
     for (const [effectName, effectFunc] of toPairs(this._effects)) {
       const actionType = actionTypes[effectName];
       const effectSaga = modelBlockingGenerator(
-        function *(payload: object = {}) { yield* effectFunc(payload, sagaEffects, actionCreators); }
+        function *(payload: object = {}) {
+          yield* effectFunc(payload, sagaEffects, actionCreators);
+        }
       );
 
       effectSagas[effectName] = effectSaga;
-      effects[effectName] = function* () { yield blockingEffectTakeEvery(actionType, effectSaga); };
+      effects[effectName] = function* () {
+        yield blockingEffectTakeEvery(actionType, effectSaga);
+      };
     }
 
     for (const [effectName, blockingEffectFunc] of toPairs(this._blockingEffects)) {
       const actionType = actionTypes[effectName];
-      effects[effectName] = function* () { yield* blockingEffectFunc(actionType, blockingSagaEffects, effectSagas); };
+      effects[effectName] = function* () {
+        yield blockingEffectFunc(actionType, blockingSagaEffects, effectSagas);
+      };
     }
 
     return effects;

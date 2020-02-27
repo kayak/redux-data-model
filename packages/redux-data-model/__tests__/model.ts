@@ -743,19 +743,19 @@ describe('Model', () => {
       });
 
      it('uses takeLeading saga effect', () => {
-        expect(gen.next().value).toEqual(
+        expect(gen.next().value.next().value).toEqual(
           allSagaEffects.takeLeading(expect.anything(), expect.anything()),
         );
       });
 
       it('passes the right arguments to the effectASpy effect', () => {
-        expect(gen.next().value.payload.args).toEqual(
+        expect(gen.next().value.next().value.payload.args).toEqual(
           [modelX.actionType('effectA'), expect.anything()],
         );
       });
 
       it('calls effectA with the right arguments', () => {
-        gen.next().value.payload.args[1](action).next();
+        gen.next().value.next().value.payload.args[1](action).next();
         expect(effectASpy).toHaveBeenCalledWith(
           payload, sagaEffects, actionCreatorsSpy.mock.results[0].value,
         );
@@ -763,7 +763,7 @@ describe('Model', () => {
 
       it('throws NonCompatibleActionError when action is not compatible', () => {
         const nonCompatibleAction = {type: 'whatever', payload: {}};
-        expect(() => gen.next().value.payload.args[1](nonCompatibleAction).next()).toThrow({
+        expect(() => gen.next().value.next().value.payload.args[1](nonCompatibleAction).next()).toThrow({
           name: 'NonCompatibleActionError',
           message: `The provided action lacks the internals for being redux-data-model-able. Be sure to use ` +
           `bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
@@ -773,7 +773,7 @@ describe('Model', () => {
       });
 
       it('calls resolve when no exception occurred', () => {
-        gen.next().value.payload.args[1](action).next();
+        gen.next().value.next().value.payload.args[1](action).next();
         expect(__actionInternals.resolve).toHaveBeenCalledWith(undefined);
       });
 
@@ -782,7 +782,7 @@ describe('Model', () => {
         effectASpy.mockImplementation(() => {
           throw error;
         });
-        gen.next().value.payload.args[1](action).next();
+        gen.next().value.next().value.payload.args[1](action).next();
         expect(__actionInternals.reject).toHaveBeenCalledWith(error);
       });
     });
@@ -841,13 +841,13 @@ describe('Model', () => {
       });
 
       it('passes the right arguments to the effectAYSpy effect in modelX', () => {
-        expect(gen.next().value.payload.args).toEqual(
+        expect(gen.next().value.next().value.payload.args).toEqual(
           [modelY.actionType('effectAY'), expect.anything()],
         );
       });
 
       it('calls effectAYSpy with the right arguments  in modelX', () => {
-        gen.next().value.payload.args[1](action).next();
+        gen.next().value.next().value.payload.args[1](action).next();
         expect(effectAXSpy).toHaveBeenCalledWith(
           payload, sagaEffects, actionCreatorsSpy.mock.results[0].value,
         );
