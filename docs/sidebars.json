@@ -26,7 +26,9 @@
       "api/classes/api-classes-invalidnamespaceerror",
       "api/classes/api-classes-modelnotreduxinitializederror",
       "api/classes/api-classes-namespaceisntastringerror",
-      "api/classes/api-classes-noncompatibleactionerror"
+      "api/classes/api-classes-noncompatibleactionerror",
+      "api/classes/api-classes-undefinedreduceroreffecterror",
+      "api/classes/api-classes-undefinedselectorerror"
     ]
   }
 }

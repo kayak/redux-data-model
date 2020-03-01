@@ -41,7 +41,7 @@ Thrown when the provided [namespace](../interfaces/modeloptions.md#namespace), f
 
 \+ **new EmptyNamespaceError**(): *[EmptyNamespaceError](emptynamespaceerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:26](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/errors.ts#L26)*
+*Defined in [packages/redux-data-model/src/errors.ts:26](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/errors.ts#L26)*
 
 **Returns:** *[EmptyNamespaceError](emptynamespaceerror.md)*
 

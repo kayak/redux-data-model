@@ -1,7 +1,13 @@
 import * as React from 'react';
 import {useDispatch} from 'react-redux';
 import {Dispatch} from 'redux';
-import {bindModelActionCreators, BoundActionCreatorsMapObject, Model} from 'redux-data-model';
+import {
+  bindModelActionCreators,
+  BoundActionCreatorsMapObject,
+  Model,
+  UndefinedReducerOrEffectError,
+  wrapProxy
+} from 'redux-data-model';
 
 /**
  * A react hook for returning already bound action creators for the provided model. If you don't want/need to use
@@ -21,5 +27,10 @@ import {bindModelActionCreators, BoundActionCreatorsMapObject, Model} from 'redu
 export function useModelActions(model: Model): BoundActionCreatorsMapObject {
   const dispatch: Dispatch = useDispatch();
   const actionCreators = React.useMemo(() => model.actionCreators(), [model]);
-  return React.useMemo(() => bindModelActionCreators(actionCreators, dispatch), [model]);
+  const boundActionCreators = React.useMemo(() => bindModelActionCreators(actionCreators, dispatch), [model]);
+  return React.useMemo(() => Model.disableProxyChecks ? boundActionCreators : wrapProxy(
+    boundActionCreators,
+    model,
+    UndefinedReducerOrEffectError,
+  ), [boundActionCreators, Model.disableProxyChecks]);
 }

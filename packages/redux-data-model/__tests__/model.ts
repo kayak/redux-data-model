@@ -3,7 +3,6 @@ import {Model} from '../src';
 import {sagaEffects} from '../src/model';
 import {actionCreator} from '../src/utils';
 
-
 describe('Model', () => {
   let modelOptions;
   let articleModel;
@@ -14,6 +13,7 @@ describe('Model', () => {
       state: {},
     };
     articleModel = new Model(modelOptions);
+    Model.disableProxyChecks = true;
   });
 
   describe('constructor', () => {
@@ -225,9 +225,61 @@ describe('Model', () => {
     });
   });
 
-  describe('actionCreators', () => {
+  describe('actionTypes', () => {
+    let model;
+
+    beforeEach(() => {
+      Model.disableProxyChecks = false;
+      model = new Model({
+        ...modelOptions,
+        reducers: {
+          whateverReducer: jest.fn(),
+        },
+        effects: {
+          whateverEffect: jest.fn(),
+        },
+      });
+    });
+
+    afterEach(() => {
+      Model.disableProxyChecks = true;
+    });
+
     it('returns an empty object when no reducers or effects exists', () => {
-      expect(articleModel.actionCreators()).toEqual({});
+      expect(Object.keys(articleModel.actionTypes())).toEqual([]);
+    });
+
+    it('returns an action type when a reducer exists', () => {
+      expect(model.actionTypes().whateverReducer).toEqual(model.actionType('whateverReducer'));
+    });
+
+    it('returns an action type when an effect exists', () => {
+      expect(model.actionTypes().whateverEffect).toEqual(model.actionType('whateverEffect'));
+    });
+
+    it('throws when an undefined effect/reducer name is accessed', () => {
+      expect(() => {
+        model.actionTypes().whatever
+      }).toThrow({
+        name: '',
+        message: 'No reducer/effect called [whatever] was found on [articles] model. ' +
+        'Available options are: whateverReducer,whateverEffect. ' +
+        'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
+      });
+    });
+  });
+
+  describe('actionCreators', () => {
+    beforeEach(() => {
+      Model.disableProxyChecks = false;
+    });
+
+    afterEach(() => {
+      Model.disableProxyChecks = true;
+    });
+
+    it('returns an empty object when no reducers or effects exists', () => {
+      expect(Object.keys(articleModel.actionCreators())).toEqual([]);
     });
 
     describe('when reducers are present', () => {
@@ -246,9 +298,7 @@ describe('Model', () => {
       const payload = {1: 2};
 
       it('returns an entry for the provided reducer', () => {
-        expect(actionCreators).toEqual(
-          {loadSomethingReducer: expect.anything()}
-        );
+        expect(Object.keys(actionCreators)).toEqual(['loadSomethingReducer']);
       });
 
       it('provided reducer has isEffect as false', () => {
@@ -259,6 +309,17 @@ describe('Model', () => {
         expect(actionCreators.loadSomethingReducer(payload)).toEqual(
           actionCreator(modelX.actionType('loadSomethingReducer'), payload)
         );
+      });
+
+      it('throws when an undefined reducer name is accessed', () => {
+        expect(() => {
+          actionCreators.whatever
+        }).toThrow({
+          name: '',
+          message: 'No reducer/effect called [whatever] was found on [articles] model. ' +
+          'Available options are: loadSomethingReducer. ' +
+          'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
+        });
       });
     });
 
@@ -278,9 +339,7 @@ describe('Model', () => {
       const payload = {1: 2};
 
       it('returns an entry for the provided effect', () => {
-        expect(actionCreators).toEqual(
-          {loadSomethingEffect: expect.anything()}
-        );
+        expect(Object.keys(actionCreators)).toEqual(['loadSomethingEffect']);
       });
 
       it('provided effect has isEffect as true', () => {
@@ -291,6 +350,17 @@ describe('Model', () => {
         expect(actionCreators.loadSomethingEffect(payload)).toEqual(
           actionCreator(modelX.actionType('loadSomethingEffect'), payload)
         );
+      });
+
+      it('throws when an undefined effect name is accessed', () => {
+        expect(() => {
+          actionCreators.whatever
+        }).toThrow({
+          name: '',
+          message: 'No reducer/effect called [whatever] was found on [articles] model. ' +
+          'Available options are: loadSomethingEffect. ' +
+          'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
+        });
       });
     });
 
@@ -314,9 +384,7 @@ describe('Model', () => {
       const payload = {1: 2};
 
       it('returns an entry for the provided effect', () => {
-        expect(actionCreators).toEqual(
-          {loadSomethingEffect: expect.anything()}
-        );
+        expect(Object.keys(actionCreators)).toEqual(['loadSomethingEffect']);
       });
 
       it('provided effect has isEffect as true', () => {
@@ -344,6 +412,7 @@ describe('Model', () => {
       let selectors;
 
       beforeEach(() => {
+        Model.disableProxyChecks = false;
         selectASpy = jest.fn();
         state = {};
         modelX = new Model({
@@ -361,10 +430,12 @@ describe('Model', () => {
         selectors = modelX.modelSelectors();
       });
 
+      afterEach(() => {
+        Model.disableProxyChecks = true;
+      });
+
       it('returns an entry for the provided selector', () => {
-        expect(selectors).toEqual(
-          {selectA: expect.anything()}
-        );
+        expect(Object.keys(selectors)).toEqual(['selectA']);
       });
 
       it('calls selector func when selector entry is called', () => {
@@ -387,6 +458,7 @@ describe('Model', () => {
       let selectors;
 
       beforeEach(() => {
+        Model.disableProxyChecks = false;
         selectorASpy = jest.fn();
         selectorBSpy = jest.fn();
         resultSpy = jest.fn();
@@ -406,10 +478,12 @@ describe('Model', () => {
         selectors = modelX.modelSelectors();
       });
 
+      afterEach(() => {
+        Model.disableProxyChecks = true;
+      });
+
       it('returns an entry for the provided selector', () => {
-        expect(selectors).toEqual(
-          {selectA: expect.anything()}
-        );
+        expect(Object.keys(selectors)).toEqual(['selectA']);
       });
 
       it('calls selectorA func when selector entry is called', () => {
@@ -440,6 +514,7 @@ describe('Model', () => {
       let selectors;
 
       beforeEach(() => {
+        Model.disableProxyChecks = false;
         selectASpy = jest.fn();
         state = {};
         modelX = new Model({
@@ -459,10 +534,12 @@ describe('Model', () => {
         selectors = modelX.modelSelectors();
       });
 
+      afterEach(() => {
+        Model.disableProxyChecks = true;
+      });
+
       it('returns an entry for the provided selector', () => {
-        expect(selectors).toEqual(
-          {selectA: expect.anything()}
-        );
+        expect(Object.keys(selectors)).toEqual(['selectA']);
       });
 
       it('calls selector func when selector entry is called', () => {

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useSelector} from 'react-redux';
-import {Model} from 'redux-data-model';
-import {SelectorFunction} from "redux-data-model/src/baseTypes";
+import {Model, UndefinedSelectorError, wrapProxy, SelectorFunction} from 'redux-data-model';
 
 /**
  * A react hook for returning data from the provided model's state, by the means of one of its selectors. If you
@@ -18,7 +17,10 @@ import {SelectorFunction} from "redux-data-model/src/baseTypes";
  * @category React Hook
  */
 export function useModelSelector(model: Model, selectorFunc: SelectorFunction): any {
-  const selectors = React.useMemo(() => model.modelSelectors(), [model]);
+  const selectors = React.useMemo(() => {
+    const modelSelectors = model.modelSelectors();
+    return Model.disableProxyChecks ? modelSelectors : wrapProxy(modelSelectors, model, UndefinedSelectorError)
+  }, [model, Model.disableProxyChecks]);
   return useSelector(
     (state: Record<string, any>) => selectorFunc(state, selectors),
   );

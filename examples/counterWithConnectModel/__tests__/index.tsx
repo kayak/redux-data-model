@@ -1,12 +1,18 @@
 import * as React from "react";
 import IndexPage from '../pages/index';
-import {mount} from 'enzyme'
+import {mount} from 'enzyme';
+import {Model} from 'redux-data-model';
 
 describe('IndexPage', () => {
   let page = null;
 
   beforeEach(() => {
+    Model.disableProxyChecks = true;
     page = mount(<IndexPage />);
+  });
+
+  afterEach(() => {
+    Model.disableProxyChecks = false;
   });
 
   it('renders two buttons', () => {

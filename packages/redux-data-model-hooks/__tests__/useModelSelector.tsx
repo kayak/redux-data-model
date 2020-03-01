@@ -59,6 +59,7 @@ describe('useModelSelector', () => {
   });
 
   it('passes state and selectors respectively as the arguments of the selectorFunc', () => {
+     Model.disableProxyChecks = true;
      const selectorFunc = jest.fn();
      mount(
       <Provider store={store}>
@@ -67,5 +68,39 @@ describe('useModelSelector', () => {
     );
 
     expect(selectorFunc).toHaveBeenLastCalledWith(store.getState(), counterModel.modelSelectors());
+    Model.disableProxyChecks = false;
+  });
+
+  describe('when model accesses an undefined selector', () => {
+    it('throws', () => {
+      expect(() => {
+        mount(
+          <Provider store={store}>
+            <Counter model={counterModel} selectorFunc={(state, selectors) => selectors.whatever(state)}/>
+          </Provider>
+        );
+      }).toThrow({
+        name: '',
+        message: `An error occured while selecting the store state: ` +
+        `No selector called [whatever] was found on [counter] model. ` +
+        `Available options are: count. ` +
+        'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info..'
+      });
+    });
+
+    it('thrown non proxy error when Model.disableProxyChecks is true', () => {
+      Model.disableProxyChecks = true;
+      expect(() => {
+        mount(
+          <Provider store={store}>
+            <Counter model={counterModel} selectorFunc={(state, selectors) => selectors.whatever(state)}/>
+          </Provider>
+        );
+      }).toThrow({
+        name: '',
+        message: 'An error occured while selecting the store state: selectors.whatever is not a function.'
+      });
+      Model.disableProxyChecks = false;
+    });
   });
 });

@@ -96,4 +96,36 @@ describe('useModelActions', () => {
       }
     });
   });
+
+  describe('when model accesses an undefined reducer/effect', () => {
+    it('throws', () => {
+      expect(() => {
+        mount(
+          <Provider store={store}>
+            <Counter model={counterModel} actionCaller={(actions) => actions.whatever()}/>
+          </Provider>
+        );
+      }).toThrow({
+        name: '',
+        message: `No reducer/effect called [whatever] was found on [counter] model. ` +
+        `Available options are: increase,tryToIncrease. ` +
+        'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
+      });
+    });
+
+    it('thrown non proxy error when Model.disableProxyChecks is true', () => {
+      Model.disableProxyChecks = true;
+      expect(() => {
+        mount(
+          <Provider store={store}>
+            <Counter model={counterModel} actionCaller={(actions) => actions.whatever()}/>
+          </Provider>
+        );
+      }).toThrow({
+        name: '',
+        message: 'actions.whatever is not a function'
+      });
+      Model.disableProxyChecks = false;
+    });
+  });
 });

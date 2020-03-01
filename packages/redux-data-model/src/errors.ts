@@ -14,7 +14,7 @@ export class NamespaceIsntAStringError extends Error {
       `Namespace must be a string. The provided namespace type was: ${typeof model.namespace}. ` +
       `See ${errorClassesIndexUrl} for more info.`
     );
-    this.name = this.constructor.name;
+    this.name = 'NamespaceIsntAStringError';
   }
 }
 
@@ -29,7 +29,7 @@ export class EmptyNamespaceError extends Error {
       `Namespace must be a non empty string. ` +
       `See ${errorClassesIndexUrl} for more info.`
     );
-    this.name = this.constructor.name;
+    this.name = 'EmptyNamespaceError';
   }
 }
 
@@ -46,7 +46,7 @@ export class InvalidNamespaceError extends Error {
       `It was validated against the following regex: ${String(namespaceRegex)}. ` +
       `See ${errorClassesIndexUrl} for more info.`
     );
-    this.name = this.constructor.name;
+    this.name = 'InvalidNamespaceError';
   }
 }
 
@@ -64,7 +64,7 @@ export class DuplicatedActionTypesError extends Error {
       `reducer/effect action types were: ${reducerAndEffectActionTypes.join(', ')}. ` +
       `See ${errorClassesIndexUrl} for more info.`
     );
-    this.name = this.constructor.name;
+    this.name = 'DuplicatedActionTypesError';
   }
 }
 
@@ -84,7 +84,7 @@ export class BlockingEffectWithoutMatchingEffectError extends Error {
       `[${model.namespace}] model. The provided effect action types were: ${effectActionTypes.join(', ')}. ` +
       `See ${errorClassesIndexUrl} for more info.`
     );
-    this.name = this.constructor.name;
+    this.name = 'BlockingEffectWithoutMatchingEffectError';
   }
 }
 
@@ -92,6 +92,8 @@ export class BlockingEffectWithoutMatchingEffectError extends Error {
  * Thrown when one of your models was not initialized on a [[combineModelReducers]] call, even though a react
  * component was dispatching actions that were meant to trigger its [[ModelOptions.reducers|reducers]] or a
  * mapStateToProps was using one of its [[ModelOptions.selectors|selectors]] for instance.
+ * See [[Model.disableInitializationChecks]] if you need to disable this check,
+ * but keep in mind that is only recommended in tests.
  *
  * @category Error
  */
@@ -102,13 +104,15 @@ export class ModelNotReduxInitializedError extends Error {
       `make this the case for: ${model.namespace}. ` +
       `See ${errorClassesIndexUrl} for more info.`
     );
-    this.name = this.constructor.name;
+    this.name = 'ModelNotReduxInitializedError';
   }
 }
 
 /**
  * Thrown when one of your models was not initialized on a [[modelRootSaga]] call, even though a react component
  * was dispatching actions that were meant to trigger its [[ModelOptions.effects|effects]] for instance.
+ * See [[Model.disableInitializationChecks]] if you need to disable this check,
+ * but keep in mind that is only recommended in tests.
  *
  * @category Error
  */
@@ -119,7 +123,7 @@ export class ModelNotSagaInitializedError extends Error {
       `make this the case for: ${model.namespace}. ` +
       `See ${errorClassesIndexUrl} for more info.`
     );
-    this.name = this.constructor.name;
+    this.name = 'ModelNotSagaInitializedError';
   }
 }
 
@@ -135,7 +139,7 @@ export class DuplicatedModelNamespaceError extends Error {
       `combineModelReducers: ${namespaces.join(', ')}. ` +
       `See ${errorClassesIndexUrl} for more info.`
     );
-    this.name = this.constructor.name;
+    this.name = 'DuplicatedModelNamespaceError';
   }
 }
 
@@ -151,7 +155,7 @@ export class ActionDataIsntPlainObjectError extends Error {
       `Action data must be a plain object, when calling action [${actionType}]. ` +
       `See ${errorClassesIndexUrl} for more info.`
     );
-    this.name = this.constructor.name;
+    this.name = 'ActionDataIsntPlainObjectError';
   }
 }
 
@@ -170,6 +174,43 @@ export class NonCompatibleActionError extends Error {
       `is: ${JSON.stringify(action)}. ` +
       `See ${errorClassesIndexUrl} for more info.`
     );
-    this.name = this.constructor.name;
+    this.name = 'NonCompatibleActionError';
+  }
+}
+
+/**
+ * Thrown when no [[ModelOptions.reducers|reducer]]/[[ModelOptions.effects|effect]] exist for the accessed
+ * property. That's usually the case for typos.
+ * See [[Model.disableProxyChecks]] if you need to disable this check,
+ * but keep in mind that is only recommended in tests.
+ *
+ * @category Error
+ */
+export class UndefinedReducerOrEffectError extends Error {
+  constructor(name, model) {
+    super(
+      `No reducer/effect called [${name}] was found on [${model.namespace}] model. ` +
+      `Available options are: ${Object.keys(model.actionTypes())}. ` +
+      `See ${errorClassesIndexUrl} for more info.`
+    );
+    this.name = 'UndefinedReducerOrEffectError';
+  }
+}
+
+/**
+ * Thrown when no [[ModelOptions.selectors|selector]] exists for the accessed property.
+ * That's usually the case for typos. See [[Model.disableProxyChecks]] if you need to disable this check,
+ * but keep in mind that is only recommended in tests.
+ *
+ * @category Error
+ */
+export class UndefinedSelectorError extends Error {
+  constructor(name, model) {
+    super(
+      `No selector called [${name}] was found on [${model.namespace}] model. ` +
+      `Available options are: ${Object.keys(model.selectors)}. ` +
+      `See ${errorClassesIndexUrl} for more info.`
+    );
+    this.name = 'UndefinedSelectorError';
   }
 }

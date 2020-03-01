@@ -31,6 +31,7 @@ dispatchers, and sagas, based on the [model's options](../interfaces/modeloption
 ### Properties
 
 * [disableInitializationChecks](model.md#static-disableinitializationchecks)
+* [disableProxyChecks](model.md#static-disableproxychecks)
 
 ### Accessors
 
@@ -55,7 +56,7 @@ dispatchers, and sagas, based on the [model's options](../interfaces/modeloption
 
 \+ **new Model**(`options`: [ModelOptions](../interfaces/modeloptions.md)): *[Model](model.md)*
 
-*Defined in [packages/redux-data-model/src/model.ts:275](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L275)*
+*Defined in [packages/redux-data-model/src/model.ts:281](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L281)*
 
 Creates a model instance.
 
@@ -105,11 +106,22 @@ Name | Type | Description |
 
 ▪ **disableInitializationChecks**: *boolean* = false
 
-*Defined in [packages/redux-data-model/src/model.ts:266](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L266)*
+*Defined in [packages/redux-data-model/src/model.ts:267](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L267)*
 
 Whether [ModelNotReduxInitializedError](modelnotreduxinitializederror.md) and [ModelNotSagaInitializedError](modelnotsagainitializederror.md) should be thrown when the model
 is used without it being integrated with Redux/Saga yet. Normally you only want to disable initialization
 checks in your tests.
+
+___
+
+### `Static` disableProxyChecks
+
+▪ **disableProxyChecks**: *boolean* = false
+
+*Defined in [packages/redux-data-model/src/model.ts:272](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L272)*
+
+Whether [UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md) and [UndefinedSelectorError](undefinedselectorerror.md) should be thrown when a accessing
+properties that were not defined. Normally you only want to disable initialization checks in your tests.
 
 ## Accessors
 
@@ -117,7 +129,7 @@ checks in your tests.
 
 • **get blockingEffects**(): *BlockingEffectMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:588](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L588)*
+*Defined in [packages/redux-data-model/src/model.ts:601](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L601)*
 
 Returns the [blocking effects](../interfaces/modeloptions.md#optional-blockingeffects) as provided in the [constructor](model.md#constructor).
 
@@ -131,7 +143,7 @@ ___
 
 • **get effects**(): *EffectMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:579](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L579)*
+*Defined in [packages/redux-data-model/src/model.ts:592](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L592)*
 
 Returns the [effects](../interfaces/modeloptions.md#optional-effects) as provided in the [constructor](model.md#constructor).
 
@@ -145,7 +157,7 @@ ___
 
 • **get isReduxInitialized**(): *boolean*
 
-*Defined in [packages/redux-data-model/src/model.ts:525](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L525)*
+*Defined in [packages/redux-data-model/src/model.ts:538](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L538)*
 
 Returns whether the model was initialized on a [combineModelReducers](../README.md#combinemodelreducers) call.
 
@@ -159,7 +171,7 @@ ___
 
 • **get isSagaInitialized**(): *boolean*
 
-*Defined in [packages/redux-data-model/src/model.ts:534](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L534)*
+*Defined in [packages/redux-data-model/src/model.ts:547](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L547)*
 
 Returns whether the model was initialized on a [modelRootSaga](../README.md#modelrootsaga) call.
 
@@ -173,7 +185,7 @@ ___
 
 • **get namespace**(): *string*
 
-*Defined in [packages/redux-data-model/src/model.ts:543](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L543)*
+*Defined in [packages/redux-data-model/src/model.ts:556](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L556)*
 
 Returns the [namespace](../interfaces/modeloptions.md#namespace) as provided in the [constructor](model.md#constructor).
 
@@ -187,7 +199,7 @@ ___
 
 • **get reducers**(): *ReducerMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:570](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L570)*
+*Defined in [packages/redux-data-model/src/model.ts:583](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L583)*
 
 Returns the [reducers](../interfaces/modeloptions.md#optional-reducers) as provided in the [constructor](model.md#constructor).
 
@@ -201,7 +213,7 @@ ___
 
 • **get reduxSagas**(): *Saga[]*
 
-*Defined in [packages/redux-data-model/src/model.ts:510](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L510)*
+*Defined in [packages/redux-data-model/src/model.ts:523](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L523)*
 
 Returns an array of sagas, one for each of the declared
 [normal effects](../interfaces/modeloptions.md#optional-effects)/[blocking effects](../interfaces/modeloptions.md#optional-blockingeffects).
@@ -220,7 +232,7 @@ ___
 
 • **get selectors**(): *SelectorMap*
 
-*Defined in [packages/redux-data-model/src/model.ts:561](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L561)*
+*Defined in [packages/redux-data-model/src/model.ts:574](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L574)*
 
 Returns the [selectors](../interfaces/modeloptions.md#optional-selectors) as provided in the [constructor](model.md#constructor).
 
@@ -234,7 +246,7 @@ ___
 
 • **get state**(): *State*
 
-*Defined in [packages/redux-data-model/src/model.ts:552](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L552)*
+*Defined in [packages/redux-data-model/src/model.ts:565](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L565)*
 
 Returns the [initial state](../interfaces/modeloptions.md#state) as provided in the [constructor](model.md#constructor).
 
@@ -248,7 +260,7 @@ An initial state.
 
 ▸ **actionCreators**(): *ActionCreatorsMapObject*
 
-*Defined in [packages/redux-data-model/src/model.ts:366](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L366)*
+*Defined in [packages/redux-data-model/src/model.ts:395](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L395)*
 
 Returns an object with action creators, one for each of the declared [reducers](../interfaces/modeloptions.md#optional-reducers) and
 [effects](../interfaces/modeloptions.md#optional-effects). Only useful for testing purposes, read the docs section on testing for
@@ -266,7 +278,7 @@ ___
 
 ▸ **actionTypes**(): *ActionTypesMapObject*
 
-*Defined in [packages/redux-data-model/src/model.ts:405](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/model.ts#L405)*
+*Defined in [packages/redux-data-model/src/model.ts:372](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/model.ts#L372)*
 
 Returns an object with action types, one for each of the declared [reducers](../interfaces/modeloptions.md#optional-reducers) and
 [effects](../interfaces/modeloptions.md#optional-effects). Only useful for testing purposes, read the docs section on testing for

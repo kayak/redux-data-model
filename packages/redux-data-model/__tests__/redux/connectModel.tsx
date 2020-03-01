@@ -123,6 +123,55 @@ describe('connectModel', () => {
         Model.disableInitializationChecks = false;
       });
     });
+
+    describe('when model accesses an undefined selector', () => {
+      let modelThatThrows;
+      let ConnectedCounterThatThrows;
+
+      beforeAll(() => {
+        modelThatThrows = new Model(modelOptions);
+
+        ConnectedCounterThatThrows = connectModel(
+          [modelThatThrows],
+          (state, _props, selectors) => ({count: selectors.counter.whatever(state)}),
+        )(Counter);
+      });
+
+      it('throws', () => {
+        expect(() => {
+          mount(
+            <Provider store={store}>
+              <ConnectedCounterThatThrows/>
+            </Provider>
+          );
+        }).toThrow({
+          name: '',
+          message: `No selector called [whatever] was found on [counter] model. ` +
+          `Available options are: count. ` +
+          'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
+        });
+      });
+
+      it('thrown non proxy error when Model.disableProxyChecks is true', () => {
+        Model.disableProxyChecks = true;
+        modelThatThrows = new Model(modelOptions);
+        ConnectedCounterThatThrows = connectModel(
+          [modelThatThrows],
+          (state, _props, selectors) => ({count: selectors.counter.whatever(state)}),
+        )(Counter);
+        expect(() => {
+          mount(
+            <Provider store={store}>
+              <ConnectedCounterThatThrows/>
+            </Provider>
+          );
+        }).toThrow({
+          name: '',
+          message: 'selectors.counter.whatever is not a function'
+        });
+        Model.disableProxyChecks = false;
+      });
+    });
   });
 
   describe('when using default userProvidedMapDispatchToProps', () => {
@@ -212,7 +261,7 @@ describe('connectModel', () => {
       });
     });
 
-    describe('when model has not been marked as loaded prior to usage', () => {
+    describe('when model accesses an undefined reducer/effect', () => {
       let modelThatThrows;
       let ConnectedCounterThatThrows;
 
@@ -229,27 +278,35 @@ describe('connectModel', () => {
         expect(() => {
           mount(
             <Provider store={store}>
-              <ConnectedCounterThatThrows actionCaller={actions => actions.tryToIncrease()} />
+              <ConnectedCounterThatThrows actionCaller={actions => actions.whatever()} />
             </Provider>
           );
         }).toThrow({
           name: '',
-          message: `Models need to be initialized with combineModelReducers prior to any usage. Now make this ` +
-          `the case for: ${modelThatThrows.namespace}. ` +
+          message: `No reducer/effect called [whatever] was found on [counter] model. ` +
+          `Available options are: increment,tryToIncrease. ` +
           'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
         });
       });
 
-      it('does not thrown when Model.disableInitializationChecks is true', () => {
-        Model.disableInitializationChecks = true;
+      it('thrown non proxy error when Model.disableProxyChecks is true', () => {
+        Model.disableProxyChecks = true;
+        modelThatThrows = new Model(modelOptions);
+        ConnectedCounterThatThrows = connectModel(
+          [modelThatThrows],
+          null,
+        )(CounterThatFiresCallback);
         expect(() => {
           mount(
             <Provider store={store}>
-              <ConnectedCounterThatThrows actionCaller={actions => actions.tryToIncrease()} />
+              <ConnectedCounterThatThrows actionCaller={actions => actions.whatever()} />
             </Provider>
           );
-        }).not.toThrow();
-        Model.disableInitializationChecks = false;
+        }).toThrow({
+          name: '',
+          message: 'actions.whatever is not a function'
+        });
+        Model.disableProxyChecks = false;
       });
     });
   });

@@ -8,6 +8,8 @@ import {
 } from '../baseTypes';
 import {Model} from '../model';
 import {bindModelActionCreators} from './bindModelActionCreators';
+import {wrapProxy} from "../utils";
+import {UndefinedReducerOrEffectError, UndefinedSelectorError} from "../errors";
 
 /**
  * @ignore
@@ -21,7 +23,13 @@ export function connectModelImpl(
   const modelActionCreators: NamespacedActionCreatorsMapObject = {};
 
   for (const model of models) {
-    set(selectors, model.namespace, model.modelSelectors());
+    const modelSelectors = model.modelSelectors();
+
+    set(selectors, model.namespace, Model.disableProxyChecks ? modelSelectors : wrapProxy(
+      modelSelectors,
+      model,
+      UndefinedSelectorError,
+    ));
     set(modelActionCreators, model.namespace, model.actionCreators());
   }
 
@@ -34,10 +42,16 @@ export function connectModelImpl(
 
     // Bind dispatch function
     for (const model of models) {
+      const boundActionCreators = bindModelActionCreators(get(modelActionCreators, model.namespace), dispatch);
+
       set(
         result,
         model.namespace,
-        bindModelActionCreators(get(modelActionCreators, model.namespace), dispatch),
+        Model.disableProxyChecks ? boundActionCreators : wrapProxy(
+          boundActionCreators,
+          model,
+          UndefinedReducerOrEffectError,
+        ),
       );
     }
 

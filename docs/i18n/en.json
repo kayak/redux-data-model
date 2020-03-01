@@ -49,6 +49,14 @@
         "title": "API - Errors - NonCompatibleActionError",
         "sidebar_label": "NonCompatibleActionError"
       },
+      "api/classes/api-classes-undefinedreduceroreffecterror": {
+        "title": "API - Errors - UndefinedReducerOrEffectError",
+        "sidebar_label": "UndefinedReducerOrEffectError"
+      },
+      "api/classes/api-classes-undefinedselectorerror": {
+        "title": "API - Errors - UndefinedSelectorError",
+        "sidebar_label": "UndefinedSelectorError"
+      },
       "api/interfaces/api-interfaces-model-options": {
         "title": "API - Interfaces - ModelOptions",
         "sidebar_label": "ModelOptions"
@@ -109,6 +117,14 @@
       "headers/classes/api-classes-noncompatibleactionerror": {
         "title": "API - Errors - NonCompatibleActionError",
         "sidebar_label": "NonCompatibleActionError"
+      },
+      "headers/classes/api-classes-undefinedreduceroreffecterror": {
+        "title": "API - Errors - UndefinedReducerOrEffectError",
+        "sidebar_label": "UndefinedReducerOrEffectError"
+      },
+      "headers/classes/api-classes-undefinedselectorerror": {
+        "title": "API - Errors - UndefinedSelectorError",
+        "sidebar_label": "UndefinedSelectorError"
       },
       "headers/interfaces/api-interfaces-model-options": {
         "title": "API - Interfaces - ModelOptions",

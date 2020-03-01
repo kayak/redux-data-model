@@ -17,6 +17,8 @@ generated from source.
 Thrown when one of your models was not initialized on a [combineModelReducers](../README.md#combinemodelreducers) call, even though a react
 component was dispatching actions that were meant to trigger its [reducers](../interfaces/modeloptions.md#optional-reducers) or a
 mapStateToProps was using one of its [selectors](../interfaces/modeloptions.md#optional-selectors) for instance.
+See [Model.disableInitializationChecks](model.md#static-disableinitializationchecks) if you need to disable this check,
+but keep in mind that is only recommended in tests.
 
 ## Hierarchy
 
@@ -43,7 +45,7 @@ mapStateToProps was using one of its [selectors](../interfaces/modeloptions.md#o
 
 \+ **new ModelNotReduxInitializedError**(`model`: any): *[ModelNotReduxInitializedError](modelnotreduxinitializederror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:98](https://github.com/kayak/redux-data-model/blob/07a4f7b/packages/redux-data-model/src/errors.ts#L98)*
+*Defined in [packages/redux-data-model/src/errors.ts:100](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/errors.ts#L100)*
 
 **Parameters:**
 

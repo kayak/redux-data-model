@@ -1,7 +1,7 @@
 ---
-title: API - Errors - NamespaceIsntAStringError
-sidebar_label: NamespaceIsntAStringError
-id: api-classes-namespaceisntastringerror
+title: API - Errors - UndefinedReducerOrEffectError
+sidebar_label: UndefinedReducerOrEffectError
+id: api-classes-undefinedreduceroreffecterror
 ---
 
 # Redux-Data-Model API Reference Guide
@@ -10,46 +10,50 @@ This reference guide lists all methods exposed by redux-data-model. Contribution
 more details to the descriptions or additional examples are highly appreciated! Please note that the docs are
 generated from source.
 
-[redux-data-model](../README.md) › [NamespaceIsntAStringError](namespaceisntastringerror.md)
+[redux-data-model](../README.md) › [UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md)
 
-# Class: NamespaceIsntAStringError
+# Class: UndefinedReducerOrEffectError
 
-Thrown when the provided [namespace](../interfaces/modeloptions.md#namespace), for one of your models, isn't a string.
+Thrown when no [reducer](../interfaces/modeloptions.md#optional-reducers)/[effect](../interfaces/modeloptions.md#optional-effects) exist for the accessed
+property. That's usually the case for typos.
+See [Model.disableProxyChecks](model.md#static-disableproxychecks) if you need to disable this check,
+but keep in mind that is only recommended in tests.
 
 ## Hierarchy
 
 * [Error](namespaceisntastringerror.md#static-error)
 
-  ↳ **NamespaceIsntAStringError**
+  ↳ **UndefinedReducerOrEffectError**
 
 ## Index
 
 ### Constructors
 
-* [constructor](namespaceisntastringerror.md#constructor)
+* [constructor](undefinedreduceroreffecterror.md#constructor)
 
 ### Properties
 
-* [message](namespaceisntastringerror.md#message)
-* [name](namespaceisntastringerror.md#name)
-* [stack](namespaceisntastringerror.md#optional-stack)
-* [Error](namespaceisntastringerror.md#static-error)
+* [message](undefinedreduceroreffecterror.md#message)
+* [name](undefinedreduceroreffecterror.md#name)
+* [stack](undefinedreduceroreffecterror.md#optional-stack)
+* [Error](undefinedreduceroreffecterror.md#static-error)
 
 ## Constructors
 
 ###  constructor
 
-\+ **new NamespaceIsntAStringError**(`model`: any): *[NamespaceIsntAStringError](namespaceisntastringerror.md)*
+\+ **new UndefinedReducerOrEffectError**(`name`: any, `model`: any): *[UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:11](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/errors.ts#L11)*
+*Defined in [packages/redux-data-model/src/errors.ts:189](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/errors.ts#L189)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
+`name` | any |
 `model` | any |
 
-**Returns:** *[NamespaceIsntAStringError](namespaceisntastringerror.md)*
+**Returns:** *[UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md)*
 
 ## Properties
 

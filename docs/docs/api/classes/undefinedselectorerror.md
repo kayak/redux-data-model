@@ -1,7 +1,7 @@
 ---
-title: API - Errors - NamespaceIsntAStringError
-sidebar_label: NamespaceIsntAStringError
-id: api-classes-namespaceisntastringerror
+title: API - Errors - UndefinedSelectorError
+sidebar_label: UndefinedSelectorError
+id: api-classes-undefinedselectorerror
 ---
 
 # Redux-Data-Model API Reference Guide
@@ -10,46 +10,49 @@ This reference guide lists all methods exposed by redux-data-model. Contribution
 more details to the descriptions or additional examples are highly appreciated! Please note that the docs are
 generated from source.
 
-[redux-data-model](../README.md) › [NamespaceIsntAStringError](namespaceisntastringerror.md)
+[redux-data-model](../README.md) › [UndefinedSelectorError](undefinedselectorerror.md)
 
-# Class: NamespaceIsntAStringError
+# Class: UndefinedSelectorError
 
-Thrown when the provided [namespace](../interfaces/modeloptions.md#namespace), for one of your models, isn't a string.
+Thrown when no [selector](../interfaces/modeloptions.md#optional-selectors) exists for the accessed property.
+That's usually the case for typos. See [Model.disableProxyChecks](model.md#static-disableproxychecks) if you need to disable this check,
+but keep in mind that is only recommended in tests.
 
 ## Hierarchy
 
 * [Error](namespaceisntastringerror.md#static-error)
 
-  ↳ **NamespaceIsntAStringError**
+  ↳ **UndefinedSelectorError**
 
 ## Index
 
 ### Constructors
 
-* [constructor](namespaceisntastringerror.md#constructor)
+* [constructor](undefinedselectorerror.md#constructor)
 
 ### Properties
 
-* [message](namespaceisntastringerror.md#message)
-* [name](namespaceisntastringerror.md#name)
-* [stack](namespaceisntastringerror.md#optional-stack)
-* [Error](namespaceisntastringerror.md#static-error)
+* [message](undefinedselectorerror.md#message)
+* [name](undefinedselectorerror.md#name)
+* [stack](undefinedselectorerror.md#optional-stack)
+* [Error](undefinedselectorerror.md#static-error)
 
 ## Constructors
 
 ###  constructor
 
-\+ **new NamespaceIsntAStringError**(`model`: any): *[NamespaceIsntAStringError](namespaceisntastringerror.md)*
+\+ **new UndefinedSelectorError**(`name`: any, `model`: any): *[UndefinedSelectorError](undefinedselectorerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:11](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/errors.ts#L11)*
+*Defined in [packages/redux-data-model/src/errors.ts:207](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/errors.ts#L207)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
+`name` | any |
 `model` | any |
 
-**Returns:** *[NamespaceIsntAStringError](namespaceisntastringerror.md)*
+**Returns:** *[UndefinedSelectorError](undefinedselectorerror.md)*
 
 ## Properties
 

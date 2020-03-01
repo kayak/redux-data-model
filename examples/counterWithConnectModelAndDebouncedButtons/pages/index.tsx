@@ -23,12 +23,12 @@ export const counterModel = new Model({
     }
   },
   effects: {
-    * tryToIncrement(_action, sagaEffects, {increment}) {
+    *tryToIncrement(_action, sagaEffects, {increment}) {
       // Let's pretend something asynchronous need to be performed here
       yield sagaEffects.delay(100);
       yield sagaEffects.put(increment());
     },
-    * tryToDecrement(_action, sagaEffects, {decrement}) {
+    *tryToDecrement(_action, sagaEffects, {decrement}) {
       // Let's pretend something asynchronous need to be performed here
       yield sagaEffects.delay(100);
       yield sagaEffects.put(decrement());
@@ -36,7 +36,6 @@ export const counterModel = new Model({
   },
   blockingEffects: {
     *tryToIncrement(actionType, {debounce}, {tryToIncrement}) {
-      console.log(actionType, 'ohhh')
       yield debounce(3000, actionType, tryToIncrement);
     },
     *tryToDecrement(actionType, {debounce}, {tryToDecrement}) {

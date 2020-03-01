@@ -57,7 +57,7 @@ import {
   SelectorModelMap,
   State,
 } from './baseTypes';
-import {actionCreator, ActionInternalsObject} from "./utils";
+import {actionCreator, ActionInternalsObject, wrapProxy} from "./utils";
 import {
   BlockingEffectWithoutMatchingEffectError,
   DuplicatedActionTypesError,
@@ -65,7 +65,8 @@ import {
   InvalidNamespaceError,
   ModelNotReduxInitializedError,
   ModelNotSagaInitializedError,
-  NamespaceIsntAStringError
+  NamespaceIsntAStringError,
+  UndefinedReducerOrEffectError,
 } from './errors'
 
 /**
@@ -264,6 +265,11 @@ export class Model {
    * checks in your tests.
    */
   static disableInitializationChecks = false;
+  /**
+   * Whether [[UndefinedReducerOrEffectError]] and [[UndefinedSelectorError]] should be thrown when a accessing
+   * properties that were not defined. Normally you only want to disable initialization checks in your tests.
+   */
+  static disableProxyChecks = false;
 
   private _isReduxInitialized: boolean;
   private _isSagaInitialized: boolean;
@@ -355,45 +361,6 @@ export class Model {
   }
 
   /**
-   * Returns an object with action creators, one for each of the declared [[ModelOptions.reducers|reducers]] and
-   * [[ModelOptions.effects|effects]]. Only useful for testing purposes, read the docs section on testing for
-   * more info, or when you need to process actions from a different model's
-   * [[ModelOptions.reducers|reducers]]/[[ModelOptions.effects|effects]]. Being the latter a common
-   * approach when dispatching another model's actions within your [[ModelOptions.effects|effects]].
-   *
-   * @returns An action creator's map object.
-   */
-  public actionCreators(): ActionCreatorsMapObject {
-    const actions = {};
-
-    const actionCreatorBuilder = actionName => (
-      payload: object = {}, __actionInternals: ActionInternalsObject=undefined,
-    ) => {
-      if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
-        throw new ModelNotReduxInitializedError(this);
-      }
-
-      if (!this.isSagaInitialized && !Model.disableInitializationChecks) {
-        throw new ModelNotSagaInitializedError(this);
-      }
-
-      return actionCreator(this.actionType(actionName), payload, __actionInternals);
-    };
-
-    for (const reducerName in this._reducers) {
-      actions[reducerName] = actionCreatorBuilder(reducerName);
-      actions[reducerName].isEffect = false;
-    }
-
-    for (const effectName in this._effects) {
-      actions[effectName] = actionCreatorBuilder(effectName);
-      actions[effectName].isEffect = true;
-    }
-
-    return actions;
-  }
-
-  /**
    * Returns an object with action types, one for each of the declared [[ModelOptions.reducers|reducers]] and
    * [[ModelOptions.effects|effects]]. Only useful for testing purposes, read the docs section on testing for
    * more info, or when you need to process actions from a different model's
@@ -413,7 +380,47 @@ export class Model {
       actionsTypes[effectName] = this.actionType(effectName);
     }
 
-    return actionsTypes;
+    return Model.disableProxyChecks ? actionsTypes : wrapProxy(actionsTypes, this, UndefinedReducerOrEffectError);
+  }
+
+  /**
+   * Returns an object with action creators, one for each of the declared [[ModelOptions.reducers|reducers]] and
+   * [[ModelOptions.effects|effects]]. Only useful for testing purposes, read the docs section on testing for
+   * more info, or when you need to process actions from a different model's
+   * [[ModelOptions.reducers|reducers]]/[[ModelOptions.effects|effects]]. Being the latter a common
+   * approach when dispatching another model's actions within your [[ModelOptions.effects|effects]].
+   *
+   * @returns An action creator's map object.
+   */
+  public actionCreators(): ActionCreatorsMapObject {
+    const actionTypes = this.actionTypes();
+    const actions = {};
+
+    const actionCreatorBuilder = actionName => (
+      payload: object = {}, __actionInternals: ActionInternalsObject=undefined,
+    ) => {
+      if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
+        throw new ModelNotReduxInitializedError(this);
+      }
+
+      if (!this.isSagaInitialized && !Model.disableInitializationChecks) {
+        throw new ModelNotSagaInitializedError(this);
+      }
+
+      return actionCreator(actionTypes[actionName], payload, __actionInternals);
+    };
+
+    for (const reducerName in this._reducers) {
+      actions[reducerName] = actionCreatorBuilder(reducerName);
+      actions[reducerName].isEffect = false;
+    }
+
+    for (const effectName in this._effects) {
+      actions[effectName] = actionCreatorBuilder(effectName);
+      actions[effectName].isEffect = true;
+    }
+
+    return Model.disableProxyChecks ? actions : wrapProxy(actions, this, UndefinedReducerOrEffectError);
   }
 
   /**
