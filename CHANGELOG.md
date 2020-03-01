@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/kayak/redux-data-model/compare/v0.8.0...v0.9.0) (2020-03-01)
+
+
+### Bug Fixes
+
+* fix blocking effects, which should not use yield star ([06a42e3](https://github.com/kayak/redux-data-model/commit/06a42e3a12e45c61646d29205f374975288f8273))
+
+
+### Features
+
+* add checks for undefined selectors/reducers/effects ([0253755](https://github.com/kayak/redux-data-model/commit/02537559f17de59695de8514d90a054fc66b0773))
+* add support to memoized selectors with array sintax ([2b1609d](https://github.com/kayak/redux-data-model/commit/2b1609d9b877c5161f70359344e60e7132ad89d3)), closes [#3](https://github.com/kayak/redux-data-model/issues/3)
+* add support to reusing other model's actions for normalisation ([07a4f7b](https://github.com/kayak/redux-data-model/commit/07a4f7b9f8f348daad19d8d8607bafb6c5489ac1))
+* introduce blocking effects to model class ([334d989](https://github.com/kayak/redux-data-model/commit/334d9892bf15ced817272abdd721eab865459bae))
+
+
+
+
+
 # [0.8.0](https://github.com/kayak/redux-data-model/compare/v0.7.1...v0.8.0) (2020-02-13)
 
 

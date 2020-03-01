@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/kayak/redux-data-model/compare/v0.8.0...v0.9.0) (2020-03-01)
+
+
+### Features
+
+* add checks for undefined selectors/reducers/effects ([0253755](https://github.com/kayak/redux-data-model/commit/02537559f17de59695de8514d90a054fc66b0773))
+
+
+
+
+
 # [0.8.0](https://github.com/kayak/redux-data-model/compare/v0.7.1...v0.8.0) (2020-02-13)
 
 **Note:** Version bump only for package redux-data-model-connect-model-with-nested-namespace.js
