@@ -62,8 +62,8 @@
             });
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Concepts</h1></header><article><div><span><p>Redux-data-model has only a few core concepts.</p>
 <h2><a class="anchor" aria-hidden="true" id="model"></a><a href="#model" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Model</h2>
-<p>Models are the most basic data structure/abstraction in redux-data-model. They require a set of options to be provided
-when initializing them.</p>
+<p><a href="/redux-data-model/docs/api/classes/api-classes-model">Models</a> are the most basic data structure/abstraction in redux-data-model. They require a set of
+<a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options">options</a> to be provided when initializing them.</p>
 <h4><a class="anchor" aria-hidden="true" id="example"></a><a href="#example" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example:</h4>
 <pre><code class="hljs css language-javascript"><span class="hljs-keyword">import</span> {Model} <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-data-model'</span>;
 <span class="hljs-keyword">import</span> _ <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash'</span>;
@@ -76,23 +76,32 @@ when initializing them.</p>
     <span class="hljs-comment">// Mandatory options</span>
     <span class="hljs-attr">namespace</span>: <span class="hljs-string">'users'</span>,
     <span class="hljs-attr">state</span>: {
-        <span class="hljs-attr">loading</span>: {},
-        <span class="hljs-attr">data</span>: {},
+        <span class="hljs-attr">userIds</span>: [],
+        <span class="hljs-attr">loadingById</span>: {},
+        <span class="hljs-attr">userById</span>: {},
     },
 
     <span class="hljs-comment">// Optional options</span>
     <span class="hljs-attr">selectors</span>: {
-        <span class="hljs-attr">loadingByUser</span>: <span class="hljs-function">(<span class="hljs-params">state, userId</span>) =&gt;</span> _.get(state, <span class="hljs-string">`loading[<span class="hljs-subst">${userId}</span>]`</span>, <span class="hljs-literal">true</span>),
-        <span class="hljs-attr">userById</span>: <span class="hljs-function">(<span class="hljs-params">state, userId</span>) =&gt;</span> _.get(state, <span class="hljs-string">`data[<span class="hljs-subst">${userId}</span>]`</span>),
+        <span class="hljs-comment">// Non memoized selectors</span>
+        <span class="hljs-attr">loadingById</span>: <span class="hljs-function">(<span class="hljs-params">state, userId</span>) =&gt;</span> _.get(state, <span class="hljs-string">`loadingById[<span class="hljs-subst">${userId}</span>]`</span>, <span class="hljs-literal">true</span>),
+        <span class="hljs-attr">userById</span>: <span class="hljs-function">(<span class="hljs-params">state, userId</span>) =&gt;</span> _.get(state, <span class="hljs-string">`userById[<span class="hljs-subst">${userId}</span>]`</span>),
+        <span class="hljs-comment">// Memoized selectors</span>
+        <span class="hljs-attr">users</span>: [
+          <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state.userIds,
+          state =&gt; state.userById,
+          (userIds, userById) =&gt; userIds.map(<span class="hljs-function"><span class="hljs-params">id</span> =&gt;</span> userById[id]),
+        ],
     },
     <span class="hljs-attr">reducers</span>: {
-        saveUser(state, {data, userId}) {
-          state.loading[userId] = <span class="hljs-literal">false</span>;
-          state.data[userId] = data;
+        saveUser(state, { data, userId }) {
+          state.userIds.append(userId);
+          state.loadingById[userId] = <span class="hljs-literal">false</span>;
+          state.userById[userId] = data;
         },
     },
     <span class="hljs-attr">effects</span>: {
-        *fetchUser({userId}, {call, put}, {saveUser}) {
+        *fetchUser({ userId }, { call, put }, { saveUser }) {
             <span class="hljs-keyword">try</span> {
                 <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">yield</span> call(fetchApi, <span class="hljs-string">`http://jsonplaceholder.typicode.com/users/<span class="hljs-subst">${userId}</span>`</span>);
                 <span class="hljs-keyword">yield</span> put(saveUser({data, userId}));
@@ -101,17 +110,19 @@ when initializing them.</p>
              }
         },
     },
+    <span class="hljs-attr">blockingEffects</span>: {
+        *fetchUser(actionType, { debounce }, { fetchUser }) {
+            <span class="hljs-keyword">yield</span> debounce(<span class="hljs-number">100</span>, actionType, fetchUser);
+        },
+    },
 });
 </code></pre>
-<p>A model consists of the set of state, selectors, actions, reducers and asynchrounous workflows (i.e. effects) that
-are related to a given entity (e.g.. users). Below you can find a more in depth description on the many options
-that can be used during a model instantiation.</p>
+<p>A <a href="/redux-data-model/docs/api/classes/api-classes-model">model</a> consists of the set of state, selectors, reducers and asynchrounous workflows (i.e. effects and blocking
+effects) that are related to a given entity (e.g. users). Below you can find a more in depth description on the
+many <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options">options</a> that can be used during a model instantiation.</p>
 <h3><a class="anchor" aria-hidden="true" id="model-options"></a><a href="#model-options" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Model Options</h3>
-<p>An object with a few key-value pairs. Being <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#namespace">namespace</a> and
-<a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#state">state</a> mandatory, while
-<a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-selectors">selectors</a>,
-<a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-reducers">reducers</a>,
-<a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-effects">effects</a> are optional. For more info see
+<p>An object with a few key-value pairs. Being <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#namespace">namespace</a> and <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#state">state</a> mandatory, while
+<a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-selectors">selectors</a>, <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-reducers">reducers</a>, <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-effects">effects</a>, and <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-blockingeffects">blocking effects</a> are optional. For more info see
 <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options">this</a>.</p>
 <h3><a class="anchor" aria-hidden="true" id="modelss-api"></a><a href="#modelss-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Models's API</h3>
 <p>For more info see <a href="/redux-data-model/docs/api/classes/api-classes-model">this</a>.</p>

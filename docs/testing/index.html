@@ -90,7 +90,7 @@ Model.disableInitializationChecks = <span class="hljs-literal">true</span>;
         decrement(state, {}) {
           state.count -= <span class="hljs-number">1</span>;
         },
-        incrementByX(state, {x}) {
+        incrementByX(state, { x }) {
           state.count += x;
         },
     },
@@ -106,21 +106,36 @@ Model.disableInitializationChecks = <span class="hljs-literal">true</span>;
           <span class="hljs-keyword">yield</span> put(decrement());
       },
     },
+    <span class="hljs-attr">blockingEffects</span>: {
+      *asyncIncrement(actionType, { debounce }, { asyncIncrement }) {
+          <span class="hljs-comment">// This overrides the asyncIncrement default behavior, which would be to use a takeEvery effect. Instead</span>
+          <span class="hljs-comment">// it will use a debounce effect.</span>
+          <span class="hljs-keyword">yield</span> debounce(<span class="hljs-number">300</span>, actionType, asyncIncrement);
+      },
+    },
 });
 </code></pre>
-<h3><a class="anchor" aria-hidden="true" id="testing-the-namespace"></a><a href="#testing-the-namespace" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing the namespace:</h3>
+<h3><a class="anchor" aria-hidden="true" id="testing-the-namespace"></a><a href="#testing-the-namespace" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing the <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#namespace">namespace</a>:</h3>
 <pre><code class="hljs css language-javascript">it(<span class="hljs-string">'namespace is set to counter'</span>, () =&gt; {
   expect(counterModel.namespace).toEqual(<span class="hljs-string">'counter'</span>);
 });
 </code></pre>
-<h3><a class="anchor" aria-hidden="true" id="testing-the-initial-state"></a><a href="#testing-the-initial-state" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing the initial state:</h3>
+<h3><a class="anchor" aria-hidden="true" id="testing-the-initial-state-state"></a><a href="#testing-the-initial-state-state" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing the <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#state">initial state</a>:</h3>
 <pre><code class="hljs css language-javascript">it(<span class="hljs-string">'initial state is properly set'</span>, () =&gt; {
   expect(counterModel.state).toEqual({
     <span class="hljs-attr">count</span>: <span class="hljs-number">0</span>,
   });
 });
 </code></pre>
-<h3><a class="anchor" aria-hidden="true" id="testing-the-reducers"></a><a href="#testing-the-reducers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing the reducers:</h3>
+<h3><a class="anchor" aria-hidden="true" id="testing-the-selectors"></a><a href="#testing-the-selectors" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing the <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-selectors">selectors</a>:</h3>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> selectors = counterModel.selectors;
+
+it(<span class="hljs-string">'count selector returns the count'</span>, () =&gt; {
+  <span class="hljs-keyword">const</span> state = {...counterModel.state};
+  expect(selectors.count(state)).toEqual(state.count);
+});
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="testing-the-reducers"></a><a href="#testing-the-reducers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing the <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-reducers">reducers</a>:</h3>
 <pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> action = {}; <span class="hljs-comment">// It's empty, since the reducers don't use the action's data</span>
 
 it(<span class="hljs-string">'increments reducer change count to current + 1'</span>, () =&gt; {
@@ -135,11 +150,11 @@ it(<span class="hljs-string">'decrements reducer change count to current - 1'</s
   expect(state.count).toEqual(<span class="hljs-number">-1</span>);
 });
 </code></pre>
-<h3><a class="anchor" aria-hidden="true" id="testing-the-effects"></a><a href="#testing-the-effects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing the effects:</h3>
+<h3><a class="anchor" aria-hidden="true" id="testing-the-effects"></a><a href="#testing-the-effects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing the <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-effects">effects</a>:</h3>
 <pre><code class="hljs css language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> sagaEffects <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-saga/effects'</span>
 
 <span class="hljs-keyword">const</span> action = {}; <span class="hljs-comment">// It's empty, since the effects don't use action's data</span>
-<span class="hljs-keyword">const</span> actionCreators = counterModel.actionCreators();
+<span class="hljs-keyword">const</span> actionCreators = counterModel.reducers;
 
 it(<span class="hljs-string">'asyncIncrement effect yields put increment reducer'</span>, () =&gt; {
   <span class="hljs-keyword">const</span> gen = counterModel.effects.asyncIncrement(action, sagaEffects, actionCreators);
@@ -155,7 +170,20 @@ it(<span class="hljs-string">'asyncDecrement effect yields put decrement reducer
   );
 });
 </code></pre>
-<p>In case you are wondering how to test blocking effects, such as the
+<h3><a class="anchor" aria-hidden="true" id="testing-the-blocking-effects"></a><a href="#testing-the-blocking-effects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing the <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-blockingeffects">blocking effects</a>:</h3>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> sagaEffects <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-saga/effects'</span>
+
+<span class="hljs-keyword">const</span> actionType = <span class="hljs-string">'whatever'</span>;
+<span class="hljs-keyword">const</span> modelEffects = counterModel.effects;
+
+it(<span class="hljs-string">'asyncIncrement blocking effect yields debounce asyncIncrement effect for 300 milliseconds'</span>, () =&gt; {
+  <span class="hljs-keyword">const</span> gen = counterModel.blockingEffects.asyncIncrement(actionType, sagaEffects, modelEffects);
+  expect(gen.next().value).toEqual(
+    sagaEffects.debounce(<span class="hljs-number">300</span>, actionType, modelEffects.asyncIncrement)
+  );
+});
+</code></pre>
+<p>In case you are wondering how to test effects that yields a value, such as the
 <a href="https://redux-saga.js.org/docs/api/#callfn-args">call</a> effect, you can set the value returned by an yield expression
 inside a generator. That's possible by passing an argument to its
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator/next">next</a> method.

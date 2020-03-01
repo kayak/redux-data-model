@@ -241,12 +241,12 @@ re-render a component.</p>
 <p>Despite that, you might be curious on how actions can trigger the reducers we have just created. That's actually
 quite simple. See a few action examples below:</p>
 <ul>
-<li>{type: 'counter.increment'}</li>
-<li>{type: 'counter.decrement'}</li>
-<li>{type: 'counter.changeCountByX', x: 1}</li>
+<li>{type: '@@counter.increment@@'}</li>
+<li>{type: '@@counter.decrement@@'}</li>
+<li>{type: '@@counter.changeCountByX@@', x: 1}</li>
 </ul>
-<p>One can rightfully assume here they could dispatch those actions and have the respective <a href="concepts#model">model</a>'s reducers triggered.
-In other words, any action with type as modelNamespace.reducerName, will trigger the reducerName in question.
+<p>One can assume here they could dispatch those actions and have the respective <a href="concepts#model">model</a>'s reducers triggered, that
+won't work but the action types are precisely the same.
 Unlike <a href="https://react-redux.js.org/api/connect">connect</a>, <a href="/redux-data-model/docs/api/api-index#connectmodel">connectModel</a> won't inject dispatch into connected components. That's because it sets a default
 mapStateToProps, if you havent set any. This default mapDispatchToProps, would have a shape like:</p>
 <pre><code class="hljs css language-json">{
