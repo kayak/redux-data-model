@@ -1,7 +1,7 @@
 ---
-title: API - Errors - UndefinedReducerOrEffectError
-sidebar_label: UndefinedReducerOrEffectError
-id: api-classes-undefinedreduceroreffecterror
+title: API - Errors - UndefinedBlockingSagaEffectError
+sidebar_label: UndefinedBlockingSagaEffectError
+id: api-classes-undefinedblockingsagaeffecterror
 ---
 
 # Redux-Data-Model API Reference Guide
@@ -10,41 +10,41 @@ This reference guide lists all methods exposed by redux-data-model. Contribution
 more details to the descriptions or additional examples are highly appreciated! Please note that the docs are
 generated from source.
 
-[redux-data-model](../README.md) › [UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md)
+[redux-data-model](../README.md) › [UndefinedBlockingSagaEffectError](undefinedblockingsagaeffecterror.md)
 
-# Class: UndefinedReducerOrEffectError
+# Class: UndefinedBlockingSagaEffectError
 
-Thrown when no [reducer](../interfaces/modeloptions.md#optional-reducers)/[effect](../interfaces/modeloptions.md#optional-effects) exist for the accessed
-property. That's usually the case for typos.
-See [Model.disableProxyChecks](model.md#static-disableproxychecks) if you need to disable this check,
-but keep in mind that is only recommended in tests.
+Thrown when no saga effect, among the intended ones, exists for the accessed property.
+Keep in mind that some saga effects such as put, putResolve, and select, are only available for
+[normal effects](../interfaces/modeloptions.md#optional-effects). See [Model.disableProxyChecks](model.md#static-disableproxychecks) if you need to
+disable this check, but keep in mind that is only recommended in tests.
 
 ## Hierarchy
 
 * [Error](namespaceisntastringerror.md#static-error)
 
-  ↳ **UndefinedReducerOrEffectError**
+  ↳ **UndefinedBlockingSagaEffectError**
 
 ## Index
 
 ### Constructors
 
-* [constructor](undefinedreduceroreffecterror.md#constructor)
+* [constructor](undefinedblockingsagaeffecterror.md#constructor)
 
 ### Properties
 
-* [message](undefinedreduceroreffecterror.md#message)
-* [name](undefinedreduceroreffecterror.md#name)
-* [stack](undefinedreduceroreffecterror.md#optional-stack)
-* [Error](undefinedreduceroreffecterror.md#static-error)
+* [message](undefinedblockingsagaeffecterror.md#message)
+* [name](undefinedblockingsagaeffecterror.md#name)
+* [stack](undefinedblockingsagaeffecterror.md#optional-stack)
+* [Error](undefinedblockingsagaeffecterror.md#static-error)
 
 ## Constructors
 
 ###  constructor
 
-\+ **new UndefinedReducerOrEffectError**(`name`: any, `model`: any): *[UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md)*
+\+ **new UndefinedBlockingSagaEffectError**(`name`: any, `model`: any): *[UndefinedBlockingSagaEffectError](undefinedblockingsagaeffecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:191](https://github.com/kayak/redux-data-model/blob/8317b28/packages/redux-data-model/src/errors.ts#L191)*
+*Defined in [packages/redux-data-model/src/errors.ts:249](https://github.com/kayak/redux-data-model/blob/8317b28/packages/redux-data-model/src/errors.ts#L249)*
 
 **Parameters:**
 
@@ -53,7 +53,7 @@ Name | Type |
 `name` | any |
 `model` | any |
 
-**Returns:** *[UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md)*
+**Returns:** *[UndefinedBlockingSagaEffectError](undefinedblockingsagaeffecterror.md)*
 
 ## Properties
 

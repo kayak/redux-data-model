@@ -1,6 +1,6 @@
 import * as allSagaEffects from "redux-saga/effects";
-import {Model} from '../src';
-import {sagaEffects} from '../src/model';
+import {Model} from '../src/model';
+import {blockingSagaEffects, sagaEffects} from '../src/saga';
 import {actionCreator} from '../src/utils';
 
 describe('Model', () => {
@@ -718,6 +718,37 @@ describe('Model', () => {
         gen.next().value.payload.args[1](action).next();
         expect(__actionInternals.reject).toHaveBeenCalledWith(error);
       });
+
+      it('throws when an undefined saga effect name is accessed', () => {
+        Model.disableProxyChecks = false;
+        modelX = new Model({
+          namespace: 'articles',
+          state,
+          effects: {
+            // @ts-ignore
+            effectA: function*(...args) {effectASpy(...args)},
+          },
+        });
+        modelEffects = modelX.modelEffects();
+        gen = modelEffects.effectA();
+
+        // We need to use mocks since the usual blocking saga helpers employ the fork saga,
+        // which is asynchronous and won't bubble up errors.
+        effectASpy.mockImplementationOnce(function*(action, sagaEffects, _actionCreators) {
+            yield sagaEffects.whatever(action);
+        });
+        gen.next().value.payload.args[1](action).next();
+        expect(() => {
+          effectASpy.mock.results[0].value.next()
+        }).toThrow({
+          name: '',
+          message: 'No saga effect called [whatever] was found on [articles] model. ' +
+          `Available options are: ${Object.keys(sagaEffects)}. ` +
+          'For being able to use other saga effects check blocking effects. ' +
+          'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
+        });
+        Model.disableProxyChecks = true;
+      });
     });
 
     describe('when an effect for the action of another model is present', () => {
@@ -734,6 +765,7 @@ describe('Model', () => {
       let gen;
 
       beforeEach(() => {
+        Model.disableProxyChecks = true;
         effectAXSpy = jest.fn();
         effectAYSpy = jest.fn();
         modelY = new Model({
@@ -791,13 +823,16 @@ describe('Model', () => {
       let gen;
 
       beforeEach(() => {
+        Model.disableProxyChecks = true;
         effectASpy = jest.fn();
         modelX = new Model({
           namespace: 'articles',
           state,
           effects: {
             // @ts-ignore
-            effectA: function*(...args) {effectASpy(...args)},
+            effectA: function*(...args) {
+              effectASpy(...args);
+            },
           },
           blockingEffects: {
             // @ts-ignore
@@ -861,6 +896,39 @@ describe('Model', () => {
         });
         gen.next().value.next().value.payload.args[1](action).next();
         expect(__actionInternals.reject).toHaveBeenCalledWith(error);
+      });
+
+      it('throws when an undefined blocking saga effect name is accessed', () => {
+        Model.disableProxyChecks = false;
+        modelX = new Model({
+          namespace: 'articles',
+          state,
+          effects: {
+            // @ts-ignore
+            effectA: function*(...args) {
+              effectASpy(...args);
+            },
+          },
+          blockingEffects: {
+            // @ts-ignore
+            effectA: function* (actionType, sagaBlockingEffects, {effectA}) {
+              yield sagaBlockingEffects.whatever(actionType, effectA);
+            },
+          },
+        });
+        modelEffects = modelX.modelEffects();
+        gen = modelEffects.effectA();
+
+        expect(() => {
+          gen.next().value.next().value.payload.args[1](action).next();
+        }).toThrow({
+          name: '',
+          message: 'No saga effect called [whatever] was found on [articles] model. ' +
+          `Available options are: ${Object.keys(blockingSagaEffects)}. ` +
+          'For being able to use other saga effects check normal effects. ' +
+          'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
+        });
+        Model.disableProxyChecks = true;
       });
     });
 

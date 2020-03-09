@@ -28,7 +28,9 @@
       "api/classes/api-classes-namespaceisntastringerror",
       "api/classes/api-classes-noncompatibleactionerror",
       "api/classes/api-classes-undefinedreduceroreffecterror",
-      "api/classes/api-classes-undefinedselectorerror"
+      "api/classes/api-classes-undefinedselectorerror",
+      "api/classes/api-classes-undefinedsagaeffecterror",
+      "api/classes/api-classes-undefinedblockingsagaeffecterror"
     ]
   }
 }

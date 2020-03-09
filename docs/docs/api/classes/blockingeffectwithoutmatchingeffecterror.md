@@ -45,7 +45,7 @@ Thrown when [blocking effect](../interfaces/modeloptions.md#optional-blockingeff
 
 \+ **new BlockingEffectWithoutMatchingEffectError**(`model`: any, `effectActionTypes`: any): *[BlockingEffectWithoutMatchingEffectError](blockingeffectwithoutmatchingeffecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:80](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/errors.ts#L80)*
+*Defined in [packages/redux-data-model/src/errors.ts:82](https://github.com/kayak/redux-data-model/blob/8317b28/packages/redux-data-model/src/errors.ts#L82)*
 
 **Parameters:**
 

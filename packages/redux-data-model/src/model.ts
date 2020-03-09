@@ -15,35 +15,9 @@ import {
 } from 'lodash';
 import {AnyAction, Reducer} from 'redux';
 import {Saga} from '@redux-saga/core';
-import {
-  actionChannel,
-  all,
-  apply,
-  call,
-  cancel,
-  cps,
-  debounce,
-  delay,
-  flush,
-  fork,
-  getContext,
-  join,
-  put,
-  putResolve,
-  race,
-  retry,
-  select,
-  setContext,
-  spawn,
-  take,
-  takeEvery as blockingEffectTakeEvery,
-  takeLatest,
-  takeLeading,
-  takeMaybe,
-  throttle,
-} from 'redux-saga/effects';
+import {takeEvery as blockingEffectTakeEvery,} from 'redux-saga/effects';
 import {createSelector} from 'reselect';
-import {modelBlockingGenerator} from './saga';
+import {blockingSagaEffects, modelBlockingGenerator, sagaEffects} from './saga';
 import {
   ActionCreatorsMapObject,
   ActionTypesMapObject,
@@ -66,54 +40,10 @@ import {
   ModelNotReduxInitializedError,
   ModelNotSagaInitializedError,
   NamespaceIsntAStringError,
+  UndefinedBlockingSagaEffectError,
   UndefinedReducerOrEffectError,
+  UndefinedSagaEffectError,
 } from './errors'
-
-/**
- * @ignore
- */
-export const sagaEffects = {
-  actionChannel,
-  all,
-  apply,
-  call,
-  cancel,
-  cps,
-  delay,
-  flush,
-  fork,
-  getContext,
-  join,
-  put,
-  putResolve,
-  race,
-  retry,
-  select,
-  setContext,
-  spawn,
-};
-
-/**
- * @ignore
- */
-export const blockingSagaEffects = {
-  blockingEffectTakeEvery,
-  takeLeading,
-  takeLatest,
-  debounce,
-  throttle,
-  take,
-  takeMaybe,
-  cancel,
-  fork,
-  spawn,
-  apply,
-  call,
-  all,
-  delay,
-  race,
-  join,
-};
 
 /**
  * @ignore
@@ -262,12 +192,14 @@ export class Model {
   /**
    * Whether [[ModelNotReduxInitializedError]] and [[ModelNotSagaInitializedError]] should be thrown when the model
    * is used without it being integrated with Redux/Saga yet. Normally you only want to disable initialization
-   * checks in your tests.
+   * checks in your tests, given they help developers to find out common mistakes soon.
    */
   static disableInitializationChecks = false;
   /**
-   * Whether [[UndefinedReducerOrEffectError]] and [[UndefinedSelectorError]] should be thrown when a accessing
-   * properties that were not defined. Normally you only want to disable initialization checks in your tests.
+   * Whether [[UndefinedReducerOrEffectError]], [[UndefinedSelectorError]], [[UndefinedSagaEffectError]], and
+   * [[UndefinedBlockingSagaEffectError]] should be thrown when a accessing properties that were not defined.
+   * Normally you only want to disable proxy checks in your tests, given they help developers to find out
+   * common mistakes soon.
    */
   static disableProxyChecks = false;
 
@@ -486,12 +418,18 @@ export class Model {
     const effectSagas = {};
     const actionTypes = this.actionTypes();
     const actionCreators = this.actionCreators();
+    const proxiedSagaEffects = Model.disableProxyChecks ? sagaEffects : wrapProxy(
+      sagaEffects, this, UndefinedSagaEffectError,
+    );
+    const proxiedBlockingSagaEffects = Model.disableProxyChecks ? blockingSagaEffects : wrapProxy(
+      blockingSagaEffects, this, UndefinedBlockingSagaEffectError,
+    );
 
     for (const [effectName, effectFunc] of toPairs(this._effects)) {
       const actionType = actionTypes[effectName];
       const effectSaga = modelBlockingGenerator(
         function *(payload: object = {}) {
-          yield* effectFunc(payload, sagaEffects, actionCreators);
+          yield* effectFunc(payload, proxiedSagaEffects, actionCreators);
         }
       );
 
@@ -503,8 +441,11 @@ export class Model {
 
     for (const [effectName, blockingEffectFunc] of toPairs(this._blockingEffects)) {
       const actionType = actionTypes[effectName];
+      const limitedModelEffects = {
+        [effectName]: effectSagas[effectName]
+      };
       effects[effectName] = function* () {
-        yield blockingEffectFunc(actionType, blockingSagaEffects, effectSagas);
+        yield blockingEffectFunc(actionType, proxiedBlockingSagaEffects, limitedModelEffects);
       };
     }
 

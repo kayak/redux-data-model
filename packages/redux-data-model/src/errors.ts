@@ -1,3 +1,5 @@
+import {sagaEffects, blockingSagaEffects} from './saga';
+
 /**
  * @ignore
  */
@@ -212,5 +214,46 @@ export class UndefinedSelectorError extends Error {
       `See ${errorClassesIndexUrl} for more info.`
     );
     this.name = 'UndefinedSelectorError';
+  }
+}
+
+/**
+ * Thrown when no saga effect, among the intended ones, exists for the accessed property.
+ * Keep in mind that some saga effects such as take, takeMaybe, takeLeading, takeLatest, takeEvery,
+ * debounce, and throttle are only available for [[ModelOptions.blockingEffects|blocking effects]].
+ * See [[Model.disableProxyChecks]] if you need to disable this check, but keep in mind that is
+ * only recommended in tests.
+ *
+ * @category Error
+ */
+export class UndefinedSagaEffectError extends Error {
+  constructor(name, model) {
+    super(
+      `No saga effect called [${name}] was found on [${model.namespace}] model. ` +
+      `Available options are: ${Object.keys(sagaEffects)}. ` +
+      `For being able to use other saga effects check blocking effects. ` +
+      `See ${errorClassesIndexUrl} for more info.`
+    );
+    this.name = 'UndefinedSagaEffectError';
+  }
+}
+
+/**
+ * Thrown when no saga effect, among the intended ones, exists for the accessed property.
+ * Keep in mind that some saga effects such as put, putResolve, and select, are only available for
+ * [[ModelOptions.effects|normal effects]]. See [[Model.disableProxyChecks]] if you need to
+ * disable this check, but keep in mind that is only recommended in tests.
+ *
+ * @category Error
+ */
+export class UndefinedBlockingSagaEffectError extends Error {
+  constructor(name, model) {
+    super(
+      `No saga effect called [${name}] was found on [${model.namespace}] model. ` +
+      `Available options are: ${Object.keys(blockingSagaEffects)}. ` +
+      `For being able to use other saga effects check normal effects. ` +
+      `See ${errorClassesIndexUrl} for more info.`
+    );
+    this.name = 'UndefinedBlockingSagaEffectError';
   }
 }

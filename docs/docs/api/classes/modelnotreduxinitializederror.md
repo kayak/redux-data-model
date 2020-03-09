@@ -45,7 +45,7 @@ but keep in mind that is only recommended in tests.
 
 \+ **new ModelNotReduxInitializedError**(`model`: any): *[ModelNotReduxInitializedError](modelnotreduxinitializederror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:100](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/errors.ts#L100)*
+*Defined in [packages/redux-data-model/src/errors.ts:102](https://github.com/kayak/redux-data-model/blob/8317b28/packages/redux-data-model/src/errors.ts#L102)*
 
 **Parameters:**
 

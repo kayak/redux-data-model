@@ -1,9 +1,81 @@
 import {flatten, get, isNil} from 'lodash';
 import {SagaIterator} from '@redux-saga/core';
-import {all, call, spawn} from 'redux-saga/effects';
+import {
+  actionChannel,
+  all,
+  apply,
+  call,
+  cancel,
+  cps,
+  debounce,
+  delay,
+  flush,
+  fork,
+  getContext,
+  join,
+  put,
+  putResolve,
+  race,
+  retry,
+  select,
+  setContext,
+  spawn,
+  take,
+  takeEvery as blockingEffectTakeEvery,
+  takeLatest,
+  takeLeading,
+  takeMaybe,
+  throttle,
+} from 'redux-saga/effects';
 import {Model} from './model';
 import {ActionWithInternals, EffectModelFunction} from './baseTypes';
 import {NonCompatibleActionError} from './errors';
+
+/**
+ * @ignore
+ */
+export const sagaEffects = {
+  actionChannel,
+  all,
+  apply,
+  call,
+  cancel,
+  cps,
+  delay,
+  flush,
+  fork,
+  getContext,
+  join,
+  put,
+  putResolve,
+  race,
+  retry,
+  select,
+  setContext,
+  spawn,
+};
+
+/**
+ * @ignore
+ */
+export const blockingSagaEffects = {
+  blockingEffectTakeEvery,
+  takeLeading,
+  takeLatest,
+  debounce,
+  throttle,
+  take,
+  takeMaybe,
+  cancel,
+  fork,
+  spawn,
+  apply,
+  call,
+  all,
+  delay,
+  race,
+  join,
+};
 
 /**
  * @ignore

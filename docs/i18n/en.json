@@ -49,9 +49,17 @@
         "title": "API - Errors - NonCompatibleActionError",
         "sidebar_label": "NonCompatibleActionError"
       },
+      "api/classes/api-classes-undefinedblockingsagaeffecterror": {
+        "title": "API - Errors - UndefinedBlockingSagaEffectError",
+        "sidebar_label": "UndefinedBlockingSagaEffectError"
+      },
       "api/classes/api-classes-undefinedreduceroreffecterror": {
         "title": "API - Errors - UndefinedReducerOrEffectError",
         "sidebar_label": "UndefinedReducerOrEffectError"
+      },
+      "api/classes/api-classes-undefinedsagaeffecterror": {
+        "title": "API - Errors - UndefinedSagaEffectError",
+        "sidebar_label": "UndefinedSagaEffectError"
       },
       "api/classes/api-classes-undefinedselectorerror": {
         "title": "API - Errors - UndefinedSelectorError",
@@ -118,9 +126,17 @@
         "title": "API - Errors - NonCompatibleActionError",
         "sidebar_label": "NonCompatibleActionError"
       },
+      "headers/classes/api-classes-undefinedblockingsagaeffecterror": {
+        "title": "API - Errors - UndefinedBlockingSagaEffectError",
+        "sidebar_label": "UndefinedBlockingSagaEffectError"
+      },
       "headers/classes/api-classes-undefinedreduceroreffecterror": {
         "title": "API - Errors - UndefinedReducerOrEffectError",
         "sidebar_label": "UndefinedReducerOrEffectError"
+      },
+      "headers/classes/api-classes-undefinedsagaeffecterror": {
+        "title": "API - Errors - UndefinedSagaEffectError",
+        "sidebar_label": "UndefinedSagaEffectError"
       },
       "headers/classes/api-classes-undefinedselectorerror": {
         "title": "API - Errors - UndefinedSelectorError",

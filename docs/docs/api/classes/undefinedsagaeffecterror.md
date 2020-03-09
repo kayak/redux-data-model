@@ -1,7 +1,7 @@
 ---
-title: API - Errors - InvalidNamespaceError
-sidebar_label: InvalidNamespaceError
-id: api-classes-invalidnamespaceerror
+title: API - Errors - UndefinedSagaEffectError
+sidebar_label: UndefinedSagaEffectError
+id: api-classes-undefinedsagaeffecterror
 ---
 
 # Redux-Data-Model API Reference Guide
@@ -10,47 +10,51 @@ This reference guide lists all methods exposed by redux-data-model. Contribution
 more details to the descriptions or additional examples are highly appreciated! Please note that the docs are
 generated from source.
 
-[redux-data-model](../README.md) › [InvalidNamespaceError](invalidnamespaceerror.md)
+[redux-data-model](../README.md) › [UndefinedSagaEffectError](undefinedsagaeffecterror.md)
 
-# Class: InvalidNamespaceError
+# Class: UndefinedSagaEffectError
 
-Thrown when the provided [namespace](../interfaces/modeloptions.md#namespace), for one of your models, has invalid characters.
-Keep in mind that a namespace can only contain letters, numbers and/or dots, when nesting the data is needed.
+Thrown when no saga effect, among the intended ones, exists for the accessed property.
+Keep in mind that some saga effects such as take, takeMaybe, takeLeading, takeLatest, takeEvery,
+debounce, and throttle are only available for [blocking effects](../interfaces/modeloptions.md#optional-blockingeffects).
+See [Model.disableProxyChecks](model.md#static-disableproxychecks) if you need to disable this check, but keep in mind that is
+only recommended in tests.
 
 ## Hierarchy
 
 * [Error](namespaceisntastringerror.md#static-error)
 
-  ↳ **InvalidNamespaceError**
+  ↳ **UndefinedSagaEffectError**
 
 ## Index
 
 ### Constructors
 
-* [constructor](invalidnamespaceerror.md#constructor)
+* [constructor](undefinedsagaeffecterror.md#constructor)
 
 ### Properties
 
-* [message](invalidnamespaceerror.md#message)
-* [name](invalidnamespaceerror.md#name)
-* [stack](invalidnamespaceerror.md#optional-stack)
-* [Error](invalidnamespaceerror.md#static-error)
+* [message](undefinedsagaeffecterror.md#message)
+* [name](undefinedsagaeffecterror.md#name)
+* [stack](undefinedsagaeffecterror.md#optional-stack)
+* [Error](undefinedsagaeffecterror.md#static-error)
 
 ## Constructors
 
 ###  constructor
 
-\+ **new InvalidNamespaceError**(`namespaceRegex`: any): *[InvalidNamespaceError](invalidnamespaceerror.md)*
+\+ **new UndefinedSagaEffectError**(`name`: any, `model`: any): *[UndefinedSagaEffectError](undefinedsagaeffecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:44](https://github.com/kayak/redux-data-model/blob/8317b28/packages/redux-data-model/src/errors.ts#L44)*
+*Defined in [packages/redux-data-model/src/errors.ts:229](https://github.com/kayak/redux-data-model/blob/8317b28/packages/redux-data-model/src/errors.ts#L229)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`namespaceRegex` | any |
+`name` | any |
+`model` | any |
 
-**Returns:** *[InvalidNamespaceError](invalidnamespaceerror.md)*
+**Returns:** *[UndefinedSagaEffectError](undefinedsagaeffecterror.md)*
 
 ## Properties
 

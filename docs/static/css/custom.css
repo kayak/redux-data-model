@@ -8,13 +8,11 @@ a {
 }
 
 @media only screen and (min-width: 1024px) {
-}
+    .wrapper {
+        max-width: calc(100% - 50px);
+    }
 
-@media only screen and (max-width: 1023px) {
-}
-
-@media only screen and (min-width: 1400px) {
-}
-
-@media only screen and (min-width: 1500px) {
+    .docsNavContainer {
+        flex: 0 0 300px;
+    }
 }

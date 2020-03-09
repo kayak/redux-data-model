@@ -43,7 +43,7 @@ calling dispatch yourself.
 
 \+ **new NonCompatibleActionError**(`action`: any): *[NonCompatibleActionError](noncompatibleactionerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:169](https://github.com/kayak/redux-data-model/blob/ff5e09a/packages/redux-data-model/src/errors.ts#L169)*
+*Defined in [packages/redux-data-model/src/errors.ts:171](https://github.com/kayak/redux-data-model/blob/8317b28/packages/redux-data-model/src/errors.ts#L171)*
 
 **Parameters:**
 
