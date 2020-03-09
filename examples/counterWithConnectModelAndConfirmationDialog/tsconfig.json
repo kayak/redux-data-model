@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "es2015",
+    "module": "esnext",
     "target": "es5",
     "jsx": "react",
     "moduleResolution": "node",
@@ -17,11 +17,26 @@
     "strictNullChecks": false,
     "outDir": "./dist/",
     "sourceMap": true,
-    "declaration": false
+    "declaration": false,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
   "include": [
     "pages/*",
     "utils/*",
     "__tests__/**/*"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
