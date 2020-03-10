@@ -81,10 +81,9 @@ describe('useModelSelector', () => {
         );
       }).toThrow({
         name: '',
-        message: `An error occured while selecting the store state: ` +
-        `No selector called [whatever] was found on [counter] model. ` +
+        message: `No selector called [whatever] was found on [counter] model. ` +
         `Available options are: count. ` +
-        'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info..'
+        'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
       });
     });
 
@@ -98,7 +97,7 @@ describe('useModelSelector', () => {
         );
       }).toThrow({
         name: '',
-        message: 'An error occured while selecting the store state: selectors.whatever is not a function.'
+        message: 'selectors.whatever is not a function'
       });
       Model.disableProxyChecks = false;
     });

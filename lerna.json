@@ -14,5 +14,7 @@
       "yes": true
     }
   },
+  "hoist": true,
+  "strict": true,
   "version": "0.9.0"
 }
