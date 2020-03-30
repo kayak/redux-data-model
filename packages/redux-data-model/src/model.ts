@@ -429,7 +429,7 @@ export class Model {
       const actionType = actionTypes[effectName];
       const effectSaga = modelBlockingGenerator(
         function *(payload: object = {}) {
-          yield* effectFunc(payload, proxiedSagaEffects, actionCreators);
+          return yield* effectFunc(payload, proxiedSagaEffects, actionCreators);
         }
       );
 
