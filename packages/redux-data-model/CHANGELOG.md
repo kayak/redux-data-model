@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/kayak/redux-data-model/compare/v0.9.0...v0.10.0) (2020-03-30)
+
+
+### Bug Fixes
+
+* fix issue with return value from effect action creators ([3372091](https://github.com/kayak/redux-data-model/commit/3372091ba5846909f2bf6de0715ff83e1deef8ed))
+
+
+### Features
+
+* add proxy check to blocking and normal saga effects args ([a690e37](https://github.com/kayak/redux-data-model/commit/a690e3779efa905d17da7ceea382af55fef0bdf9))
+
+
+
+
+
 # [0.9.0](https://github.com/kayak/redux-data-model/compare/v0.8.0...v0.9.0) (2020-03-01)
 
 
