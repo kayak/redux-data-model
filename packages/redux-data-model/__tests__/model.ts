@@ -659,7 +659,9 @@ describe('Model', () => {
           state,
           effects: {
             // @ts-ignore
-            effectA: function*(...args) {effectASpy(...args)},
+            effectA: function*(...args) {
+              return effectASpy(...args)
+            },
           },
         });
         __actionInternals = {resolve: jest.fn(), reject: jest.fn()};
@@ -705,9 +707,18 @@ describe('Model', () => {
         });
       });
 
-      it('calls resolve when no exception occurred', () => {
-        gen.next().value.payload.args[1](action).next();
-        expect(__actionInternals.resolve).toHaveBeenCalledWith(undefined);
+      describe('when no exception occurred calls resolve', () => {
+        it('with undefined as return value by default', () => {
+          gen.next().value.payload.args[1](action).next();
+          expect(__actionInternals.resolve).toHaveBeenCalledWith(undefined);
+        });
+
+        it('with effect return value when available', () => {
+          const returnValue = 'finished';
+          effectASpy.mockReturnValueOnce(returnValue);
+          gen.next().value.payload.args[1](action).next();
+          expect(__actionInternals.resolve).toHaveBeenCalledWith(returnValue);
+        });
       });
 
       it('calls reject when an exception occurs', () => {
@@ -803,7 +814,7 @@ describe('Model', () => {
         );
       });
 
-      it('calls effectAYSpy with the right arguments  in modelX', () => {
+      it('calls effectAYSpy with the right arguments in modelX', () => {
         gen.next().value.payload.args[1](action).next();
         expect(effectAXSpy).toHaveBeenCalledWith(
           payload, sagaEffects, actionCreatorsSpy.mock.results[0].value,
@@ -831,7 +842,7 @@ describe('Model', () => {
           effects: {
             // @ts-ignore
             effectA: function*(...args) {
-              effectASpy(...args);
+              return effectASpy(...args);
             },
           },
           blockingEffects: {
@@ -884,9 +895,18 @@ describe('Model', () => {
         });
       });
 
-      it('calls resolve when no exception occurred', () => {
-        gen.next().value.next().value.payload.args[1](action).next();
-        expect(__actionInternals.resolve).toHaveBeenCalledWith(undefined);
+      describe('when no exception occurred calls resolve', () => {
+        it('with undefined as return value by default', () => {
+          gen.next().value.next().value.payload.args[1](action).next();
+          expect(__actionInternals.resolve).toHaveBeenCalledWith(undefined);
+        });
+
+        it('with effect return value when available', () => {
+          const returnValue = 'finished';
+          effectASpy.mockReturnValueOnce(returnValue);
+          gen.next().value.next().value.payload.args[1](action).next();
+          expect(__actionInternals.resolve).toHaveBeenCalledWith(returnValue);
+        });
       });
 
       it('calls reject when an exception occurs', () => {
