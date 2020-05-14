@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/kayak/redux-data-model/compare/v0.10.0...v0.10.1) (2020-05-14)
+
+
+### Bug Fixes
+
+* ensure exceptions are properly logged on root saga ([0c6e139](https://github.com/kayak/redux-data-model/commit/0c6e13991059799a6ac3496f9001d2795733379d))
+
+
+
+
+
 # [0.10.0](https://github.com/kayak/redux-data-model/compare/v0.9.0...v0.10.0) (2020-03-30)
 
 
