@@ -100,6 +100,9 @@ export function modelBlockingGenerator(
       resolve(returnValue);
     } catch (error) {
       reject(error);
+
+      // Re-throw error, which will be handled/logged on the root saga.
+      throw error;
     }
   };
 }
@@ -129,8 +132,8 @@ export function* modelRootSaga(models: Model[]): SagaIterator {
           try {
             yield call(blockingSaga);
             break;
-          } catch (e) {
-            console.error(e);
+          } catch (error) {
+            console.error(error);
           }
         }
       })

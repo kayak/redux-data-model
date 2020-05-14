@@ -726,7 +726,9 @@ describe('Model', () => {
         effectASpy.mockImplementation(() => {
           throw error;
         });
-        gen.next().value.payload.args[1](action).next();
+        try {
+          gen.next().value.payload.args[1](action).next();
+        } catch {}
         expect(__actionInternals.reject).toHaveBeenCalledWith(error);
       });
 
@@ -914,7 +916,9 @@ describe('Model', () => {
         effectASpy.mockImplementation(() => {
           throw error;
         });
-        gen.next().value.next().value.payload.args[1](action).next();
+        try {
+          gen.next().value.next().value.payload.args[1](action).next();
+        } catch {}
         expect(__actionInternals.reject).toHaveBeenCalledWith(error);
       });
 
