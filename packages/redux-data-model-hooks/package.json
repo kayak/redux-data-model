@@ -17,11 +17,12 @@
   "scripts": {
     "clean": "rimraf dist js_coverage .rpt2_cache",
     "lint": "eslint src --ext .ts,.tsx",
-    "lint:fix": "eslint src --ext .ts,.tsx --fix",
-    "test": "jest",
-    "test:update": "jest -u",
-    "test:watch": "jest --watchAll --verbose",
-    "test:coverage": "jest --verbose --coverage",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest --silent",
+    "test:logs": "jest",
+    "test:update": "npm run test -- -u",
+    "test:watch": "npm run test -- --watchAll --verbose",
+    "test:coverage": "npm run test -- --verbose --coverage",
     "coveralls": "coveralls",
     "build": "npm run lint && npm run test && rollup -c",
     "size": "npm run build && size-limit"

@@ -8,10 +8,11 @@
     "clean": "rimraf .next js_coverage",
     "lint": "eslint pages utils --ext .ts,.tsx",
     "lint:fix": "eslint pages utils --ext .ts,.tsx --fix",
-    "test": "jest",
-    "test:update": "jest -u",
-    "test:watch": "jest --watchAll --verbose",
-    "test:coverage": "jest --verbose --coverage",
+    "test": "jest --silent",
+    "test:logs": "jest",
+    "test:update": "npm run test -- -u",
+    "test:watch": "npm run test -- --watchAll --verbose",
+    "test:coverage": "npm run test -- --verbose --coverage",
     "start": "next"
   },
   "dependencies": {

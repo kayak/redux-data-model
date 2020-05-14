@@ -19,6 +19,7 @@
     "lint": "lerna run --parallel lint",
     "lint:fix": "lerna run --parallel lint:fix",
     "test": "lerna run --parallel test",
+    "test:logs": "lerna run --parallel test:logs",
     "test:update": "lerna run test:update",
     "test:watch": "lerna run test:watch",
     "test:coverage": "lerna run test:coverage",
