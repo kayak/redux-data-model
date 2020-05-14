@@ -110,6 +110,10 @@ it('decrements reducer change count to current - 1', () => {
 
 ### Testing the [effects]:
 
+Testing [effects] (i.e. sagas/generators) can feel very repetitive. Some options for increasing
+productivity can be found on [Testing Sagas](https://redux-saga.js.org/docs/advanced/Testing.html).
+Among those options it's noteworthy [redux-saga-test-plan](https://github.com/jfairbank/redux-saga-test-plan).
+
 ```javascript
 import * as sagaEffects from 'redux-saga/effects'
 
@@ -132,6 +136,8 @@ it('asyncDecrement effect yields put decrement reducer', () => {
 ```
 
 ### Testing the [blocking effects]:
+
+Read the section above for more info on tips for testing sagas.
 
 ```javascript
 import * as sagaEffects from 'redux-saga/effects'

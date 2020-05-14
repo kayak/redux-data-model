@@ -43,7 +43,7 @@ Thrown when [reducer](../interfaces/modeloptions.md#optional-reducers) and/or [e
 
 \+ **new DuplicatedActionTypesError**(`model`: any, `reducerAndEffectActionTypes`: any): *[DuplicatedActionTypesError](duplicatedactiontypeserror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:62](https://github.com/kayak/redux-data-model/blob/8317b28/packages/redux-data-model/src/errors.ts#L62)*
+*Defined in [packages/redux-data-model/src/errors.ts:62](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model/src/errors.ts#L62)*
 
 **Parameters:**
 

@@ -41,7 +41,7 @@ Thrown when multiple models have the same [namespace](../interfaces/modeloptions
 
 \+ **new DuplicatedModelNamespaceError**(`namespaces`: any): *[DuplicatedModelNamespaceError](duplicatedmodelnamespaceerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:137](https://github.com/kayak/redux-data-model/blob/8317b28/packages/redux-data-model/src/errors.ts#L137)*
+*Defined in [packages/redux-data-model/src/errors.ts:137](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model/src/errors.ts#L137)*
 
 **Parameters:**
 

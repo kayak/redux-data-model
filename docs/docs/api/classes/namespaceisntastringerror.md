@@ -41,7 +41,7 @@ Thrown when the provided [namespace](../interfaces/modeloptions.md#namespace), f
 
 \+ **new NamespaceIsntAStringError**(`model`: any): *[NamespaceIsntAStringError](namespaceisntastringerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:13](https://github.com/kayak/redux-data-model/blob/8317b28/packages/redux-data-model/src/errors.ts#L13)*
+*Defined in [packages/redux-data-model/src/errors.ts:13](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model/src/errors.ts#L13)*
 
 **Parameters:**
 

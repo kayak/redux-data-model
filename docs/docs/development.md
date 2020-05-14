@@ -66,8 +66,8 @@ npm run release
 ```
 
 Besides publishing the package, the command above will build the package, bump its version, commit that, tag the
-new version, push commits/tags to github and then create a github release. This process is automatically handled by
-[release-it](https://github.com/release-it/release-it). To publish the documentation on github pages run:
+new version and push commits/tags to github and then create a github release. This process is automatically handled by
+[lerna](https://github.com/lerna/lerna). To publish the documentation on github pages run:
 
 ```bash
 npm run release:docs
@@ -76,7 +76,7 @@ npm run release:docs
 It might take some time for github pages to update its caches once docs are deployed, so be patient.
 
 ## License
-Copyright 2016 KAYAK Germany, GmbH
+Copyright 2020 KAYAK Germany, GmbH
 
 Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance
 with the License. You may obtain a copy of the License at

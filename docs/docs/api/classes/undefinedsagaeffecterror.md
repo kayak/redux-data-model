@@ -45,7 +45,7 @@ only recommended in tests.
 
 \+ **new UndefinedSagaEffectError**(`name`: any, `model`: any): *[UndefinedSagaEffectError](undefinedsagaeffecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:229](https://github.com/kayak/redux-data-model/blob/8317b28/packages/redux-data-model/src/errors.ts#L229)*
+*Defined in [packages/redux-data-model/src/errors.ts:229](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model/src/errors.ts#L229)*
 
 **Parameters:**
 
