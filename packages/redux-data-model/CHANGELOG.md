@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/kayak/redux-data-model/compare/v0.10.1...v0.11.0) (2020-05-15)
+
+
+### Features
+
+* add check to avoid key conflicts when merging connectModel props ([49b9147](https://github.com/kayak/redux-data-model/commit/49b9147a1a6aa48691bdd208274ad01246b653a3))
+* add mergeProps and options args to connectModel ([3a623f8](https://github.com/kayak/redux-data-model/commit/3a623f8063d84e049d8f0b1fa0ff35fda805111a))
+
+
+
+
+
 ## [0.10.1](https://github.com/kayak/redux-data-model/compare/v0.10.0...v0.10.1) (2020-05-14)
 
 
