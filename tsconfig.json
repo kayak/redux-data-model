@@ -17,7 +17,8 @@
     "strictNullChecks": false,
     "outDir": "./dist/",
     "sourceMap": true,
-    "declaration": false
+    "declaration": false,
+    "downlevelIteration": true
   },
   "include": [
     "src/**/*",

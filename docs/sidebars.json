@@ -23,6 +23,7 @@
       "api/classes/api-classes-emptynamespaceerror",
       "api/classes/api-classes-modelnotsagainitializederror",
       "api/classes/api-classes-duplicatedactiontypeserror",
+      "api/classes/api-classes-keyconflictinmergepropserror",
       "api/classes/api-classes-invalidnamespaceerror",
       "api/classes/api-classes-modelnotreduxinitializederror",
       "api/classes/api-classes-namespaceisntastringerror",

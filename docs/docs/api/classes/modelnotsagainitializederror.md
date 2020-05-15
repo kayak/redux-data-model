@@ -44,7 +44,7 @@ but keep in mind that is only recommended in tests.
 
 \+ **new ModelNotSagaInitializedError**(`model`: any): *[ModelNotSagaInitializedError](modelnotsagainitializederror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:121](https://github.com/kayak/redux-data-model/blob/1e00ebf/packages/redux-data-model/src/errors.ts#L121)*
+*Defined in [packages/redux-data-model/src/errors.ts:122](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/errors.ts#L122)*
 
 **Parameters:**
 

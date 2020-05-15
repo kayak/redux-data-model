@@ -29,6 +29,10 @@
         "title": "API - Errors - InvalidNamespaceError",
         "sidebar_label": "InvalidNamespaceError"
       },
+      "api/classes/api-classes-keyconflictinmergepropserror": {
+        "title": "API - Errors - KeyConflictInMergePropsError",
+        "sidebar_label": "KeyConflictInMergePropsError"
+      },
       "api/classes/api-classes-model": {
         "title": "API - Classes - Model",
         "sidebar_label": "Model"
@@ -105,6 +109,10 @@
       "headers/classes/api-classes-invalidnamespaceerror": {
         "title": "API - Errors - InvalidNamespaceError",
         "sidebar_label": "InvalidNamespaceError"
+      },
+      "headers/classes/api-classes-keyconflictinmergepropserror": {
+        "title": "API - Errors - KeyConflictInMergePropsError",
+        "sidebar_label": "KeyConflictInMergePropsError"
       },
       "headers/classes/api-classes-model": {
         "title": "API - Classes - Model",

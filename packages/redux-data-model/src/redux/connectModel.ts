@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import {MapDispatchToPropsWithActionCreators, MapStateToPropsWithSelectors,} from '../baseTypes';
 import {Model} from '../model';
 import {connectModelImpl} from './connectModelImpl';
+import {wrapMergePropChecks} from './wrapMergePropChecks';
 
 /**
  * Equivalent to redux's [connect](https://react-redux.js.org/api/connect) function.
@@ -24,6 +25,9 @@ import {connectModelImpl} from './connectModelImpl';
  * @returns A connect HOC.
  * @throws [[ModelNotReduxInitializedError]] When model was not initialized on a [[combineModelReducers]] call.
  * @throws [[ModelNotSagaInitializedError]] When model was not initialized on a [[modelRootSaga]] call.
+ * @throws [[KeyConflictInMergePropsError]] When the props passed from the parent component, mapStateToProps props,
+ *                                          or mapDispatchToProps props are conflicting (i.e. have the same name).
+ *                                          This check is ignored when a custom mergeProps function is provided.
  * @category High Order Component (HOC)
  */
 export function connectModel(
@@ -37,7 +41,7 @@ export function connectModel(
     ...connectModelImpl(
       models, userProvidedMapStateToProps, userProvidedMapDispatchToProps,
     ),
-    mergeProps,
+    wrapMergePropChecks(mergeProps),
     options,
   );
 }

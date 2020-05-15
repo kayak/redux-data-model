@@ -44,7 +44,7 @@ but keep in mind that is only recommended in tests.
 
 \+ **new UndefinedReducerOrEffectError**(`name`: any, `model`: any): *[UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:191](https://github.com/kayak/redux-data-model/blob/1e00ebf/packages/redux-data-model/src/errors.ts#L191)*
+*Defined in [packages/redux-data-model/src/errors.ts:192](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/errors.ts#L192)*
 
 **Parameters:**
 

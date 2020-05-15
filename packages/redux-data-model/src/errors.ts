@@ -1,3 +1,4 @@
+import {isEmpty} from 'lodash';
 import {sagaEffects, blockingSagaEffects} from './saga';
 
 /**
@@ -255,5 +256,30 @@ export class UndefinedBlockingSagaEffectError extends Error {
       `See ${errorClassesIndexUrl} for more info.`
     );
     this.name = 'UndefinedBlockingSagaEffectError';
+  }
+}
+
+/**
+ * Thrown when the props passed from the parent component, mapStateToProps props, or mapDispatchToProps props
+ * are conflicting (i.e. have the same name). To fix preferably change your mapStateToProps and mapDispatchToProps
+ * implementation to remove the conflicts. Providing your own mergeProps is also an alternative, but keep in mind
+ * this conflict check will be ignored when doing so.
+ *
+ * @category Error
+ */
+export class KeyConflictInMergePropsError extends Error {
+  constructor(statePropConflicts, dispatchPropConflicts, ownPropsConflicts) {
+    super(
+      `A connectModel HOC has conflicts when merging the result of props from the parent component, ` +
+      `mapStateToProps props, or mapDispatchToProps props. ` +
+      `Conflicts are: \n\n` +
+      `mapStateToProps conflicts: ${(isEmpty(statePropConflicts) ? '' : statePropConflicts.join(', '))}\n` +
+      `mapDispatchToProps conflicts: ${(isEmpty(dispatchPropConflicts) ? '' : dispatchPropConflicts.join(', '))}\n` +
+      `ownProps conflicts: ${(isEmpty(ownPropsConflicts) ? '' : ownPropsConflicts.join(', '))}` +
+      `\n\nTo fix preferably change your mapStateToProps and mapDispatchToProps implementation ` +
+      `to remove the conflicts. Providing your own mergeProps is also an alternative. ` +
+      `See ${errorClassesIndexUrl} for more info.`
+    );
+    this.name = 'KeyConflictInMergePropsError';
   }
 }
