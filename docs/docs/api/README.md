@@ -60,15 +60,19 @@ generated from source.
 
 ###  connectModel
 
-▸ **connectModel**(`models`: [Model](classes/model.md)[], `userProvidedMapStateToProps`: MapStateToPropsWithSelectors‹any, any, any›, `userProvidedMapDispatchToProps`: MapDispatchToPropsWithActionCreators‹any, any›): *any*
+▸ **connectModel**(`models`: [Model](classes/model.md)[], `userProvidedMapStateToProps`: MapStateToPropsWithSelectors‹any, any, any›, `userProvidedMapDispatchToProps`: MapDispatchToPropsWithActionCreators‹any, any›, `mergeProps?`: Function, `options?`: Record‹string, any›): *any*
 
-*Defined in [packages/redux-data-model/src/redux/connectModel.ts:22](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model/src/redux/connectModel.ts#L22)*
+*Defined in [packages/redux-data-model/src/redux/connectModel.ts:29](https://github.com/kayak/redux-data-model/blob/1e00ebf/packages/redux-data-model/src/redux/connectModel.ts#L29)*
 
-Equivalent to redux's connect function. This should be used when the hooks api is not desired or
-supported. Otherwise check [useModelActions](README.md#usemodelactions) and [useModelSelector](README.md#usemodelselector) up.
+Equivalent to redux's [connect](https://react-redux.js.org/api/connect) function.
+This should be used when the hooks api is not desired or supported.
+Otherwise check [useModelActions](README.md#usemodelactions) and [useModelSelector](README.md#usemodelselector) up.
 
 **`example`** 
-const ConnectedComponent = connectModel([modelA, modelB], mapStateToProps, mapDispatchToProps)
+const ConnectedComponent = connectModel([modelA, modelB], mapStateToProps);
+const ConnectedComponent = connectModel([modelA, modelB], mapStateToProps, mapDispatchToProps);
+const ConnectedComponent = connectModel([modelA, modelB], null, mapDispatchToProps);
+const ConnectedComponent = connectModel([modelA, modelB], mapStateToProps, mapDispatchToProps, mergeProps, options);
 
 **`throws`** [ModelNotReduxInitializedError](classes/modelnotreduxinitializederror.md) When model was not initialized on a [combineModelReducers](README.md#combinemodelreducers) call.
 
@@ -80,7 +84,9 @@ Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
 `models` | [Model](classes/model.md)[] | - | An array of Model instances. |
 `userProvidedMapStateToProps` | MapStateToPropsWithSelectors‹any, any, any› | null | A mapToProps equivalent, which has a third argument with all selectors. |
-`userProvidedMapDispatchToProps` | MapDispatchToPropsWithActionCreators‹any, any› | null | A mapDispatchToProps equivalent, which has a third argument with all                                       models' action creators. |
+`userProvidedMapDispatchToProps` | MapDispatchToPropsWithActionCreators‹any, any› | null | A mapDispatchToProps equivalent, which has a third argument with all                                       models' dispatchers (i.e. already dispatch bound). |
+`mergeProps?` | Function | - | See react-redux documentation for [mergeProps](                   https://react-redux.js.org/api/connect#mergeprops-stateprops-dispatchprops-ownprops-object). |
+`options?` | Record‹string, any› | - | See react-redux documentation for [options](https://react-redux.js.org/api/connect#options-object). |
 
 **Returns:** *any*
 
@@ -94,7 +100,7 @@ ___
 
 ▸ **useModelActions**(`model`: [Model](classes/model.md)): *BoundActionCreatorsMapObject*
 
-*Defined in [packages/redux-data-model-hooks/src/useModelActions.ts:27](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model-hooks/src/useModelActions.ts#L27)*
+*Defined in [packages/redux-data-model-hooks/src/useModelActions.ts:27](https://github.com/kayak/redux-data-model/blob/1e00ebf/packages/redux-data-model-hooks/src/useModelActions.ts#L27)*
 
 A react hook for returning already bound action creators for the provided model. If you don't want/need to use
 the hooks api, check [connectModel](README.md#connectmodel) up.
@@ -124,7 +130,7 @@ ___
 
 ▸ **useModelSelector**(`model`: [Model](classes/model.md), `selectorFunc`: SelectorFunction): *any*
 
-*Defined in [packages/redux-data-model-hooks/src/useModelSelector.ts:19](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model-hooks/src/useModelSelector.ts#L19)*
+*Defined in [packages/redux-data-model-hooks/src/useModelSelector.ts:19](https://github.com/kayak/redux-data-model/blob/1e00ebf/packages/redux-data-model-hooks/src/useModelSelector.ts#L19)*
 
 A react hook for returning data from the provided model's state, by the means of one of its selectors. If you
 don't want/need to use the hooks api, check [connectModel](README.md#connectmodel) up.
@@ -153,7 +159,7 @@ ___
 
 ▸ **bindModelActionCreators**(`actionCreators`: ActionCreatorsMapObject, `dispatch`: Dispatch): *BoundNamespacedActionCreatorsMapObject*
 
-*Defined in [packages/redux-data-model/src/redux/bindModelActionCreators.ts:24](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model/src/redux/bindModelActionCreators.ts#L24)*
+*Defined in [packages/redux-data-model/src/redux/bindModelActionCreators.ts:24](https://github.com/kayak/redux-data-model/blob/1e00ebf/packages/redux-data-model/src/redux/bindModelActionCreators.ts#L24)*
 
 Turns an object whose values are action creators or nested objects with them, into an object with the
 same keys, but with every action creator wrapped into a dispatch call so they may be invoked directly.
@@ -179,7 +185,7 @@ ___
 
 ▸ **combineModelReducers**(`models`: [Model](classes/model.md)[]): *ReducersMapObject*
 
-*Defined in [packages/redux-data-model/src/redux/combineModelReducers.ts:35](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model/src/redux/combineModelReducers.ts#L35)*
+*Defined in [packages/redux-data-model/src/redux/combineModelReducers.ts:35](https://github.com/kayak/redux-data-model/blob/1e00ebf/packages/redux-data-model/src/redux/combineModelReducers.ts#L35)*
 
 Returns a reducer map object that can be deconstructed into the combineReducers helper, from redux, so that
 redux is aware of any reducers produced by models.
@@ -207,7 +213,7 @@ ___
 
 ▸ **modelRootSaga**(`models`: [Model](classes/model.md)[]): *SagaIterator*
 
-*Defined in [packages/redux-data-model/src/saga.ts:121](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model/src/saga.ts#L121)*
+*Defined in [packages/redux-data-model/src/saga.ts:121](https://github.com/kayak/redux-data-model/blob/1e00ebf/packages/redux-data-model/src/saga.ts#L121)*
 
 Returns a root saga generator that can be passed to sagaMiddleware's run function, so that redux-saga is aware
 of any sagas produced by models.

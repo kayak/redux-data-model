@@ -42,7 +42,7 @@ object.
 
 \+ **new ActionDataIsntPlainObjectError**(`actionType`: any): *[ActionDataIsntPlainObjectError](actiondataisntplainobjecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:154](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model/src/errors.ts#L154)*
+*Defined in [packages/redux-data-model/src/errors.ts:154](https://github.com/kayak/redux-data-model/blob/1e00ebf/packages/redux-data-model/src/errors.ts#L154)*
 
 **Parameters:**
 

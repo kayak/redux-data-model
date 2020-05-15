@@ -43,7 +43,7 @@ but keep in mind that is only recommended in tests.
 
 \+ **new UndefinedSelectorError**(`name`: any, `model`: any): *[UndefinedSelectorError](undefinedselectorerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:209](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model/src/errors.ts#L209)*
+*Defined in [packages/redux-data-model/src/errors.ts:209](https://github.com/kayak/redux-data-model/blob/1e00ebf/packages/redux-data-model/src/errors.ts#L209)*
 
 **Parameters:**
 

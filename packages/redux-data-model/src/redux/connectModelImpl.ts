@@ -18,7 +18,7 @@ export function connectModelImpl(
   models: Model[],
   userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any>=null,
   userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any>=null,
-) {
+): [Function, Function] {
   const selectors: NamespacedSelectorsMapObject = {};
   const modelActionCreators: NamespacedActionCreatorsMapObject = {};
 
@@ -33,22 +33,22 @@ export function connectModelImpl(
     set(modelActionCreators, model.namespace, model.actionCreators());
   }
 
-  const mapStateToPropsFunc = !isNil(userProvidedMapStateToProps) && ((state, props=null) => {
-    return userProvidedMapStateToProps(state, props, selectors);
-  });
+  const mapStateToPropsFunc = !isNil(userProvidedMapStateToProps) ? ((state, ownProps=null) => {
+    return userProvidedMapStateToProps(state, ownProps, selectors);
+  }) : null;
 
-  const mapDispatchToPropsFunc = (dispatch: Dispatch) => {
-    const result = {};
+  const mapDispatchToPropsFunc = (dispatch: Dispatch, ownProps=null) => {
+    const dispatchers = {};
 
     // Bind dispatch function
     for (const model of models) {
-      const boundActionCreators = bindModelActionCreators(get(modelActionCreators, model.namespace), dispatch);
+      const boundModelActionCreators = bindModelActionCreators(get(modelActionCreators, model.namespace), dispatch);
 
       set(
-        result,
+        dispatchers,
         model.namespace,
-        Model.disableProxyChecks ? boundActionCreators : wrapProxy(
-          boundActionCreators,
+        Model.disableProxyChecks ? boundModelActionCreators : wrapProxy(
+          boundModelActionCreators,
           model,
           UndefinedReducerOrEffectError,
         ),
@@ -56,15 +56,14 @@ export function connectModelImpl(
     }
 
     if (!isNil(userProvidedMapDispatchToProps)) {
-      Object.assign(
-        result,
-        isFunction(userProvidedMapDispatchToProps) ?
-          userProvidedMapDispatchToProps(dispatch, modelActionCreators) :
-          userProvidedMapDispatchToProps
-      );
+      if (isFunction(userProvidedMapDispatchToProps)) {
+        return userProvidedMapDispatchToProps(dispatch, ownProps, dispatchers);
+      } else {
+        return bindModelActionCreators(userProvidedMapDispatchToProps, dispatch);
+      }
     }
 
-    return result;
+    return dispatchers;
   };
 
   return [mapStateToPropsFunc, mapDispatchToPropsFunc];

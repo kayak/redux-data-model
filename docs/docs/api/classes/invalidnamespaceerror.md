@@ -42,7 +42,7 @@ Keep in mind that a namespace can only contain letters, numbers and/or dots, whe
 
 \+ **new InvalidNamespaceError**(`namespaceRegex`: any): *[InvalidNamespaceError](invalidnamespaceerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:44](https://github.com/kayak/redux-data-model/blob/11ed706/packages/redux-data-model/src/errors.ts#L44)*
+*Defined in [packages/redux-data-model/src/errors.ts:44](https://github.com/kayak/redux-data-model/blob/1e00ebf/packages/redux-data-model/src/errors.ts#L44)*
 
 **Parameters:**
 
