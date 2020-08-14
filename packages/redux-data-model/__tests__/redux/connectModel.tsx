@@ -8,7 +8,7 @@ const {connectModelImpl} = jest.requireMock('../../src/redux/connectModelImpl');
 const {wrapMergePropChecks} = jest.requireMock('../../src/redux/wrapMergePropChecks');
 
 describe('connectModel', () => {
-  let counterModel;
+  let counterModel: any;
 
   beforeAll(() => {
     counterModel = {};
@@ -16,6 +16,7 @@ describe('connectModel', () => {
 
   it('returns result of connect call', () => {
     const result = connectModel([counterModel]);
+    // @ts-ignore
     expect(result).toEqual(connect.mock.results[0].value);
   });
 
@@ -29,11 +30,13 @@ describe('connectModel', () => {
 
   it('calls connect with the mapStateToProps and mapDispatchToProps from connectModelImpl', () => {
     connectModel([counterModel]);
-    expect(connect).toHaveBeenCalledWith(...connectModelImpl.mock.results[0].value, wrapMergePropChecks.mock.results[0].value, undefined);
+    expect(connect).toHaveBeenCalledWith(
+      ...connectModelImpl.mock.results[0].value, wrapMergePropChecks.mock.results[0].value, undefined,
+    );
   });
 
   describe('calls connect with a custom mergeProps', () => {
-    let mergeProps;
+    let mergeProps: any;
 
     beforeEach(() => {
       mergeProps = jest.fn();
@@ -47,13 +50,17 @@ describe('connectModel', () => {
     it('calls connect with a mergeProps as the result of the wrapMergePropChecks call', () => {
       const mergeProps = jest.fn();
       connectModel([counterModel], null, null, mergeProps);
-      expect(connect).toHaveBeenCalledWith(...connectModelImpl.mock.results[0].value, wrapMergePropChecks.mock.results[0].value, undefined);
+      expect(connect).toHaveBeenCalledWith(
+        ...connectModelImpl.mock.results[0].value, wrapMergePropChecks.mock.results[0].value, undefined,
+      );
     });
   });
 
   it('calls connect with an options argument if provided', () => {
     const options = {};
     connectModel([counterModel], null, null, null, options);
-    expect(connect).toHaveBeenCalledWith(...connectModelImpl.mock.results[0].value, wrapMergePropChecks.mock.results[0].value, options);
+    expect(connect).toHaveBeenCalledWith(
+      ...connectModelImpl.mock.results[0].value, wrapMergePropChecks.mock.results[0].value, options,
+    );
   });
 });

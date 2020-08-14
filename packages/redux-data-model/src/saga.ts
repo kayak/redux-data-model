@@ -118,7 +118,7 @@ export function modelBlockingGenerator(
  * @returns A root saga.
  * @category Redux/Saga Setup
  */
-export function* modelRootSaga(models: Model[]): SagaIterator {
+export function* modelRootSaga(models: Model<any>[]): SagaIterator {
   const sagas: any[] = flatten(models.map(model => model.reduxSagas));
 
   for (const model of models) {

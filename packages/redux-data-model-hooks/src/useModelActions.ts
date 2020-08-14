@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import {Dispatch} from 'redux';
 import {
   bindModelActionCreators,
-  BoundActionCreatorsMapObject,
+  BoundNamespacedActionCreatorsMapObject,
   Model,
   UndefinedReducerOrEffectError,
   wrapProxy
@@ -24,7 +24,7 @@ import {
  * @throws [[ModelNotSagaInitializedError]] When model was not initialized on a [[modelRootSaga]] call.
  * @category React Hook
  */
-export function useModelActions(model: Model): BoundActionCreatorsMapObject {
+export function useModelActions<State=any>(model: Model<State>): BoundNamespacedActionCreatorsMapObject {
   const dispatch: Dispatch = useDispatch();
   const actionCreators = React.useMemo(() => model.actionCreators(), [model]);
   const boundActionCreators = React.useMemo(() => bindModelActionCreators(actionCreators, dispatch), [model]);

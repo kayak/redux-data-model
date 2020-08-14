@@ -3,10 +3,10 @@ import {bindModelActionCreators} from '../../src';
 jest.mock('redux', () => ({combineReducers: jest.fn()}));
 
 describe('bindModelActionCreators', () => {
-  let actionCreators;
-  let dispatchSpy;
-  let actionData;
-  let boundActionDispatchers;
+  let actionCreators: any;
+  let dispatchSpy: any;
+  let actionData: any;
+  let boundActionDispatchers: any;
 
   beforeEach(() => {
     actionCreators = {

@@ -4,8 +4,8 @@ import {blockingSagaEffects, sagaEffects} from '../src/saga';
 import {actionCreator} from '../src/utils';
 
 describe('Model', () => {
-  let modelOptions;
-  let articleModel;
+  let modelOptions: any;
+  let articleModel: Model<any>;
 
   beforeAll(() => {
     modelOptions = {
@@ -226,7 +226,7 @@ describe('Model', () => {
   });
 
   describe('actionTypes', () => {
-    let model;
+    let model: any;
 
     beforeEach(() => {
       Model.disableProxyChecks = false;
@@ -405,11 +405,11 @@ describe('Model', () => {
     });
 
     describe('when selectors are present', () => {
-      let selectASpy;
-      let state;
-      let modelX;
-      let allState;
-      let selectors;
+      let selectASpy: any;
+      let state: any;
+      let modelX: Model<any>;
+      let allState: any;
+      let selectors: any;
 
       beforeEach(() => {
         Model.disableProxyChecks = false;
@@ -449,13 +449,13 @@ describe('Model', () => {
     });
 
     describe('when memoized selectors are present', () => {
-      let selectorASpy;
-      let selectorBSpy;
-      let resultSpy;
-      let state;
-      let modelX;
-      let allState;
-      let selectors;
+      let selectorASpy: any;
+      let selectorBSpy: any;
+      let resultSpy: any;
+      let state: any;
+      let modelX: Model<any>;
+      let allState: any;
+      let selectors: any;
 
       beforeEach(() => {
         Model.disableProxyChecks = false;
@@ -507,11 +507,11 @@ describe('Model', () => {
     });
 
     describe('when selectors are present in a nested namespace', () => {
-      let selectASpy;
-      let state;
-      let modelX;
-      let allState;
-      let selectors;
+      let selectASpy: any;
+      let state: any;
+      let modelX: Model<any>;
+      let allState: any;
+      let selectors: any;
 
       beforeEach(() => {
         Model.disableProxyChecks = false;
@@ -559,11 +559,11 @@ describe('Model', () => {
     });
 
     describe('when a reducer is present', () => {
-      let reducerASpy;
-      let state;
-      let modelX;
-      let reducers;
-      let reducerAction;
+      let reducerASpy: any;
+      let state: any;
+      let modelX: Model<any>;
+      let reducers: any;
+      let reducerAction: any;
 
       beforeEach(() => {
         // @ts-ignore
@@ -592,13 +592,13 @@ describe('Model', () => {
     });
 
     describe('when a reducer for the action of another model is present', () => {
-      let reducerAYSpy;
-      let reducerAXSpy;
-      let state;
-      let modelX;
-      let modelY;
-      let reducers;
-      let reducerAction;
+      let reducerAYSpy: any;
+      let reducerAXSpy: any;
+      let state: any;
+      let modelX: Model<any>;
+      let modelY: any;
+      let reducers: any;
+      let reducerAction: any;
 
       beforeEach(() => {
         // @ts-ignore
@@ -642,15 +642,15 @@ describe('Model', () => {
     });
 
     describe('when an effect is present', () => {
-      let modelEffects;
+      let modelEffects: any;
       const state = {};
-      let effectASpy;
-      let modelX;
-      let actionCreatorsSpy;
+      let effectASpy: any;
+      let modelX: Model<any>;
+      let actionCreatorsSpy: any;
       const payload = {userId: 1};
-      let __actionInternals;
-      let action;
-      let gen;
+      let __actionInternals: any;
+      let action: any;
+      let gen: any;
 
       beforeEach(() => {
         effectASpy = jest.fn();
@@ -747,8 +747,8 @@ describe('Model', () => {
 
         // We need to use mocks since the usual blocking saga helpers employ the fork saga,
         // which is asynchronous and won't bubble up errors.
-        effectASpy.mockImplementationOnce(function*(action, sagaEffects, _actionCreators) {
-            yield sagaEffects.whatever(action);
+        effectASpy.mockImplementationOnce(function*(action: any, sagaEffects: any, _actionCreators: any) {
+          yield sagaEffects.whatever(action);
         });
         gen.next().value.payload.args[1](action).next();
         expect(() => {
@@ -765,17 +765,17 @@ describe('Model', () => {
     });
 
     describe('when an effect for the action of another model is present', () => {
-      let modelEffects;
-      let effectAXSpy;
-      let effectAYSpy;
-      let state = {};
-      let modelX;
-      let modelY;
-      let actionCreatorsSpy;
+      let modelEffects: any;
+      let effectAXSpy: any;
+      let effectAYSpy: any;
+      const state = {};
+      let modelX: Model<any>;
+      let modelY: any;
+      let actionCreatorsSpy: any;
       const payload = {userId: 1};
-      let __actionInternals;
-      let action;
-      let gen;
+      let __actionInternals: any;
+      let action: any;
+      let gen: any;
 
       beforeEach(() => {
         Model.disableProxyChecks = true;
@@ -825,15 +825,15 @@ describe('Model', () => {
     });
 
     describe('when a blocking effect is present', () => {
-      let modelEffects;
+      let modelEffects: any;
       const state = {};
-      let effectASpy;
-      let modelX;
-      let actionCreatorsSpy;
+      let effectASpy: any;
+      let modelX: Model<any>;
+      let actionCreatorsSpy: any;
       const payload = {userId: 1};
-      let __actionInternals;
-      let action;
-      let gen;
+      let __actionInternals: any;
+      let action: any;
+      let gen: any;
 
       beforeEach(() => {
         Model.disableProxyChecks = true;
@@ -867,7 +867,7 @@ describe('Model', () => {
         );
       });
 
-     it('uses takeLeading saga effect', () => {
+      it('uses takeLeading saga effect', () => {
         expect(gen.next().value.next().value).toEqual(
           allSagaEffects.takeLeading(expect.anything(), expect.anything()),
         );
@@ -936,6 +936,7 @@ describe('Model', () => {
           blockingEffects: {
             // @ts-ignore
             effectA: function* (actionType, sagaBlockingEffects, {effectA}) {
+              // @ts-ignore
               yield sagaBlockingEffects.whatever(actionType, effectA);
             },
           },
@@ -957,17 +958,17 @@ describe('Model', () => {
     });
 
     describe('when a blocking effect for the action of another model is present', () => {
-      let modelEffects;
-      let effectAXSpy;
-      let effectAYSpy;
-      let state = {};
-      let modelX;
-      let modelY;
-      let actionCreatorsSpy;
+      let modelEffects: any;
+      let effectAXSpy: any;
+      let effectAYSpy: any;
+      const state = {};
+      let modelX: Model<any>;
+      let modelY: any;
+      let actionCreatorsSpy: any;
       const payload = {userId: 1};
-      let __actionInternals;
-      let action;
-      let gen;
+      let __actionInternals: any;
+      let action: any;
+      let gen: any;
 
       beforeEach(() => {
         effectAXSpy = jest.fn();
@@ -1030,11 +1031,11 @@ describe('Model', () => {
     });
 
     describe('when model effects are present', () => {
-      let state;
-      let effectASpy;
-      let modelX;
-      let modelEffectsSpy;
-      let reduxSagas;
+      let state: any;
+      let effectASpy: any;
+      let modelX: Model<any>;
+      let modelEffectsSpy: any;
+      let reduxSagas: any;
 
       beforeEach(() => {
         effectASpy = jest.fn();

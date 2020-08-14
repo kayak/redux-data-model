@@ -1,12 +1,12 @@
 import {modelBlockingGenerator} from '../../src/saga';
 
 describe('modelBlockingGenerator', () => {
-  let effectASpy;
-  let effectGenerator;
-  let payload;
-  let __actionInternals;
-  let action;
-  let gen;
+  let effectASpy: any;
+  let effectGenerator: any;
+  let payload: any;
+  let __actionInternals: any;
+  let action: any;
+  let gen: any;
 
   beforeEach(() => {
     payload = {};
@@ -34,16 +34,16 @@ describe('modelBlockingGenerator', () => {
   });
 
   it('throws NonCompatibleActionError when action is not compatible', () => {
-      const nonCompatibleAction = {type: 'whatever', payload: {}};
-      // @ts-ignore
-      gen = modelBlockingGenerator(effectGenerator)(nonCompatibleAction);
-      expect(() => gen.next()).toThrow({
-        name: 'NonCompatibleActionError',
-        message: `The provided action lacks the internals for being redux-data-model-able. Be sure to use ` +
+    const nonCompatibleAction = {type: 'whatever', payload: {}};
+    // @ts-ignore
+    gen = modelBlockingGenerator(effectGenerator)(nonCompatibleAction);
+    expect(() => gen.next()).toThrow({
+      name: 'NonCompatibleActionError',
+      message: `The provided action lacks the internals for being redux-data-model-able. Be sure to use ` +
         `bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
         `is: ${JSON.stringify(nonCompatibleAction)}. ` +
         'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.',
-      });
+    });
   });
 
   describe('when no exception occurred calls resolve', () => {

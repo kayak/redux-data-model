@@ -1,10 +1,12 @@
 /**
  * @ignore
  */
-export function wrapProxy(data: any, model: any, CustomException) {
+export function wrapProxy<Data extends object, Model>(
+  data: Data, model: Model, CustomException?: any,
+): Data {
   return new Proxy(data, {
     get: (
-      function (target, prop, receiver) {
+      function (target: any, prop: string, receiver: any) {
         const value = Reflect.get(target, prop, receiver);
 
         if (

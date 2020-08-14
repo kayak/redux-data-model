@@ -31,12 +31,13 @@ import {wrapMergePropChecks} from './wrapMergePropChecks';
  * @category High Order Component (HOC)
  */
 export function connectModel(
-  models: Model[],
-  userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any>=null,
-  userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any>=null,
-  mergeProps?: Function,
+  models: Model<any>[],
+  userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any> | null=null,
+  userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any> | null=null,
+  mergeProps: Function | null=null,
   options?: Record<string, any>,
-) {
+): any {
+  // @ts-ignore
   return connect(
     ...connectModelImpl(
       models, userProvidedMapStateToProps, userProvidedMapDispatchToProps,

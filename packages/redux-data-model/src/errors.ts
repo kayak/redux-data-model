@@ -1,5 +1,6 @@
 import {isEmpty} from 'lodash';
 import {sagaEffects, blockingSagaEffects} from './saga';
+import {Model} from './model';
 
 /**
  * @ignore
@@ -11,8 +12,8 @@ const errorClassesIndexUrl = 'https://kayak.github.io/redux-data-model/docs/api/
  *
  * @category Error
  */
-export class NamespaceIsntAStringError extends Error {
-  constructor(model) {
+export class NamespaceIsntAStringError<State> extends Error {
+  constructor(model: Model<State>) {
     super(
       `Namespace must be a string. The provided namespace type was: ${typeof model.namespace}. ` +
       `See ${errorClassesIndexUrl} for more info.`
@@ -43,7 +44,7 @@ export class EmptyNamespaceError extends Error {
  * @category Error
  */
 export class InvalidNamespaceError extends Error {
-  constructor (namespaceRegex) {
+  constructor (namespaceRegex: RegExp) {
     super(
       `Namespace can only contain letters, numbers and/or dots, when nesting the data is needed. ` +
       `It was validated against the following regex: ${String(namespaceRegex)}. ` +
@@ -60,8 +61,8 @@ export class InvalidNamespaceError extends Error {
  *
  * @category Error
  */
-export class DuplicatedActionTypesError extends Error {
-  constructor(model, reducerAndEffectActionTypes) {
+export class DuplicatedActionTypesError<State> extends Error {
+  constructor(model: Model<State>, reducerAndEffectActionTypes: string[]) {
     super(
       `Reducer and effect action types must be unique in [${model.namespace}] model. The provided ` +
       `reducer/effect action types were: ${reducerAndEffectActionTypes.join(', ')}. ` +
@@ -80,8 +81,8 @@ export class DuplicatedActionTypesError extends Error {
  *
  * @category Error
  */
-export class BlockingEffectWithoutMatchingEffectError extends Error {
-  constructor(model, effectActionTypes) {
+export class BlockingEffectWithoutMatchingEffectError<State> extends Error {
+  constructor(model: Model<State>, effectActionTypes: string[]) {
     super(
       `Blocking effect action types should match a pre-existing effect action type in ` +
       `[${model.namespace}] model. The provided effect action types were: ${effectActionTypes.join(', ')}. ` +
@@ -100,8 +101,8 @@ export class BlockingEffectWithoutMatchingEffectError extends Error {
  *
  * @category Error
  */
-export class ModelNotReduxInitializedError extends Error {
-  constructor(model) {
+export class ModelNotReduxInitializedError<State> extends Error {
+  constructor(model: Model<State>) {
     super(
       `Models need to be initialized with combineModelReducers prior to any usage. Now ` +
       `make this the case for: ${model.namespace}. ` +
@@ -119,8 +120,8 @@ export class ModelNotReduxInitializedError extends Error {
  *
  * @category Error
  */
-export class ModelNotSagaInitializedError extends Error {
-  constructor(model) {
+export class ModelNotSagaInitializedError<State> extends Error {
+  constructor(model: Model<State>) {
     super(
       `Models need to be initialized with modelRootSaga prior to any usage. Now ` +
       `make this the case for: ${model.namespace}. ` +
@@ -136,7 +137,7 @@ export class ModelNotSagaInitializedError extends Error {
  * @category Error
  */
 export class DuplicatedModelNamespaceError extends Error {
-  constructor(namespaces) {
+  constructor(namespaces: string[]) {
     super(
       `Namespace in models must be unique. The following namespaces, in order, were referenced in ` +
       `combineModelReducers: ${namespaces.join(', ')}. ` +
@@ -153,7 +154,7 @@ export class DuplicatedModelNamespaceError extends Error {
  * @category Error
  */
 export class ActionDataIsntPlainObjectError extends Error {
-  constructor(actionType) {
+  constructor(actionType: string) {
     super(
       `Action data must be a plain object, when calling action [${actionType}]. ` +
       `See ${errorClassesIndexUrl} for more info.`
@@ -170,7 +171,7 @@ export class ActionDataIsntPlainObjectError extends Error {
  * @category Error
  */
 export class NonCompatibleActionError extends Error {
-  constructor(action) {
+  constructor(action: any) {
     super(
       `The provided action lacks the internals for being redux-data-model-able. Be sure to ` +
       `use bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
@@ -189,8 +190,8 @@ export class NonCompatibleActionError extends Error {
  *
  * @category Error
  */
-export class UndefinedReducerOrEffectError extends Error {
-  constructor(name, model) {
+export class UndefinedReducerOrEffectError<State> extends Error {
+  constructor(name: string, model: Model<State>) {
     super(
       `No reducer/effect called [${name}] was found on [${model.namespace}] model. ` +
       `Available options are: ${Object.keys(model.actionTypes())}. ` +
@@ -207,8 +208,8 @@ export class UndefinedReducerOrEffectError extends Error {
  *
  * @category Error
  */
-export class UndefinedSelectorError extends Error {
-  constructor(name, model) {
+export class UndefinedSelectorError<State> extends Error {
+  constructor(name: string, model: Model<State>) {
     super(
       `No selector called [${name}] was found on [${model.namespace}] model. ` +
       `Available options are: ${Object.keys(model.selectors)}. ` +
@@ -227,8 +228,8 @@ export class UndefinedSelectorError extends Error {
  *
  * @category Error
  */
-export class UndefinedSagaEffectError extends Error {
-  constructor(name, model) {
+export class UndefinedSagaEffectError<State> extends Error {
+  constructor(name: string, model: Model<State>) {
     super(
       `No saga effect called [${name}] was found on [${model.namespace}] model. ` +
       `Available options are: ${Object.keys(sagaEffects)}. ` +
@@ -247,8 +248,8 @@ export class UndefinedSagaEffectError extends Error {
  *
  * @category Error
  */
-export class UndefinedBlockingSagaEffectError extends Error {
-  constructor(name, model) {
+export class UndefinedBlockingSagaEffectError<State> extends Error {
+  constructor(name: string, model: Model<State>) {
     super(
       `No saga effect called [${name}] was found on [${model.namespace}] model. ` +
       `Available options are: ${Object.keys(blockingSagaEffects)}. ` +
@@ -268,7 +269,7 @@ export class UndefinedBlockingSagaEffectError extends Error {
  * @category Error
  */
 export class KeyConflictInMergePropsError extends Error {
-  constructor(statePropConflicts, dispatchPropConflicts, ownPropsConflicts) {
+  constructor(statePropConflicts: string[], dispatchPropConflicts: string[], ownPropsConflicts: string[]) {
     super(
       `A connectModel HOC has conflicts when merging the result of props from the parent component, ` +
       `mapStateToProps props, or mapDispatchToProps props. ` +

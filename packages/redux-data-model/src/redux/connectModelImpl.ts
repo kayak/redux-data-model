@@ -15,10 +15,10 @@ import {UndefinedReducerOrEffectError, UndefinedSelectorError} from "../errors";
  * @ignore
  */
 export function connectModelImpl(
-  models: Model[],
-  userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any>=null,
-  userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any>=null,
-): [Function, Function] {
+  models: Model<any>[],
+  userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any> | null=null,
+  userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any> | null=null,
+): [any, any] {
   const selectors: NamespacedSelectorsMapObject = {};
   const modelActionCreators: NamespacedActionCreatorsMapObject = {};
 
@@ -33,11 +33,11 @@ export function connectModelImpl(
     set(modelActionCreators, model.namespace, model.actionCreators());
   }
 
-  const mapStateToPropsFunc = !isNil(userProvidedMapStateToProps) ? ((state, ownProps=null) => {
+  const mapStateToPropsFunc = !isNil(userProvidedMapStateToProps) ? ((state: any, ownProps: any | null=null) => {
     return userProvidedMapStateToProps(state, ownProps, selectors);
   }) : null;
 
-  const mapDispatchToPropsFunc = (dispatch: Dispatch, ownProps=null) => {
+  const mapDispatchToPropsFunc = (dispatch: Dispatch, ownProps: any | null=null) => {
     const dispatchers = {};
 
     // Bind dispatch function

@@ -25,7 +25,7 @@ export function bindModelActionCreators(
   actionCreators: ActionCreatorsMapObject,
   dispatch: Dispatch
 ): BoundNamespacedActionCreatorsMapObject {
-  return mapValues(actionCreators,actionCreator => function(actionData: object) {
+  return mapValues(actionCreators, actionCreator => function(actionData: any) {
     let promise = Promise.resolve();
 
     // The action is created here so that exceptions within the action creator are not absorbed by promises.

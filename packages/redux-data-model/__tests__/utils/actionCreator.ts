@@ -2,7 +2,7 @@ import {actionCreator} from '../../src/utils';
 import {identity} from 'lodash';
 
 describe('actionCreator', () => {
-  let __actionInternals;
+  let __actionInternals: any;
 
   beforeEach(() => {
     __actionInternals = {resolve: identity, reject: identity};

@@ -4,7 +4,7 @@ import {KeyConflictInMergePropsError} from '../errors';
 /**
  * @ignore
  */
-export function wrapMergePropChecks(mergeProps?: Function | undefined | null): Function {
+export function wrapMergePropChecks(mergeProps?: Function | undefined | null): any {
   if (isFunction(mergeProps)) return mergeProps;
 
   return (stateProps: Record<string, any>, dispatchProps: Record<string, any>, ownProps: Record<string, any>) => {

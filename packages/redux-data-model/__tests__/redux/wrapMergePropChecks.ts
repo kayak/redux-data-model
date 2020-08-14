@@ -3,10 +3,10 @@ import {wrapMergePropChecks} from '../../src/redux/wrapMergePropChecks';
 jest.mock('redux', () => ({combineReducers: jest.fn()}));
 
 describe('wrapMergePropChecks', () => {
-  let ownProps;
-  let stateProps;
-  let dispatchProps;
-  let mergePropsFunc;
+  let ownProps: any;
+  let stateProps: any;
+  let dispatchProps: any;
+  let mergePropsFunc: any;
 
   beforeAll(() => {
     ownProps = {a: true};
@@ -26,17 +26,17 @@ describe('wrapMergePropChecks', () => {
       [{a: true, b: true}, {c: true}, {b:true}, {mapStateToProps: 'b', mapDispatchToProps: '', ownProps: 'b'}],
       [{a: true, b: true}, {c: true}, {c:true}, {mapStateToProps: '', mapDispatchToProps: 'c', ownProps: 'c'}],
     ])(
-    'throws when there is a conflict among the props (mapStateToProps=%j, mapDispatchToProps=%j, ownProps=%j)',
-    // @ts-ignore
-    (
-      mapStateToProps, mapDispatchToProps, ownProps, expected,
-    ) => {
-      expect(() => {
-        mergePropsFunc(mapStateToProps, mapDispatchToProps, ownProps);
-      }).toThrow({
-        name: '',
-        message: (
-          `A connectModel HOC has conflicts when merging the result of props from the parent component, ` +
+      'throws when there is a conflict among the props (mapStateToProps=%j, mapDispatchToProps=%j, ownProps=%j)',
+      // @ts-ignore
+      (
+        mapStateToProps, mapDispatchToProps, ownProps, expected,
+      ) => {
+        expect(() => {
+          mergePropsFunc(mapStateToProps, mapDispatchToProps, ownProps);
+        }).toThrow({
+          name: '',
+          message: (
+            `A connectModel HOC has conflicts when merging the result of props from the parent component, ` +
           `mapStateToProps props, or mapDispatchToProps props. ` +
           `Conflicts are: \n\n` +
           `mapStateToProps conflicts: ${expected.mapStateToProps}\n` +
@@ -45,9 +45,9 @@ describe('wrapMergePropChecks', () => {
           `\nTo fix preferably change your mapStateToProps and mapDispatchToProps implementation ` +
           `to remove the conflicts. Providing your own mergeProps is also an alternative. ` +
           'See https://kayak.github.io/redux-data-model/docs/api/api-index#error-classes for more info.'
-        ),
+          ),
+        });
       });
-    });
 
     describe('when no prop conflict exists', () => {
       it('returns { ...ownProps, ...stateProps, ...dispatchProps }', () => {
@@ -63,7 +63,7 @@ describe('wrapMergePropChecks', () => {
   });
 
   describe('custom mergeProps', () => {
-    let customMergeProps;
+    let customMergeProps: any;
 
     beforeEach(() => {
       customMergeProps = jest.fn((a, b, c) => ({...a, ...b, ...c}));

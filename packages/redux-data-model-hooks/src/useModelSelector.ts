@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useSelector} from 'react-redux';
-import {Model, UndefinedSelectorError, wrapProxy, SelectorFunction} from 'redux-data-model';
+import {Model, UndefinedSelectorError, wrapProxy} from 'redux-data-model';
 
 /**
  * A react hook for returning data from the provided model's state, by the means of one of its selectors. If you
@@ -16,7 +16,7 @@ import {Model, UndefinedSelectorError, wrapProxy, SelectorFunction} from 'redux-
  * @throws [[ModelNotReduxInitializedError]] When model was not initialized on a [[combineModelReducers]] call.
  * @category React Hook
  */
-export function useModelSelector(model: Model, selectorFunc: SelectorFunction): any {
+export function useModelSelector<State=any>(model: Model<State>, selectorFunc: (...args: any[]) => any): any {
   const selectors = React.useMemo(() => {
     const modelSelectors = model.modelSelectors();
     return Model.disableProxyChecks ? modelSelectors : wrapProxy(modelSelectors, model, UndefinedSelectorError)

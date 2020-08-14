@@ -5,14 +5,14 @@ jest.mock('../../src/redux/bindModelActionCreators', () => ({bindModelActionCrea
 const {bindModelActionCreators} = jest.requireMock('../../src/redux/bindModelActionCreators');
 
 describe('connectModelImpl', () => {
-  let state;
-  let dispatch;
-  let ownProps;
-  let articleModel;
-  let modelSelectorsSpy;
-  let actionCreatorsSpy;
-  let mapStateToPropsSpy;
-  let mapDispatchToPropsSpy;
+  let state: any;
+  let dispatch: any;
+  let ownProps: any;
+  let articleModel: Model<any>;
+  let modelSelectorsSpy: any;
+  let actionCreatorsSpy: any;
+  let mapStateToPropsSpy: any;
+  let mapDispatchToPropsSpy: any;
 
   beforeEach(() => {
     state = {};
@@ -25,12 +25,10 @@ describe('connectModelImpl', () => {
     articleModel.markAsReduxInitialized();
     Model.disableProxyChecks = true;
     modelSelectorsSpy = jest.spyOn(articleModel, 'modelSelectors').mockImplementation(
-      // Implements an identity selector
-      () => (data) => data
+      () => ({})
     );
     actionCreatorsSpy = jest.spyOn(articleModel, 'actionCreators').mockImplementation(
-      // Implements an identity action creator
-      () => (data) => data
+      () => ({})
     );
     mapStateToPropsSpy = jest.fn();
     mapDispatchToPropsSpy = jest.fn();
@@ -93,7 +91,9 @@ describe('connectModelImpl', () => {
           [articleModel],
         );
         const result = connectedMapDispatchToProps(dispatch, ownProps);
-        expect(result).toEqual({[articleModel.namespace]: bindModelActionCreators.mock.results[0].value});
+        expect(result).toEqual({
+          [articleModel.namespace]: bindModelActionCreators.mock.results[0].value,
+        });
       });
     });
 
@@ -161,12 +161,10 @@ describe('connectModelImpl', () => {
       });
       articleModel.markAsReduxInitialized();
       modelSelectorsSpy = jest.spyOn(articleModel, 'modelSelectors').mockImplementation(
-        // Implements an identity selector
-        () => (data) => data
+        () => ({})
       );
       actionCreatorsSpy = jest.spyOn(articleModel, 'actionCreators').mockImplementation(
-        // Implements an identity action creator
-        () => (data) => data
+        () => ({})
       );
       mapDispatchToPropsSpy = jest.fn();
     });

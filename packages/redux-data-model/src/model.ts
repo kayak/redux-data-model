@@ -13,10 +13,11 @@ import {
   uniq,
   values
 } from 'lodash';
-import {AnyAction, Reducer} from 'redux';
+import {Action, AnyAction, Reducer} from 'redux';
 import {Saga} from '@redux-saga/core';
 import {takeEvery as blockingEffectTakeEvery,} from 'redux-saga/effects';
 import {createSelector} from 'reselect';
+import {Immutable} from 'immer';
 import {blockingSagaEffects, modelBlockingGenerator, sagaEffects} from './saga';
 import {
   ActionCreatorsMapObject,
@@ -29,7 +30,6 @@ import {
   SelectorFunction,
   SelectorMap,
   SelectorModelMap,
-  State,
 } from './baseTypes';
 import {actionCreator, ActionInternalsObject, wrapProxy} from "./utils";
 import {
@@ -48,10 +48,10 @@ import {
 /**
  * @ignore
  */
-const defaultReducer = (
-  state,
+const defaultReducer = <State,>(
+  state: State,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _action,
+  _action: Action,
 ) => state;
 
 /**
@@ -64,10 +64,13 @@ const namespaceRegex = new RegExp('^([A-Za-z0-9]+)([.][A-Za-z0-9]+)*$');
  */
 const actionTypeRegex = new RegExp('^@@([A-Za-z0-9]+)(([.]([A-Za-z0-9]+))+)@@$');
 
+export type SagaEffects = typeof sagaEffects;
+export type BlockingSagaEffects = typeof blockingSagaEffects;
+
 /**
  * Model options are used for initialising a [[Model]] instance.
  */
-export interface ModelOptions {
+export interface ModelOptions<State=any> {
   /**
    * The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
    * and, as a matter of fact, redux-data-model will enforce it. The namespace is effectively an object's path
@@ -91,7 +94,7 @@ export interface ModelOptions {
    *   userById: {},
    * }
    */
-  state: State;
+  state: Immutable<State>;
   /**
    * Selectors are functions that receive the entire state and returns a piece of it. The first argument
    * of a selector function is the namespaced state, following by any other positional arguments passed
@@ -115,7 +118,7 @@ export interface ModelOptions {
    *    (userIds, userById) => userIds.map(id => userById[id])
    *  ],
    */
-  selectors?: SelectorMap;
+  selectors?: SelectorMap<Immutable<State>>;
   /**
    * Reducers are functions used for synchronously changing the current state of a given model. A reducer will
    * be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
@@ -139,7 +142,7 @@ export interface ModelOptions {
    *   state.userById[userId] = data;
    * }
    */
-  reducers?: ReducerMap;
+  reducers?: ReducerMap<State>;
   /**
    * Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
    * an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
@@ -160,7 +163,7 @@ export interface ModelOptions {
    *   }
    * },
    */
-  effects?: EffectMap;
+  effects?: EffectMap<SagaEffects>;
   /**
    * Blocking effects are functions used for defining when/how [[ModelOptions.effects|normal effects]] will be
    * executed. By default, effects are wrapped by a
@@ -179,7 +182,7 @@ export interface ModelOptions {
    *   yield blockingSagaEffects.debounce(300, actionType, modelEffects.fetchPostsByUser);
    * },
    */
-  blockingEffects?: BlockingEffectMap;
+  blockingEffects?: BlockingEffectMap<BlockingSagaEffects>;
 }
 
 /**
@@ -187,7 +190,7 @@ export interface ModelOptions {
  * provided when initializing them. The model will be used to generate the action types, actions, reducers,
  * dispatchers, and sagas, based on the [[ModelOptions|model's options]] that were provided.
  */
-export class Model {
+export class Model<State=any> {
 
   /**
    * Whether [[ModelNotReduxInitializedError]] and [[ModelNotSagaInitializedError]] should be thrown when the model
@@ -206,11 +209,11 @@ export class Model {
   private _isReduxInitialized: boolean;
   private _isSagaInitialized: boolean;
   private readonly _namespace: string;
-  private readonly _state: State;
-  private readonly _selectors?: SelectorMap;
-  private readonly _reducers?: ReducerMap;
-  private readonly _effects?: EffectMap;
-  private readonly _blockingEffects?: BlockingEffectMap;
+  private readonly _state: Immutable<State>;
+  private readonly _selectors: SelectorMap<Immutable<State>>;
+  private readonly _reducers: ReducerMap<State>;
+  private readonly _effects: EffectMap<SagaEffects>;
+  private readonly _blockingEffects: BlockingEffectMap<BlockingSagaEffects>;
 
   /**
    * Creates a model instance.
@@ -244,7 +247,7 @@ export class Model {
    * @throws [[BlockingEffectWithoutMatchingEffectError]] When blocking effect action types don't have a matching
    *                                                      effect action type.
    */
-  public constructor(options: ModelOptions) {
+  public constructor(options: ModelOptions<State>) {
     this._isReduxInitialized = false;
     this._isSagaInitialized = false;
     this._namespace = options.namespace;
@@ -254,9 +257,11 @@ export class Model {
     this._effects = options.effects || {};
     this._blockingEffects = options.blockingEffects || {};
 
-    const effectActionTypes = [...keys(this._effects)];
-    const blockingEffectActionTypes = [...keys(this._blockingEffects)];
-    const reducerAndEffectActionTypes = [].concat(...keys(this._reducers)).concat(effectActionTypes);
+    const effectActionTypes: string[] = [...keys(this._effects)];
+    const blockingEffectActionTypes: string[] = [...keys(this._blockingEffects)];
+    const reducerAndEffectActionTypes: string[] = [
+      ...keys(this._reducers), ...effectActionTypes,
+    ];
 
     if (!isString(this._namespace)) {
       throw new NamespaceIsntAStringError(this);
@@ -302,7 +307,7 @@ export class Model {
    * @returns An action type's map object.
    */
   public actionTypes(): ActionTypesMapObject {
-    const actionsTypes = {};
+    const actionsTypes: ActionTypesMapObject = {};
 
     for (const reducerName in this._reducers) {
       actionsTypes[reducerName] = this.actionType(reducerName);
@@ -326,10 +331,10 @@ export class Model {
    */
   public actionCreators(): ActionCreatorsMapObject {
     const actionTypes = this.actionTypes();
-    const actions = {};
+    const actions: ActionCreatorsMapObject = {};
 
-    const actionCreatorBuilder = actionName => (
-      payload: object = {}, __actionInternals: ActionInternalsObject=undefined,
+    const actionCreatorBuilder = (actionName: string) => (
+      payload: any = {}, __actionInternals: ActionInternalsObject | undefined = undefined,
     ) => {
       if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
         throw new ModelNotReduxInitializedError(this);
@@ -343,13 +348,15 @@ export class Model {
     };
 
     for (const reducerName in this._reducers) {
-      actions[reducerName] = actionCreatorBuilder(reducerName);
-      actions[reducerName].isEffect = false;
+      const actionCreator: any = actionCreatorBuilder(reducerName);
+      actionCreator.isEffect = false;
+      actions[reducerName] = actionCreator;
     }
 
     for (const effectName in this._effects) {
-      actions[effectName] = actionCreatorBuilder(effectName);
-      actions[effectName].isEffect = true;
+      const actionCreator: any = actionCreatorBuilder(effectName);
+      actionCreator.isEffect = true;
+      actions[effectName] = actionCreator
     }
 
     return Model.disableProxyChecks ? actions : wrapProxy(actions, this, UndefinedReducerOrEffectError);
@@ -358,15 +365,17 @@ export class Model {
   /**
    * @ignore
    */
-  public modelSelectors(): SelectorModelMap {
-    const selectors = {};
+  public modelSelectors(): SelectorModelMap<Immutable<State>> {
+    const selectors: SelectorModelMap<Immutable<State>> = {};
 
-    const namespacedSelectorFuncCreator = inputFunc => (allState, ...args) => {
-      const namespacedState = get(allState, this._namespace);
+    const namespacedSelectorFuncCreator = (
+      inputFunc: SelectorFunction<Immutable<State>>
+    ) => (allState: any, ...args: any[]) => {
+      const namespacedState: Immutable<State> = get(allState, this._namespace);
       return inputFunc(namespacedState, ...args, allState);
     };
 
-    const resultFuncCreator = resultFunc => (...args) => {
+    const resultFuncCreator = (resultFunc: Function) => (...args: any[]) => {
       if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
         throw new ModelNotReduxInitializedError(this);
       }
@@ -375,10 +384,10 @@ export class Model {
     };
 
     for (const [selectorName, selectorFunc] of toPairs(this._selectors)) {
-      let inputSelectorFuncs;
-      let resultFunc;
+      let inputSelectorFuncs: SelectorFunction<Immutable<State>>[] | null;
+      let resultFunc: (...args: any[]) => any | null;
 
-      if (isArray<SelectorFunction>(selectorFunc)) {
+      if (isArray<SelectorFunction<Immutable<State>>>(selectorFunc)) {
         inputSelectorFuncs = selectorFunc.slice(0, -1).map(namespacedSelectorFuncCreator);
         resultFunc = selectorFunc.slice(-1).map(resultFuncCreator)[0];
       } else {
@@ -396,7 +405,7 @@ export class Model {
    * @ignore
    */
   public modelReducers(): Reducer<unknown, AnyAction> {
-    const reducers = {};
+    const reducers: ReducerMap<State> = {};
     const actionTypes = this.actionTypes();
 
     for (const [reducerName, reducerFunc] of toPairs(this._reducers)) {
@@ -404,7 +413,7 @@ export class Model {
       reducers[actionType] = reducerFunc;
     }
 
-    return produce((draft: object, action: ActionWithInternals) => {
+    return produce((draft: State, action: ActionWithInternals) => {
       const reducerFunc = get(reducers, action.type, defaultReducer);
       reducerFunc(draft, action.payload);
     }, this._state);
@@ -414,8 +423,8 @@ export class Model {
    * @ignore
    */
   public modelEffects(): EffectModelMap {
-    const effects = {};
-    const effectSagas = {};
+    const effects: EffectModelMap = {};
+    const effectSagas: EffectModelMap = {};
     const actionTypes = this.actionTypes();
     const actionCreators = this.actionCreators();
     const proxiedSagaEffects = Model.disableProxyChecks ? sagaEffects : wrapProxy(
@@ -428,7 +437,7 @@ export class Model {
     for (const [effectName, effectFunc] of toPairs(this._effects)) {
       const actionType = actionTypes[effectName];
       const effectSaga = modelBlockingGenerator(
-        function *(payload: object = {}) {
+        function *(payload: any = {}) {
           return yield* effectFunc(payload, proxiedSagaEffects, actionCreators);
         }
       );
@@ -462,7 +471,7 @@ export class Model {
    * @returns An array of sagas.
    */
   public get reduxSagas(): Saga[] {
-    const reduxSagas = [];
+    const reduxSagas: Saga[] = [];
 
     for (const modelEffectFunc of values(this.modelEffects())) {
       reduxSagas.push(modelEffectFunc);
@@ -503,7 +512,7 @@ export class Model {
    *
    * @returns An initial state.
    */
-  public get state(): State {
+  public get state(): Immutable<State> {
     return this._state;
   }
 
@@ -512,7 +521,7 @@ export class Model {
    *
    * @returns A selectors map.
    */
-  public get selectors(): SelectorMap {
+  public get selectors(): SelectorMap<Immutable<State>> {
     return this._selectors;
   }
 
@@ -521,7 +530,7 @@ export class Model {
    *
    * @returns A reducer function.
    */
-  public get reducers(): ReducerMap {
+  public get reducers(): ReducerMap<State> {
     return this._reducers;
   }
 
@@ -530,7 +539,7 @@ export class Model {
    *
    * @returns An effect map.
    */
-  public get effects(): EffectMap {
+  public get effects(): EffectMap<SagaEffects> {
     return this._effects;
   }
 
@@ -539,21 +548,21 @@ export class Model {
    *
    * @returns A blocking effect map.
    */
-  public get blockingEffects(): BlockingEffectMap {
+  public get blockingEffects(): BlockingEffectMap<BlockingSagaEffects> {
     return this._blockingEffects;
   }
 
   /**
    * @ignore
    */
-  public markAsReduxInitialized() {
+  public markAsReduxInitialized(): void {
     this._isReduxInitialized = true;
   }
 
   /**
    * @ignore
    */
-  public markAsSagaInitialized() {
+  public markAsSagaInitialized(): void {
     this._isSagaInitialized = true;
   }
 }

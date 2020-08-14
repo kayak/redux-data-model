@@ -6,11 +6,11 @@ import {DuplicatedModelNamespaceError} from '../errors';
 /**
  * @ignore
  */
-function combineReducersRecursively(reducerTree, level=0) {
+function combineReducersRecursively(reducerTree: Record<string, any>, level=0) {
   if (!isPlainObject(reducerTree))
     return reducerTree;
 
-  const newReducerTree = {};
+  const newReducerTree: Record<string, any> = {};
   for (const [reducerKey, reducerValue] of toPairs(reducerTree)) {
     newReducerTree[reducerKey] = combineReducersRecursively(reducerValue, level + 1);
   }
@@ -32,7 +32,7 @@ function combineReducersRecursively(reducerTree, level=0) {
  * @throws [[DuplicatedModelNamespaceError]] When multiple models have the same namespace.
  * @category Redux/Saga Setup
  */
-export function combineModelReducers(models: Model[]): ReducersMapObject {
+export function combineModelReducers(models: Model<any>[]): ReducersMapObject {
   const modelNamespaces = models.map(model => model.namespace);
   const reducerTree = {};
 

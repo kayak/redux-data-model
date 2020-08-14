@@ -2,12 +2,12 @@ import {mount} from 'enzyme';
 import * as React from 'react';
 import {Provider} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import {Model} from 'redux-data-model';
+import {Model, ModelOptions} from 'redux-data-model';
 import {useModelActions} from '../src';
 
 const mockStore = configureMockStore([]);
 
-function Counter({model, actionCaller}) {
+function Counter({model, actionCaller}: {model: any; actionCaller: any}) {
   const actions = useModelActions(model);
   React.useEffect(() => {
     actionCaller(actions);
@@ -16,10 +16,10 @@ function Counter({model, actionCaller}) {
 }
 
 describe('useModelActions', () => {
-  let modelOptions;
-  let counterModel;
-  let actionCreators;
-  let store;
+  let modelOptions: ModelOptions<any>;
+  let counterModel: any;
+  let actionCreators: any;
+  let store: any;
 
   beforeAll(() => {
     modelOptions = {
@@ -51,10 +51,10 @@ describe('useModelActions', () => {
   });
 
   it('calls actionCreators', () => {
-     const actionCreatorsSpy = jest.spyOn(counterModel, 'actionCreators');
-     mount(
+    const actionCreatorsSpy = jest.spyOn(counterModel, 'actionCreators');
+    mount(
       <Provider store={store}>
-        <Counter model={counterModel} actionCaller={(actions) => actions.increase()}/>
+        <Counter model={counterModel} actionCaller={(actions: any) => actions.increase()}/>
       </Provider>
     );
 
@@ -62,9 +62,9 @@ describe('useModelActions', () => {
   });
 
   it('will dispatch the respective reducer action when reducer callback is called', () => {
-     mount(
+    mount(
       <Provider store={store}>
-        <Counter model={counterModel} actionCaller={(actions) => actions.increase()}/>
+        <Counter model={counterModel} actionCaller={(actions: any) => actions.increase()}/>
       </Provider>
     );
 
@@ -80,9 +80,9 @@ describe('useModelActions', () => {
   });
 
   it('will dispatch the respective effect action when effect callback is called', () => {
-     mount(
+    mount(
       <Provider store={store}>
-        <Counter model={counterModel} actionCaller={(actions) => actions.tryToIncrease()}/>
+        <Counter model={counterModel} actionCaller={(actions: any) => actions.tryToIncrease()}/>
       </Provider>
     );
 
@@ -102,7 +102,7 @@ describe('useModelActions', () => {
       expect(() => {
         mount(
           <Provider store={store}>
-            <Counter model={counterModel} actionCaller={(actions) => actions.whatever()}/>
+            <Counter model={counterModel} actionCaller={(actions: any) => actions.whatever()}/>
           </Provider>
         );
       }).toThrow({
@@ -118,7 +118,7 @@ describe('useModelActions', () => {
       expect(() => {
         mount(
           <Provider store={store}>
-            <Counter model={counterModel} actionCaller={(actions) => actions.whatever()}/>
+            <Counter model={counterModel} actionCaller={(actions: any) => actions.whatever()}/>
           </Provider>
         );
       }).toThrow({

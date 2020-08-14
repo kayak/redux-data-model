@@ -40,6 +40,7 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
+    "@types/redux-mock-store": "1.0.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.4.3",

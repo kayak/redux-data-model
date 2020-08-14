@@ -15,15 +15,15 @@ export interface ActionInternalsObject {
  */
 export interface ActionWithInternals extends AnyAction {
   type: string;
-  payload: object;
-  __actionInternals: ActionInternalsObject;
+  payload: any;
+  __actionInternals: ActionInternalsObject | undefined;
 }
 
 /**
  * @ignore
  */
 export function actionCreator(
-  type: string, payload: object = {}, __actionInternals: ActionInternalsObject=undefined,
+  type: string, payload: any = {}, __actionInternals: ActionInternalsObject | undefined=undefined,
 ): ActionWithInternals {
   if (!isPlainObject(payload)) {
     throw new ActionDataIsntPlainObjectError(type);

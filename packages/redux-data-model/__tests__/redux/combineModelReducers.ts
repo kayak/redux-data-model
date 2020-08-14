@@ -4,10 +4,10 @@ import {combineModelReducers, Model} from '../../src';
 jest.mock('redux', () => ({combineReducers: jest.fn()}));
 
 describe('combineModelReducers', () => {
-  let articleModel;
-  let modelReducersSpy;
-  let markAsReduxInitializedSpy;
-  let result;
+  let articleModel: Model<any>;
+  let modelReducersSpy: any;
+  let markAsReduxInitializedSpy: any;
+  let result: any;
 
   beforeEach(() => {
     articleModel = new Model({

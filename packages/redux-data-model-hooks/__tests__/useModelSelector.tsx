@@ -2,12 +2,14 @@ import {mount} from 'enzyme';
 import * as React from 'react';
 import {Provider} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import {Model} from 'redux-data-model';
+import {Model, ModelOptions} from 'redux-data-model';
 import {useModelSelector} from '../src';
 
 const mockStore = configureMockStore([]);
 
-function Counter({model, selectorFunc = (state, selectors) => selectors.count(state)}) {
+function Counter({
+  model, selectorFunc = (state: any, selectors: any) => selectors.count(state)
+}: {model: any; selectorFunc?: any}) {
   const count = useModelSelector(model, selectorFunc);
   return (
     <div id="count">{count}</div>
@@ -15,9 +17,9 @@ function Counter({model, selectorFunc = (state, selectors) => selectors.count(st
 }
 
 describe('useModelSelector', () => {
-  let modelOptions;
-  let counterModel;
-  let store;
+  let modelOptions: ModelOptions<any>;
+  let counterModel: any;
+  let store: any;
 
   beforeAll(() => {
     modelOptions = {
@@ -29,7 +31,7 @@ describe('useModelSelector', () => {
         count: state => state.count,
       },
     };
-    counterModel = new Model(modelOptions);
+    counterModel = new Model<any>(modelOptions);
     counterModel.markAsReduxInitialized();
     counterModel.markAsSagaInitialized();
     store = mockStore({
@@ -38,8 +40,8 @@ describe('useModelSelector', () => {
   });
 
   it('calls modelSelectors', () => {
-     const modelSelectorsSpy = jest.spyOn(counterModel, 'modelSelectors');
-     mount(
+    const modelSelectorsSpy = jest.spyOn(counterModel, 'modelSelectors');
+    mount(
       <Provider store={store}>
         <Counter model={counterModel}/>
       </Provider>
@@ -49,7 +51,7 @@ describe('useModelSelector', () => {
   });
 
   it('can access data from the store with a model selector', () => {
-     const wrapper = mount(
+    const wrapper = mount(
       <Provider store={store}>
         <Counter model={counterModel}/>
       </Provider>
@@ -59,9 +61,9 @@ describe('useModelSelector', () => {
   });
 
   it('passes state and selectors respectively as the arguments of the selectorFunc', () => {
-     Model.disableProxyChecks = true;
-     const selectorFunc = jest.fn();
-     mount(
+    Model.disableProxyChecks = true;
+    const selectorFunc = jest.fn();
+    mount(
       <Provider store={store}>
         <Counter model={counterModel} selectorFunc={selectorFunc}/>
       </Provider>
@@ -76,7 +78,7 @@ describe('useModelSelector', () => {
       expect(() => {
         mount(
           <Provider store={store}>
-            <Counter model={counterModel} selectorFunc={(state, selectors) => selectors.whatever(state)}/>
+            <Counter model={counterModel} selectorFunc={(state: any, selectors: any) => selectors.whatever(state)}/>
           </Provider>
         );
       }).toThrow({
@@ -92,7 +94,7 @@ describe('useModelSelector', () => {
       expect(() => {
         mount(
           <Provider store={store}>
-            <Counter model={counterModel} selectorFunc={(state, selectors) => selectors.whatever(state)}/>
+            <Counter model={counterModel} selectorFunc={(state: any, selectors: any) => selectors.whatever(state)}/>
           </Provider>
         );
       }).toThrow({

@@ -2,11 +2,11 @@ import {all} from 'redux-saga/effects';
 import {Model, modelRootSaga} from '../../src';
 
 describe('modelRootSaga', () => {
-  let sagas;
-  let articleModel;
-  let reduxSagasSpy;
-  let markAsSagaInitializedSpy;
-  let gen;
+  let sagas: any;
+  let articleModel: Model<any>;
+  let reduxSagasSpy: any;
+  let markAsSagaInitializedSpy: any;
+  let gen: any;
 
   beforeEach(() => {
     articleModel = new Model({
@@ -42,8 +42,8 @@ describe('modelRootSaga', () => {
   });
 
   describe('when an exception occurs', () => {
-    let error;
-    let firstSagaGen;
+    let error: any;
+    let firstSagaGen: any;
 
     beforeEach(() => {
       error = new Error();
