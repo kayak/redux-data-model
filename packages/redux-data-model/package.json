@@ -34,7 +34,7 @@
   },
   "peerDependencies": {
     "immer": "^6.0.1",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
     "react-redux": ">=4.4.9",
