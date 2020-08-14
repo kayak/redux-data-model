@@ -10,6 +10,7 @@
   ],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
+  "typings": "dist/types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kayak/redux-data-model.git"
@@ -18,13 +19,14 @@
     "clean": "rimraf dist js_coverage .rpt2_cache",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
+    "lint:tsc": "tsc",
     "test": "jest --silent",
     "test:logs": "jest",
     "test:update": "npm run test -- -u",
     "test:watch": "npm run test -- --watchAll --verbose",
     "test:coverage": "npm run test -- --verbose --coverage",
     "coveralls": "coveralls",
-    "build": "npm run lint && npm run test && rollup -c",
+    "build": "npm run lint && npm run lint:tsc && npm run test && rollup -c",
     "size": "npm run build && size-limit"
   },
   "bugs": {
@@ -38,15 +40,15 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.1",
-    "enzyme-to-json": "3.4.3",
-    "jest": "25.1.0",
-    "jest-extended": "0.11.2",
-    "jsdom-global": "3.0.2",
-    "react-test-renderer": "16.10.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "enzyme-to-json": "^3.4.3",
+    "jest": "^25.1.0",
+    "jest-extended": "^0.11.2",
+    "jsdom-global": "^3.0.2",
+    "react-test-renderer": "^16.10.2",
     "redux-data-model": "^0.11.0",
-    "redux-mock-store": "1.5.3",
-    "ts-jest": "25.5.1"
+    "redux-mock-store": "^1.5.3",
+    "ts-jest": "^25.5.1"
   }
 }

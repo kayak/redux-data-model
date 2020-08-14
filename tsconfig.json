@@ -15,10 +15,10 @@
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false,
-    "outDir": "./dist/",
     "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true
+    "declaration": true,
+    "downlevelIteration": true,
+    "outDir": "./dist/"
   },
   "include": [
     "src/**/*",
