@@ -4,7 +4,7 @@ import {mount} from 'enzyme';
 import {Model} from 'redux-data-model';
 
 describe('IndexPage', () => {
-  let page = null;
+  let page: any = null;
 
   beforeEach(() => {
     Model.disableProxyChecks = true;

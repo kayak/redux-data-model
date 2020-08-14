@@ -18,7 +18,11 @@ import {
 import * as React from 'react';
 import JSONTree from 'react-json-tree';
 
-export const counterModel = new Model({
+interface State {
+  count: number;
+};
+
+export const counterModel = new Model<State>({
   namespace: 'projectA.counter',
   state: {
     count: 0,
@@ -37,7 +41,7 @@ export const counterModel = new Model({
 });
 
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = [sagaMiddleware];
+const middlewares: any[] = [sagaMiddleware];
 
 if (process.env.NODE_ENV === `development`) {
   middlewares.push(logger);
@@ -49,7 +53,7 @@ const store = createStore(combineReducers({
 
 sagaMiddleware.run(() => modelRootSaga([counterModel]));
 
-function TestComponent({count, projectA}) {
+function TestComponent({count, projectA}: {count: number; projectA: any}) {
   // Only used for displaying entire state
   const allState = useSelector(state => state);
 
@@ -73,7 +77,7 @@ function TestComponent({count, projectA}) {
   );
 }
 
-function mapStateToProps(state, _props, selectors) {
+function mapStateToProps(state: any, _props: any, selectors: any) {
   return {
     count: selectors.projectA.counter.count(state),
   };

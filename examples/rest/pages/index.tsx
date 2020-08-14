@@ -9,24 +9,33 @@ import * as React from 'react';
 import JSONTree from 'react-json-tree';
 import fetch from 'isomorphic-unfetch';
 
-async function fetchApi(url) {
+async function fetchApi(url: string) {
   return await fetch(url).then(response => response.json());
 }
 
-export const userModel = new Model({
+interface UserState {
+  loadingById: {
+    [key: string]: boolean;
+  };
+  usersById: {
+    [key: string]: any;
+  };
+};
+
+export const userModel = new Model<UserState>({
   namespace: 'users',
   state: {
-    loading: {},
-    data: {},
+    loadingById: {},
+    usersById: {},
   },
   selectors: {
-    loadingByUser: (state, userId) => _.get(state, `loading[${userId}]`, true),
-    userById: (state, userId) => _.get(state, `data[${userId}]`),
+    loadingByUser: (state, userId) => _.get(state, `loadingById[${userId}]`, true),
+    userById: (state, userId) => _.get(state, `usersById[${userId}]`),
   },
   reducers: {
     saveUser(state, {data, userId}) {
-      state.loading[userId] = false;
-      state.data[userId] = data;
+      state.loadingById[userId] = false;
+      state.usersById[userId] = data;
     },
   },
   effects: {
@@ -41,28 +50,37 @@ export const userModel = new Model({
   },
 });
 
-export const postModel = new Model({
+interface PostState {
+  loadingById: {
+    [key: string]: boolean;
+  };
+  postsByUserId: {
+    [key: string]: any[];
+  };
+};
+
+export const postModel = new Model<PostState>({
   namespace: 'posts',
   state: {
-    loading: {},
+    loadingById: {},
     postsByUserId: {},
   },
   selectors: {
-    loadingByUser: (state, userId) => _.get(state, `loading[${userId}]`, true),
+    loadingByUser: (state, userId) => _.get(state, `loadingById[${userId}]`, true),
     postsAsItems: (state, userId) => _.get(state, `postsByUserId[${userId}]`, []).map(
-      post => ({id: post.id, label: `${post.id}. ${post.title}`, status: post.published ? 'Done' : 'To Do'})
+      (post: any) => ({id: post.id, label: `${post.id}. ${post.title}`, status: post.published ? 'Done' : 'To Do'})
     ),
   },
   reducers: {
     savePostsByUser(state, {data, userId}) {
-      state.loading[userId] = false;
+      state.loadingById[userId] = false;
       state.postsByUserId[userId] = data;
     },
     switchPublishedByUser(state, {userId}) {
-      state.postsByUserId[userId].forEach(post => post.published = !post.published);
+      state.postsByUserId[userId].forEach((post: any) => post.published = !post.published);
     },
     switchPublishedByUserAndPost(state, {userId, postId}) {
-      const post = state.postsByUserId[userId].find(post => post.id === postId);
+      const post = state.postsByUserId[userId].find((post: any) => post.id === postId);
       post.published = !post.published;
     },
   },
@@ -79,7 +97,7 @@ export const postModel = new Model({
 });
 
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = [sagaMiddleware];
+const middlewares: any[] = [sagaMiddleware];
 
 if (process.env.NODE_ENV === `development`) {
   middlewares.push(logger);
@@ -122,7 +140,7 @@ function TestComponent() {
       </div>
       <br/>
       <div>
-        <strong>Posts:</strong> {loadingPosts ? 'Loading posts...' : postItems.map(post => (
+        <strong>Posts:</strong> {loadingPosts ? 'Loading posts...' : postItems.map((post: any) => (
           <div key={post.id}>{post.label} | {post.status} |{' '}
             <button onClick={() => postActions.switchPublishedByUserAndPost({userId, postId: post.id})}>
               Switch state

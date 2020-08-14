@@ -10,7 +10,7 @@ const ReactSwal = withReactContent(Swal).mixin({
   buttonsStyling: false
 });
 
-const alert = options => ReactSwal.fire(options);
+const alert = (options: any) => ReactSwal.fire(options);
 
 const confirm = (options = {}) =>
   alert({
@@ -19,13 +19,13 @@ const confirm = (options = {}) =>
     ...options
   });
 
-export async function showConfirm(options) {
+export async function showConfirm(options: any) {
   const result = await confirm(options);
   if (result.value !== true) return false;
   return true;
 }
 
-export async function notifySucess(options) {
+export async function notifySucess(options: any) {
   alert({
     icon: "success",
     ...options,

@@ -21,7 +21,11 @@ import {
 import * as React from 'react';
 import JSONTree from 'react-json-tree';
 
-export const counterModel = new Model({
+interface State {
+  count: number;
+};
+
+export const counterModel = new Model<State>({
   namespace: 'counter',
   state: {
     count: 0,
@@ -40,7 +44,7 @@ export const counterModel = new Model({
 });
 
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = [sagaMiddleware];
+const middlewares: any[] = [sagaMiddleware];
 
 if (process.env.NODE_ENV === `development`) {
   middlewares.push(logger);

@@ -9,11 +9,20 @@ import * as React from 'react';
 import JSONTree from 'react-json-tree';
 import fetch from 'isomorphic-unfetch';
 
-async function fetchApi(url) {
+async function fetchApi(url: string) {
   return await fetch(url).then(response => response.json());
 }
 
-export const userModel = new Model({
+interface UserState {
+  loadingById: {
+    [key: string]: boolean;
+  };
+  usersById: {
+    [key: string]: any;
+  };
+};
+
+export const userModel = new Model<UserState>({
   namespace: 'users',
   state: {
     loadingById: {},
@@ -49,7 +58,13 @@ export const userModel = new Model({
   },
 });
 
-export const addressModel = new Model({
+interface AddressState {
+  addressesByUserId: {
+    [key: string]: any;
+  };
+};
+
+export const addressModel = new Model<AddressState>({
   namespace: 'addresses',
   state: {
     addressesByUserId: {},
@@ -62,7 +77,7 @@ export const addressModel = new Model({
 });
 
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = [sagaMiddleware];
+const middlewares: any[] = [sagaMiddleware];
 
 if (process.env.NODE_ENV === `development`) {
   middlewares.push(logger);
