@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/kayak/redux-data-model/compare/v0.11.0...v0.12.0) (2020-08-14)
+
+
+### Features
+
+* improve typescript support ([794b3ad](https://github.com/kayak/redux-data-model/commit/794b3ad0c27dbd25a5d2f3e9795fadf3bd0046b6))
+
+
+
+
+
 # [0.11.0](https://github.com/kayak/redux-data-model/compare/v0.10.1...v0.11.0) (2020-05-15)
 
 

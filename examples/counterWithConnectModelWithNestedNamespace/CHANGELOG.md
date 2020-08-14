@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/kayak/redux-data-model/compare/v0.11.0...v0.12.0) (2020-08-14)
+
+**Note:** Version bump only for package redux-data-model-connect-model-with-nested-namespace.js
+
+
+
+
+
 # [0.11.0](https://github.com/kayak/redux-data-model/compare/v0.10.1...v0.11.0) (2020-05-15)
 
 **Note:** Version bump only for package redux-data-model-connect-model-with-nested-namespace.js
