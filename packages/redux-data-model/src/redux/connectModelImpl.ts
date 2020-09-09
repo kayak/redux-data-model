@@ -14,10 +14,10 @@ import {UndefinedReducerOrEffectError, UndefinedSelectorError} from "../errors";
 /**
  * @ignore
  */
-export function connectModelImpl(
+export function connectModelImpl<TStateProps, TOwnProps, TDispatchProps>(
   models: Model<any>[],
-  userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any> | null=null,
-  userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any> | null=null,
+  userProvidedMapStateToProps: MapStateToPropsWithSelectors<TStateProps, TOwnProps, any> | null=null,
+  userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<TDispatchProps, TOwnProps> | null=null,
 ): [any, any] {
   const selectors: NamespacedSelectorsMapObject = {};
   const modelActionCreators: NamespacedActionCreatorsMapObject = {};
@@ -33,38 +33,34 @@ export function connectModelImpl(
     set(modelActionCreators, model.namespace, model.actionCreators());
   }
 
-  const mapStateToPropsFunc = !isNil(userProvidedMapStateToProps) ? ((state: any, ownProps: any | null=null) => {
+  const mapStateToPropsFunc = !isNil(userProvidedMapStateToProps) ? ((state: TStateProps, ownProps: TOwnProps) => {
     return userProvidedMapStateToProps(state, ownProps, selectors);
   }) : null;
 
-  const mapDispatchToPropsFunc = (dispatch: Dispatch, ownProps: any | null=null) => {
-    const dispatchers = {};
+  const mapDispatchToPropsFunc = !isNil(userProvidedMapDispatchToProps) ? (dispatch: Dispatch, ownProps: TOwnProps) => {
+    if (isFunction(userProvidedMapDispatchToProps)) {
+      const dispatchers = {};
 
-    // Bind dispatch function
-    for (const model of models) {
-      const boundModelActionCreators = bindModelActionCreators(get(modelActionCreators, model.namespace), dispatch);
+      // Bind dispatch function
+      for (const model of models) {
+        const boundModelActionCreators = bindModelActionCreators(get(modelActionCreators, model.namespace), dispatch);
 
-      set(
-        dispatchers,
-        model.namespace,
-        Model.disableProxyChecks ? boundModelActionCreators : wrapProxy(
-          boundModelActionCreators,
-          model,
-          UndefinedReducerOrEffectError,
-        ),
-      );
-    }
-
-    if (!isNil(userProvidedMapDispatchToProps)) {
-      if (isFunction(userProvidedMapDispatchToProps)) {
-        return userProvidedMapDispatchToProps(dispatch, ownProps, dispatchers);
-      } else {
-        return bindModelActionCreators(userProvidedMapDispatchToProps, dispatch);
+        set(
+          dispatchers,
+          model.namespace,
+          Model.disableProxyChecks ? boundModelActionCreators : wrapProxy(
+            boundModelActionCreators,
+            model,
+            UndefinedReducerOrEffectError,
+          ),
+        );
       }
+
+      return userProvidedMapDispatchToProps(dispatch, ownProps, dispatchers);
     }
 
-    return dispatchers;
-  };
+    return bindModelActionCreators(userProvidedMapDispatchToProps || {}, dispatch);
+  } : null;
 
   return [mapStateToPropsFunc, mapDispatchToPropsFunc];
 }

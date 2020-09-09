@@ -16,14 +16,8 @@ exports[`IndexPage matches snapshot 1`] = `
     <Connect(TestComponent)>
       <TestComponent
         count={0}
-        counter={
-          Object {
-            "decrement": [Function],
-            "increment": [Function],
-            "tryToDecrement": [Function],
-            "tryToIncrement": [Function],
-          }
-        }
+        tryToDecrement={[Function]}
+        tryToIncrement={[Function]}
       >
         <div>
           <strong>

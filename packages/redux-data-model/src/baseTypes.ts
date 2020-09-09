@@ -7,36 +7,60 @@ export interface ActionCreator<A> {
   isEffect: boolean;
 }
 
-export interface ActionCreatorsMapObject<A = any> {
-  [key: string]: ActionCreator<A>;
-}
-
-export interface ActionTypesMapObject {
-  [key: string]: string;
-}
+export type ActionTypesMapObject<Payloads=any> = {
+  [key in keyof Payloads]: string;
+};
 
 export interface EffectMapObject {
   [key: string]: EffectModelFunction;
 }
 
-export type SelectorFunction<State> = (state: State, ...args: any[]) => any;
-export type ReducerFunction<State> = (state: State, action: AnyAction) => void;
-export type EffectFunction<Effects> = (
-  actionData: any, sagaEffects: Effects, actionCreators: ActionCreatorsMapObject,
+export type ActionCreatorsMapObject<Payloads=any> = {
+  [key in keyof Payloads]: (payload?: Payloads[key]) => any;
+};
+
+interface ActionWithPayload<PayloadAction> extends AnyAction {
+  payload: PayloadAction;
+};
+
+export type SelectorFunction<State, Props> = (state: State, props: Props, allState: any) => any;
+export type ReducerFunction<State, PayloadAction> = (
+  state: State, payload: PayloadAction, action: ActionWithPayload<PayloadAction>
+) => void;
+export type EffectFunction<Effects, ReducerPayloads, PayloadAction> = (
+  actionData: PayloadAction,
+  sagaEffects: Effects,
+  actionCreators: ActionCreatorsMapObject<ReducerPayloads>,
 ) => any;
-export type BlockingEffectFunction<Effects> = (
-  actionType: string, blockingSagaEffects: Effects, modelEffects: EffectMapObject,
+export type BlockingEffectFunction<Effects, ActionType, ModelEffect> = (
+  actionType: ActionType, blockingSagaEffects: Effects, modelEffects: ModelEffect,
 ) => any;
 
-export type SelectorMap<State> = Record<string, SelectorFunction<State> | Array<SelectorFunction<State>>>;
-export type ReducerMap<State> = Record<string, ReducerFunction<State>>;
-export type EffectMap<Effects> = Record<string, EffectFunction<Effects>>;
-export type BlockingEffectMap<Effects> = Record<string, BlockingEffectFunction<Effects>>;
+export type SelectorMap<State, SelectorPayloads> = {
+  [key in keyof SelectorPayloads]: (
+    SelectorFunction<State, SelectorPayloads[key]> | Array<SelectorFunction<State, SelectorPayloads[key]>>
+  );
+};
+export type ReducerMap<State, ReducerPayloads> = {
+  [key in keyof ReducerPayloads]: ReducerFunction<State, ReducerPayloads[key]>;
+};
+export type EffectMap<Effects, ReducerPayloads, EffectPayloads> = {
+  [key in keyof EffectPayloads]: EffectFunction<Effects, ReducerPayloads, EffectPayloads[key]>;
+};
+export type BlockingEffectMap<Effects, EffectPayloads> = {
+  [key in keyof EffectPayloads]: BlockingEffectFunction<Effects, key, {
+    [key in keyof EffectPayloads]: Saga
+  }>;
+};
 
-export type SelectorModelFunction<State> = (state: State, ...args: any[]) => any;
+export type SelectorModelFunction<State, SelectorPayload> = (
+  state: State, props?: SelectorPayload,
+) => any;
 export type EffectModelFunction = (actionData?: any) => any;
 
-export type SelectorModelMap<State> = Record<string, SelectorModelFunction<State>>;
+export type SelectorModelMap<State, SelectorPayloads> = {
+  [key in keyof SelectorPayloads]: SelectorModelFunction<State, SelectorPayloads[key]>;
+};
 export type EffectModelMap = Record<string, Saga>;
 
 // Ideally value would be ActionCreator<any> | NamespacedActionCreatorsMapObject, but that creates circular references
@@ -47,7 +71,9 @@ export type NamespacedSelectorsMapObject = Record<string, any>;
 
 // Ideally value would be BoundActionCreatorThatReturnsAPromise | BoundNamespacedActionCreatorsMapObject, but
 // that creates circular references
-export type BoundNamespacedActionCreatorsMapObject = Record<string, any>;
+export type BoundNamespacedActionCreatorsMapObject<Payloads=any> = {
+  [key in keyof Payloads]: (payload?: Payloads[key]) => void;
+};
 
 export type MapDispatchToPropsWithActionCreatorsFunction<TDispatchProps, TOwnProps> =
     (

@@ -70,7 +70,9 @@ export type BlockingSagaEffects = typeof blockingSagaEffects;
 /**
  * Model options are used for initialising a [[Model]] instance.
  */
-export interface ModelOptions<State=any> {
+export interface ModelOptions<
+  State=any, SelectorPayloads=any, ReducerPayloads=any, EffectPayloads=any
+>{
   /**
    * The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
    * and, as a matter of fact, redux-data-model will enforce it. The namespace is effectively an object's path
@@ -118,7 +120,7 @@ export interface ModelOptions<State=any> {
    *    (userIds, userById) => userIds.map(id => userById[id])
    *  ],
    */
-  selectors?: SelectorMap<Immutable<State>>;
+  selectors?: SelectorMap<Immutable<State>, SelectorPayloads>;
   /**
    * Reducers are functions used for synchronously changing the current state of a given model. A reducer will
    * be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
@@ -142,7 +144,7 @@ export interface ModelOptions<State=any> {
    *   state.userById[userId] = data;
    * }
    */
-  reducers?: ReducerMap<State>;
+  reducers?: ReducerMap<State, ReducerPayloads>;
   /**
    * Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
    * an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
@@ -163,7 +165,7 @@ export interface ModelOptions<State=any> {
    *   }
    * },
    */
-  effects?: EffectMap<SagaEffects>;
+  effects?: EffectMap<SagaEffects, ReducerPayloads, EffectPayloads>;
   /**
    * Blocking effects are functions used for defining when/how [[ModelOptions.effects|normal effects]] will be
    * executed. By default, effects are wrapped by a
@@ -182,7 +184,7 @@ export interface ModelOptions<State=any> {
    *   yield blockingSagaEffects.debounce(300, actionType, modelEffects.fetchPostsByUser);
    * },
    */
-  blockingEffects?: BlockingEffectMap<BlockingSagaEffects>;
+  blockingEffects?: BlockingEffectMap<BlockingSagaEffects, EffectPayloads>;
 }
 
 /**
@@ -190,7 +192,7 @@ export interface ModelOptions<State=any> {
  * provided when initializing them. The model will be used to generate the action types, actions, reducers,
  * dispatchers, and sagas, based on the [[ModelOptions|model's options]] that were provided.
  */
-export class Model<State=any> {
+export class Model<State=any, SelectorPayloads=any, ReducerPayloads=any, EffectPayloads=any> {
 
   /**
    * Whether [[ModelNotReduxInitializedError]] and [[ModelNotSagaInitializedError]] should be thrown when the model
@@ -210,10 +212,10 @@ export class Model<State=any> {
   private _isSagaInitialized: boolean;
   private readonly _namespace: string;
   private readonly _state: Immutable<State>;
-  private readonly _selectors: SelectorMap<Immutable<State>>;
-  private readonly _reducers: ReducerMap<State>;
-  private readonly _effects: EffectMap<SagaEffects>;
-  private readonly _blockingEffects: BlockingEffectMap<BlockingSagaEffects>;
+  private readonly _selectors: SelectorMap<Immutable<State>, SelectorPayloads>;
+  private readonly _reducers: ReducerMap<State, ReducerPayloads>;
+  private readonly _effects: EffectMap<SagaEffects, ReducerPayloads, EffectPayloads>;
+  private readonly _blockingEffects: BlockingEffectMap<BlockingSagaEffects, EffectPayloads>;
 
   /**
    * Creates a model instance.
@@ -247,15 +249,23 @@ export class Model<State=any> {
    * @throws [[BlockingEffectWithoutMatchingEffectError]] When blocking effect action types don't have a matching
    *                                                      effect action type.
    */
-  public constructor(options: ModelOptions<State>) {
+  public constructor(options: ModelOptions<State, SelectorPayloads, ReducerPayloads, EffectPayloads>) {
     this._isReduxInitialized = false;
     this._isSagaInitialized = false;
     this._namespace = options.namespace;
     this._state = options.state;
-    this._selectors = options.selectors || {};
-    this._reducers = options.reducers || {};
-    this._effects = options.effects || {};
-    this._blockingEffects = options.blockingEffects || {};
+    this._selectors = (
+      options.selectors || {} as SelectorMap<Immutable<State>, SelectorPayloads>
+    );
+    this._reducers = (
+      options.reducers || {} as ReducerMap<State, ReducerPayloads>
+    );
+    this._effects = (
+      options.effects || {} as EffectMap<SagaEffects, ReducerPayloads, EffectPayloads>
+    );
+    this._blockingEffects = (
+      options.blockingEffects || {} as BlockingEffectMap<BlockingSagaEffects, EffectPayloads>
+    );
 
     const effectActionTypes: string[] = [...keys(this._effects)];
     const blockingEffectActionTypes: string[] = [...keys(this._blockingEffects)];
@@ -306,8 +316,8 @@ export class Model<State=any> {
    *
    * @returns An action type's map object.
    */
-  public actionTypes(): ActionTypesMapObject {
-    const actionsTypes: ActionTypesMapObject = {};
+  public actionTypes(): ActionTypesMapObject<ReducerPayloads & EffectPayloads> {
+    const actionsTypes: any = {};
 
     for (const reducerName in this._reducers) {
       actionsTypes[reducerName] = this.actionType(reducerName);
@@ -329,11 +339,11 @@ export class Model<State=any> {
    *
    * @returns An action creator's map object.
    */
-  public actionCreators(): ActionCreatorsMapObject {
+  public actionCreators(): ActionCreatorsMapObject<ReducerPayloads & EffectPayloads> {
     const actionTypes = this.actionTypes();
-    const actions: ActionCreatorsMapObject = {};
+    const actions: any = {};
 
-    const actionCreatorBuilder = (actionName: string) => (
+    const actionCreatorBuilder = (actionName: keyof ReducerPayloads | keyof EffectPayloads) => (
       payload: any = {}, __actionInternals: ActionInternalsObject | undefined = undefined,
     ) => {
       if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
@@ -365,14 +375,14 @@ export class Model<State=any> {
   /**
    * @ignore
    */
-  public modelSelectors(): SelectorModelMap<Immutable<State>> {
-    const selectors: SelectorModelMap<Immutable<State>> = {};
+  public modelSelectors(): SelectorModelMap<Immutable<State>, SelectorPayloads> {
+    const selectors: any = {};
 
     const namespacedSelectorFuncCreator = (
-      inputFunc: SelectorFunction<Immutable<State>>
-    ) => (allState: any, ...args: any[]) => {
+      inputFunc: SelectorFunction<Immutable<State>, any>
+    ) => (allState: any, props: any) => {
       const namespacedState: Immutable<State> = get(allState, this._namespace);
-      return inputFunc(namespacedState, ...args, allState);
+      return inputFunc(namespacedState, props, allState);
     };
 
     const resultFuncCreator = (resultFunc: Function) => (...args: any[]) => {
@@ -383,11 +393,11 @@ export class Model<State=any> {
       return resultFunc(...args);
     };
 
-    for (const [selectorName, selectorFunc] of toPairs(this._selectors)) {
-      let inputSelectorFuncs: SelectorFunction<Immutable<State>>[] | null;
+    for (const [selectorName, selectorFunc] of toPairs<any>(this._selectors)) {
+      let inputSelectorFuncs: SelectorFunction<Immutable<State>, any>[] | null;
       let resultFunc: (...args: any[]) => any | null;
 
-      if (isArray<SelectorFunction<Immutable<State>>>(selectorFunc)) {
+      if (isArray<SelectorFunction<Immutable<State>, any>>(selectorFunc)) {
         inputSelectorFuncs = selectorFunc.slice(0, -1).map(namespacedSelectorFuncCreator);
         resultFunc = selectorFunc.slice(-1).map(resultFuncCreator)[0];
       } else {
@@ -405,17 +415,17 @@ export class Model<State=any> {
    * @ignore
    */
   public modelReducers(): Reducer<unknown, AnyAction> {
-    const reducers: ReducerMap<State> = {};
-    const actionTypes = this.actionTypes();
+    const reducers: any = {};
+    const actionTypes: any = this.actionTypes();
 
-    for (const [reducerName, reducerFunc] of toPairs(this._reducers)) {
+    for (const [reducerName, reducerFunc] of toPairs<any>(this._reducers)) {
       const actionType = actionTypes[reducerName];
       reducers[actionType] = reducerFunc;
     }
 
     return produce((draft: State, action: ActionWithInternals) => {
-      const reducerFunc = get(reducers, action.type, defaultReducer);
-      reducerFunc(draft, action.payload);
+      const reducerFunc: any  = get(reducers, action.type, defaultReducer);
+      reducerFunc(draft, action.payload, action);
     }, this._state);
   }
 
@@ -425,7 +435,7 @@ export class Model<State=any> {
   public modelEffects(): EffectModelMap {
     const effects: EffectModelMap = {};
     const effectSagas: EffectModelMap = {};
-    const actionTypes = this.actionTypes();
+    const actionTypes: any = this.actionTypes();
     const actionCreators = this.actionCreators();
     const proxiedSagaEffects = Model.disableProxyChecks ? sagaEffects : wrapProxy(
       sagaEffects, this, UndefinedSagaEffectError,
@@ -434,7 +444,7 @@ export class Model<State=any> {
       blockingSagaEffects, this, UndefinedBlockingSagaEffectError,
     );
 
-    for (const [effectName, effectFunc] of toPairs(this._effects)) {
+    for (const [effectName, effectFunc] of toPairs<any>(this._effects)) {
       const actionType = actionTypes[effectName];
       const effectSaga = modelBlockingGenerator(
         function *(payload: any = {}) {
@@ -448,7 +458,7 @@ export class Model<State=any> {
       };
     }
 
-    for (const [effectName, blockingEffectFunc] of toPairs(this._blockingEffects)) {
+    for (const [effectName, blockingEffectFunc] of toPairs<any>(this._blockingEffects)) {
       const actionType = actionTypes[effectName];
       const limitedModelEffects = {
         [effectName]: effectSagas[effectName]
@@ -521,7 +531,7 @@ export class Model<State=any> {
    *
    * @returns A selectors map.
    */
-  public get selectors(): SelectorMap<Immutable<State>> {
+  public get selectors(): SelectorMap<Immutable<State>, SelectorPayloads> {
     return this._selectors;
   }
 
@@ -530,7 +540,7 @@ export class Model<State=any> {
    *
    * @returns A reducer function.
    */
-  public get reducers(): ReducerMap<State> {
+  public get reducers(): ReducerMap<State, ReducerPayloads> {
     return this._reducers;
   }
 
@@ -539,7 +549,7 @@ export class Model<State=any> {
    *
    * @returns An effect map.
    */
-  public get effects(): EffectMap<SagaEffects> {
+  public get effects(): EffectMap<SagaEffects, ReducerPayloads, EffectPayloads> {
     return this._effects;
   }
 
@@ -548,7 +558,7 @@ export class Model<State=any> {
    *
    * @returns A blocking effect map.
    */
-  public get blockingEffects(): BlockingEffectMap<BlockingSagaEffects> {
+  public get blockingEffects(): BlockingEffectMap<BlockingSagaEffects, EffectPayloads> {
     return this._blockingEffects;
   }
 

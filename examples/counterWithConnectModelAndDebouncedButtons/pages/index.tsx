@@ -6,11 +6,27 @@ import {Provider, useSelector,} from 'react-redux';
 import * as React from 'react';
 import JSONTree from 'react-json-tree';
 
-interface State {
+interface CounterState {
   count: number;
 };
 
-export const counterModel = new Model<State>({
+interface CounterSelectorPayloads {
+  count: null;
+};
+
+interface CounterReducerPayloads {
+  increment: null;
+  decrement: null;
+};
+
+interface CounterEffectPayloads {
+  tryToIncrement: null;
+  tryToDecrement: null;
+};
+
+export const counterModel = new Model<
+CounterState, CounterSelectorPayloads, CounterReducerPayloads, CounterEffectPayloads
+>({
   namespace: "counter",
   state: {
     count: 0
@@ -61,7 +77,11 @@ const store = createStore(combineReducers({
 
 sagaMiddleware.run(() => modelRootSaga([counterModel]));
 
-function TestComponent({ count, counter }: { count: number; counter: any }) {
+function TestComponent({ count, tryToIncrement, tryToDecrement }: {
+  count: number;
+  tryToIncrement: () => Promise<any>;
+  tryToDecrement: () => Promise<any>;
+}) {
   // Only used for displaying entire state
   const allState = useSelector(state => state);
 
@@ -73,12 +93,12 @@ function TestComponent({ count, counter }: { count: number; counter: any }) {
       <div>
         <button
           id="incrementButton"
-          onClick={() => counter.tryToIncrement()}>
+          onClick={tryToIncrement}>
           Debounced increment by 3 seconds
         </button> |{" "}
         <button
           id="decrementButton"
-          onClick={() => counter.tryToDecrement()}>
+          onClick={tryToDecrement}>
           Debounced decrement by 3 seconds
         </button>
       </div>
@@ -101,7 +121,14 @@ function mapStateToProps(state: any, _props: any, selectors: any) {
   };
 }
 
-const WrappedTestComponent = connectModel([counterModel], mapStateToProps)(
+function mapDispatchToProps(_dispatch: any, _props: any, dispatchers: any) {
+  return {
+    tryToIncrement: () => dispatchers.counter.tryToIncrement(),
+    tryToDecrement: () => dispatchers.counter.tryToDecrement(),
+  };
+}
+
+const WrappedTestComponent = connectModel([counterModel], mapStateToProps, mapDispatchToProps)(
   TestComponent
 );
 

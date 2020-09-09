@@ -13,26 +13,56 @@ async function fetchApi(url: string) {
   return await fetch(url).then(response => response.json());
 }
 
+interface User {
+  id: number;
+  name: string;
+  address: number;
+}
+
 interface UserState {
   loadingById: {
     [key: string]: boolean;
   };
   usersById: {
-    [key: string]: any;
+    [key: string]: User;
   };
 };
 
-export const userModel = new Model<UserState>({
+interface UserSelectorPayloads {
+  loadingByUser: {
+    userId: number;
+  };
+  userById: {
+    userId: number;
+  };
+};
+
+interface UserReducerPayloads {
+  saveUser: {
+    data: User;
+    userId: number;
+  };
+};
+
+interface UserEffectPayloads {
+  fetchUser: {
+    userId: number;
+  };
+};
+
+export const userModel = new Model<
+UserState, UserSelectorPayloads, UserReducerPayloads, UserEffectPayloads
+>({
   namespace: 'users',
   state: {
     loadingById: {},
     usersById: {},
   },
   selectors: {
-    loadingByUser: (state, userId) => _.get(state, `loadingById[${userId}]`, true),
+    loadingByUser: (state, {userId}) => _.get(state, `loadingById[${userId}]`, true),
     userById: [
-      (state, userId) => _.get(state, `usersById[${userId}]`),
-      (_state, userId, allState) => _.get(allState, `addresses.addressesByUserId[${userId}]`),
+      (state, {userId}) => _.get(state, `usersById[${userId}]`),
+      (_state, {userId}, allState) => _.get(allState, `addresses.addressesByUserId[${userId}]`),
       (user, address) => ({...user, address})
     ],
   },
@@ -60,11 +90,11 @@ export const userModel = new Model<UserState>({
 
 interface AddressState {
   addressesByUserId: {
-    [key: string]: any;
+    [key: string]: string;
   };
 };
 
-export const addressModel = new Model<AddressState>({
+export const addressModel = new Model<AddressState, any>({
   namespace: 'addresses',
   state: {
     addressesByUserId: {},
@@ -96,9 +126,9 @@ function TestComponent() {
   // Only used for displaying entire state
   const allState = useSelector(state => state);
 
-  const loadingUser = useModelSelector(userModel, (state, selectors) => selectors.loadingByUser(state, userId));
+  const loadingUser = useModelSelector(userModel, (state, selectors) => selectors.loadingByUser(state, {userId}));
 
-  const user = useModelSelector(userModel, (state, selectors) => selectors.userById(state, userId));
+  const user = useModelSelector(userModel, (state, selectors) => selectors.userById(state, {userId}));
 
   React.useEffect(() => {
     userActions.fetchUser({userId});

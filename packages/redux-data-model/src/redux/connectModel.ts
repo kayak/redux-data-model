@@ -30,18 +30,20 @@ import {wrapMergePropChecks} from './wrapMergePropChecks';
  *                                          This check is ignored when a custom mergeProps function is provided.
  * @category High Order Component (HOC)
  */
-export function connectModel(
+export function connectModel<TStateProps=any, TDispatchProps=any, TOwnProps=any>(
   models: Model<any>[],
-  userProvidedMapStateToProps: MapStateToPropsWithSelectors<any, any, any> | null=null,
-  userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<any, any> | null=null,
+  userProvidedMapStateToProps: MapStateToPropsWithSelectors<TStateProps, TOwnProps, any> | null=null,
+  userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<TDispatchProps, TOwnProps> | null=null,
   mergeProps: Function | null=null,
   options?: Record<string, any>,
-): any {
-  // @ts-ignore
-  return connect(
-    ...connectModelImpl(
-      models, userProvidedMapStateToProps, userProvidedMapDispatchToProps,
-    ),
+) {
+  const [mapStateToProps, mapDispatchToProps] = connectModelImpl(
+    models, userProvidedMapStateToProps, userProvidedMapDispatchToProps,
+  );
+
+  return connect<TStateProps, TDispatchProps, TOwnProps>(
+    mapStateToProps,
+    mapDispatchToProps,
     wrapMergePropChecks(mergeProps),
     options,
   );

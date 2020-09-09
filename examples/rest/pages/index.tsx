@@ -13,24 +13,53 @@ async function fetchApi(url: string) {
   return await fetch(url).then(response => response.json());
 }
 
+interface User {
+  id: number;
+  name: string;
+}
+
 interface UserState {
   loadingById: {
     [key: string]: boolean;
   };
   usersById: {
-    [key: string]: any;
+    [key: string]: User;
   };
 };
 
-export const userModel = new Model<UserState>({
+interface UserSelectorPayloads {
+  loadingByUser: {
+    userId: number;
+  };
+  userById: {
+    userId: number;
+  };
+};
+
+interface UserReducerPayloads {
+  saveUser: {
+    data: User;
+    userId: number;
+  };
+};
+
+interface UserEffectPayloads {
+  fetchUser: {
+    userId: number;
+  };
+};
+
+export const userModel = new Model<
+UserState, UserSelectorPayloads, UserReducerPayloads, UserEffectPayloads
+>({
   namespace: 'users',
   state: {
     loadingById: {},
     usersById: {},
   },
   selectors: {
-    loadingByUser: (state, userId) => _.get(state, `loadingById[${userId}]`, true),
-    userById: (state, userId) => _.get(state, `usersById[${userId}]`),
+    loadingByUser: (state, {userId}) => _.get(state, `loadingById[${userId}]`, true),
+    userById: (state, {userId}) => _.get(state, `usersById[${userId}]`),
   },
   reducers: {
     saveUser(state, {data, userId}) {
@@ -50,16 +79,47 @@ export const userModel = new Model<UserState>({
   },
 });
 
+interface UserPost {
+  id: number;
+  userId: number;
+  title: string;
+  body: string;
+  published: boolean;
+}
+
 interface PostState {
   loadingById: {
     [key: string]: boolean;
   };
   postsByUserId: {
-    [key: string]: any[];
+    [key: string]: UserPost[];
   };
 };
 
-export const postModel = new Model<PostState>({
+interface PostSelectorPayloads {
+  loadingByUser: {
+    userId: number;
+  };
+  postsAsItems: {
+    userId: number;
+  };
+};
+
+interface PostReducerPayloads {
+  savePostsByUser: {
+    data: UserPost[];
+    userId: number;
+  };
+  switchPublishedByUser: {
+    userId: number;
+  };
+  switchPublishedByUserAndPost: {
+    userId: number;
+    postId: number;
+  };
+};
+
+export const postModel = new Model<PostState, PostSelectorPayloads, PostReducerPayloads>({
   namespace: 'posts',
   state: {
     loadingById: {},
@@ -81,6 +141,7 @@ export const postModel = new Model<PostState>({
     },
     switchPublishedByUserAndPost(state, {userId, postId}) {
       const post = state.postsByUserId[userId].find((post: any) => post.id === postId);
+      if (!post) return;
       post.published = !post.published;
     },
   },
@@ -117,11 +178,11 @@ function TestComponent() {
   // Only used for displaying entire state
   const allState = useSelector(state => state);
 
-  const loadingUser = useModelSelector(userModel, (state, selectors) => selectors.loadingByUser(state, userId));
-  const loadingPosts = useModelSelector(postModel, (state, selectors) => selectors.loadingByUser(state, userId));
+  const loadingUser = useModelSelector(userModel, (state, selectors) => selectors.loadingByUser(state, {userId}));
+  const loadingPosts = useModelSelector(postModel, (state, selectors) => selectors.loadingByUser(state, {userId}));
 
-  const user = useModelSelector(userModel, (state, selectors) => selectors.userById(state, userId));
-  const postItems = useModelSelector(postModel, (state, selectors) => selectors.postsAsItems(state, userId));
+  const user = useModelSelector(userModel, (state, selectors) => selectors.userById(state, {userId}));
+  const postItems = useModelSelector(postModel, (state, selectors) => selectors.postsAsItems(state, {userId}));
 
   React.useEffect(() => {
     userActions.fetchUser({userId});

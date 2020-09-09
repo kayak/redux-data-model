@@ -21,11 +21,22 @@ import {
 import * as React from 'react';
 import JSONTree from 'react-json-tree';
 
-interface State {
+interface CounterState {
   count: number;
 };
 
-export const counterModel = new Model<State>({
+interface CounterSelectorPayloads {
+  count: null;
+};
+
+interface CounterReducerPayloads {
+  increment: null;
+  decrement: null;
+};
+
+export const counterModel = new Model<
+CounterState, CounterSelectorPayloads, CounterReducerPayloads
+>({
   namespace: 'counter',
   state: {
     count: 0,

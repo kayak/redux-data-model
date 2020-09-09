@@ -1,6 +1,6 @@
 import {identity, mapValues} from 'lodash';
 import {Dispatch} from 'redux';
-import {ActionCreatorsMapObject, BoundNamespacedActionCreatorsMapObject,} from '../baseTypes';
+import {ActionCreator, ActionCreatorsMapObject, BoundNamespacedActionCreatorsMapObject,} from '../baseTypes';
 
 /**
  * @ignore
@@ -22,10 +22,10 @@ const defaultActionInternals = {resolve: identity, reject: identity};
  * @category Redux/Saga Setup
  */
 export function bindModelActionCreators(
-  actionCreators: ActionCreatorsMapObject,
+  actionCreators: ActionCreatorsMapObject<any>,
   dispatch: Dispatch
 ): BoundNamespacedActionCreatorsMapObject {
-  return mapValues(actionCreators, actionCreator => function(actionData: any) {
+  return mapValues(actionCreators, (actionCreator: ActionCreator<any>) => function(actionData: any) {
     let promise = Promise.resolve();
 
     // The action is created here so that exceptions within the action creator are not absorbed by promises.

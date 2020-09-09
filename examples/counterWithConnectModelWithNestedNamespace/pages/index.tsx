@@ -18,11 +18,22 @@ import {
 import * as React from 'react';
 import JSONTree from 'react-json-tree';
 
-interface State {
+interface CounterState {
   count: number;
 };
 
-export const counterModel = new Model<State>({
+interface CounterSelectorPayloads {
+  count: null;
+};
+
+interface CounterReducerPayloads {
+  increment: null;
+  decrement: null;
+};
+
+export const counterModel = new Model<
+CounterState, CounterSelectorPayloads, CounterReducerPayloads
+>({
   namespace: 'projectA.counter',
   state: {
     count: 0,
@@ -53,7 +64,11 @@ const store = createStore(combineReducers({
 
 sagaMiddleware.run(() => modelRootSaga([counterModel]));
 
-function TestComponent({count, projectA}: {count: number; projectA: any}) {
+function TestComponent({ count, increment, decrement }: {
+  count: number;
+  increment: () => void;
+  decrement: () => void;
+}) {
   // Only used for displaying entire state
   const allState = useSelector(state => state);
 
@@ -63,8 +78,8 @@ function TestComponent({count, projectA}: {count: number; projectA: any}) {
         <strong>Count:</strong> <span id="counterValue">{count}</span>
       </div>
       <div>
-        <button id="incrementButton" onClick={() => projectA.counter.increment()}>Increment</button> |{' '}
-        <button id="decrementButton" onClick={() => projectA.counter.decrement()}>Decrement</button>
+        <button id="incrementButton" onClick={increment}>Increment</button> |{' '}
+        <button id="decrementButton" onClick={decrement}>Decrement</button>
       </div>
       <br/>
       <hr/>
@@ -83,7 +98,14 @@ function mapStateToProps(state: any, _props: any, selectors: any) {
   };
 }
 
-const WrappedTestComponent = connectModel([counterModel], mapStateToProps)(TestComponent);
+function mapDispatchToProps(_dispatch: any, _props: any, dispatchers: any) {
+  return {
+    increment: () => dispatchers.projectA.counter.increment(),
+    decrement: () => dispatchers.projectA.counter.decrement(),
+  };
+}
+
+const WrappedTestComponent = connectModel([counterModel], mapStateToProps, mapDispatchToProps)(TestComponent);
 
 export default () => {
   return (

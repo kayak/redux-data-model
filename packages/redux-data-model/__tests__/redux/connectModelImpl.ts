@@ -85,15 +85,12 @@ describe('connectModelImpl', () => {
 
   describe('mapDispatchToProps', () => {
     describe('default', () => {
-      it('func returns result from bindModelActionCreators call', () => {
+      it('func returns null', () => {
         // @ts-ignore
         const [connectedMapStateToProps, connectedMapDispatchToProps] = connectModelImpl(
           [articleModel],
         );
-        const result = connectedMapDispatchToProps(dispatch, ownProps);
-        expect(result).toEqual({
-          [articleModel.namespace]: bindModelActionCreators.mock.results[0].value,
-        });
+        expect(connectedMapDispatchToProps).toBeNull();
       });
     });
 

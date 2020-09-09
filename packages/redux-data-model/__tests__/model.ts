@@ -294,7 +294,7 @@ describe('Model', () => {
       });
       modelX.markAsReduxInitialized();
       modelX.markAsSagaInitialized();
-      const actionCreators = modelX.actionCreators();
+      const actionCreators: any = modelX.actionCreators();
       const payload = {1: 2};
 
       it('returns an entry for the provided reducer', () => {
@@ -335,7 +335,7 @@ describe('Model', () => {
       });
       modelX.markAsReduxInitialized();
       modelX.markAsSagaInitialized();
-      const actionCreators = modelX.actionCreators();
+      const actionCreators: any = modelX.actionCreators();
       const payload = {1: 2};
 
       it('returns an entry for the provided effect', () => {
@@ -380,7 +380,7 @@ describe('Model', () => {
       });
       modelX.markAsReduxInitialized();
       modelX.markAsSagaInitialized();
-      const actionCreators = modelX.actionCreators();
+      const actionCreators: any = modelX.actionCreators();
       const payload = {1: 2};
 
       it('returns an entry for the provided effect', () => {
