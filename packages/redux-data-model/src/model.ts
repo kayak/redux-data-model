@@ -21,6 +21,7 @@ import {Immutable} from 'immer';
 import {blockingSagaEffects, modelBlockingGenerator, sagaEffects} from './saga';
 import {
   ActionCreatorsMapObject,
+  ActionType,
   ActionTypesMapObject,
   ActionWithInternals,
   BlockingEffectMap,
@@ -71,7 +72,7 @@ export type BlockingSagaEffects = typeof blockingSagaEffects;
  * Model options are used for initialising a [[Model]] instance.
  */
 export interface ModelOptions<
-  State=any, SelectorPayloads=any, ReducerPayloads=any, EffectPayloads=any
+  State={}, SelectorPayloads={}, ReducerPayloads={}, EffectPayloads={}
 >{
   /**
    * The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
@@ -99,8 +100,8 @@ export interface ModelOptions<
   state: Immutable<State>;
   /**
    * Selectors are functions that receive the entire state and returns a piece of it. The first argument
-   * of a selector function is the namespaced state, following by any other positional arguments passed
-   * in an eventual call within a mapStateToProps. Last but not least, the last argument is the entire
+   * of a selector function is the namespaced state, following by a single argument that can be used
+   * to pass custom parameters. Last but not least, the last argument is the entire
    * redux state, which might be necessary when normalizing data. By default selectors won't memoize the
    * returned data, which can be useful to avoid any re-renders caused by shallow comparing its variables.
    * Although that's possible, a different syntax is needed. For such, a selector should be specified as an
@@ -111,11 +112,16 @@ export interface ModelOptions<
    * [reselect](https://github.com/reduxjs/reselect) under the hood for that.
    *
    * @example count: (state) => state,
-   * @example userIds: (state, allState) => allState.modelNamespace.userIds,
-   * @example userById: (state, userId) => state.userById[userId],
-   * @example isLoading: (state, userId, allState) => allState.modelNamespace.loadingById[userId],
+   * @example userIds: (state, props, allState) => allState.modelNamespace.userIds,
+   * @example userById: (state, { userId }) => state.userById[userId],
+   * @example isLoading: (state, { userId }, allState) => allState.modelNamespace.loadingById[userId],
    * @example users: [
    *    state => state.userIds,
+   *    state => state.userById,
+   *    (userIds, userById) => userIds.map(id => userById[id])
+   *  ],
+   * @example usersByGroup: [
+   *    (state, { groupId }) => state.userIdsByGroup[groupId],
    *    state => state.userById,
    *    (userIds, userById) => userIds.map(id => userById[id])
    *  ],
@@ -130,11 +136,11 @@ export interface ModelOptions<
    * by tracking property access.
    *
    * @example
-   * increment(state, action) {
+   * increment(state) {
    *   state.count += 1;
    * }
    * @example
-   * decrement: (state, action) => {
+   * decrement: (state) => {
    *   state.count -= 1;
    * }
    * @example
@@ -192,7 +198,9 @@ export interface ModelOptions<
  * provided when initializing them. The model will be used to generate the action types, actions, reducers,
  * dispatchers, and sagas, based on the [[ModelOptions|model's options]] that were provided.
  */
-export class Model<State=any, SelectorPayloads=any, ReducerPayloads=any, EffectPayloads=any> {
+export class Model<
+  State={}, SelectorPayloads={}, ReducerPayloads={}, EffectPayloads={}
+> {
 
   /**
    * Whether [[ModelNotReduxInitializedError]] and [[ModelNotSagaInitializedError]] should be thrown when the model
@@ -230,11 +238,14 @@ export class Model<State=any, SelectorPayloads=any, ReducerPayloads=any, EffectP
    *       count: (state) => state.count,
    *   },
    *   reducers: {
-   *      increment(state, action) {
+   *      increment(state) {
    *        state.count += 1;
    *      },
-   *      decrement(state, action) {
+   *      decrement(state) {
    *        state.count -= 1;
+   *      },
+   *      setCount(state, { value }) {
+   *        state.count = value;
    *      },
    *   },
    *  // effects: {...}
@@ -303,7 +314,7 @@ export class Model<State=any, SelectorPayloads=any, ReducerPayloads=any, EffectP
   /**
    * @ignore
    */
-  public actionType(actionName: string): string {
+  public actionType(actionName: string): ActionType {
     return actionTypeRegex.test(actionName) ? actionName : `@@${this._namespace}.${actionName}@@`;
   }
 

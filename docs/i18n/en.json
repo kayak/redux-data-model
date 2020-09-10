@@ -69,6 +69,18 @@
         "title": "API - Errors - UndefinedSelectorError",
         "sidebar_label": "UndefinedSelectorError"
       },
+      "api/interfaces/actioncreator": {
+        "title": "api/interfaces/actioncreator"
+      },
+      "api/interfaces/actioninternals": {
+        "title": "api/interfaces/actioninternals"
+      },
+      "api/interfaces/actionwithpayload": {
+        "title": "api/interfaces/actionwithpayload"
+      },
+      "api/interfaces/effectmapobject": {
+        "title": "api/interfaces/effectmapobject"
+      },
       "api/interfaces/api-interfaces-model-options": {
         "title": "API - Interfaces - ModelOptions",
         "sidebar_label": "ModelOptions"
@@ -172,6 +184,9 @@
       },
       "tutorial": {
         "title": "Tutorial"
+      },
+      "typescript": {
+        "title": "Typescript"
       }
     },
     "links": {

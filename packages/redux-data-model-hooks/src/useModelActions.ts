@@ -25,7 +25,7 @@ import {
  * @category React Hook
  */
 export function useModelActions<ReducerPayloads=any, EffectPayloads=any>(
-  model: Model<any, any, ReducerPayloads, EffectPayloads>,
+  model: Model<{}, {}, ReducerPayloads, EffectPayloads>,
 ): BoundNamespacedActionCreatorsMapObject<ReducerPayloads & EffectPayloads> {
   const dispatch: Dispatch = useDispatch();
   const actionCreators = React.useMemo(() => model.actionCreators(), [model]);

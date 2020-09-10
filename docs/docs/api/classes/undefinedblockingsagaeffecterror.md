@@ -12,12 +12,16 @@ generated from source.
 
 [redux-data-model](../README.md) › [UndefinedBlockingSagaEffectError](undefinedblockingsagaeffecterror.md)
 
-# Class: UndefinedBlockingSagaEffectError
+# Class: UndefinedBlockingSagaEffectError ‹**State**›
 
 Thrown when no saga effect, among the intended ones, exists for the accessed property.
 Keep in mind that some saga effects such as put, putResolve, and select, are only available for
 [normal effects](../interfaces/modeloptions.md#optional-effects). See [Model.disableProxyChecks](model.md#static-disableproxychecks) if you need to
 disable this check, but keep in mind that is only recommended in tests.
+
+## Type parameters
+
+▪ **State**
 
 ## Hierarchy
 
@@ -42,16 +46,16 @@ disable this check, but keep in mind that is only recommended in tests.
 
 ###  constructor
 
-\+ **new UndefinedBlockingSagaEffectError**(`name`: any, `model`: any): *[UndefinedBlockingSagaEffectError](undefinedblockingsagaeffecterror.md)*
+\+ **new UndefinedBlockingSagaEffectError**(`name`: string, `model`: [Model](model.md)‹State›): *[UndefinedBlockingSagaEffectError](undefinedblockingsagaeffecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:250](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/errors.ts#L250)*
+*Defined in [packages/redux-data-model/src/errors.ts:251](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L251)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`name` | any |
-`model` | any |
+`name` | string |
+`model` | [Model](model.md)‹State› |
 
 **Returns:** *[UndefinedBlockingSagaEffectError](undefinedblockingsagaeffecterror.md)*
 
@@ -63,7 +67,7 @@ Name | Type |
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[message](namespaceisntastringerror.md#message)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:974
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:974
 
 ___
 
@@ -73,19 +77,19 @@ ___
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[name](namespaceisntastringerror.md#name)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:973
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:973
 
 ___
 
 ### `Optional` stack
 
-• **stack**? : *string*
+• **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 *Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:975
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 
 ___
 
@@ -93,4 +97,4 @@ ___
 
 ▪ **Error**: *ErrorConstructor*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:984
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:984

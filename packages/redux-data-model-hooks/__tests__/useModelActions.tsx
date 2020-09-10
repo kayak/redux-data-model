@@ -2,7 +2,7 @@ import {mount} from 'enzyme';
 import * as React from 'react';
 import {Provider} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import {Model, ModelOptions} from 'redux-data-model';
+import {Model} from 'redux-data-model';
 import {useModelActions} from '../src';
 
 const mockStore = configureMockStore([]);
@@ -16,7 +16,7 @@ function Counter({model, actionCaller}: {model: any; actionCaller: any}) {
 }
 
 describe('useModelActions', () => {
-  let modelOptions: ModelOptions<any>;
+  let modelOptions: any;
   let counterModel: any;
   let actionCreators: any;
   let store: any;
@@ -28,17 +28,17 @@ describe('useModelActions', () => {
         count: 666,
       },
       reducers: {
-        increase(state) {
+        increase(state: any) {
           state.count += 1;
         }
       },
       effects: {
-        *tryToIncrease(_action, effects, actionCreators) {
+        *tryToIncrease(_action: any, effects: any, actionCreators: any) {
           yield effects.put(actionCreators.increase());
         }
       },
     };
-    counterModel = new Model(modelOptions);
+    counterModel = new Model<any>(modelOptions);
     counterModel.markAsReduxInitialized();
     counterModel.markAsSagaInitialized();
     actionCreators = counterModel.actionCreators();

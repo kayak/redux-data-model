@@ -12,11 +12,15 @@ generated from source.
 
 [redux-data-model](../README.md) › [DuplicatedActionTypesError](duplicatedactiontypeserror.md)
 
-# Class: DuplicatedActionTypesError
+# Class: DuplicatedActionTypesError ‹**State**›
 
 Thrown when [reducer](../interfaces/modeloptions.md#optional-reducers) and/or [effect](../interfaces/modeloptions.md#optional-effects) action types
  are duplicated, for one of your models. So don't try to have a [reducer](../interfaces/modeloptions.md#optional-reducers)
  named the same way that an [effect](../interfaces/modeloptions.md#optional-effects).
+
+## Type parameters
+
+▪ **State**
 
 ## Hierarchy
 
@@ -41,16 +45,16 @@ Thrown when [reducer](../interfaces/modeloptions.md#optional-reducers) and/or [e
 
 ###  constructor
 
-\+ **new DuplicatedActionTypesError**(`model`: any, `reducerAndEffectActionTypes`: any): *[DuplicatedActionTypesError](duplicatedactiontypeserror.md)*
+\+ **new DuplicatedActionTypesError**(`model`: [Model](model.md)‹State›, `reducerAndEffectActionTypes`: string[]): *[DuplicatedActionTypesError](duplicatedactiontypeserror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:63](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/errors.ts#L63)*
+*Defined in [packages/redux-data-model/src/errors.ts:64](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L64)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`model` | any |
-`reducerAndEffectActionTypes` | any |
+`model` | [Model](model.md)‹State› |
+`reducerAndEffectActionTypes` | string[] |
 
 **Returns:** *[DuplicatedActionTypesError](duplicatedactiontypeserror.md)*
 
@@ -62,7 +66,7 @@ Name | Type |
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[message](namespaceisntastringerror.md#message)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:974
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:974
 
 ___
 
@@ -72,19 +76,19 @@ ___
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[name](namespaceisntastringerror.md#name)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:973
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:973
 
 ___
 
 ### `Optional` stack
 
-• **stack**? : *string*
+• **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 *Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:975
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 
 ___
 
@@ -92,4 +96,4 @@ ___
 
 ▪ **Error**: *ErrorConstructor*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:984
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:984

@@ -35,20 +35,20 @@ CounterState, CounterSelectorPayloads, CounterReducerPayloads, CounterEffectPayl
     count: state => state.count
   },
   reducers: {
-    increment(state, _action) {
+    increment(state) {
       state.count += 1;
     },
-    decrement(state, _action) {
+    decrement(state) {
       state.count -= 1;
     }
   },
   effects: {
-    *tryToIncrement(_action, sagaEffects, {increment}) {
+    *tryToIncrement(_payload, sagaEffects, {increment}) {
       // Let's pretend something asynchronous need to be performed here
       yield sagaEffects.delay(100);
       yield sagaEffects.put(increment());
     },
-    *tryToDecrement(_action, sagaEffects, {decrement}) {
+    *tryToDecrement(_payload, sagaEffects, {decrement}) {
       // Let's pretend something asynchronous need to be performed here
       yield sagaEffects.delay(100);
       yield sagaEffects.put(decrement());

@@ -36,22 +36,22 @@ CounterState, CounterSelectorPayloads, CounterReducerPayloads, CounterEffectPayl
     count: state => state.count
   },
   reducers: {
-    increment(state, _action) {
+    increment(state) {
       state.count += 1;
     },
-    decrement(state, _action) {
+    decrement(state) {
       state.count -= 1;
     }
   },
   effects: {
-    *tryToIncrement(_action, sagaEffects, {increment}) {
+    *tryToIncrement(_payload, sagaEffects, {increment}) {
       const hasConfirmed = yield sagaEffects.call(showConfirm, {
         text: "Are you sure you want to increment?"
       });
 
       if (hasConfirmed) yield sagaEffects.put(increment());
     },
-    *tryToDecrement(_action, sagaEffects, {decrement}) {
+    *tryToDecrement(_payload, sagaEffects, {decrement}) {
       const hasConfirmed = yield sagaEffects.call(showConfirm, {
         text: "Are you sure you want to decrement?"
       });

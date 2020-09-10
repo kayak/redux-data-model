@@ -12,12 +12,16 @@ generated from source.
 
 [redux-data-model](../README.md) › [ModelNotSagaInitializedError](modelnotsagainitializederror.md)
 
-# Class: ModelNotSagaInitializedError
+# Class: ModelNotSagaInitializedError ‹**State**›
 
 Thrown when one of your models was not initialized on a [modelRootSaga](../README.md#modelrootsaga) call, even though a react component
 was dispatching actions that were meant to trigger its [effects](../interfaces/modeloptions.md#optional-effects) for instance.
 See [Model.disableInitializationChecks](model.md#static-disableinitializationchecks) if you need to disable this check,
 but keep in mind that is only recommended in tests.
+
+## Type parameters
+
+▪ **State**
 
 ## Hierarchy
 
@@ -42,15 +46,15 @@ but keep in mind that is only recommended in tests.
 
 ###  constructor
 
-\+ **new ModelNotSagaInitializedError**(`model`: any): *[ModelNotSagaInitializedError](modelnotsagainitializederror.md)*
+\+ **new ModelNotSagaInitializedError**(`model`: [Model](model.md)‹State›): *[ModelNotSagaInitializedError](modelnotsagainitializederror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:122](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/errors.ts#L122)*
+*Defined in [packages/redux-data-model/src/errors.ts:123](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L123)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`model` | any |
+`model` | [Model](model.md)‹State› |
 
 **Returns:** *[ModelNotSagaInitializedError](modelnotsagainitializederror.md)*
 
@@ -62,7 +66,7 @@ Name | Type |
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[message](namespaceisntastringerror.md#message)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:974
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:974
 
 ___
 
@@ -72,19 +76,19 @@ ___
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[name](namespaceisntastringerror.md#name)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:973
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:973
 
 ___
 
 ### `Optional` stack
 
-• **stack**? : *string*
+• **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 *Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:975
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 
 ___
 
@@ -92,4 +96,4 @@ ___
 
 ▪ **Error**: *ErrorConstructor*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:984
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:984

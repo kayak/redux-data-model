@@ -29,10 +29,10 @@ export const counterModel = new Model({
         count: (state) => state.count,
     },
     reducers: {
-        increment(state, {}) {
+        increment(state) {
           state.count += 1;
         },
-        decrement(state, {}) {
+        decrement(state) {
           state.count -= 1;
         },
         incrementByX(state, { x }) {
@@ -40,12 +40,12 @@ export const counterModel = new Model({
         },
     },
     effects: {
-      *asyncIncrement(action, { put }, { increment }) {
+      *asyncIncrement(payload, { put }, { increment }) {
           // This is not useful in practice, since there's no async behaviour per se, but is defined for
           // example's sake.
           yield put(increment());
       },
-      *asyncDecrement(action, { put }, { decrement }) {
+      *asyncDecrement(payload, { put }, { decrement }) {
           // This is not useful in practice, since there's no async behaviour per se, but is defined for
           // example's sake.
           yield put(decrement());
@@ -93,17 +93,17 @@ it('count selector returns the count', () => {
 ### Testing the [reducers]:
 
 ```javascript
-const action = {}; // It's empty, since the reducers don't use the action's data
+const payload = {}; // It's empty, since the reducers don't use the action's payload
 
 it('increments reducer change count to current + 1', () => {
   const state = {...counterModel.state};
-  counterModel.reducers.increment(state, action);
+  counterModel.reducers.increment(state, payload);
   expect(state.count).toEqual(1);
 });
 
 it('decrements reducer change count to current - 1', () => {
   const state = {...counterModel.state};
-  counterModel.reducers.decrement(state, action);
+  counterModel.reducers.decrement(state, payload);
   expect(state.count).toEqual(-1);
 });
 ```
@@ -121,14 +121,14 @@ const action = {}; // It's empty, since the effects don't use action's data
 const actionCreators = counterModel.reducers;
 
 it('asyncIncrement effect yields put increment reducer', () => {
-  const gen = counterModel.effects.asyncIncrement(action, sagaEffects, actionCreators);
+  const gen = counterModel.effects.asyncIncrement(payload, sagaEffects, actionCreators);
   expect(gen.next().value).toEqual(
     sagaEffects.put(actionCreators.increment())
   );
 });
 
 it('asyncDecrement effect yields put decrement reducer', () => {
-  const gen = counterModel.effects.asyncDecrement(action, sagaEffects, actionCreators);
+  const gen = counterModel.effects.asyncDecrement(payload, sagaEffects, actionCreators);
   expect(gen.next().value).toEqual(
     sagaEffects.put(actionCreators.decrement())
   );

@@ -42,10 +42,10 @@ CounterState, CounterSelectorPayloads, CounterReducerPayloads
     count: (state) => state.count,
   },
   reducers: {
-    increment(state, _action) {
+    increment(state) {
       state.count += 1;
     },
-    decrement(state, _action) {
+    decrement(state) {
       state.count -= 1;
     },
   },

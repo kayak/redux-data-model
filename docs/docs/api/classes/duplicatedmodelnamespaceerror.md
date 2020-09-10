@@ -39,15 +39,15 @@ Thrown when multiple models have the same [namespace](../interfaces/modeloptions
 
 ###  constructor
 
-\+ **new DuplicatedModelNamespaceError**(`namespaces`: any): *[DuplicatedModelNamespaceError](duplicatedmodelnamespaceerror.md)*
+\+ **new DuplicatedModelNamespaceError**(`namespaces`: string[]): *[DuplicatedModelNamespaceError](duplicatedmodelnamespaceerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:138](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/errors.ts#L138)*
+*Defined in [packages/redux-data-model/src/errors.ts:139](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L139)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`namespaces` | any |
+`namespaces` | string[] |
 
 **Returns:** *[DuplicatedModelNamespaceError](duplicatedmodelnamespaceerror.md)*
 
@@ -59,7 +59,7 @@ Name | Type |
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[message](namespaceisntastringerror.md#message)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:974
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:974
 
 ___
 
@@ -69,19 +69,19 @@ ___
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[name](namespaceisntastringerror.md#name)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:973
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:973
 
 ___
 
 ### `Optional` stack
 
-• **stack**? : *string*
+• **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 *Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:975
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 
 ___
 
@@ -89,4 +89,4 @@ ___
 
 ▪ **Error**: *ErrorConstructor*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:984
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:984

@@ -12,11 +12,15 @@ generated from source.
 
 [redux-data-model](../README.md) › [UndefinedSelectorError](undefinedselectorerror.md)
 
-# Class: UndefinedSelectorError
+# Class: UndefinedSelectorError ‹**State**›
 
 Thrown when no [selector](../interfaces/modeloptions.md#optional-selectors) exists for the accessed property.
 That's usually the case for typos. See [Model.disableProxyChecks](model.md#static-disableproxychecks) if you need to disable this check,
 but keep in mind that is only recommended in tests.
+
+## Type parameters
+
+▪ **State**
 
 ## Hierarchy
 
@@ -41,16 +45,16 @@ but keep in mind that is only recommended in tests.
 
 ###  constructor
 
-\+ **new UndefinedSelectorError**(`name`: any, `model`: any): *[UndefinedSelectorError](undefinedselectorerror.md)*
+\+ **new UndefinedSelectorError**(`name`: string, `model`: [Model](model.md)‹State›): *[UndefinedSelectorError](undefinedselectorerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:210](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/errors.ts#L210)*
+*Defined in [packages/redux-data-model/src/errors.ts:211](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L211)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`name` | any |
-`model` | any |
+`name` | string |
+`model` | [Model](model.md)‹State› |
 
 **Returns:** *[UndefinedSelectorError](undefinedselectorerror.md)*
 
@@ -62,7 +66,7 @@ Name | Type |
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[message](namespaceisntastringerror.md#message)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:974
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:974
 
 ___
 
@@ -72,19 +76,19 @@ ___
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[name](namespaceisntastringerror.md#name)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:973
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:973
 
 ___
 
 ### `Optional` stack
 
-• **stack**? : *string*
+• **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 *Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:975
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 
 ___
 
@@ -92,4 +96,4 @@ ___
 
 ▪ **Error**: *ErrorConstructor*
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:984
+Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:984

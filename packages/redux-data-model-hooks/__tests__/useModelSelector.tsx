@@ -2,7 +2,7 @@ import {mount} from 'enzyme';
 import * as React from 'react';
 import {Provider} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import {Model, ModelOptions} from 'redux-data-model';
+import {Model} from 'redux-data-model';
 import {useModelSelector} from '../src';
 
 const mockStore = configureMockStore([]);
@@ -17,7 +17,7 @@ function Counter({
 }
 
 describe('useModelSelector', () => {
-  let modelOptions: ModelOptions<any>;
+  let modelOptions: any;
   let counterModel: any;
   let store: any;
 
@@ -28,7 +28,7 @@ describe('useModelSelector', () => {
         count: 666,
       },
       selectors: {
-        count: state => state.count,
+        count: (state: any) => state.count,
       },
     };
     counterModel = new Model<any>(modelOptions);

@@ -12,9 +12,19 @@ generated from source.
 
 [redux-data-model](../README.md) › [ModelOptions](modeloptions.md)
 
-# Interface: ModelOptions
+# Interface: ModelOptions ‹**State, SelectorPayloads, ReducerPayloads, EffectPayloads**›
 
 Model options are used for initialising a [Model](../classes/model.md) instance.
+
+## Type parameters
+
+▪ **State**
+
+▪ **SelectorPayloads**
+
+▪ **ReducerPayloads**
+
+▪ **EffectPayloads**
 
 ## Hierarchy
 
@@ -35,9 +45,9 @@ Model options are used for initialising a [Model](../classes/model.md) instance.
 
 ### `Optional` blockingEffects
 
-• **blockingEffects**? : *BlockingEffectMap*
+• **blockingEffects**? : *[BlockingEffectMap](../README.md#blockingeffectmap)‹[BlockingSagaEffects](../README.md#blockingsagaeffects), EffectPayloads›*
 
-*Defined in [packages/redux-data-model/src/model.ts:182](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/model.ts#L182)*
+*Defined in [packages/redux-data-model/src/model.ts:193](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/model.ts#L193)*
 
 Blocking effects are functions used for defining when/how [normal effects](modeloptions.md#optional-effects) will be
 executed. By default, effects are wrapped by a
@@ -60,9 +70,9 @@ ___
 
 ### `Optional` effects
 
-• **effects**? : *EffectMap*
+• **effects**? : *[EffectMap](../README.md#effectmap)‹[SagaEffects](../README.md#sagaeffects), ReducerPayloads, EffectPayloads›*
 
-*Defined in [packages/redux-data-model/src/model.ts:163](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/model.ts#L163)*
+*Defined in [packages/redux-data-model/src/model.ts:174](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/model.ts#L174)*
 
 Effects are functions used for performing asynchronous state changes. An effect will be triggered whenever
 an action is dispatched, which contains an actionType equal to modelNamespace.effectName. They are wrapped
@@ -89,7 +99,7 @@ ___
 
 • **namespace**: *string*
 
-*Defined in [packages/redux-data-model/src/model.ts:82](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/model.ts#L82)*
+*Defined in [packages/redux-data-model/src/model.ts:88](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/model.ts#L88)*
 
 The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
 and, as a matter of fact, redux-data-model will enforce it. The namespace is effectively an object's path
@@ -108,9 +118,9 @@ ___
 
 ### `Optional` reducers
 
-• **reducers**? : *ReducerMap*
+• **reducers**? : *[ReducerMap](../README.md#reducermap)‹State, ReducerPayloads›*
 
-*Defined in [packages/redux-data-model/src/model.ts:142](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/model.ts#L142)*
+*Defined in [packages/redux-data-model/src/model.ts:153](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/model.ts#L153)*
 
 Reducers are functions used for synchronously changing the current state of a given model. A reducer will
 be triggered whenever an action is dispatched, which contains a type equal to modelNamespace.reducerName.
@@ -120,12 +130,12 @@ data, like vanilla reducers. Instead it should change the state argument in plac
 by tracking property access.
 
 **`example`** 
-increment(state, action) {
+increment(state) {
   state.count += 1;
 }
 
 **`example`** 
-decrement: (state, action) => {
+decrement: (state) => {
   state.count -= 1;
 }
 
@@ -140,13 +150,13 @@ ___
 
 ### `Optional` selectors
 
-• **selectors**? : *SelectorMap*
+• **selectors**? : *[SelectorMap](../README.md#selectormap)‹Immutable‹State›, SelectorPayloads›*
 
-*Defined in [packages/redux-data-model/src/model.ts:118](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/model.ts#L118)*
+*Defined in [packages/redux-data-model/src/model.ts:129](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/model.ts#L129)*
 
 Selectors are functions that receive the entire state and returns a piece of it. The first argument
-of a selector function is the namespaced state, following by any other positional arguments passed
-in an eventual call within a mapStateToProps. Last but not least, the last argument is the entire
+of a selector function is the namespaced state, following by a single argument that can be used
+to pass custom parameters. Last but not least, the last argument is the entire
 redux state, which might be necessary when normalizing data. By default selectors won't memoize the
 returned data, which can be useful to avoid any re-renders caused by shallow comparing its variables.
 Although that's possible, a different syntax is needed. For such, a selector should be specified as an
@@ -158,14 +168,20 @@ values of the input selectors evaluates to true. Redux-data-model uses
 
 **`example`** count: (state) => state,
 
-**`example`** userIds: (state, allState) => allState.modelNamespace.userIds,
+**`example`** userIds: (state, props, allState) => allState.modelNamespace.userIds,
 
-**`example`** userById: (state, userId) => state.userById[userId],
+**`example`** userById: (state, { userId }) => state.userById[userId],
 
-**`example`** isLoading: (state, userId, allState) => allState.modelNamespace.loadingById[userId],
+**`example`** isLoading: (state, { userId }, allState) => allState.modelNamespace.loadingById[userId],
 
 **`example`** users: [
    state => state.userIds,
+   state => state.userById,
+   (userIds, userById) => userIds.map(id => userById[id])
+ ],
+
+**`example`** usersByGroup: [
+   (state, { groupId }) => state.userIdsByGroup[groupId],
    state => state.userById,
    (userIds, userById) => userIds.map(id => userById[id])
  ],
@@ -174,9 +190,9 @@ ___
 
 ###  state
 
-• **state**: *State*
+• **state**: *Immutable‹State›*
 
-*Defined in [packages/redux-data-model/src/model.ts:94](https://github.com/kayak/redux-data-model/blob/3a623f8/packages/redux-data-model/src/model.ts#L94)*
+*Defined in [packages/redux-data-model/src/model.ts:100](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/model.ts#L100)*
 
 State represents the initial state of the model's reducer.
 

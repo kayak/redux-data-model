@@ -90,17 +90,25 @@ UserState, UserSelectorPayloads, UserReducerPayloads, UserEffectPayloads
 
 interface AddressState {
   addressesByUserId: {
-    [key: string]: string;
+    [key: number]: string;
   };
 };
 
-export const addressModel = new Model<AddressState, any>({
+export const addressModel = new Model<AddressState>({
   namespace: 'addresses',
   state: {
     addressesByUserId: {},
   },
   reducers: {
-    [userModel.actionTypes().saveUser](state, {data, userId}) {
+    [userModel.actionTypes().saveUser](
+      state: AddressState,
+      {data, userId}: {
+        data: {
+          address: string;
+        };
+        userId: number;
+      }
+    ) {
       state.addressesByUserId[userId] = data.address;
     },
   },

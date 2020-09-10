@@ -19,7 +19,7 @@ import {Model, SelectorModelMap, UndefinedSelectorError, wrapProxy} from 'redux-
 export function useModelSelector<
   ReturnValue=any, State=Record<string, any>, SelectorPayloads=any,
 >(
-  model: Model<any, SelectorPayloads, any, any>,
+  model: Model<{}, SelectorPayloads, {}, {}>,
   selectorFunc: (state: State, selectors: SelectorModelMap<any, SelectorPayloads>) => ReturnValue
 ) {
   const selectors = React.useMemo(() => {

@@ -206,10 +206,10 @@ export const countModel = new Model({
       count: (namespacedState) => namespacedState.count
     },
     reducers: {
-      increment(state, action) {
+      increment(state) {
         state.count += 1;
       },
-      decrement(state, action) {
+      decrement(state) {
         state.count -= 1;
       },
       changeCountByX(state, {x}) {
@@ -235,57 +235,12 @@ quite simple. See a few action examples below:
 
 One can assume here they could dispatch those actions and have the respective [model]'s reducers triggered, that
 won't work but the action types are precisely the same.
-Unlike [connect], [connectModel] won't inject dispatch into connected components. That's because it sets a default
-mapStateToProps, if you havent set any. This default mapDispatchToProps, would have a shape like:
+Unlike [connect], [connectModel] won't inject dispatch into connected components. That's because you should do
+yourself a favour and define mapDispatchToProps.
 
-```json
-{
-  modelANamespace: {
-    modelAReducer1Name: (objectToBeMergedWithAction) => ...
-    modelAEffect1Name: (objectToBeMergedWithAction) => ...
-    // your other reducer and effect's
-  },
-  // your other models
-}
-```
-
-So like selectors, in mapStateToProps, your default mapDispatchToProps is namespaced by the models' namespace.
-Let's try to change the example with selectors, in order to use the default mapDispatchToProps for modifying our
-redux state via reducers:
-
-```javascript
-import {connectModel} from 'redux-data-model';
-import {countModel} from './models';
-
-function CountComponent({count, counter}) {
-  return (
-    <div>
-      <div>Count: {count}</div>
-      <div>
-        <button onClick={counter.increment}>Increment</button> | <button onClick={
-          () => {
-            // We could actually use decrement, but used this for showing how to pass parameters to your dispatchers
-            counter.changeCountByX({x: -1});
-          }
-        }>Decrement</button>
-      </div>
-    </div>
-  );
-}
-
-function mapStateToProps(state, props, selectors) {
-  return {
-    count: selectors.counter.count(state),
-  };
-}
-
-export default connectModel([countModel], mapStateToProps)(CountComponent);
-```
-
-Simple right. We just needed to get the counter prop, since that's the namespace of the counter [model] and voilà.
-But what about when you want to define a custom mapDispatchToProps, like when you need to mix vanilla [redux] with
-redux-data-model. Like in react-redux, mapDispatchToProps can be declared in either a function form or a object shorthand
-notation. As a function that would look like:
+So like selectors, in mapDispatchToProps, your dispatchers are namespaced by the models' namespace.
+Dispatchers are equivalent to already bound action creators, so no need to use dispatch with them.
+Let's try to change the example with selectors, in order to modify our redux state via reducers:
 
 ```javascript
 import {connectModel} from 'redux-data-model';
@@ -308,10 +263,10 @@ function mapStateToProps(state, props, selectors) {
   };
 }
 
-function mapDispatchToProps(dispatch, props, actionCreators) {
+function mapDispatchToProps(dispatch, props, dispatchers) {
   return {
-    increment: () => dispatch(actionCreators.counter.increment()),
-    decrement: () => dispatch(actionCreators.counter.decrement()),
+    increment: () => dispatchers.counter.increment(),
+    decrement: () => dispatchers.counter.decrement(),
   };
 }
 
@@ -345,9 +300,6 @@ const mapDispatchToProps = {increment, decrement} = countModel.actionCreators();
 
 export default connectModel([countModel], mapStateToProps, mapDispatchToProps);
 ```
-
-All that said, you probably noticed that the default mapStateToProps is way easier to implement than both of these
-solutions, so stick with it unless you have a good reason not to.
 
 ## Having a confirmation dialog
 
@@ -385,10 +337,10 @@ export const countModel = new Model({
       count: (namespacedState) => namespacedState.count
     },
     reducers: {
-      increment(state, action) {
+      increment(state) {
         state.count += 1;
       },
-      decrement(state, action) {
+      decrement(state) {
         state.count -= 1;
       },
       changeCountByX(state, {x}) {
@@ -396,16 +348,16 @@ export const countModel = new Model({
       },
     },
     effects: {
-      * confirmBeforeIncrementing(action, {call, put}, {increment, decrement}) {
-        // Arguments are action, sagaEffects and actionCreators
+      * confirmBeforeIncrementing(payload, {call, put}, {increment, decrement}) {
+        // Arguments are payload, sagaEffects and actionCreators
         const hasConfirmed = yield call(showConfirm, {
           text: "Are you sure you want to increment?"
         });
 
         if (hasConfirmed) yield put(increment());
       },
-      * confirmBeforeDecrementing(action, {call, put}, {increment, decrement}) {
-        // Arguments are action, sagaEffects and actionCreators
+      * confirmBeforeDecrementing(payload, {call, put}, {increment, decrement}) {
+        // Arguments are payload, sagaEffects and actionCreators
         const hasConfirmed = yield call(showConfirm, {
           text: "Are you sure you want to decrement?"
         });
@@ -427,13 +379,13 @@ mapDispatchToProps:
 import {connectModel} from 'redux-data-model';
 import {countModel} from './models';
 
-function CountComponent({count, counter}) {
+function CountComponent({count, confirmBeforeIncrementing, confirmBeforeDecrementing}) {
   return (
     <div>
       <div>Count: {count}</div>
       <div>
-        <button onClick={counter.confirmBeforeIncrementing}>Increment</button> |
-        <button onClick={counter.confirmBeforeDecrementing}>Decrement</button>
+        <button onClick={confirmBeforeIncrementing}>Increment</button> |
+        <button onClick={confirmBeforeDecrementing}>Decrement</button>
       </div>
     </div>
   );
@@ -445,7 +397,14 @@ function mapStateToProps(state, props, selectors) {
   };
 }
 
-export default connectModel([countModel], mapStateToProps)(CountComponent);
+function mapDispatchToProps(dispatch, props, dispatchers) {
+  return {
+    confirmBeforeIncrementing: () => selectors.counter.confirmBeforeIncrementing(),
+    confirmBeforeDecrementing: () => selectors.counter.confirmBeforeDecrementing(),
+  };
+}
+
+export default connectModel([countModel], mapStateToProps, mapDispatchToProps)(CountComponent);
 ```
 
 Now let's say we need to redirect to another page, when the user is done with the incrementation (i.e. clicking
@@ -459,13 +418,13 @@ promise is returned. That means we could change the code above to:
 import {connectModel} from 'redux-data-model';
 import {countModel} from './models';
 
-function CountComponent({count, counter}) {
+function CountComponent({count, confirmBeforeIncrementing, confirmBeforeDecrementing}) {
   return (
     <div>
       <div>Count: {count}</div>
       <div>
         <button onClick={
-            () => counter.confirmBeforeIncrementing().then(
+            () => confirmBeforeIncrementing().then(
                 //...
             ).rejects(
                 // shows an error message
@@ -474,7 +433,7 @@ function CountComponent({count, counter}) {
             Increment
         </button> |
         <button onClick={
-            () => counter.confirmBeforeDecrementing().then(
+            () => confirmBeforeDecrementing().then(
                 // ...
             ).rejects(
                 // shows an error message
@@ -492,7 +451,13 @@ function mapStateToProps(state, props, selectors) {
   };
 }
 
-export default connectModel([countModel], mapStateToProps)(CountComponent);
+function mapDispatchToProps(dispatch, props, dispatchers) {
+  return {
+    confirmBeforeIncrementing: () => selectors.counter.confirmBeforeIncrementing(),
+    confirmBeforeDecrementing: () => selectors.counter.confirmBeforeDecrementing(),
+  };
+
+export default connectModel([countModel], mapStateToProps, mapDispatchToProps)(CountComponent);
 ```
 
 Neat right? That covers basically all the functionality that the [model] class exposes. So now you can go ahead and
@@ -516,8 +481,8 @@ export default function CountComponent() {
     <div>
       <div>Count: {count}</div>
       <div>
-        <button onClick={confirmBeforeIncrementing}>Increment</button> |
-        <button onClick={confirmBeforeDecrementing}>Decrement</button>
+        <button onClick={() => confirmBeforeIncrementing()}>Increment</button> |
+        <button onClick={() => confirmBeforeDecrementing()}>Decrement</button>
       </div>
     </div>
   );
