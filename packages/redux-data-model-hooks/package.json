@@ -1,6 +1,6 @@
 {
   "name": "redux-data-model-hooks",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "Hooks support for redux-data-model.",
   "author": "Lucas Lira Gomes <llira@kayak.com>",
   "homepage": "https://kayak.github.io/redux-data-model/",
@@ -48,7 +48,7 @@
     "jest-extended": "^0.11.5",
     "jsdom-global": "^3.0.2",
     "react-test-renderer": "^16.13.1",
-    "redux-data-model": "^0.12.0",
+    "redux-data-model": "^0.13.0",
     "redux-mock-store": "^1.5.4",
     "ts-jest": "^26.3.0"
   }

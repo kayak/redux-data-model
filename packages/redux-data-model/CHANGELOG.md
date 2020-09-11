@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/kayak/redux-data-model/compare/v0.12.0...v0.13.0) (2020-09-11)
+
+
+### Features
+
+* add typing support to selectors, reducers and effects ([cd368f3](https://github.com/kayak/redux-data-model/commit/cd368f3591972251a0efdbc0c98a42ad46c61c96))
+
+
+
+
+
 # [0.12.0](https://github.com/kayak/redux-data-model/compare/v0.11.0...v0.12.0) (2020-08-14)
 
 
