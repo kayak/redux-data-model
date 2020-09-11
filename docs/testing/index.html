@@ -4,7 +4,7 @@
             {"zIndex":100}
           )
         });
-        </script><script src="/redux-data-model/js/scrollSpy.js"></script><link rel="stylesheet" href="/redux-data-model/css/main.css"/><script src="/redux-data-model/js/codetabs.js"></script></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/redux-data-model/"><h2 class="headerTitle">Redux-Data-Model</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/redux-data-model/docs/introduction" target="_self">Docs</a></li><li class=""><a href="/redux-data-model/docs/api/api-index" target="_self">API</a></li><li class=""><a href="https://github.com/kayak/redux-data-model" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Testing</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/introduction">Introduction</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/concepts">Concepts</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/tutorial">Tutorial</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/redux-integration">Integrating with Redux/Redux Saga</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/hooks">Hooks</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Testing</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/redux-data-model/docs/testing">Testing</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Contributing</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/development">Development</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">FAQ</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/faq">FAQ</a></li></ul></div></div></section></div><script>
+        </script><script src="/redux-data-model/js/scrollSpy.js"></script><link rel="stylesheet" href="/redux-data-model/css/main.css"/><script src="/redux-data-model/js/codetabs.js"></script></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/redux-data-model/"><h2 class="headerTitle">Redux-Data-Model</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/redux-data-model/docs/introduction" target="_self">Docs</a></li><li class=""><a href="/redux-data-model/docs/api/api-index" target="_self">API</a></li><li class=""><a href="https://github.com/kayak/redux-data-model" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Testing</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/introduction">Introduction</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/concepts">Concepts</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/tutorial">Tutorial</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/redux-integration">Integrating with Redux/Redux Saga</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/hooks">Hooks</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/typescript">Typescript</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Testing</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/redux-data-model/docs/testing">Testing</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Contributing</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/development">Development</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">FAQ</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/faq">FAQ</a></li></ul></div></div></section></div><script>
             var coll = document.getElementsByClassName('collapsible');
             var checkActiveCategory = true;
             for (var i = 0; i < coll.length; i++) {
@@ -84,10 +84,10 @@ Model.disableInitializationChecks = <span class="hljs-literal">true</span>;
         <span class="hljs-attr">count</span>: <span class="hljs-function">(<span class="hljs-params">state</span>) =&gt;</span> state.count,
     },
     <span class="hljs-attr">reducers</span>: {
-        increment(state, {}) {
+        increment(state) {
           state.count += <span class="hljs-number">1</span>;
         },
-        decrement(state, {}) {
+        decrement(state) {
           state.count -= <span class="hljs-number">1</span>;
         },
         incrementByX(state, { x }) {
@@ -95,12 +95,12 @@ Model.disableInitializationChecks = <span class="hljs-literal">true</span>;
         },
     },
     <span class="hljs-attr">effects</span>: {
-      *asyncIncrement(action, { put }, { increment }) {
+      *asyncIncrement(payload, { put }, { increment }) {
           <span class="hljs-comment">// This is not useful in practice, since there's no async behaviour per se, but is defined for</span>
           <span class="hljs-comment">// example's sake.</span>
           <span class="hljs-keyword">yield</span> put(increment());
       },
-      *asyncDecrement(action, { put }, { decrement }) {
+      *asyncDecrement(payload, { put }, { decrement }) {
           <span class="hljs-comment">// This is not useful in practice, since there's no async behaviour per se, but is defined for</span>
           <span class="hljs-comment">// example's sake.</span>
           <span class="hljs-keyword">yield</span> put(decrement());
@@ -136,17 +136,17 @@ it(<span class="hljs-string">'count selector returns the count'</span>, () =&gt;
 });
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="testing-the-reducers"></a><a href="#testing-the-reducers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing the <a href="/redux-data-model/docs/api/interfaces/api-interfaces-model-options#optional-reducers">reducers</a>:</h3>
-<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> action = {}; <span class="hljs-comment">// It's empty, since the reducers don't use the action's data</span>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> payload = {}; <span class="hljs-comment">// It's empty, since the reducers don't use the action's payload</span>
 
 it(<span class="hljs-string">'increments reducer change count to current + 1'</span>, () =&gt; {
   <span class="hljs-keyword">const</span> state = {...counterModel.state};
-  counterModel.reducers.increment(state, action);
+  counterModel.reducers.increment(state, payload);
   expect(state.count).toEqual(<span class="hljs-number">1</span>);
 });
 
 it(<span class="hljs-string">'decrements reducer change count to current - 1'</span>, () =&gt; {
   <span class="hljs-keyword">const</span> state = {...counterModel.state};
-  counterModel.reducers.decrement(state, action);
+  counterModel.reducers.decrement(state, payload);
   expect(state.count).toEqual(<span class="hljs-number">-1</span>);
 });
 </code></pre>
@@ -160,14 +160,14 @@ Among those options it's noteworthy <a href="https://github.com/jfairbank/redux-
 <span class="hljs-keyword">const</span> actionCreators = counterModel.reducers;
 
 it(<span class="hljs-string">'asyncIncrement effect yields put increment reducer'</span>, () =&gt; {
-  <span class="hljs-keyword">const</span> gen = counterModel.effects.asyncIncrement(action, sagaEffects, actionCreators);
+  <span class="hljs-keyword">const</span> gen = counterModel.effects.asyncIncrement(payload, sagaEffects, actionCreators);
   expect(gen.next().value).toEqual(
     sagaEffects.put(actionCreators.increment())
   );
 });
 
 it(<span class="hljs-string">'asyncDecrement effect yields put decrement reducer'</span>, () =&gt; {
-  <span class="hljs-keyword">const</span> gen = counterModel.effects.asyncDecrement(action, sagaEffects, actionCreators);
+  <span class="hljs-keyword">const</span> gen = counterModel.effects.asyncDecrement(payload, sagaEffects, actionCreators);
   expect(gen.next().value).toEqual(
     sagaEffects.put(actionCreators.decrement())
   );
@@ -193,4 +193,4 @@ inside a generator. That's possible by passing an argument to its
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator/next">next</a> method.
 Also, whenever you need to inject an exception within a generator, in order to test a try-catch block, you can use
 the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator/throw">throw</a> method.</p>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/redux-data-model/docs/hooks"><span class="arrow-prev">← </span><span>Hooks</span></a><a class="docs-next button" href="/redux-data-model/docs/development"><span>Development</span><span class="arrow-next"> →</span></a></div></div></div></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/redux-data-model/" class="nav-home"></a><div><h5>Docs</h5><a href="/redux-data-model/docs/introduction">Introduction</a><a href="/redux-data-model/docs/tutorial">Getting Started</a><a href="/redux-data-model/docs/testing">Testing</a><a href="/redux-data-model/docs/faq">FAQ</a></div><div><h5>More</h5><a class="github-button" href="https://github.com/kayak/redux-data-model/" data-icon="octicon-star" data-count-href="/kayak/redux-data-model/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 KAYAK Germany, GmbH</section></footer></div></body></html>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/redux-data-model/docs/typescript"><span class="arrow-prev">← </span><span>Typescript</span></a><a class="docs-next button" href="/redux-data-model/docs/development"><span>Development</span><span class="arrow-next"> →</span></a></div></div></div></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/redux-data-model/" class="nav-home"></a><div><h5>Docs</h5><a href="/redux-data-model/docs/introduction">Introduction</a><a href="/redux-data-model/docs/tutorial">Getting Started</a><a href="/redux-data-model/docs/testing">Testing</a><a href="/redux-data-model/docs/faq">FAQ</a></div><div><h5>More</h5><a class="github-button" href="https://github.com/kayak/redux-data-model/" data-icon="octicon-star" data-count-href="/kayak/redux-data-model/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 KAYAK Germany, GmbH</section></footer></div></body></html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Typescript · Redux-Data-Model</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Yes. We do support [typescript]. The most important aspect is that you can define four specific templated types,"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Typescript · Redux-Data-Model"/><meta property="og:type" content="website"/><meta property="og:url" content="https://kayak.github.io/redux-data-model/"/><meta property="og:description" content="Yes. We do support [typescript]. The most important aspect is that you can define four specific templated types,"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/redux-data-model/undefined"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/redux-data-model/js/scrollSpy.js"></script><link rel="stylesheet" href="/redux-data-model/css/main.css"/><script src="/redux-data-model/js/codetabs.js"></script></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/redux-data-model/"><h2 class="headerTitle">Redux-Data-Model</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/redux-data-model/docs/introduction" target="_self">Docs</a></li><li class=""><a href="/redux-data-model/docs/api/api-index" target="_self">API</a></li><li class=""><a href="https://github.com/kayak/redux-data-model" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Getting Started</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/introduction">Introduction</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/concepts">Concepts</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/tutorial">Tutorial</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/redux-integration">Integrating with Redux/Redux Saga</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/hooks">Hooks</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/redux-data-model/docs/typescript">Typescript</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Testing</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/testing">Testing</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Contributing</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/development">Development</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">FAQ</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/faq">FAQ</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Typescript</h1></header><article><div><span><p>Yes. We do support <a href="https://www.typescriptlang.org/">typescript</a>. The most important aspect is that you can define four specific templated types,
+either when typing the ModelOptions or the Model itself. Both interfaces are declared as follows:</p>
+<pre><code class="hljs css language-typescript"><span class="hljs-keyword">interface</span> ModelOptions&lt;
+    State=Record&lt;string, unknown&gt;,
+    SelectorPayloads=Record&lt;string, unknown&gt;,
+    ReducerPayloads=Record&lt;string, unknown&gt;,
+    EffectPayloads=Record&lt;string, unknown&gt;
+&gt;;
+<span class="hljs-keyword">interface</span> Model&lt;
+    State=Record&lt;string, unknown&gt;,
+    SelectorPayloads=Record&lt;string, unknown&gt;,
+    ReducerPayloads=Record&lt;string, unknown&gt;,
+    EffectPayloads=Record&lt;string, unknown&gt;
+&gt;;
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="example"></a><a href="#example" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example</h2>
+<p>So assuming the following model:</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">import</span> {Model} <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-data-model'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> counterModel = <span class="hljs-keyword">new</span> Model({
+    <span class="hljs-attr">namespace</span>: <span class="hljs-string">'counter'</span>,
+    <span class="hljs-attr">state</span>: {
+        <span class="hljs-attr">count</span>: <span class="hljs-number">0</span>,
+    }
+});
+</code></pre>
+<p>One could type its state as:</p>
+<pre><code class="hljs css language-typescript"><span class="hljs-keyword">import</span> {Model} <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-data-model'</span>;
+
+<span class="hljs-keyword">type</span> CounterState = {
+    count: <span class="hljs-built_in">number</span>;
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> counterModel = <span class="hljs-keyword">new</span> Model&lt;CounterState&gt;({
+    <span class="hljs-keyword">namespace</span>: <span class="hljs-string">'counter'</span>,
+    state: {
+        count: <span class="hljs-number">0</span>,
+    },
+});
+</code></pre>
+<p>Let's add a couple selectors and type them as well:</p>
+<pre><code class="hljs css language-typescript"><span class="hljs-keyword">import</span> {Model} <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-data-model'</span>;
+
+<span class="hljs-keyword">type</span> CounterState = {
+    count: <span class="hljs-built_in">number</span>;
+};
+
+<span class="hljs-keyword">type</span> CounterSelectorPayloads = {
+    count: {};
+    countTimesX: {
+        x: <span class="hljs-built_in">number</span>;
+    };
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> counterModel = <span class="hljs-keyword">new</span> Model&lt;CounterState, CounterSelectorPayloads&gt;({
+    <span class="hljs-keyword">namespace</span>: <span class="hljs-string">'counter'</span>,
+    state: {
+        count: <span class="hljs-number">0</span>,
+    },
+    selectors: {
+        count: <span class="hljs-function">(<span class="hljs-params">state</span>) =&gt;</span> state.count,
+        countTimesX: <span class="hljs-function">(<span class="hljs-params">state, { x }</span>) =&gt;</span> state.count * x,
+    },
+});
+</code></pre>
+<p>As you can assume, when typing selectors, you won't define their function shape. Instead you just type the
+only variable aspect of it. Which are the parameters that the user can pass when calling the selector. The
+same principle holds true for reducers and effects/blocking effects. As you can see in the following
+example:</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">import</span> {Model} <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-data-model'</span>;
+
+type CounterState = {
+    <span class="hljs-attr">count</span>: number;
+};
+
+type CounterSelectorPayloads = {
+    <span class="hljs-attr">count</span>: {};
+    countTimesX: {
+        <span class="hljs-attr">x</span>: number;
+    };
+};
+
+type CounterReducerPayloads = {
+    <span class="hljs-attr">decrement</span>: {};
+    incrementByX: {
+        <span class="hljs-attr">x</span>: number;
+    };
+};
+
+type CounterEffectPayloads = {
+    <span class="hljs-attr">asyncIncrement</span>: {};
+    asyncIncrementByX: {
+        <span class="hljs-attr">x</span>: number;
+    };
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> counterModel = <span class="hljs-keyword">new</span> Model&lt;CounterState, CounterSelectorPayloads, CounterReducerPayloads, CounterEffectPayloads&gt;({
+    <span class="hljs-attr">namespace</span>: <span class="hljs-string">'counter'</span>,
+    <span class="hljs-attr">state</span>: {
+        <span class="hljs-attr">count</span>: <span class="hljs-number">0</span>,
+    },
+    <span class="hljs-attr">selectors</span>: {
+        <span class="hljs-attr">count</span>: <span class="hljs-function">(<span class="hljs-params">state</span>) =&gt;</span> state.count,
+        <span class="hljs-attr">countTimesX</span>: <span class="hljs-function">(<span class="hljs-params">state, { x }</span>) =&gt;</span> state.count * x,
+    },
+    <span class="hljs-attr">reducers</span>: {
+        increment(state) {
+          state.count += <span class="hljs-number">1</span>;
+        },
+        incrementByX(state, { x }) {
+          state.count += x;
+        },
+    },
+    <span class="hljs-attr">effects</span>: {
+      *asyncIncrement(payload, { put }, { increment }) {
+          <span class="hljs-comment">// This is not useful in practice, since there's no async behaviour per se, but is defined for</span>
+          <span class="hljs-comment">// example's sake.</span>
+          <span class="hljs-keyword">yield</span> put(increment());
+      },
+      *asyncIncrementByX(payload, { put }, { incrementByX }) {
+          <span class="hljs-comment">// This is not useful in practice, since there's no async behaviour per se, but is defined for</span>
+          <span class="hljs-comment">// example's sake.</span>
+          <span class="hljs-keyword">yield</span> put(incrementByX());
+      },
+    },
+    <span class="hljs-attr">blockingEffects</span>: {
+      *asyncIncrement(actionType, { debounce }, { asyncIncrement }) {
+          <span class="hljs-comment">// This overrides the asyncIncrement default behavior, which would be to use a takeEvery effect. Instead</span>
+          <span class="hljs-comment">// it will use a debounce effect.</span>
+          <span class="hljs-keyword">yield</span> debounce(<span class="hljs-number">300</span>, actionType, asyncIncrement);
+      },
+    },
+});
+</code></pre>
+<p>Those simple steps will ensure your models are thoroughly typed.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/redux-data-model/docs/hooks"><span class="arrow-prev">← </span><span>Hooks</span></a><a class="docs-next button" href="/redux-data-model/docs/testing"><span>Testing</span><span class="arrow-next"> →</span></a></div></div></div></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/redux-data-model/" class="nav-home"></a><div><h5>Docs</h5><a href="/redux-data-model/docs/introduction">Introduction</a><a href="/redux-data-model/docs/tutorial">Getting Started</a><a href="/redux-data-model/docs/testing">Testing</a><a href="/redux-data-model/docs/faq">FAQ</a></div><div><h5>More</h5><a class="github-button" href="https://github.com/kayak/redux-data-model/" data-icon="octicon-star" data-count-href="/kayak/redux-data-model/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 KAYAK Germany, GmbH</section></footer></div></body></html>

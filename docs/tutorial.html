@@ -4,7 +4,7 @@
             {"zIndex":100}
           )
         });
-        </script><script src="/redux-data-model/js/scrollSpy.js"></script><link rel="stylesheet" href="/redux-data-model/css/main.css"/><script src="/redux-data-model/js/codetabs.js"></script></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/redux-data-model/"><h2 class="headerTitle">Redux-Data-Model</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/redux-data-model/docs/introduction" target="_self">Docs</a></li><li class=""><a href="/redux-data-model/docs/api/api-index" target="_self">API</a></li><li class=""><a href="https://github.com/kayak/redux-data-model" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Getting Started</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/introduction">Introduction</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/concepts">Concepts</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/redux-data-model/docs/tutorial">Tutorial</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/redux-integration">Integrating with Redux/Redux Saga</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/hooks">Hooks</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Testing</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/testing">Testing</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Contributing</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/development">Development</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">FAQ</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/faq">FAQ</a></li></ul></div></div></section></div><script>
+        </script><script src="/redux-data-model/js/scrollSpy.js"></script><link rel="stylesheet" href="/redux-data-model/css/main.css"/><script src="/redux-data-model/js/codetabs.js"></script></head><body class="sideNavVisible"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/redux-data-model/"><h2 class="headerTitle">Redux-Data-Model</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/redux-data-model/docs/introduction" target="_self">Docs</a></li><li class=""><a href="/redux-data-model/docs/api/api-index" target="_self">API</a></li><li class=""><a href="https://github.com/kayak/redux-data-model" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Getting Started</span></h2></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/introduction">Introduction</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/concepts">Concepts</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/redux-data-model/docs/tutorial">Tutorial</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/redux-integration">Integrating with Redux/Redux Saga</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/hooks">Hooks</a></li><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/typescript">Typescript</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Testing</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/testing">Testing</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Contributing</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/development">Development</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">FAQ</h3><ul class=""><li class="navListItem"><a class="navItem" href="/redux-data-model/docs/faq">FAQ</a></li></ul></div></div></section></div><script>
             var coll = document.getElementsByClassName('collapsible');
             var checkActiveCategory = true;
             for (var i = 0; i < coll.length; i++) {
@@ -220,10 +220,10 @@ one for decrementing the count. Before we do any sort of UI work, we need to def
       <span class="hljs-attr">count</span>: <span class="hljs-function">(<span class="hljs-params">namespacedState</span>) =&gt;</span> namespacedState.count
     },
     <span class="hljs-attr">reducers</span>: {
-      increment(state, action) {
+      increment(state) {
         state.count += <span class="hljs-number">1</span>;
       },
-      decrement(state, action) {
+      decrement(state) {
         state.count -= <span class="hljs-number">1</span>;
       },
       changeCountByX(state, {x}) {
@@ -247,51 +247,11 @@ quite simple. See a few action examples below:</p>
 </ul>
 <p>One can assume here they could dispatch those actions and have the respective <a href="concepts#model">model</a>'s reducers triggered, that
 won't work but the action types are precisely the same.
-Unlike <a href="https://react-redux.js.org/api/connect">connect</a>, <a href="/redux-data-model/docs/api/api-index#connectmodel">connectModel</a> won't inject dispatch into connected components. That's because it sets a default
-mapStateToProps, if you havent set any. This default mapDispatchToProps, would have a shape like:</p>
-<pre><code class="hljs css language-json">{
-  modelANamespace: {
-    modelAReducer1Name: (objectToBeMergedWithAction) =&gt; ...
-    modelAEffect1Name: (objectToBeMergedWithAction) =&gt; ...
-    // your other reducer and effect's
-  },
-  // your other models
-}
-</code></pre>
-<p>So like selectors, in mapStateToProps, your default mapDispatchToProps is namespaced by the models' namespace.
-Let's try to change the example with selectors, in order to use the default mapDispatchToProps for modifying our
-redux state via reducers:</p>
-<pre><code class="hljs css language-javascript"><span class="hljs-keyword">import</span> {connectModel} <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-data-model'</span>;
-<span class="hljs-keyword">import</span> {countModel} <span class="hljs-keyword">from</span> <span class="hljs-string">'./models'</span>;
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CountComponent</span>(<span class="hljs-params">{count, counter}</span>) </span>{
-  <span class="hljs-keyword">return</span> (
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Count: {count}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{counter.increment}</span>&gt;</span>Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span>
-          () =&gt;</span> {
-            // We could actually use decrement, but used this for showing how to pass parameters to your dispatchers
-            counter.changeCountByX({x: -1});
-          }
-        }&gt;Decrement<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-  );
-}
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapStateToProps</span>(<span class="hljs-params">state, props, selectors</span>) </span>{
-  <span class="hljs-keyword">return</span> {
-    <span class="hljs-attr">count</span>: selectors.counter.count(state),
-  };
-}
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connectModel([countModel], mapStateToProps)(CountComponent);
-</code></pre>
-<p>Simple right. We just needed to get the counter prop, since that's the namespace of the counter <a href="concepts#model">model</a> and voilà.
-But what about when you want to define a custom mapDispatchToProps, like when you need to mix vanilla <a href="https://redux.js.org/">redux</a> with
-redux-data-model. Like in react-redux, mapDispatchToProps can be declared in either a function form or a object shorthand
-notation. As a function that would look like:</p>
+Unlike <a href="https://react-redux.js.org/api/connect">connect</a>, <a href="/redux-data-model/docs/api/api-index#connectmodel">connectModel</a> won't inject dispatch into connected components. That's because you should do
+yourself a favour and define mapDispatchToProps.</p>
+<p>So like selectors, in mapDispatchToProps, your dispatchers are namespaced by the models' namespace.
+Dispatchers are equivalent to already bound action creators, so no need to use dispatch with them.
+Let's try to change the example with selectors, in order to modify our redux state via reducers:</p>
 <pre><code class="hljs css language-javascript"><span class="hljs-keyword">import</span> {connectModel} <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-data-model'</span>;
 <span class="hljs-keyword">import</span> {countModel} <span class="hljs-keyword">from</span> <span class="hljs-string">'./models'</span>;
 
@@ -312,10 +272,10 @@ notation. As a function that would look like:</p>
   };
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapDispatchToProps</span>(<span class="hljs-params">dispatch, props, actionCreators</span>) </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapDispatchToProps</span>(<span class="hljs-params">dispatch, props, dispatchers</span>) </span>{
   <span class="hljs-keyword">return</span> {
-    <span class="hljs-attr">increment</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> dispatch(actionCreators.counter.increment()),
-    <span class="hljs-attr">decrement</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> dispatch(actionCreators.counter.decrement()),
+    <span class="hljs-attr">increment</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> dispatchers.counter.increment(),
+    <span class="hljs-attr">decrement</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> dispatchers.counter.decrement(),
   };
 }
 
@@ -346,8 +306,6 @@ notation. As a function that would look like:</p>
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connectModel([countModel], mapStateToProps, mapDispatchToProps);
 </code></pre>
-<p>All that said, you probably noticed that the default mapStateToProps is way easier to implement than both of these
-solutions, so stick with it unless you have a good reason not to.</p>
 <h2><a class="anchor" aria-hidden="true" id="having-a-confirmation-dialog"></a><a href="#having-a-confirmation-dialog" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Having a confirmation dialog</h2>
 <p>Now we have the basic functionality, we still need a confirmation step via a dialog, whenever users try to
 increment/decrement the counter value. For such dialog we are going to use the <a href="https://sweetalert2.github.io/">sweetalert2</a>, but any would fit.</p>
@@ -380,10 +338,10 @@ like with the bespoke effects:</p>
       <span class="hljs-attr">count</span>: <span class="hljs-function">(<span class="hljs-params">namespacedState</span>) =&gt;</span> namespacedState.count
     },
     <span class="hljs-attr">reducers</span>: {
-      increment(state, action) {
+      increment(state) {
         state.count += <span class="hljs-number">1</span>;
       },
-      decrement(state, action) {
+      decrement(state) {
         state.count -= <span class="hljs-number">1</span>;
       },
       changeCountByX(state, {x}) {
@@ -391,16 +349,16 @@ like with the bespoke effects:</p>
       },
     },
     <span class="hljs-attr">effects</span>: {
-      * confirmBeforeIncrementing(action, {call, put}, {increment, decrement}) {
-        <span class="hljs-comment">// Arguments are action, sagaEffects and actionCreators</span>
+      * confirmBeforeIncrementing(payload, {call, put}, {increment, decrement}) {
+        <span class="hljs-comment">// Arguments are payload, sagaEffects and actionCreators</span>
         <span class="hljs-keyword">const</span> hasConfirmed = <span class="hljs-keyword">yield</span> call(showConfirm, {
           <span class="hljs-attr">text</span>: <span class="hljs-string">"Are you sure you want to increment?"</span>
         });
 
         <span class="hljs-keyword">if</span> (hasConfirmed) <span class="hljs-keyword">yield</span> put(increment());
       },
-      * confirmBeforeDecrementing(action, {call, put}, {increment, decrement}) {
-        <span class="hljs-comment">// Arguments are action, sagaEffects and actionCreators</span>
+      * confirmBeforeDecrementing(payload, {call, put}, {increment, decrement}) {
+        <span class="hljs-comment">// Arguments are payload, sagaEffects and actionCreators</span>
         <span class="hljs-keyword">const</span> hasConfirmed = <span class="hljs-keyword">yield</span> call(showConfirm, {
           <span class="hljs-attr">text</span>: <span class="hljs-string">"Are you sure you want to decrement?"</span>
         });
@@ -419,13 +377,13 @@ mapDispatchToProps:</p>
 <pre><code class="hljs css language-javascript"><span class="hljs-keyword">import</span> {connectModel} <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-data-model'</span>;
 <span class="hljs-keyword">import</span> {countModel} <span class="hljs-keyword">from</span> <span class="hljs-string">'./models'</span>;
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CountComponent</span>(<span class="hljs-params">{count, counter}</span>) </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CountComponent</span>(<span class="hljs-params">{count, confirmBeforeIncrementing, confirmBeforeDecrementing}</span>) </span>{
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Count: {count}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{counter.confirmBeforeIncrementing}</span>&gt;</span>Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> |
-        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{counter.confirmBeforeDecrementing}</span>&gt;</span>Decrement<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{confirmBeforeIncrementing}</span>&gt;</span>Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> |
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{confirmBeforeDecrementing}</span>&gt;</span>Decrement<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
   );
@@ -437,7 +395,14 @@ mapDispatchToProps:</p>
   };
 }
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connectModel([countModel], mapStateToProps)(CountComponent);
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapDispatchToProps</span>(<span class="hljs-params">dispatch, props, dispatchers</span>) </span>{
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">confirmBeforeIncrementing</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> selectors.counter.confirmBeforeIncrementing(),
+    <span class="hljs-attr">confirmBeforeDecrementing</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> selectors.counter.confirmBeforeDecrementing(),
+  };
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connectModel([countModel], mapStateToProps, mapDispatchToProps)(CountComponent);
 </code></pre>
 <p>Now let's say we need to redirect to another page, when the user is done with the incrementation (i.e. clicking
 yes in the dialog), or that we need to display an error message if something went wrong (e.g. a REST request
@@ -448,13 +413,13 @@ promise is returned. That means we could change the code above to:</p>
 <pre><code class="hljs css language-javascript"><span class="hljs-keyword">import</span> {connectModel} <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-data-model'</span>;
 <span class="hljs-keyword">import</span> {countModel} <span class="hljs-keyword">from</span> <span class="hljs-string">'./models'</span>;
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CountComponent</span>(<span class="hljs-params">{count, counter}</span>) </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CountComponent</span>(<span class="hljs-params">{count, confirmBeforeIncrementing, confirmBeforeDecrementing}</span>) </span>{
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Count: {count}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span>
-            () =&gt;</span> counter.confirmBeforeIncrementing().then(
+            () =&gt;</span> confirmBeforeIncrementing().then(
                 //...
             ).rejects(
                 // shows an error message
@@ -463,7 +428,7 @@ promise is returned. That means we could change the code above to:</p>
             Increment
         <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> |
         <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span>
-            () =&gt;</span> counter.confirmBeforeDecrementing().then(
+            () =&gt;</span> confirmBeforeDecrementing().then(
                 // ...
             ).rejects(
                 // shows an error message
@@ -481,7 +446,13 @@ promise is returned. That means we could change the code above to:</p>
   };
 }
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connectModel([countModel], mapStateToProps)(CountComponent);
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapDispatchToProps</span>(<span class="hljs-params">dispatch, props, dispatchers</span>) </span>{
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">confirmBeforeIncrementing</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> selectors.counter.confirmBeforeIncrementing(),
+    <span class="hljs-attr">confirmBeforeDecrementing</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> selectors.counter.confirmBeforeDecrementing(),
+  };
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connectModel([countModel], mapStateToProps, mapDispatchToProps)(CountComponent);
 </code></pre>
 <p>Neat right? That covers basically all the functionality that the <a href="concepts#model">model</a> class exposes. So now you can go ahead and
 implement your own.</p>
@@ -500,8 +471,8 @@ write the previous examples as:</p>
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Count: {count}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{confirmBeforeIncrementing}</span>&gt;</span>Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> |
-        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{confirmBeforeDecrementing}</span>&gt;</span>Decrement<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> confirmBeforeIncrementing()}&gt;Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> |
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> confirmBeforeDecrementing()}&gt;Decrement<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
   );
