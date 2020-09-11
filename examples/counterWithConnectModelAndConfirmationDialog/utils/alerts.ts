@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as Swal from "sweetalert2";
 import * as withReactContent from "sweetalert2-react-content";
 

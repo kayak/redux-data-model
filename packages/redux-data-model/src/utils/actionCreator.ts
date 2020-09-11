@@ -1,14 +1,7 @@
 import {isPlainObject} from 'lodash';
 import {AnyAction} from "redux";
+import {ActionInternals} from '../baseTypes';
 import {ActionDataIsntPlainObjectError} from "../errors";
-
-/**
- * @ignore
- */
-export interface ActionInternalsObject {
-  resolve: Function;
-  reject: Function;
-}
 
 /**
  * @ignore
@@ -16,14 +9,14 @@ export interface ActionInternalsObject {
 export interface ActionWithInternals extends AnyAction {
   type: string;
   payload: any;
-  __actionInternals: ActionInternalsObject | undefined;
+  __actionInternals: ActionInternals | undefined;
 }
 
 /**
  * @ignore
  */
 export function actionCreator(
-  type: string, payload: any = {}, __actionInternals: ActionInternalsObject | undefined=undefined,
+  type: string, payload: any = {}, __actionInternals: ActionInternals | undefined=undefined,
 ): ActionWithInternals {
   if (!isPlainObject(payload)) {
     throw new ActionDataIsntPlainObjectError(type);

@@ -12,17 +12,13 @@ generated from source.
 
 [redux-data-model](../README.md) › [BlockingEffectWithoutMatchingEffectError](blockingeffectwithoutmatchingeffecterror.md)
 
-# Class: BlockingEffectWithoutMatchingEffectError ‹**State**›
+# Class: BlockingEffectWithoutMatchingEffectError
 
 Thrown when [blocking effect](../interfaces/modeloptions.md#optional-blockingeffects) action types don't have a matching
  [effect](../interfaces/modeloptions.md#optional-effects) action type, for one of your models.
  A [blocking effect](../interfaces/modeloptions.md#optional-blockingeffects) is meant to alter the default behavior of a pre-existing
  [normal effect](../interfaces/modeloptions.md#optional-effects), therefore it needs to be named the same way as the
  [effect](../interfaces/modeloptions.md#optional-effects) in question.
-
-## Type parameters
-
-▪ **State**
 
 ## Hierarchy
 
@@ -47,15 +43,15 @@ Thrown when [blocking effect](../interfaces/modeloptions.md#optional-blockingeff
 
 ###  constructor
 
-\+ **new BlockingEffectWithoutMatchingEffectError**(`model`: [Model](model.md)‹State›, `effectActionTypes`: string[]): *[BlockingEffectWithoutMatchingEffectError](blockingeffectwithoutmatchingeffecterror.md)*
+\+ **new BlockingEffectWithoutMatchingEffectError**(`model`: [Model](model.md)‹unknown, unknown, unknown, unknown›, `effectActionTypes`: string[]): *[BlockingEffectWithoutMatchingEffectError](blockingeffectwithoutmatchingeffecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:84](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L84)*
+*Defined in [packages/redux-data-model/src/errors.ts:85](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/errors.ts#L85)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`model` | [Model](model.md)‹State› |
+`model` | [Model](model.md)‹unknown, unknown, unknown, unknown› |
 `effectActionTypes` | string[] |
 
 **Returns:** *[BlockingEffectWithoutMatchingEffectError](blockingeffectwithoutmatchingeffecterror.md)*
@@ -87,8 +83,6 @@ ___
 • **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
-
-*Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 

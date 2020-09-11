@@ -44,7 +44,7 @@ this conflict check will be ignored when doing so.
 
 \+ **new KeyConflictInMergePropsError**(`statePropConflicts`: string[], `dispatchPropConflicts`: string[], `ownPropsConflicts`: string[]): *[KeyConflictInMergePropsError](keyconflictinmergepropserror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:271](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L271)*
+*Defined in [packages/redux-data-model/src/errors.ts:272](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/errors.ts#L272)*
 
 **Parameters:**
 
@@ -83,8 +83,6 @@ ___
 • **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
-
-*Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 

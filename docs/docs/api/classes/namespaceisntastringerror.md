@@ -12,13 +12,9 @@ generated from source.
 
 [redux-data-model](../README.md) › [NamespaceIsntAStringError](namespaceisntastringerror.md)
 
-# Class: NamespaceIsntAStringError ‹**State**›
+# Class: NamespaceIsntAStringError
 
 Thrown when the provided [namespace](../interfaces/modeloptions.md#namespace), for one of your models, isn't a string.
-
-## Type parameters
-
-▪ **State**
 
 ## Hierarchy
 
@@ -43,15 +39,15 @@ Thrown when the provided [namespace](../interfaces/modeloptions.md#namespace), f
 
 ###  constructor
 
-\+ **new NamespaceIsntAStringError**(`model`: [Model](model.md)‹State›): *[NamespaceIsntAStringError](namespaceisntastringerror.md)*
+\+ **new NamespaceIsntAStringError**(`model`: [Model](model.md)‹unknown, unknown, unknown, unknown›): *[NamespaceIsntAStringError](namespaceisntastringerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:15](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L15)*
+*Defined in [packages/redux-data-model/src/errors.ts:16](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/errors.ts#L16)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`model` | [Model](model.md)‹State› |
+`model` | [Model](model.md)‹unknown, unknown, unknown, unknown› |
 
 **Returns:** *[NamespaceIsntAStringError](namespaceisntastringerror.md)*
 
@@ -82,8 +78,6 @@ ___
 • **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
-
-*Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 

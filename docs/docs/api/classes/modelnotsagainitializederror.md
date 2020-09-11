@@ -12,16 +12,12 @@ generated from source.
 
 [redux-data-model](../README.md) › [ModelNotSagaInitializedError](modelnotsagainitializederror.md)
 
-# Class: ModelNotSagaInitializedError ‹**State**›
+# Class: ModelNotSagaInitializedError
 
 Thrown when one of your models was not initialized on a [modelRootSaga](../README.md#modelrootsaga) call, even though a react component
 was dispatching actions that were meant to trigger its [effects](../interfaces/modeloptions.md#optional-effects) for instance.
 See [Model.disableInitializationChecks](model.md#static-disableinitializationchecks) if you need to disable this check,
 but keep in mind that is only recommended in tests.
-
-## Type parameters
-
-▪ **State**
 
 ## Hierarchy
 
@@ -46,15 +42,15 @@ but keep in mind that is only recommended in tests.
 
 ###  constructor
 
-\+ **new ModelNotSagaInitializedError**(`model`: [Model](model.md)‹State›): *[ModelNotSagaInitializedError](modelnotsagainitializederror.md)*
+\+ **new ModelNotSagaInitializedError**(`model`: [Model](model.md)‹unknown, unknown, unknown, unknown›): *[ModelNotSagaInitializedError](modelnotsagainitializederror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:123](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L123)*
+*Defined in [packages/redux-data-model/src/errors.ts:124](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/errors.ts#L124)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`model` | [Model](model.md)‹State› |
+`model` | [Model](model.md)‹unknown, unknown, unknown, unknown› |
 
 **Returns:** *[ModelNotSagaInitializedError](modelnotsagainitializederror.md)*
 
@@ -85,8 +81,6 @@ ___
 • **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
-
-*Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 

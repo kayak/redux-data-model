@@ -1,6 +1,7 @@
 import {isEmpty} from 'lodash';
 import {sagaEffects, blockingSagaEffects} from './saga';
 import {Model} from './model';
+import {AnyAction} from 'redux';
 
 /**
  * @ignore
@@ -12,8 +13,8 @@ const errorClassesIndexUrl = 'https://kayak.github.io/redux-data-model/docs/api/
  *
  * @category Error
  */
-export class NamespaceIsntAStringError<State> extends Error {
-  constructor(model: Model<State>) {
+export class NamespaceIsntAStringError extends Error {
+  constructor(model: Model<unknown, unknown, unknown, unknown>) {
     super(
       `Namespace must be a string. The provided namespace type was: ${typeof model.namespace}. ` +
       `See ${errorClassesIndexUrl} for more info.`
@@ -61,8 +62,8 @@ export class InvalidNamespaceError extends Error {
  *
  * @category Error
  */
-export class DuplicatedActionTypesError<State> extends Error {
-  constructor(model: Model<State>, reducerAndEffectActionTypes: string[]) {
+export class DuplicatedActionTypesError extends Error {
+  constructor(model: Model<unknown, unknown, unknown, unknown>, reducerAndEffectActionTypes: string[]) {
     super(
       `Reducer and effect action types must be unique in [${model.namespace}] model. The provided ` +
       `reducer/effect action types were: ${reducerAndEffectActionTypes.join(', ')}. ` +
@@ -81,8 +82,8 @@ export class DuplicatedActionTypesError<State> extends Error {
  *
  * @category Error
  */
-export class BlockingEffectWithoutMatchingEffectError<State> extends Error {
-  constructor(model: Model<State>, effectActionTypes: string[]) {
+export class BlockingEffectWithoutMatchingEffectError extends Error {
+  constructor(model: Model<unknown, unknown, unknown, unknown>, effectActionTypes: string[]) {
     super(
       `Blocking effect action types should match a pre-existing effect action type in ` +
       `[${model.namespace}] model. The provided effect action types were: ${effectActionTypes.join(', ')}. ` +
@@ -101,8 +102,8 @@ export class BlockingEffectWithoutMatchingEffectError<State> extends Error {
  *
  * @category Error
  */
-export class ModelNotReduxInitializedError<State> extends Error {
-  constructor(model: Model<State>) {
+export class ModelNotReduxInitializedError extends Error {
+  constructor(model: Model<unknown, unknown, unknown, unknown>) {
     super(
       `Models need to be initialized with combineModelReducers prior to any usage. Now ` +
       `make this the case for: ${model.namespace}. ` +
@@ -120,8 +121,8 @@ export class ModelNotReduxInitializedError<State> extends Error {
  *
  * @category Error
  */
-export class ModelNotSagaInitializedError<State> extends Error {
-  constructor(model: Model<State>) {
+export class ModelNotSagaInitializedError extends Error {
+  constructor(model: Model<unknown, unknown, unknown, unknown>) {
     super(
       `Models need to be initialized with modelRootSaga prior to any usage. Now ` +
       `make this the case for: ${model.namespace}. ` +
@@ -171,7 +172,7 @@ export class ActionDataIsntPlainObjectError extends Error {
  * @category Error
  */
 export class NonCompatibleActionError extends Error {
-  constructor(action: any) {
+  constructor(action: AnyAction) {
     super(
       `The provided action lacks the internals for being redux-data-model-able. Be sure to ` +
       `use bindModelActionCreators instead of redux's bindActionCreators. The action in question ` +
@@ -190,8 +191,8 @@ export class NonCompatibleActionError extends Error {
  *
  * @category Error
  */
-export class UndefinedReducerOrEffectError<State> extends Error {
-  constructor(name: string, model: Model<State>) {
+export class UndefinedReducerOrEffectError extends Error {
+  constructor(name: string, model: Model<unknown, unknown, unknown, unknown>) {
     super(
       `No reducer/effect called [${name}] was found on [${model.namespace}] model. ` +
       `Available options are: ${Object.keys(model.actionTypes())}. ` +
@@ -208,8 +209,8 @@ export class UndefinedReducerOrEffectError<State> extends Error {
  *
  * @category Error
  */
-export class UndefinedSelectorError<State> extends Error {
-  constructor(name: string, model: Model<State>) {
+export class UndefinedSelectorError extends Error {
+  constructor(name: string, model: Model<unknown, unknown, unknown, unknown>) {
     super(
       `No selector called [${name}] was found on [${model.namespace}] model. ` +
       `Available options are: ${Object.keys(model.selectors)}. ` +
@@ -228,8 +229,8 @@ export class UndefinedSelectorError<State> extends Error {
  *
  * @category Error
  */
-export class UndefinedSagaEffectError<State> extends Error {
-  constructor(name: string, model: Model<State>) {
+export class UndefinedSagaEffectError extends Error {
+  constructor(name: string, model: Model<unknown, unknown, unknown, unknown>) {
     super(
       `No saga effect called [${name}] was found on [${model.namespace}] model. ` +
       `Available options are: ${Object.keys(sagaEffects)}. ` +
@@ -248,8 +249,8 @@ export class UndefinedSagaEffectError<State> extends Error {
  *
  * @category Error
  */
-export class UndefinedBlockingSagaEffectError<State> extends Error {
-  constructor(name: string, model: Model<State>) {
+export class UndefinedBlockingSagaEffectError extends Error {
+  constructor(name: string, model: Model<unknown, unknown, unknown, unknown>) {
     super(
       `No saga effect called [${name}] was found on [${model.namespace}] model. ` +
       `Available options are: ${Object.keys(blockingSagaEffects)}. ` +

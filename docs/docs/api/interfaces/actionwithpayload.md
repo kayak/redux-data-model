@@ -31,7 +31,7 @@
 
 • **payload**: *PayloadAction*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:25](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L25)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:29](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L29)*
 
 ___
 

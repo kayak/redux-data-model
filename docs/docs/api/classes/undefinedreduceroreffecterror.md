@@ -12,16 +12,12 @@ generated from source.
 
 [redux-data-model](../README.md) › [UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md)
 
-# Class: UndefinedReducerOrEffectError ‹**State**›
+# Class: UndefinedReducerOrEffectError
 
 Thrown when no [reducer](../interfaces/modeloptions.md#optional-reducers)/[effect](../interfaces/modeloptions.md#optional-effects) exist for the accessed
 property. That's usually the case for typos.
 See [Model.disableProxyChecks](model.md#static-disableproxychecks) if you need to disable this check,
 but keep in mind that is only recommended in tests.
-
-## Type parameters
-
-▪ **State**
 
 ## Hierarchy
 
@@ -46,16 +42,16 @@ but keep in mind that is only recommended in tests.
 
 ###  constructor
 
-\+ **new UndefinedReducerOrEffectError**(`name`: string, `model`: [Model](model.md)‹State›): *[UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md)*
+\+ **new UndefinedReducerOrEffectError**(`name`: string, `model`: [Model](model.md)‹unknown, unknown, unknown, unknown›): *[UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:193](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L193)*
+*Defined in [packages/redux-data-model/src/errors.ts:194](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/errors.ts#L194)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `name` | string |
-`model` | [Model](model.md)‹State› |
+`model` | [Model](model.md)‹unknown, unknown, unknown, unknown› |
 
 **Returns:** *[UndefinedReducerOrEffectError](undefinedreduceroreffecterror.md)*
 
@@ -86,8 +82,6 @@ ___
 • **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
-
-*Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 

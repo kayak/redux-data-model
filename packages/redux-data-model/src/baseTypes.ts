@@ -1,11 +1,15 @@
 import {AnyAction, Dispatch} from 'redux';
-import {ActionInternalsObject} from "./utils";
 import {Saga} from 'redux-saga';
 
 export type ActionType = string;
 
+export interface ActionInternals {
+  resolve: (result: any) => void;
+  reject: (error: any) => void;
+}
+
 export interface ActionCreator<A> {
-  (payload?: object, __actionInternals?: ActionInternalsObject): A;
+  (payload?: Record<string, unknown>, __actionInternals?: ActionInternals): A;
   isEffect: boolean;
 }
 
@@ -24,7 +28,7 @@ export type ActionCreatorsMapObject<Payloads=any> = {
 interface ActionWithPayload<PayloadAction> extends AnyAction {
   payload: PayloadAction;
   [key: string]: any;
-};
+}
 
 export type SelectorFunction<State, Props> = (state: State, props: Props, allState: any) => any;
 export type ReducerFunction<State, PayloadAction> = (
@@ -93,11 +97,6 @@ export type MapStateToPropsWithSelectors<TStateProps, TOwnProps, State> =
       ownProps: TOwnProps,
       modelSelectors: NamespacedSelectorsMapObject,
     ) => TStateProps;
-
-export interface ActionInternals {
-  resolve: Function;
-  reject: Function;
-}
 
 export interface ActionWithInternals {
   type: string;

@@ -12,15 +12,11 @@ generated from source.
 
 [redux-data-model](../README.md) › [UndefinedSelectorError](undefinedselectorerror.md)
 
-# Class: UndefinedSelectorError ‹**State**›
+# Class: UndefinedSelectorError
 
 Thrown when no [selector](../interfaces/modeloptions.md#optional-selectors) exists for the accessed property.
 That's usually the case for typos. See [Model.disableProxyChecks](model.md#static-disableproxychecks) if you need to disable this check,
 but keep in mind that is only recommended in tests.
-
-## Type parameters
-
-▪ **State**
 
 ## Hierarchy
 
@@ -45,16 +41,16 @@ but keep in mind that is only recommended in tests.
 
 ###  constructor
 
-\+ **new UndefinedSelectorError**(`name`: string, `model`: [Model](model.md)‹State›): *[UndefinedSelectorError](undefinedselectorerror.md)*
+\+ **new UndefinedSelectorError**(`name`: string, `model`: [Model](model.md)‹unknown, unknown, unknown, unknown›): *[UndefinedSelectorError](undefinedselectorerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:211](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L211)*
+*Defined in [packages/redux-data-model/src/errors.ts:212](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/errors.ts#L212)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `name` | string |
-`model` | [Model](model.md)‹State› |
+`model` | [Model](model.md)‹unknown, unknown, unknown, unknown› |
 
 **Returns:** *[UndefinedSelectorError](undefinedselectorerror.md)*
 
@@ -85,8 +81,6 @@ ___
 • **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
-
-*Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 

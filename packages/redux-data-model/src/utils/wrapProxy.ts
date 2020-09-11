@@ -1,7 +1,7 @@
 /**
  * @ignore
  */
-export function wrapProxy<Data extends object, Model>(
+export function wrapProxy<Data extends Record<string, unknown>, Model>(
   data: Data, model: Model, CustomException?: any,
 ): Data {
   return new Proxy(data, {

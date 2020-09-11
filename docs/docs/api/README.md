@@ -94,7 +94,7 @@ generated from source.
 
 Ƭ **ActionCreatorsMapObject**: *object*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:20](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L20)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:24](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L24)*
 
 #### Type declaration:
 
@@ -104,7 +104,7 @@ ___
 
 Ƭ **ActionType**: *string*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:5](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L5)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:4](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L4)*
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 Ƭ **ActionTypesMapObject**: *object*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:12](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L12)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:16](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L16)*
 
 #### Type declaration:
 
@@ -122,7 +122,7 @@ ___
 
 Ƭ **BlockingEffectFunction**: *function*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:38](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L38)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:42](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L42)*
 
 #### Type declaration:
 
@@ -142,7 +142,7 @@ ___
 
 Ƭ **BlockingEffectMap**: *object*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:53](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L53)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:57](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L57)*
 
 #### Type declaration:
 
@@ -152,7 +152,7 @@ ___
 
 Ƭ **BlockingSagaEffects**: *typeof blockingSagaEffects*
 
-*Defined in [packages/redux-data-model/src/model.ts:69](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/model.ts#L69)*
+*Defined in [packages/redux-data-model/src/model.ts:70](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/model.ts#L70)*
 
 ___
 
@@ -160,7 +160,7 @@ ___
 
 Ƭ **BoundNamespacedActionCreatorsMapObject**: *object*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:77](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L77)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:81](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L81)*
 
 #### Type declaration:
 
@@ -170,7 +170,7 @@ ___
 
 Ƭ **EffectFunction**: *function*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:33](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L33)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:37](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L37)*
 
 #### Type declaration:
 
@@ -190,7 +190,7 @@ ___
 
 Ƭ **EffectMap**: *object*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:50](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L50)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:54](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L54)*
 
 #### Type declaration:
 
@@ -200,7 +200,7 @@ ___
 
 Ƭ **EffectModelFunction**: *function*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:62](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L62)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:66](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L66)*
 
 #### Type declaration:
 
@@ -218,7 +218,7 @@ ___
 
 Ƭ **EffectModelMap**: *Record‹string, Saga›*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:67](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L67)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:71](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L71)*
 
 ___
 
@@ -226,7 +226,7 @@ ___
 
 Ƭ **MapDispatchToPropsWithActionCreators**: *[MapDispatchToPropsWithActionCreatorsFunction](README.md#mapdispatchtopropswithactioncreatorsfunction)‹TDispatchProps, TOwnProps› | TDispatchProps*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:87](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L87)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:91](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L91)*
 
 ___
 
@@ -234,7 +234,7 @@ ___
 
 Ƭ **MapDispatchToPropsWithActionCreatorsFunction**: *function*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:81](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L81)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:85](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L85)*
 
 #### Type declaration:
 
@@ -254,7 +254,7 @@ ___
 
 Ƭ **MapStateToPropsWithSelectors**: *function*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:90](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L90)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:94](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L94)*
 
 #### Type declaration:
 
@@ -274,7 +274,7 @@ ___
 
 Ƭ **NamespacedActionCreatorsMapObject**: *Record‹string, any›*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:70](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L70)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:74](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L74)*
 
 ___
 
@@ -282,7 +282,7 @@ ___
 
 Ƭ **NamespacedDispatchersMapObject**: *Record‹string, any›*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:71](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L71)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:75](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L75)*
 
 ___
 
@@ -290,7 +290,7 @@ ___
 
 Ƭ **NamespacedSelectorsMapObject**: *Record‹string, any›*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:73](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L73)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:77](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L77)*
 
 ___
 
@@ -298,7 +298,7 @@ ___
 
 Ƭ **ReducerFunction**: *function*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:30](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L30)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:34](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L34)*
 
 #### Type declaration:
 
@@ -318,7 +318,7 @@ ___
 
 Ƭ **ReducerMap**: *object*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:47](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L47)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:51](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L51)*
 
 #### Type declaration:
 
@@ -328,7 +328,7 @@ ___
 
 Ƭ **SagaEffects**: *typeof sagaEffects*
 
-*Defined in [packages/redux-data-model/src/model.ts:68](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/model.ts#L68)*
+*Defined in [packages/redux-data-model/src/model.ts:69](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/model.ts#L69)*
 
 ___
 
@@ -336,7 +336,7 @@ ___
 
 Ƭ **SelectorFunction**: *function*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:29](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L29)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:33](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L33)*
 
 #### Type declaration:
 
@@ -356,7 +356,7 @@ ___
 
 Ƭ **SelectorMap**: *object*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:42](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L42)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:46](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L46)*
 
 #### Type declaration:
 
@@ -366,7 +366,7 @@ ___
 
 Ƭ **SelectorModelFunction**: *function*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:59](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L59)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:63](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L63)*
 
 #### Type declaration:
 
@@ -385,7 +385,7 @@ ___
 
 Ƭ **SelectorModelMap**: *object*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:64](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L64)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:68](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L68)*
 
 #### Type declaration:
 
@@ -393,9 +393,9 @@ ___
 
 ###  connectModel
 
-▸ **connectModel**‹**TStateProps**, **TDispatchProps**, **TOwnProps**›(`models`: [Model](classes/model.md)‹any›[], `userProvidedMapStateToProps`: [MapStateToPropsWithSelectors](README.md#mapstatetopropswithselectors)‹TStateProps, TOwnProps, any› | null, `userProvidedMapDispatchToProps`: [MapDispatchToPropsWithActionCreators](README.md#mapdispatchtopropswithactioncreators)‹TDispatchProps, TOwnProps› | null, `mergeProps`: Function | null, `options?`: Record‹string, any›): *function*
+▸ **connectModel**‹**TStateProps**, **TDispatchProps**, **TOwnProps**, **TMergedProps**›(`models`: [Model](classes/model.md)‹any›[], `userProvidedMapStateToProps`: [MapStateToPropsWithSelectors](README.md#mapstatetopropswithselectors)‹TStateProps, TOwnProps, any› | null, `userProvidedMapDispatchToProps`: [MapDispatchToPropsWithActionCreators](README.md#mapdispatchtopropswithactioncreators)‹TDispatchProps, TOwnProps› | null, `mergeProps`: MergeProps‹TStateProps, TDispatchProps, TOwnProps, TMergedProps› | null | undefined, `options?`: Record‹string, any›): *function*
 
-*Defined in [packages/redux-data-model/src/redux/connectModel.ts:33](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/redux/connectModel.ts#L33)*
+*Defined in [packages/redux-data-model/src/redux/connectModel.ts:33](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/redux/connectModel.ts#L33)*
 
 Equivalent to redux's [connect](https://react-redux.js.org/api/connect) function.
 This should be used when the hooks api is not desired or supported.
@@ -423,6 +423,8 @@ const ConnectedComponent = connectModel([modelA, modelB], mapStateToProps, mapDi
 
 ▪ **TOwnProps**
 
+▪ **TMergedProps**
+
 **Parameters:**
 
 Name | Type | Default | Description |
@@ -430,7 +432,7 @@ Name | Type | Default | Description |
 `models` | [Model](classes/model.md)‹any›[] | - | An array of Model instances. |
 `userProvidedMapStateToProps` | [MapStateToPropsWithSelectors](README.md#mapstatetopropswithselectors)‹TStateProps, TOwnProps, any› &#124; null | null | A mapToProps equivalent, which has a third argument with all selectors. |
 `userProvidedMapDispatchToProps` | [MapDispatchToPropsWithActionCreators](README.md#mapdispatchtopropswithactioncreators)‹TDispatchProps, TOwnProps› &#124; null | null | A mapDispatchToProps equivalent, which has a third argument with all                                       models' dispatchers (i.e. already dispatch bound). |
-`mergeProps` | Function &#124; null | null | See react-redux documentation for [mergeProps](                   https://react-redux.js.org/api/connect#mergeprops-stateprops-dispatchprops-ownprops-object). |
+`mergeProps` | MergeProps‹TStateProps, TDispatchProps, TOwnProps, TMergedProps› &#124; null &#124; undefined | null | See react-redux documentation for [mergeProps](                   https://react-redux.js.org/api/connect#mergeprops-stateprops-dispatchprops-ownprops-object). |
 `options?` | Record‹string, any› | - | See react-redux documentation for [options](https://react-redux.js.org/api/connect#options-object). |
 
 **Returns:** *function*
@@ -455,9 +457,9 @@ ___
 
 ###  useModelActions
 
-▸ **useModelActions**‹**ReducerPayloads**, **EffectPayloads**›(`model`: Model‹object, object, ReducerPayloads, EffectPayloads›): *[BoundNamespacedActionCreatorsMapObject](README.md#boundnamespacedactioncreatorsmapobject)‹ReducerPayloads & EffectPayloads›*
+▸ **useModelActions**‹**ReducerPayloads**, **EffectPayloads**›(`model`: Model‹unknown, unknown, ReducerPayloads, EffectPayloads›): *[BoundNamespacedActionCreatorsMapObject](README.md#boundnamespacedactioncreatorsmapobject)‹ReducerPayloads & EffectPayloads›*
 
-*Defined in [packages/redux-data-model-hooks/src/useModelActions.ts:27](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model-hooks/src/useModelActions.ts#L27)*
+*Defined in [packages/redux-data-model-hooks/src/useModelActions.ts:27](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model-hooks/src/useModelActions.ts#L27)*
 
 A react hook for returning already bound action creators for the provided model. If you don't want/need to use
 the hooks api, check [connectModel](README.md#connectmodel) up.
@@ -479,7 +481,7 @@ const modelActions = useModelActions(model);
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`model` | Model‹object, object, ReducerPayloads, EffectPayloads› | A model instance. |
+`model` | Model‹unknown, unknown, ReducerPayloads, EffectPayloads› | A model instance. |
 
 **Returns:** *[BoundNamespacedActionCreatorsMapObject](README.md#boundnamespacedactioncreatorsmapobject)‹ReducerPayloads & EffectPayloads›*
 
@@ -491,9 +493,9 @@ ___
 
 ###  useModelSelector
 
-▸ **useModelSelector**‹**ReturnValue**, **State**, **SelectorPayloads**›(`model`: Model‹object, SelectorPayloads, object, object›, `selectorFunc`: function): *ReturnValue*
+▸ **useModelSelector**‹**ReturnValue**, **State**, **SelectorPayloads**›(`model`: Model‹unknown, SelectorPayloads, unknown, unknown›, `selectorFunc`: function): *ReturnValue*
 
-*Defined in [packages/redux-data-model-hooks/src/useModelSelector.ts:19](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model-hooks/src/useModelSelector.ts#L19)*
+*Defined in [packages/redux-data-model-hooks/src/useModelSelector.ts:19](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model-hooks/src/useModelSelector.ts#L19)*
 
 A react hook for returning data from the provided model's state, by the means of one of its selectors. If you
 don't want/need to use the hooks api, check [connectModel](README.md#connectmodel) up.
@@ -513,7 +515,7 @@ const someDataFromState = useModelSelector(model, (state, selectors) => selector
 
 **Parameters:**
 
-▪ **model**: *Model‹object, SelectorPayloads, object, object›*
+▪ **model**: *Model‹unknown, SelectorPayloads, unknown, unknown›*
 
 A model instance.
 
@@ -543,7 +545,7 @@ ___
 
 ▸ **bindModelActionCreators**(`actionCreators`: [ActionCreatorsMapObject](README.md#actioncreatorsmapobject)‹any›, `dispatch`: Dispatch): *[BoundNamespacedActionCreatorsMapObject](README.md#boundnamespacedactioncreatorsmapobject)*
 
-*Defined in [packages/redux-data-model/src/redux/bindModelActionCreators.ts:24](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/redux/bindModelActionCreators.ts#L24)*
+*Defined in [packages/redux-data-model/src/redux/bindModelActionCreators.ts:24](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/redux/bindModelActionCreators.ts#L24)*
 
 Turns an object whose values are action creators or nested objects with them, into an object with the
 same keys, but with every action creator wrapped into a dispatch call so they may be invoked directly.
@@ -569,7 +571,7 @@ ___
 
 ▸ **combineModelReducers**(`models`: [Model](classes/model.md)‹any›[]): *ReducersMapObject*
 
-*Defined in [packages/redux-data-model/src/redux/combineModelReducers.ts:35](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/redux/combineModelReducers.ts#L35)*
+*Defined in [packages/redux-data-model/src/redux/combineModelReducers.ts:35](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/redux/combineModelReducers.ts#L35)*
 
 Returns a reducer map object that can be deconstructed into the combineReducers helper, from redux, so that
 redux is aware of any reducers produced by models.
@@ -597,7 +599,7 @@ ___
 
 ▸ **modelRootSaga**(`models`: [Model](classes/model.md)‹any›[]): *SagaIterator*
 
-*Defined in [packages/redux-data-model/src/saga.ts:121](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/saga.ts#L121)*
+*Defined in [packages/redux-data-model/src/saga.ts:121](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/saga.ts#L121)*
 
 Returns a root saga generator that can be passed to sagaMiddleware's run function, so that redux-saga is aware
 of any sagas produced by models.

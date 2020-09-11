@@ -12,16 +12,12 @@ generated from source.
 
 [redux-data-model](../README.md) › [UndefinedBlockingSagaEffectError](undefinedblockingsagaeffecterror.md)
 
-# Class: UndefinedBlockingSagaEffectError ‹**State**›
+# Class: UndefinedBlockingSagaEffectError
 
 Thrown when no saga effect, among the intended ones, exists for the accessed property.
 Keep in mind that some saga effects such as put, putResolve, and select, are only available for
 [normal effects](../interfaces/modeloptions.md#optional-effects). See [Model.disableProxyChecks](model.md#static-disableproxychecks) if you need to
 disable this check, but keep in mind that is only recommended in tests.
-
-## Type parameters
-
-▪ **State**
 
 ## Hierarchy
 
@@ -46,16 +42,16 @@ disable this check, but keep in mind that is only recommended in tests.
 
 ###  constructor
 
-\+ **new UndefinedBlockingSagaEffectError**(`name`: string, `model`: [Model](model.md)‹State›): *[UndefinedBlockingSagaEffectError](undefinedblockingsagaeffecterror.md)*
+\+ **new UndefinedBlockingSagaEffectError**(`name`: string, `model`: [Model](model.md)‹unknown, unknown, unknown, unknown›): *[UndefinedBlockingSagaEffectError](undefinedblockingsagaeffecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:251](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L251)*
+*Defined in [packages/redux-data-model/src/errors.ts:252](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/errors.ts#L252)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `name` | string |
-`model` | [Model](model.md)‹State› |
+`model` | [Model](model.md)‹unknown, unknown, unknown, unknown› |
 
 **Returns:** *[UndefinedBlockingSagaEffectError](undefinedblockingsagaeffecterror.md)*
 
@@ -86,8 +82,6 @@ ___
 • **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
-
-*Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 

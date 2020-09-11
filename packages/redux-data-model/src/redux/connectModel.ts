@@ -1,4 +1,4 @@
-import {connect} from 'react-redux';
+import {connect, MergeProps} from 'react-redux';
 import {MapDispatchToPropsWithActionCreators, MapStateToPropsWithSelectors,} from '../baseTypes';
 import {Model} from '../model';
 import {connectModelImpl} from './connectModelImpl';
@@ -30,18 +30,18 @@ import {wrapMergePropChecks} from './wrapMergePropChecks';
  *                                          This check is ignored when a custom mergeProps function is provided.
  * @category High Order Component (HOC)
  */
-export function connectModel<TStateProps=any, TDispatchProps=any, TOwnProps=any>(
+export function connectModel<TStateProps=any, TDispatchProps=any, TOwnProps=any, TMergedProps=any>(
   models: Model<any>[],
   userProvidedMapStateToProps: MapStateToPropsWithSelectors<TStateProps, TOwnProps, any> | null=null,
   userProvidedMapDispatchToProps: MapDispatchToPropsWithActionCreators<TDispatchProps, TOwnProps> | null=null,
-  mergeProps: Function | null=null,
+  mergeProps: MergeProps<TStateProps, TDispatchProps, TOwnProps, TMergedProps> | null | undefined=null,
   options?: Record<string, any>,
 ) {
   const [mapStateToProps, mapDispatchToProps] = connectModelImpl(
     models, userProvidedMapStateToProps, userProvidedMapDispatchToProps,
   );
 
-  return connect<TStateProps, TDispatchProps, TOwnProps>(
+  return connect<TStateProps, TDispatchProps, TOwnProps, TMergedProps>(
     mapStateToProps,
     mapDispatchToProps,
     wrapMergePropChecks(mergeProps),

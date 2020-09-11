@@ -42,7 +42,7 @@ object.
 
 \+ **new ActionDataIsntPlainObjectError**(`actionType`: string): *[ActionDataIsntPlainObjectError](actiondataisntplainobjecterror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:156](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L156)*
+*Defined in [packages/redux-data-model/src/errors.ts:157](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/errors.ts#L157)*
 
 **Parameters:**
 
@@ -79,8 +79,6 @@ ___
 • **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
-
-*Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 

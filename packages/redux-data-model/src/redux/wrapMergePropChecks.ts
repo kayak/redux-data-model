@@ -1,13 +1,16 @@
 import {isEmpty, isFunction, keys,} from 'lodash';
+import {MergeProps} from 'react-redux';
 import {KeyConflictInMergePropsError} from '../errors';
 
 /**
  * @ignore
  */
-export function wrapMergePropChecks(mergeProps?: Function | undefined | null): any {
+export function wrapMergePropChecks<TStateProps, TDispatchProps, TOwnProps, TMergedProps>(
+  mergeProps?: MergeProps<TStateProps, TDispatchProps, TOwnProps, TMergedProps> | null | undefined
+): any {
   if (isFunction(mergeProps)) return mergeProps;
 
-  return (stateProps: Record<string, any>, dispatchProps: Record<string, any>, ownProps: Record<string, any>) => {
+  return (stateProps: TStateProps, dispatchProps: TDispatchProps, ownProps: TOwnProps) => {
     const statePropKeys = new Set(keys(stateProps));
     const dispatchPropKeys = new Set(keys(dispatchProps));
     const ownPropKeys = new Set(keys(ownProps));

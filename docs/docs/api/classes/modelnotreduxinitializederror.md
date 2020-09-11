@@ -12,17 +12,13 @@ generated from source.
 
 [redux-data-model](../README.md) › [ModelNotReduxInitializedError](modelnotreduxinitializederror.md)
 
-# Class: ModelNotReduxInitializedError ‹**State**›
+# Class: ModelNotReduxInitializedError
 
 Thrown when one of your models was not initialized on a [combineModelReducers](../README.md#combinemodelreducers) call, even though a react
 component was dispatching actions that were meant to trigger its [reducers](../interfaces/modeloptions.md#optional-reducers) or a
 mapStateToProps was using one of its [selectors](../interfaces/modeloptions.md#optional-selectors) for instance.
 See [Model.disableInitializationChecks](model.md#static-disableinitializationchecks) if you need to disable this check,
 but keep in mind that is only recommended in tests.
-
-## Type parameters
-
-▪ **State**
 
 ## Hierarchy
 
@@ -47,15 +43,15 @@ but keep in mind that is only recommended in tests.
 
 ###  constructor
 
-\+ **new ModelNotReduxInitializedError**(`model`: [Model](model.md)‹State›): *[ModelNotReduxInitializedError](modelnotreduxinitializederror.md)*
+\+ **new ModelNotReduxInitializedError**(`model`: [Model](model.md)‹unknown, unknown, unknown, unknown›): *[ModelNotReduxInitializedError](modelnotreduxinitializederror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:104](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L104)*
+*Defined in [packages/redux-data-model/src/errors.ts:105](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/errors.ts#L105)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`model` | [Model](model.md)‹State› |
+`model` | [Model](model.md)‹unknown, unknown, unknown, unknown› |
 
 **Returns:** *[ModelNotReduxInitializedError](modelnotreduxinitializederror.md)*
 
@@ -86,8 +82,6 @@ ___
 • **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
-
-*Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 

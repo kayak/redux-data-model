@@ -12,16 +12,16 @@
 
 ## Callable
 
-▸ (`payload?`: undefined | object, `__actionInternals?`: ActionInternalsObject): *A*
+▸ (`payload?`: Record‹string, unknown›, `__actionInternals?`: [ActionInternals](actioninternals.md)): *A*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:7](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L7)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:11](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L11)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`payload?` | undefined &#124; object |
-`__actionInternals?` | ActionInternalsObject |
+`payload?` | Record‹string, unknown› |
+`__actionInternals?` | [ActionInternals](actioninternals.md) |
 
 **Returns:** *A*
 
@@ -37,4 +37,4 @@ Name | Type |
 
 • **isEffect**: *boolean*
 
-*Defined in [packages/redux-data-model/src/baseTypes.ts:9](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/baseTypes.ts#L9)*
+*Defined in [packages/redux-data-model/src/baseTypes.ts:13](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/baseTypes.ts#L13)*

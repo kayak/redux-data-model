@@ -41,15 +41,15 @@ calling dispatch yourself.
 
 ###  constructor
 
-\+ **new NonCompatibleActionError**(`action`: any): *[NonCompatibleActionError](noncompatibleactionerror.md)*
+\+ **new NonCompatibleActionError**(`action`: AnyAction): *[NonCompatibleActionError](noncompatibleactionerror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:173](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L173)*
+*Defined in [packages/redux-data-model/src/errors.ts:174](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/errors.ts#L174)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`action` | any |
+`action` | AnyAction |
 
 **Returns:** *[NonCompatibleActionError](noncompatibleactionerror.md)*
 
@@ -80,8 +80,6 @@ ___
 • **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
-
-*Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 

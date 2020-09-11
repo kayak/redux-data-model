@@ -12,15 +12,11 @@ generated from source.
 
 [redux-data-model](../README.md) › [DuplicatedActionTypesError](duplicatedactiontypeserror.md)
 
-# Class: DuplicatedActionTypesError ‹**State**›
+# Class: DuplicatedActionTypesError
 
 Thrown when [reducer](../interfaces/modeloptions.md#optional-reducers) and/or [effect](../interfaces/modeloptions.md#optional-effects) action types
  are duplicated, for one of your models. So don't try to have a [reducer](../interfaces/modeloptions.md#optional-reducers)
  named the same way that an [effect](../interfaces/modeloptions.md#optional-effects).
-
-## Type parameters
-
-▪ **State**
 
 ## Hierarchy
 
@@ -45,15 +41,15 @@ Thrown when [reducer](../interfaces/modeloptions.md#optional-reducers) and/or [e
 
 ###  constructor
 
-\+ **new DuplicatedActionTypesError**(`model`: [Model](model.md)‹State›, `reducerAndEffectActionTypes`: string[]): *[DuplicatedActionTypesError](duplicatedactiontypeserror.md)*
+\+ **new DuplicatedActionTypesError**(`model`: [Model](model.md)‹unknown, unknown, unknown, unknown›, `reducerAndEffectActionTypes`: string[]): *[DuplicatedActionTypesError](duplicatedactiontypeserror.md)*
 
-*Defined in [packages/redux-data-model/src/errors.ts:64](https://github.com/kayak/redux-data-model/blob/6bdca53/packages/redux-data-model/src/errors.ts#L64)*
+*Defined in [packages/redux-data-model/src/errors.ts:65](https://github.com/kayak/redux-data-model/blob/2f50839/packages/redux-data-model/src/errors.ts#L65)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`model` | [Model](model.md)‹State› |
+`model` | [Model](model.md)‹unknown, unknown, unknown, unknown› |
 `reducerAndEffectActionTypes` | string[] |
 
 **Returns:** *[DuplicatedActionTypesError](duplicatedactiontypeserror.md)*
@@ -85,8 +81,6 @@ ___
 • **stack**? : *undefined | string*
 
 *Inherited from [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
-
-*Overrides [NamespaceIsntAStringError](namespaceisntastringerror.md).[stack](namespaceisntastringerror.md#optional-stack)*
 
 Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975
 

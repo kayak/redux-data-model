@@ -13,13 +13,13 @@ async function fetchApi(url: string) {
   return await fetch(url).then(response => response.json());
 }
 
-interface User {
+type User = {
   id: number;
   name: string;
   address: number;
 }
 
-interface UserState {
+type UserState = {
   loadingById: {
     [key: string]: boolean;
   };
@@ -28,7 +28,7 @@ interface UserState {
   };
 };
 
-interface UserSelectorPayloads {
+type UserSelectorPayloads = {
   loadingByUser: {
     userId: number;
   };
@@ -37,14 +37,14 @@ interface UserSelectorPayloads {
   };
 };
 
-interface UserReducerPayloads {
+type UserReducerPayloads = {
   saveUser: {
     data: User;
     userId: number;
   };
 };
 
-interface UserEffectPayloads {
+type UserEffectPayloads = {
   fetchUser: {
     userId: number;
   };
@@ -88,7 +88,7 @@ UserState, UserSelectorPayloads, UserReducerPayloads, UserEffectPayloads
   },
 });
 
-interface AddressState {
+type AddressState = {
   addressesByUserId: {
     [key: number]: string;
   };

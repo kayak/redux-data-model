@@ -82,7 +82,7 @@ export const blockingSagaEffects = {
  */
 export function modelBlockingGenerator(
   effectFunc: EffectModelFunction,
-) {
+): any {
   return function* (action: ActionWithInternals) {
     const isNonCompatibleAction = isNil(
       get(action, '__actionInternals.resolve', undefined) ||

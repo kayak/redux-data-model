@@ -7,8 +7,18 @@ Yes. We do support [typescript]. The most important aspect is that you can defin
 either when typing the ModelOptions or the Model itself. Both interfaces are declared as follows:
 
 ```typescript
-interface ModelOptions<State={}, SelectorPayloads={}, ReducerPayloads={}, EffectPayloads={}>;
-interface Model<State={}, SelectorPayloads={}, ReducerPayloads={}, EffectPayloads={}>
+interface ModelOptions<
+    State=Record<string, unknown>,
+    SelectorPayloads=Record<string, unknown>,
+    ReducerPayloads=Record<string, unknown>,
+    EffectPayloads=Record<string, unknown>
+>;
+interface Model<
+    State=Record<string, unknown>,
+    SelectorPayloads=Record<string, unknown>,
+    ReducerPayloads=Record<string, unknown>,
+    EffectPayloads=Record<string, unknown>
+>;
 ```
 
 ## Example

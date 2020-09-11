@@ -21,6 +21,7 @@ import {Immutable} from 'immer';
 import {blockingSagaEffects, modelBlockingGenerator, sagaEffects} from './saga';
 import {
   ActionCreatorsMapObject,
+  ActionInternals,
   ActionType,
   ActionTypesMapObject,
   ActionWithInternals,
@@ -32,7 +33,7 @@ import {
   SelectorMap,
   SelectorModelMap,
 } from './baseTypes';
-import {actionCreator, ActionInternalsObject, wrapProxy} from "./utils";
+import {actionCreator, wrapProxy} from "./utils";
 import {
   BlockingEffectWithoutMatchingEffectError,
   DuplicatedActionTypesError,
@@ -72,7 +73,10 @@ export type BlockingSagaEffects = typeof blockingSagaEffects;
  * Model options are used for initialising a [[Model]] instance.
  */
 export interface ModelOptions<
-  State={}, SelectorPayloads={}, ReducerPayloads={}, EffectPayloads={}
+  State=Record<string, unknown>,
+  SelectorPayloads=Record<string, unknown>,
+  ReducerPayloads=Record<string, unknown>,
+  EffectPayloads=Record<string, unknown>
 >{
   /**
    * The namespace of a model will prefix all its reducers and effects' action types. This value must be unique
@@ -199,7 +203,10 @@ export interface ModelOptions<
  * dispatchers, and sagas, based on the [[ModelOptions|model's options]] that were provided.
  */
 export class Model<
-  State={}, SelectorPayloads={}, ReducerPayloads={}, EffectPayloads={}
+  State=Record<string, unknown>,
+  SelectorPayloads=Record<string, unknown>,
+  ReducerPayloads=Record<string, unknown>,
+  EffectPayloads=Record<string, unknown>
 > {
 
   /**
@@ -355,7 +362,7 @@ export class Model<
     const actions: any = {};
 
     const actionCreatorBuilder = (actionName: keyof ReducerPayloads | keyof EffectPayloads) => (
-      payload: any = {}, __actionInternals: ActionInternalsObject | undefined = undefined,
+      payload: any = {}, __actionInternals: ActionInternals | undefined = undefined,
     ) => {
       if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
         throw new ModelNotReduxInitializedError(this);
@@ -396,7 +403,7 @@ export class Model<
       return inputFunc(namespacedState, props, allState);
     };
 
-    const resultFuncCreator = (resultFunc: Function) => (...args: any[]) => {
+    const resultFuncCreator = (resultFunc: (...args: any[]) => any) => (...args: any[]) => {
       if (!this.isReduxInitialized && !Model.disableInitializationChecks) {
         throw new ModelNotReduxInitializedError(this);
       }

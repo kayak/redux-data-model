@@ -7,20 +7,20 @@ import * as React from 'react';
 import JSONTree from 'react-json-tree';
 import {notifySucess, showConfirm} from '../utils/alerts';
 
-interface CounterState {
+type CounterState = {
   count: number;
 };
 
-interface CounterSelectorPayloads {
+type CounterSelectorPayloads = {
   count: null;
 };
 
-interface CounterReducerPayloads {
+type CounterReducerPayloads = {
   increment: null;
   decrement: null;
 };
 
-interface CounterEffectPayloads {
+type CounterEffectPayloads = {
   tryToIncrement: null;
   tryToDecrement: null;
 };

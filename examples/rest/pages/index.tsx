@@ -13,12 +13,12 @@ async function fetchApi(url: string) {
   return await fetch(url).then(response => response.json());
 }
 
-interface User {
+type User = {
   id: number;
   name: string;
 }
 
-interface UserState {
+type UserState = {
   loadingById: {
     [key: string]: boolean;
   };
@@ -27,7 +27,7 @@ interface UserState {
   };
 };
 
-interface UserSelectorPayloads {
+type UserSelectorPayloads = {
   loadingByUser: {
     userId: number;
   };
@@ -36,14 +36,14 @@ interface UserSelectorPayloads {
   };
 };
 
-interface UserReducerPayloads {
+type UserReducerPayloads = {
   saveUser: {
     data: User;
     userId: number;
   };
 };
 
-interface UserEffectPayloads {
+type UserEffectPayloads = {
   fetchUser: {
     userId: number;
   };
@@ -79,7 +79,7 @@ UserState, UserSelectorPayloads, UserReducerPayloads, UserEffectPayloads
   },
 });
 
-interface UserPost {
+type UserPost = {
   id: number;
   userId: number;
   title: string;
@@ -87,7 +87,7 @@ interface UserPost {
   published: boolean;
 }
 
-interface PostState {
+type PostState = {
   loadingById: {
     [key: string]: boolean;
   };
@@ -96,7 +96,7 @@ interface PostState {
   };
 };
 
-interface PostSelectorPayloads {
+type PostSelectorPayloads = {
   loadingByUser: {
     userId: number;
   };
@@ -105,7 +105,7 @@ interface PostSelectorPayloads {
   };
 };
 
-interface PostReducerPayloads {
+type PostReducerPayloads = {
   savePostsByUser: {
     data: UserPost[];
     userId: number;
