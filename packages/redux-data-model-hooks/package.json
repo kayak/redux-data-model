@@ -1,6 +1,6 @@
 {
   "name": "redux-data-model-hooks",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "Hooks support for redux-data-model.",
   "author": "Lucas Lira Gomes <llira@kayak.com>",
   "homepage": "https://kayak.github.io/redux-data-model/",
