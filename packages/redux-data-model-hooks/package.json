@@ -1,6 +1,6 @@
 {
   "name": "redux-data-model-hooks",
-  "version": "0.13.2",
+  "version": "0.14.0",
   "description": "Hooks support for redux-data-model.",
   "author": "Lucas Lira Gomes <llira@kayak.com>",
   "homepage": "https://kayak.github.io/redux-data-model/",
@@ -41,15 +41,15 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@types/redux-mock-store": "1.0.2",
     "@cfaester/enzyme-adapter-react-18": "^0.8.0",
+    "@types/redux-mock-store": "1.0.2",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.5.0",
     "jest": "^26.4.2",
     "jest-extended": "^0.11.5",
     "jsdom-global": "^3.0.2",
     "react-test-renderer": "^18.3.1",
-    "redux-data-model": "^0.13.0",
+    "redux-data-model": "^0.14.0",
     "redux-mock-store": "^1.5.4",
     "ts-jest": "^26.3.0"
   }

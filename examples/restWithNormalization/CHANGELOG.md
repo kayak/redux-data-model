@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com-kayak/kayak/redux-data-model/compare/v0.13.0...v0.14.0) (2026-06-09)
+
+**Note:** Version bump only for package redux-data-model-rest-with-normalization.js
+
+
+
+
+
 # [0.13.0](https://github.com/kayak/redux-data-model/compare/v0.12.0...v0.13.0) (2020-09-11)
 
 
