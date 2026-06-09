@@ -18,6 +18,7 @@
     "sourceMap": true,
     "declaration": true,
     "downlevelIteration": true,
+    "skipLibCheck": true,
     "outDir": "./dist/"
   },
   "include": [

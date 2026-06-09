@@ -16,7 +16,7 @@ import {
   useSelector,
 } from 'react-redux';
 import * as React from 'react';
-import JSONTree from 'react-json-tree';
+import {JSONTree} from 'react-json-tree';
 
 type CounterState = {
   count: number;

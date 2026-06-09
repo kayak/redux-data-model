@@ -5,11 +5,11 @@ exports[`IndexPage matches snapshot 1`] = `
   <Provider
     store={
       Object {
+        "@@observable": [Function],
         "dispatch": [Function],
         "getState": [Function],
         "replaceReducer": [Function],
         "subscribe": [Function],
-        Symbol(observable): [Function],
       }
     }
   >
@@ -54,7 +54,6 @@ exports[`IndexPage matches snapshot 1`] = `
             State (Open console to see actions as they are triggered):
           </strong>
           <JSONTree
-            collectionLimit={50}
             data={
               Object {
                 "counter": Object {
@@ -62,19 +61,6 @@ exports[`IndexPage matches snapshot 1`] = `
                 },
               }
             }
-            getItemString={[Function]}
-            hideRoot={false}
-            invertTheme={true}
-            isCustomNode={[Function]}
-            keyPath={
-              Array [
-                "root",
-              ]
-            }
-            labelRenderer={[Function]}
-            postprocessValue={[Function]}
-            shouldExpandNode={[Function]}
-            valueRenderer={[Function]}
           >
             <ul
               style={
@@ -104,7 +90,8 @@ exports[`IndexPage matches snapshot 1`] = `
                 }
                 labelRenderer={[Function]}
                 postprocessValue={[Function]}
-                shouldExpandNode={[Function]}
+                shouldExpandNodeInitially={[Function]}
+                sortObjectKeys={false}
                 styling={[Function]}
                 value={
                   Object {
@@ -136,7 +123,8 @@ exports[`IndexPage matches snapshot 1`] = `
                   labelRenderer={[Function]}
                   nodeType="Object"
                   postprocessValue={[Function]}
-                  shouldExpandNode={[Function]}
+                  shouldExpandNodeInitially={[Function]}
+                  sortObjectKeys={false}
                   styling={[Function]}
                   value={
                     Object {
@@ -148,7 +136,6 @@ exports[`IndexPage matches snapshot 1`] = `
                   valueRenderer={[Function]}
                 >
                   <JSONNestedNode
-                    circularCache={Array []}
                     collectionLimit={50}
                     createItemString={[Function]}
                     data={
@@ -168,11 +155,11 @@ exports[`IndexPage matches snapshot 1`] = `
                       ]
                     }
                     labelRenderer={[Function]}
-                    level={0}
                     nodeType="Object"
                     nodeTypeIndicator="{}"
                     postprocessValue={[Function]}
-                    shouldExpandNode={[Function]}
+                    shouldExpandNodeInitially={[Function]}
+                    sortObjectKeys={false}
                     styling={[Function]}
                     value={
                       Object {
@@ -194,7 +181,6 @@ exports[`IndexPage matches snapshot 1`] = `
                       }
                     >
                       <JSONArrow
-                        arrowStyle="single"
                         expanded={true}
                         nodeType="Object"
                         onClick={[Function]}
@@ -323,7 +309,8 @@ exports[`IndexPage matches snapshot 1`] = `
                           nodeType="Object"
                           nodeTypeIndicator="{}"
                           postprocessValue={[Function]}
-                          shouldExpandNode={[Function]}
+                          shouldExpandNodeInitially={[Function]}
+                          sortObjectKeys={false}
                           styling={[Function]}
                           value={
                             Object {
@@ -364,7 +351,8 @@ exports[`IndexPage matches snapshot 1`] = `
                             nodeType="Object"
                             nodeTypeIndicator="{}"
                             postprocessValue={[Function]}
-                            shouldExpandNode={[Function]}
+                            shouldExpandNodeInitially={[Function]}
+                            sortObjectKeys={false}
                             styling={[Function]}
                             value={
                               Object {
@@ -404,7 +392,8 @@ exports[`IndexPage matches snapshot 1`] = `
                               nodeType="Object"
                               nodeTypeIndicator="{}"
                               postprocessValue={[Function]}
-                              shouldExpandNode={[Function]}
+                              shouldExpandNodeInitially={[Function]}
+                              sortObjectKeys={false}
                               styling={[Function]}
                               value={
                                 Object {
@@ -424,7 +413,6 @@ exports[`IndexPage matches snapshot 1`] = `
                                 }
                               >
                                 <JSONArrow
-                                  arrowStyle="single"
                                   expanded={false}
                                   nodeType="Object"
                                   onClick={[Function]}

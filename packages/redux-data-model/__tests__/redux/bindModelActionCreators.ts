@@ -41,6 +41,10 @@ describe('bindModelActionCreators', () => {
       });
 
       describe('passes some internal metadata as part of the second argument of the action creator', () => {
+        beforeEach(() => {
+          actionCreators.actionA.isEffect = true;
+        });
+
         it('that amounts to the following shape', () => {
           boundActionDispatchers.actionA(actionData);
           expect(actionCreators.actionA.mock.results[0].value[1]).toEqual(
@@ -51,15 +55,15 @@ describe('bindModelActionCreators', () => {
         it('that can be used to resolve the promise', () => {
           const promise = boundActionDispatchers.actionA(actionData);
           const returnValue = 'hi';
-          actionCreators.actionA.mock.results[0].value[1].resolve(returnValue);
-          expect(promise).resolves.toBe(returnValue);
+          actionCreators.actionA.mock.results[0].value.__actionInternals.resolve(returnValue);
+          return expect(promise).resolves.toBe(returnValue);
         });
 
         it('that can be used to reject the promise', () => {
           const promise = boundActionDispatchers.actionA(actionData);
           const error = new Error();
-          actionCreators.actionA.mock.results[0].value[1].reject(error);
-          expect(promise).rejects.toBe(error);
+          actionCreators.actionA.mock.results[0].value.__actionInternals.reject(error);
+          return expect(promise).rejects.toBe(error);
         });
       });
     });

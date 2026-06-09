@@ -50,11 +50,13 @@ import {
 /**
  * @ignore
  */
-const defaultReducer = <State,>(
+function defaultReducer<State>(
   state: State,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _action: Action,
-) => state;
+): State {
+  return state;
+}
 
 /**
  * @ignore
@@ -415,7 +417,7 @@ export class Model<
       let inputSelectorFuncs: SelectorFunction<Immutable<State>, any>[] | null;
       let resultFunc: (...args: any[]) => any | null;
 
-      if (isArray<SelectorFunction<Immutable<State>, any>>(selectorFunc)) {
+      if (isArray(selectorFunc)) {
         inputSelectorFuncs = selectorFunc.slice(0, -1).map(namespacedSelectorFuncCreator);
         resultFunc = selectorFunc.slice(-1).map(resultFuncCreator)[0];
       } else {

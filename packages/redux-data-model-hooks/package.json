@@ -26,28 +26,29 @@
     "test:watch": "npm run test -- --watchAll --verbose",
     "test:coverage": "npm run test -- --verbose --coverage",
     "coveralls": "coveralls",
-    "build": "npm run lint && npm run lint:tsc && npm run test && rollup -c",
+    "build": "npm run lint && npm run lint:tsc && npm run test && npm run build:tsc",
+    "build:tsc": "tsc -p tsconfig.build.cjs.json && tsc -p tsconfig.build.esm.json && tsc -p tsconfig.build.types.json",
     "size": "npm run build && size-limit"
   },
   "bugs": {
     "url": "https://github.com/kayak/redux-data-model/issues"
   },
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.6",
-    "react-redux": "^7.1.0",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "react-redux": "^7.1.0 || ^8.0.0",
     "redux-data-model": "^0.13.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
     "@types/redux-mock-store": "1.0.2",
+    "@cfaester/enzyme-adapter-react-18": "^0.8.0",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.4",
     "enzyme-to-json": "^3.5.0",
     "jest": "^26.4.2",
     "jest-extended": "^0.11.5",
     "jsdom-global": "^3.0.2",
-    "react-test-renderer": "^16.13.1",
+    "react-test-renderer": "^18.3.1",
     "redux-data-model": "^0.13.0",
     "redux-mock-store": "^1.5.4",
     "ts-jest": "^26.3.0"

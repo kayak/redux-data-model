@@ -19,10 +19,7 @@ export function wrapProxy<Data extends Record<string, unknown>, Model>(
         throw new CustomException(prop, model);
       }
     ).bind(model),
-    enumerate: function (target) {
-      return Object.keys(target);
-    },
-    ownKeys: function (target) {
+    ownKeys: function (target: Data) {
       return Object.keys(target);
     },
     has: function (target, key) {

@@ -4,7 +4,7 @@ import {applyMiddleware, combineReducers, createStore,} from 'redux';
 import logger from 'redux-logger';
 import {Provider, useSelector,} from 'react-redux';
 import * as React from 'react';
-import JSONTree from 'react-json-tree';
+import {JSONTree} from 'react-json-tree';
 
 type CounterState = {
   count: number;
@@ -43,22 +43,22 @@ CounterState, CounterSelectorPayloads, CounterReducerPayloads, CounterEffectPayl
     }
   },
   effects: {
-    *tryToIncrement(_payload, sagaEffects, {increment}) {
+    *tryToIncrement(_payload, sagaEffects, {increment}): Generator<any, void, any> {
       // Let's pretend something asynchronous need to be performed here
       yield sagaEffects.delay(100);
       yield sagaEffects.put(increment());
     },
-    *tryToDecrement(_payload, sagaEffects, {decrement}) {
+    *tryToDecrement(_payload, sagaEffects, {decrement}): Generator<any, void, any> {
       // Let's pretend something asynchronous need to be performed here
       yield sagaEffects.delay(100);
       yield sagaEffects.put(decrement());
     },
   },
   blockingEffects: {
-    *tryToIncrement(actionType, {debounce}, {tryToIncrement}) {
+    *tryToIncrement(actionType, {debounce}, {tryToIncrement}): Generator<any, void, any> {
       yield debounce(3000, actionType, tryToIncrement);
     },
-    *tryToDecrement(actionType, {debounce}, {tryToDecrement}) {
+    *tryToDecrement(actionType, {debounce}, {tryToDecrement}): Generator<any, void, any> {
       yield debounce(3000, actionType, tryToDecrement);
     },
   }

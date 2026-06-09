@@ -3,6 +3,11 @@ import IndexPage from '../pages/index';
 import {mount} from 'enzyme';
 import {Model} from 'redux-data-model';
 
+jest.mock('../utils/alerts', () => ({
+  notifySucess: jest.fn(),
+  showConfirm: jest.fn(() => Promise.resolve(false)),
+}));
+
 describe('IndexPage', () => {
   let page: any = null;
 

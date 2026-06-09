@@ -1,4 +1,4 @@
-import pkg from './package.json';
-import baseConfig from '../../rollup.config';
+const pkg = require('./package.json');
+const baseConfig = require('../../rollup.config.js');
 
-export default baseConfig({}, pkg);
+module.exports = baseConfig({}, pkg);
