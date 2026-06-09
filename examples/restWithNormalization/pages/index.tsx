@@ -6,7 +6,7 @@ import logger from 'redux-logger';
 import * as _ from 'lodash';
 import {Provider, useSelector,} from 'react-redux';
 import * as React from 'react';
-import JSONTree from 'react-json-tree';
+import {JSONTree} from 'react-json-tree';
 import fetch from 'isomorphic-unfetch';
 
 async function fetchApi(url: string) {
@@ -77,7 +77,7 @@ UserState, UserSelectorPayloads, UserReducerPayloads, UserEffectPayloads
     },
   },
   effects: {
-    *fetchUser({userId}, {call, put}, actionCreators) {
+    *fetchUser({userId}, {call, put}, actionCreators): Generator<any, void, any> {
       try {
         const data = yield call(fetchApi, `//jsonplaceholder.typicode.com/users/${userId}`);
         yield put(actionCreators.saveUser({data, userId}));

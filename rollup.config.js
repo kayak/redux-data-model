@@ -1,10 +1,10 @@
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import filesize from 'rollup-plugin-filesize';
-import typescript from 'rollup-plugin-typescript2';
-import dts from "rollup-plugin-dts";
+const resolve = require('@rollup/plugin-node-resolve').default;
+const commonjs = require('@rollup/plugin-commonjs');
+const filesize = require('rollup-plugin-filesize');
+const typescript = require('rollup-plugin-typescript2');
+const dts = require('rollup-plugin-dts').default;
 
-export default (props, pkg) => ([{
+module.exports = (props, pkg) => ([{
   input: 'src/index.ts',
   output: [
     {
@@ -23,18 +23,20 @@ export default (props, pkg) => ([{
     ...Object.keys(pkg.peerDependencies || {}),
   ],
   plugins: [
-    resolve(),
-    commonjs(),
     typescript({
-      typescript: require('typescript'), tsconfigOverride: { compilerOptions: { declaration: false } },
+      typescript: require('typescript'),
+      tsconfigOverride: { compilerOptions: { declaration: false } },
+      clean: true,
     }),
+    resolve({ extensions: ['.ts', '.tsx', '.js', '.jsx'] }),
+    commonjs(),
     filesize(),
   ],
   ...props,
 },
 {
-  input: "src/index.ts",
-  output: [{ file: pkg.typings, format: "es" }],
+  input: 'src/index.ts',
+  output: [{ file: pkg.typings, format: 'es' }],
   plugins: [dts()],
 }
 ]);
