@@ -1,4 +1,4 @@
-import {mount} from 'enzyme';
+import {render} from '@testing-library/react';
 import * as React from 'react';
 import {Provider} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
@@ -52,7 +52,7 @@ describe('useModelActions', () => {
 
   it('calls actionCreators', () => {
     const actionCreatorsSpy = jest.spyOn(counterModel, 'actionCreators');
-    mount(
+    render(
       <Provider store={store}>
         <Counter model={counterModel} actionCaller={(actions: any) => actions.increase()}/>
       </Provider>
@@ -62,7 +62,7 @@ describe('useModelActions', () => {
   });
 
   it('will dispatch the respective reducer action when reducer callback is called', () => {
-    mount(
+    render(
       <Provider store={store}>
         <Counter model={counterModel} actionCaller={(actions: any) => actions.increase()}/>
       </Provider>
@@ -80,7 +80,7 @@ describe('useModelActions', () => {
   });
 
   it('will dispatch the respective effect action when effect callback is called', () => {
-    mount(
+    render(
       <Provider store={store}>
         <Counter model={counterModel} actionCaller={(actions: any) => actions.tryToIncrease()}/>
       </Provider>
@@ -100,7 +100,7 @@ describe('useModelActions', () => {
   describe('when model accesses an undefined reducer/effect', () => {
     it('throws', () => {
       expect(() => {
-        mount(
+        render(
           <Provider store={store}>
             <Counter model={counterModel} actionCaller={(actions: any) => actions.whatever()}/>
           </Provider>
@@ -116,7 +116,7 @@ describe('useModelActions', () => {
     it('thrown non proxy error when Model.disableProxyChecks is true', () => {
       Model.disableProxyChecks = true;
       expect(() => {
-        mount(
+        render(
           <Provider store={store}>
             <Counter model={counterModel} actionCaller={(actions: any) => actions.whatever()}/>
           </Provider>

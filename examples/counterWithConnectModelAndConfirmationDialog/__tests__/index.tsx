@@ -1,6 +1,6 @@
 import * as React from "react";
 import IndexPage from '../pages/index';
-import {mount} from 'enzyme';
+import {fireEvent, render, screen} from '@testing-library/react';
 import {Model} from 'redux-data-model';
 
 jest.mock('../utils/alerts', () => ({
@@ -9,11 +9,12 @@ jest.mock('../utils/alerts', () => ({
 }));
 
 describe('IndexPage', () => {
-  let page: any = null;
+  let container: HTMLElement;
+  let asFragment: () => DocumentFragment;
 
   beforeEach(() => {
     Model.disableProxyChecks = true;
-    page = mount(<IndexPage />);
+    ({container, asFragment} = render(<IndexPage />));
   });
 
   afterEach(() => {
@@ -21,33 +22,31 @@ describe('IndexPage', () => {
   });
 
   it('renders two buttons', () => {
-    expect(page.find('button')).toHaveLength(2);
+    expect(screen.getAllByRole('button')).toHaveLength(2);
   });
 
   it('matches snapshot', () => {
-    expect(page).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('starts with counter value as 0', () => {
-    expect(
-      page.find('#counterValue').text()
-    ).toEqual('0')
+    expect(container.querySelector('#counterValue')?.textContent).toEqual('0')
   });
 
   describe('when incremented', () => {
     it('does not really change counter value', () => {
-      page.find('#incrementButton').simulate('click');
+      fireEvent.click(container.querySelector('#incrementButton') as Element);
       expect(
-        page.find('#counterValue').text()
+        container.querySelector('#counterValue')?.textContent
       ).toEqual('0');
     });
   });
 
   describe('when decremented', () => {
     it('does not really change counter value', () => {
-      page.find('#decrementButton').simulate('click');
+      fireEvent.click(container.querySelector('#decrementButton') as Element);
       expect(
-        page.find('#counterValue').text()
+        container.querySelector('#counterValue')?.textContent
       ).toEqual('0');
     });
   });

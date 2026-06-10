@@ -14,9 +14,9 @@
     "max-len": ["error", { "code": 120 }],
     "react/jsx-filename-extension": "off",
     "react/forbid-prop-types": "off",
-    "@typescript-eslint/indent": ["error", 2],
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/ban-ts-ignore": "off"
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }]
   }
 }

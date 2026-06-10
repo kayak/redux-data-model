@@ -45,5 +45,5 @@ export function combineModelReducers(models: Model<any>[]): ReducersMapObject {
     throw new DuplicatedModelNamespaceError(modelNamespaces);
   }
 
-  return combineReducersRecursively(reducerTree);
+  return combineReducersRecursively(reducerTree) as ReducersMapObject;
 }

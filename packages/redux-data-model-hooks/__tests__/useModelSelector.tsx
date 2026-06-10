@@ -1,4 +1,4 @@
-import {mount} from 'enzyme';
+import {render} from '@testing-library/react';
 import * as React from 'react';
 import {Provider} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
@@ -41,7 +41,7 @@ describe('useModelSelector', () => {
 
   it('calls modelSelectors', () => {
     const modelSelectorsSpy = jest.spyOn(counterModel, 'modelSelectors');
-    mount(
+    render(
       <Provider store={store}>
         <Counter model={counterModel}/>
       </Provider>
@@ -51,19 +51,19 @@ describe('useModelSelector', () => {
   });
 
   it('can access data from the store with a model selector', () => {
-    const wrapper = mount(
+    const {container} = render(
       <Provider store={store}>
         <Counter model={counterModel}/>
       </Provider>
     );
 
-    expect(wrapper.find('#count').text()).toEqual(String(modelOptions.state.count))
+    expect(container.querySelector('#count')?.textContent).toEqual(String(modelOptions.state.count))
   });
 
   it('passes state and selectors respectively as the arguments of the selectorFunc', () => {
     Model.disableProxyChecks = true;
     const selectorFunc = jest.fn();
-    mount(
+    render(
       <Provider store={store}>
         <Counter model={counterModel} selectorFunc={selectorFunc}/>
       </Provider>
@@ -76,7 +76,7 @@ describe('useModelSelector', () => {
   describe('when model accesses an undefined selector', () => {
     it('throws', () => {
       expect(() => {
-        mount(
+        render(
           <Provider store={store}>
             <Counter model={counterModel} selectorFunc={(state: any, selectors: any) => selectors.whatever(state)}/>
           </Provider>
@@ -92,7 +92,7 @@ describe('useModelSelector', () => {
     it('thrown non proxy error when Model.disableProxyChecks is true', () => {
       Model.disableProxyChecks = true;
       expect(() => {
-        mount(
+        render(
           <Provider store={store}>
             <Counter model={counterModel} selectorFunc={(state: any, selectors: any) => selectors.whatever(state)}/>
           </Provider>
