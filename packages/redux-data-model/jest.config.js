@@ -130,7 +130,7 @@ module.exports = {
   ],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: ['jest-extended'],
+  setupFilesAfterEnv: ['jest-extended/all'],
 
   // The test environment that will be used for testing
   testEnvironment: 'node',
@@ -168,10 +168,7 @@ module.exports = {
   // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
   // timers: "real",
 
-  // A map from regular expressions to paths to transformers
-  transform: {
-    "^.+\\.{js,jsx,ts,tsx}$": "ts-jest"
-  },
+  // Transforms are provided by the ts-jest preset (handles .ts/.tsx).
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will
   // skip transformation
