@@ -1,14 +1,14 @@
 import * as React from "react";
 import IndexPage from '../pages/index';
-import {mount} from 'enzyme';
+import {render} from '@testing-library/react';
 import {Model} from 'redux-data-model';
 
 describe('IndexPage', () => {
-  let page: any = null;
+  let asFragment: () => DocumentFragment;
 
   beforeEach(() => {
     Model.disableProxyChecks = true;
-    page = mount(<IndexPage />);
+    ({asFragment} = render(<IndexPage />));
   });
 
   afterEach(() => {
@@ -16,6 +16,6 @@ describe('IndexPage', () => {
   });
 
   it('matches snapshot', () => {
-    expect(page).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 });

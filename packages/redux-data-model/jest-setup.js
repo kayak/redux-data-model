@@ -1,6 +1,3 @@
 /* eslint-disable import/no-extraneous-dependencies */
-require('jsdom-global')();
-var enzyme = require('enzyme');
-var Adapter = require('@cfaester/enzyme-adapter-react-18').default;
-
-enzyme.configure({ adapter: new Adapter() });
+// These tests exercise pure logic and do not render React components,
+// so no DOM testing setup is required here.

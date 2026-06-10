@@ -1,526 +1,113 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`IndexPage matches snapshot 1`] = `
-<Component>
-  <Provider
-    store={
-      Object {
-        "@@observable": [Function],
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      }
-    }
-  >
-    <Connect(TestComponent)>
-      <TestComponent
-        count={0}
-        tryToDecrement={[Function]}
-        tryToIncrement={[Function]}
+<DocumentFragment>
+  <div>
+    <strong>
+      Count:
+    </strong>
+     
+    <span
+      id="counterValue"
+    >
+      0
+    </span>
+  </div>
+  <div>
+    <button
+      id="incrementButton"
+    >
+      Debounced increment by 3 seconds
+    </button>
+     | 
+    <button
+      id="decrementButton"
+    >
+      Debounced decrement by 3 seconds
+    </button>
+  </div>
+  <br />
+  <hr />
+  <br />
+  <div>
+    <strong>
+      State (Open console to see actions as they are triggered):
+    </strong>
+    <ul
+      style="border: 0px; padding: 0px; margin: 0.5em 0px 0.5em 0.125em; list-style: none; background-color: rgb(0, 43, 54);"
+    >
+      <li
+        style="position: relative; padding-top: 0.25em; margin-left: 0px; padding-left: 0px;"
       >
-        <div>
-          <strong>
-            Count:
-          </strong>
-           
-          <span
-            id="counterValue"
+        <div
+          style="display: inline-block; padding-right: 0.5em; padding-left: 0px; cursor: pointer;"
+        >
+          <div
+            style="margin-left: 0px; transition: 150ms; transform: rotateZ(90deg); transform-origin: 45% 50%; position: relative; line-height: 1.1em; font-size: 0.75em; color: rgb(38, 139, 210);"
           >
-            0
+            ▶
+          </div>
+        </div>
+        <label
+          style="display: inline-block; color: rgb(38, 139, 210); margin: 0px; padding: 0px; cursor: pointer;"
+        >
+          <span>
+            root:
           </span>
-        </div>
-        <div>
-          <button
-            id="incrementButton"
-            onClick={[Function]}
-          >
-            Debounced increment by 3 seconds
-          </button>
-           |
-           
-          <button
-            id="decrementButton"
-            onClick={[Function]}
-          >
-            Debounced decrement by 3 seconds
-          </button>
-        </div>
-        <br />
-        <hr />
-        <br />
-        <div>
-          <strong>
-            State (Open console to see actions as they are triggered):
-          </strong>
-          <JSONTree
-            data={
-              Object {
-                "counter": Object {
-                  "count": 0,
-                },
-              }
-            }
-          >
-            <ul
-              style={
-                Object {
-                  "MozUserSelect": "none",
-                  "WebkitUserSelect": "none",
-                  "backgroundColor": "#002b36",
-                  "border": 0,
-                  "listStyle": "none",
-                  "marginBottom": "0.5em",
-                  "marginLeft": "0.125em",
-                  "marginRight": 0,
-                  "marginTop": "0.5em",
-                  "padding": 0,
-                }
-              }
+        </label>
+        <span
+          style="padding-left: 0.5em; cursor: default; color: rgb(101, 123, 131);"
+        >
+          <span>
+            <span
+              style="margin-left: 0.3em; margin-right: 0.3em;"
             >
-              <JSONNode
-                collectionLimit={50}
-                getItemString={[Function]}
-                hideRoot={false}
-                isCustomNode={[Function]}
-                keyPath={
-                  Array [
-                    "root",
-                  ]
-                }
-                labelRenderer={[Function]}
-                postprocessValue={[Function]}
-                shouldExpandNodeInitially={[Function]}
-                sortObjectKeys={false}
-                styling={[Function]}
-                value={
-                  Object {
-                    "counter": Object {
-                      "count": 0,
-                    },
-                  }
-                }
-                valueRenderer={[Function]}
+              {}
+            </span>
+             1 key
+          </span>
+        </span>
+        <ul
+          style="padding: 0px; margin: 0px; list-style: none; display: block;"
+        >
+          <li
+            style="position: relative; padding-top: 0.25em; margin-left: 0.875em; padding-left: 0px;"
+          >
+            <div
+              style="display: inline-block; padding-right: 0.5em; padding-left: 0px; cursor: pointer;"
+            >
+              <div
+                style="margin-left: 0px; transition: 150ms; transform: rotateZ(0deg); transform-origin: 45% 50%; position: relative; line-height: 1.1em; font-size: 0.75em; color: rgb(38, 139, 210);"
               >
-                <JSONObjectNode
-                  collectionLimit={50}
-                  data={
-                    Object {
-                      "counter": Object {
-                        "count": 0,
-                      },
-                    }
-                  }
-                  getItemString={[Function]}
-                  hideRoot={false}
-                  isCustomNode={[Function]}
-                  key="root"
-                  keyPath={
-                    Array [
-                      "root",
-                    ]
-                  }
-                  labelRenderer={[Function]}
-                  nodeType="Object"
-                  postprocessValue={[Function]}
-                  shouldExpandNodeInitially={[Function]}
-                  sortObjectKeys={false}
-                  styling={[Function]}
-                  value={
-                    Object {
-                      "counter": Object {
-                        "count": 0,
-                      },
-                    }
-                  }
-                  valueRenderer={[Function]}
+                ▶
+              </div>
+            </div>
+            <label
+              style="display: inline-block; color: rgb(38, 139, 210); margin: 0px; padding: 0px; cursor: pointer;"
+            >
+              <span>
+                counter:
+              </span>
+            </label>
+            <span
+              style="padding-left: 0.5em; cursor: default; color: rgb(133, 153, 0);"
+            >
+              <span>
+                <span
+                  style="margin-left: 0.3em; margin-right: 0.3em;"
                 >
-                  <JSONNestedNode
-                    collectionLimit={50}
-                    createItemString={[Function]}
-                    data={
-                      Object {
-                        "counter": Object {
-                          "count": 0,
-                        },
-                      }
-                    }
-                    expandable={true}
-                    getItemString={[Function]}
-                    hideRoot={false}
-                    isCustomNode={[Function]}
-                    keyPath={
-                      Array [
-                        "root",
-                      ]
-                    }
-                    labelRenderer={[Function]}
-                    nodeType="Object"
-                    nodeTypeIndicator="{}"
-                    postprocessValue={[Function]}
-                    shouldExpandNodeInitially={[Function]}
-                    sortObjectKeys={false}
-                    styling={[Function]}
-                    value={
-                      Object {
-                        "counter": Object {
-                          "count": 0,
-                        },
-                      }
-                    }
-                    valueRenderer={[Function]}
-                  >
-                    <li
-                      style={
-                        Object {
-                          "marginLeft": 0,
-                          "paddingLeft": 0,
-                          "paddingTop": "0.25em",
-                          "position": "relative",
-                        }
-                      }
-                    >
-                      <JSONArrow
-                        expanded={true}
-                        nodeType="Object"
-                        onClick={[Function]}
-                        styling={[Function]}
-                      >
-                        <div
-                          onClick={[Function]}
-                          style={
-                            Object {
-                              "cursor": "pointer",
-                              "display": "inline-block",
-                              "paddingLeft": 0,
-                              "paddingRight": "0.5em",
-                            }
-                          }
-                        >
-                          <div
-                            style={
-                              Object {
-                                "MozTransform": "rotateZ(90deg)",
-                                "MozTransformOrigin": "45% 50%",
-                                "MozTransition": "150ms",
-                                "WebkitTransform": "rotateZ(90deg)",
-                                "WebkitTransformOrigin": "45% 50%",
-                                "WebkitTransition": "150ms",
-                                "color": "#268bd2",
-                                "fontSize": "0.75em",
-                                "lineHeight": "1.1em",
-                                "marginLeft": 0,
-                                "position": "relative",
-                                "transform": "rotateZ(90deg)",
-                                "transformOrigin": "45% 50%",
-                                "transition": "150ms",
-                              }
-                            }
-                          >
-                            ▶
-                          </div>
-                        </div>
-                      </JSONArrow>
-                      <label
-                        onClick={[Function]}
-                        style={
-                          Object {
-                            "MozUserSelect": "inherit",
-                            "WebkitUserSelect": "inherit",
-                            "color": "#268bd2",
-                            "cursor": "pointer",
-                            "display": "inline-block",
-                            "margin": 0,
-                            "padding": 0,
-                          }
-                        }
-                      >
-                        <span>
-                          root
-                          :
-                        </span>
-                      </label>
-                      <span
-                        onClick={[Function]}
-                        style={
-                          Object {
-                            "color": "#657b83",
-                            "cursor": "default",
-                            "paddingLeft": "0.5em",
-                          }
-                        }
-                      >
-                        <span>
-                          <span
-                            style={
-                              Object {
-                                "marginLeft": "0.3em",
-                                "marginRight": "0.3em",
-                              }
-                            }
-                          >
-                            {}
-                          </span>
-                           
-                          1 key
-                        </span>
-                      </span>
-                      <ul
-                        style={
-                          Object {
-                            "display": "block",
-                            "listStyle": "none",
-                            "margin": 0,
-                            "padding": 0,
-                          }
-                        }
-                      >
-                        <JSONNode
-                          circularCache={
-                            Array [
-                              Object {
-                                "count": 0,
-                              },
-                            ]
-                          }
-                          collectionLimit={50}
-                          createItemString={[Function]}
-                          data={
-                            Object {
-                              "counter": Object {
-                                "count": 0,
-                              },
-                            }
-                          }
-                          expandable={true}
-                          getItemString={[Function]}
-                          hideRoot={false}
-                          isCircular={false}
-                          isCustomNode={[Function]}
-                          key="Node--counter"
-                          keyPath={
-                            Array [
-                              "counter",
-                              "root",
-                            ]
-                          }
-                          labelRenderer={[Function]}
-                          level={1}
-                          nodeType="Object"
-                          nodeTypeIndicator="{}"
-                          postprocessValue={[Function]}
-                          shouldExpandNodeInitially={[Function]}
-                          sortObjectKeys={false}
-                          styling={[Function]}
-                          value={
-                            Object {
-                              "count": 0,
-                            }
-                          }
-                          valueRenderer={[Function]}
-                        >
-                          <JSONObjectNode
-                            circularCache={
-                              Array [
-                                Object {
-                                  "count": 0,
-                                },
-                              ]
-                            }
-                            collectionLimit={50}
-                            createItemString={[Function]}
-                            data={
-                              Object {
-                                "count": 0,
-                              }
-                            }
-                            expandable={true}
-                            getItemString={[Function]}
-                            hideRoot={false}
-                            isCircular={false}
-                            isCustomNode={[Function]}
-                            key="counter"
-                            keyPath={
-                              Array [
-                                "counter",
-                                "root",
-                              ]
-                            }
-                            labelRenderer={[Function]}
-                            level={1}
-                            nodeType="Object"
-                            nodeTypeIndicator="{}"
-                            postprocessValue={[Function]}
-                            shouldExpandNodeInitially={[Function]}
-                            sortObjectKeys={false}
-                            styling={[Function]}
-                            value={
-                              Object {
-                                "count": 0,
-                              }
-                            }
-                            valueRenderer={[Function]}
-                          >
-                            <JSONNestedNode
-                              circularCache={
-                                Array [
-                                  Object {
-                                    "count": 0,
-                                  },
-                                ]
-                              }
-                              collectionLimit={50}
-                              createItemString={[Function]}
-                              data={
-                                Object {
-                                  "count": 0,
-                                }
-                              }
-                              expandable={true}
-                              getItemString={[Function]}
-                              hideRoot={false}
-                              isCircular={false}
-                              isCustomNode={[Function]}
-                              keyPath={
-                                Array [
-                                  "counter",
-                                  "root",
-                                ]
-                              }
-                              labelRenderer={[Function]}
-                              level={1}
-                              nodeType="Object"
-                              nodeTypeIndicator="{}"
-                              postprocessValue={[Function]}
-                              shouldExpandNodeInitially={[Function]}
-                              sortObjectKeys={false}
-                              styling={[Function]}
-                              value={
-                                Object {
-                                  "count": 0,
-                                }
-                              }
-                              valueRenderer={[Function]}
-                            >
-                              <li
-                                style={
-                                  Object {
-                                    "marginLeft": "0.875em",
-                                    "paddingLeft": 0,
-                                    "paddingTop": "0.25em",
-                                    "position": "relative",
-                                  }
-                                }
-                              >
-                                <JSONArrow
-                                  expanded={false}
-                                  nodeType="Object"
-                                  onClick={[Function]}
-                                  styling={[Function]}
-                                >
-                                  <div
-                                    onClick={[Function]}
-                                    style={
-                                      Object {
-                                        "cursor": "pointer",
-                                        "display": "inline-block",
-                                        "paddingLeft": 0,
-                                        "paddingRight": "0.5em",
-                                      }
-                                    }
-                                  >
-                                    <div
-                                      style={
-                                        Object {
-                                          "MozTransform": "rotateZ(0deg)",
-                                          "MozTransformOrigin": "45% 50%",
-                                          "MozTransition": "150ms",
-                                          "WebkitTransform": "rotateZ(0deg)",
-                                          "WebkitTransformOrigin": "45% 50%",
-                                          "WebkitTransition": "150ms",
-                                          "color": "#268bd2",
-                                          "fontSize": "0.75em",
-                                          "lineHeight": "1.1em",
-                                          "marginLeft": 0,
-                                          "position": "relative",
-                                          "transform": "rotateZ(0deg)",
-                                          "transformOrigin": "45% 50%",
-                                          "transition": "150ms",
-                                        }
-                                      }
-                                    >
-                                      ▶
-                                    </div>
-                                  </div>
-                                </JSONArrow>
-                                <label
-                                  onClick={[Function]}
-                                  style={
-                                    Object {
-                                      "MozUserSelect": "inherit",
-                                      "WebkitUserSelect": "inherit",
-                                      "color": "#268bd2",
-                                      "cursor": "pointer",
-                                      "display": "inline-block",
-                                      "margin": 0,
-                                      "padding": 0,
-                                    }
-                                  }
-                                >
-                                  <span>
-                                    counter
-                                    :
-                                  </span>
-                                </label>
-                                <span
-                                  onClick={[Function]}
-                                  style={
-                                    Object {
-                                      "color": "#859900",
-                                      "cursor": "default",
-                                      "paddingLeft": "0.5em",
-                                    }
-                                  }
-                                >
-                                  <span>
-                                    <span
-                                      style={
-                                        Object {
-                                          "marginLeft": "0.3em",
-                                          "marginRight": "0.3em",
-                                        }
-                                      }
-                                    >
-                                      {}
-                                    </span>
-                                     
-                                    1 key
-                                  </span>
-                                </span>
-                                <ul
-                                  style={
-                                    Object {
-                                      "display": "block",
-                                      "listStyle": "none",
-                                      "margin": 0,
-                                      "padding": 0,
-                                    }
-                                  }
-                                />
-                              </li>
-                            </JSONNestedNode>
-                          </JSONObjectNode>
-                        </JSONNode>
-                      </ul>
-                    </li>
-                  </JSONNestedNode>
-                </JSONObjectNode>
-              </JSONNode>
-            </ul>
-          </JSONTree>
-        </div>
-      </TestComponent>
-    </Connect(TestComponent)>
-  </Provider>
-</Component>
+                  {}
+                </span>
+                 1 key
+              </span>
+            </span>
+            <ul
+              style="padding: 0px; margin: 0px; list-style: none; display: block;"
+            />
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
 `;
