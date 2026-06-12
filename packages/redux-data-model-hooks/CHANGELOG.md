@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.1](https://github.com/kayak/redux-data-model/compare/v0.15.0...v0.15.1) (2026-06-12)
+
+
+### Features
+
+* fix redux-data-model-hooks peer dependency of redux-data-model ([7785ff3](https://github.com/kayak/redux-data-model/commit/7785ff37997051b76047b86e2189d54ecaf66dbe))
+
+
+
+
+
 # [0.15.0](https://github.com/kayak/redux-data-model/compare/v0.14.0...v0.15.0) (2026-06-10)
 
 **Note:** Version bump only for package redux-data-model-hooks
