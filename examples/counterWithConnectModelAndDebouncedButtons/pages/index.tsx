@@ -44,12 +44,12 @@ CounterState, CounterSelectorPayloads, CounterReducerPayloads, CounterEffectPayl
   },
   effects: {
     *tryToIncrement(_payload, sagaEffects, {increment}): Generator<any, void, any> {
-      // Let's pretend something asynchronous need to be performed here
+      // Let's pretend something asynchronous needs to be performed here
       yield sagaEffects.delay(100);
       yield sagaEffects.put(increment());
     },
     *tryToDecrement(_payload, sagaEffects, {decrement}): Generator<any, void, any> {
-      // Let's pretend something asynchronous need to be performed here
+      // Let's pretend something asynchronous needs to be performed here
       yield sagaEffects.delay(100);
       yield sagaEffects.put(decrement());
     },

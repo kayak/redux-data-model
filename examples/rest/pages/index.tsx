@@ -210,7 +210,7 @@ function TestComponent() {
         ))}
 
         <button onClick={() => postActions.switchPublishedByUser({userId})}>
-          Switch state from all comments
+          Switch state from all posts
         </button>
       </div>
       <br/>
