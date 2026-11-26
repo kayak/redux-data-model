@@ -17,11 +17,11 @@ import {Model, SelectorModelMap, UndefinedSelectorError, wrapProxy} from 'redux-
  * @category React Hook
  */
 export function useModelSelector<
-  ReturnValue=any, State=Record<string, any>, SelectorPayloads=any,
+  ReturnValue=any, State=Record<string, any>, SelectorPayloads=any, SelectorResults=any,
 >(
-  model: Model<unknown, SelectorPayloads, unknown, unknown>,
-  selectorFunc: (state: State, selectors: SelectorModelMap<any, SelectorPayloads>) => ReturnValue
-) {
+  model: Model<unknown, SelectorPayloads, unknown, unknown, SelectorResults, any>,
+  selectorFunc: (state: State, selectors: SelectorModelMap<any, SelectorPayloads, SelectorResults>) => ReturnValue
+): ReturnValue {
   const selectors = React.useMemo(() => {
     const modelSelectors = model.modelSelectors();
     return Model.disableProxyChecks ? modelSelectors : wrapProxy(modelSelectors, model, UndefinedSelectorError)
