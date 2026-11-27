@@ -24,9 +24,9 @@ import {
  * @throws [[ModelNotSagaInitializedError]] When model was not initialized on a [[modelRootSaga]] call.
  * @category React Hook
  */
-export function useModelActions<ReducerPayloads=any, EffectPayloads=any>(
-  model: Model<unknown, unknown, ReducerPayloads, EffectPayloads>,
-): BoundNamespacedActionCreatorsMapObject<ReducerPayloads & EffectPayloads> {
+export function useModelActions<ReducerPayloads=any, EffectPayloads=any, EffectResults=any>(
+  model: Model<unknown, unknown, ReducerPayloads, EffectPayloads, any, EffectResults>,
+): BoundNamespacedActionCreatorsMapObject<ReducerPayloads & EffectPayloads, EffectResults> {
   const dispatch: Dispatch = useDispatch();
   const actionCreators = React.useMemo(() => model.actionCreators(), [model]);
   const boundActionCreators = React.useMemo(() => bindModelActionCreators(actionCreators, dispatch), [model]);
